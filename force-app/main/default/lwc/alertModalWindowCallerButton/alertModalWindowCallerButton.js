@@ -5,12 +5,15 @@ import ALERTMODAL from '@salesforce/messageChannel/AlertMessageChannel__c';
 export default class AlertModalWindowCallerButton extends LightningElement {
     @wire(MessageContext) messageContext;
 
-    alertInformation = [
-        { normalTxt: 'This is normal text', boldTxt: 'This is bold text', boldLeftTxt: 'Left Bold', normalRightTxt: 'Right Normal',  }
+    alertBodyInformation = [
+        { normalTxt: 'This is normal text', boldTxt: 'This is bold text', boldLeftTxt: 'Left Bold', normalRightTxt: 'Right Normal'}
     ]
+    alertHeadInformation = {
+        title: 'Alert', titleInfo: 'These are some relevant alerts for this Opportunity' 
+    }
     handleClick() {
         console.clear();
         console.log(this.messageContext);
-        publish(this.messageContext, ALERTMODAL, { alertHeaderInfo: 'This is header', alertBodyInfo: 'This is body', alertVisibleInfo: true });
+        publish(this.messageContext, ALERTMODAL, { alertHeaderInfo: this.alertHeadInformation, alertBodyInfo: this.alertBodyInformation, alertVisibleInfo: true });
     }
 }

@@ -27,6 +27,7 @@ export default class AlertModalWindow extends LightningElement {
     }
 
     onAlertMessage(alertInfo) {
+        this.receivedMessage = alertInfo;
         this.isModalOpen = alertInfo.alertVisibleInfo;
     }
 
