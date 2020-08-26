@@ -1,0 +1,8 @@
+:host {
+
+}
+.BH-alert-icon button, .BH-alert-icon button:hover, .BH-alert-icon button:active {
+    color: lightblue;
+    outline: none;
+    border: none;
+}

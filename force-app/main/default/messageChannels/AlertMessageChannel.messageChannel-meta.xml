@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningMessageChannel xmlns="http://soap.sforce.com/2006/04/metadata">
+    <masterLabel>AlertMessageChannel</masterLabel>
+    <isExposed>true</isExposed>
+    <description>This is a alert message channel communicator</description>
+    <lightningMessageFields>
+        <fieldName>alertVisibleInfo</fieldName>
+        <description>Show/Hide information passed into alert modal window</description>
+    </lightningMessageFields>
+    <lightningMessageFields>
+        <fieldName>alertHeaderInfo</fieldName> 
+        <description>Header information passed into alert modal window</description>
+    </lightningMessageFields>
+    <lightningMessageFields>
+        <fieldName>alertBodyInfo</fieldName>
+        <description>Body information passed into alert modal window</description>
+    </lightningMessageFields>
+</LightningMessageChannel>
