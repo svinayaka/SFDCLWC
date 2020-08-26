@@ -1,31 +1,51 @@
 <template>
     <template if:true={isModalOpen}>
-        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
-            <div class="slds-modal__container">
-              <header class="slds-modal__header">
-                <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">{receivedMessage.alertHeadInformation.title}</h2>
-                <p>{receivedMessage.alertHeadInformation.titleInfo}</p>
-              </header>
-              <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                <template if:true={receivedMessage.alertBodyInfo}>
-                    <template for:each={receivedMessage.alertBodyInfo} for:item="eachBodyInfo" key={index}>
-                        <template if:true={eachBodyInfo.normalTxt}>
-                            <p key={index}> <span key={index}>{eachBodyInfo.normalTxt}</span></p>
-                        </template>
-                        <template if:true={eachBodyInfo.normalTxt}>
-                            <p key={index}> <strong>{eachBodyInfo.boldTxt}</strong> </p>
-                        </template>
-                        
-                            <p key={index}><strong>{eachBodyInfo.boldLeftTxt}</strong> - <span>{eachBodyInfo.boldLeftTxt}</span></p>
-                        
+        <template if:true={receivedMessage}>
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <template if:true={alertHeadMessage}>
+                        <header class="slds-modal__header">
+                            <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">
+                                {alertHeadMessage.title}
+                            </h2>
+                            <p>{alertHeadMessage.titleInfo}</p>
+                        </header>
                     </template>
-                </template>
-              </div>
-              <footer class="slds-modal__footer">
-                <button class="slds-button slds-button_brand" onclick={closeAlertWindow}>Okay</button>
-              </footer>
-            </div>
-          </section>
-          <div class="slds-backdrop slds-backdrop_open"></div>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <template if:true={alertBodyMessageList}>
+                            <ul>
+                                <template for:each={alertBodyMessageList} for:item="eachBodyInfo" key={index}>
+                                    <li key={index}>
+                                        <template if:true={eachBodyInfo.normalTxt}>
+                                            <p key={index}>
+                                                <span key={index}>{eachBodyInfo.normalTxt}</span>
+                                            </p>
+                                        </template>
+                                        <template if:true={eachBodyInfo.normalTxt}>
+                                            <p key={index}><strong>{eachBodyInfo.boldTxt}</strong></p>
+                                        </template>
+                                        <template if:true={eachBodyInfo.boldLeftTxt}>
+                                            <template if:true={eachBodyInfo.normalRightTxt}>
+                                                <p key={index}>
+                                                    <strong>{eachBodyInfo.boldLeftTxt}</strong> -
+                                                    <span>{eachBodyInfo.normalRightTxt}</span>
+                                                </p>
+                                            </template>
+                                        </template>
+                                    </li>
+                                </template>
+                            </ul>
+                        </template>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <button class="slds-button slds-button_brand" onclick={closeAlertWindow}>
+                            Okay
+                        </button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
     </template>
 </template>

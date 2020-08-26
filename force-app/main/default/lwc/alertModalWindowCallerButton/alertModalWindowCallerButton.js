@@ -6,7 +6,8 @@ export default class AlertModalWindowCallerButton extends LightningElement {
     @wire(MessageContext) messageContext;
 
     alertBodyInformation = [
-        { normalTxt: 'This is normal text', boldTxt: 'This is bold text', boldLeftTxt: 'Left Bold', normalRightTxt: 'Right Normal'}
+        { normalTxt: '', boldTxt: '', boldLeftTxt: 'This opportunity is Stale', normalRightTxt: 'the stale reason code is EOD PAST DUE.'},
+        { normalTxt: '', boldTxt: '', boldLeftTxt: 'This account has 1 or more Frame Agreements', normalRightTxt: 'There is a Frame Agreement associated to the account, if applicable, please link to this opportunity using the Contract ID field.'},
     ]
     alertHeadInformation = {
         title: 'Alert', titleInfo: 'These are some relevant alerts for this Opportunity' 
