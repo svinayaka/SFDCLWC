@@ -1,0 +1,28 @@
+<template>
+        <div>
+            <lightning-combobox label=" " 
+                                name="country" 
+                                onchange={handleCountryChange} 
+                                options={controllingValues} 
+                                placeholder="Select Primary Area" 
+                                value={selectedCountry}></lightning-combobox>                
+            
+        </div>
+        <template if:true={showDist}>
+        <div>
+            <lightning-combobox label=" " 
+                                name="state"
+                                onchange={handleStateChange} 
+                                options={dependentValues} 
+                                placeholder="Select Primary District" 
+                                value={selectedState}
+                                disabled={isEmpty}></lightning-combobox>                
+        </div>
+        </template>
+    <br/>
+
+    <div if:true={error}>
+        <p>{error}</p>
+    </div>
+
+</template>

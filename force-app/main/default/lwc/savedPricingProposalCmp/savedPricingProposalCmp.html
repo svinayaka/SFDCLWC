@@ -1,0 +1,15 @@
+<template>
+<lightning-card >
+    <div class="slds-p-left_x-small" ><b>My saved Pricing Proposals</b></div>&nbsp;&nbsp;
+        <div class="slds-p-left_medium spp-bg slds-scrollable--y">
+            <template iterator:it={getSavedPPList}>
+                <div key={it.value.Id}>
+                    <a onclick={handleClick}  data-id={it.value.Id}>{it.value.Name}</a></br>
+                    {it.value.TM_Profitability_Status__c}|{it.value.CurrencyIsoCode}</br>&nbsp;
+                        <div class="col-bg"></div>
+                </div>&nbsp;&nbsp;
+            </template> 
+        </div>
+</lightning-card>
+
+</template>

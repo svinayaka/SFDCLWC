@@ -1,0 +1,34 @@
+<template>
+    <lightning-card class="cc-bg">
+<div >
+        <lightning-carousel>
+            <lightning-carousel-image
+                src = {training}
+               
+                alternative-text = "First card accessible description."
+                onclick={handleClick}>
+            </lightning-carousel-image>
+            <lightning-carousel-image
+                src = {analyzing}
+                
+                alternative-text = "Second card accessible description."
+                onclick={handleClick}>
+            </lightning-carousel-image>
+            <lightning-carousel-image
+                src = {calculate}
+                
+                alternative-text = "Third card accessible description."
+                onclick={handleClick}>
+            </lightning-carousel-image>
+            <lightning-carousel-image
+                src = {launchBox}
+                
+                alternative-text = "Forth card accessible description."
+                onclick={handleClick}>
+            </lightning-carousel-image>
+        </lightning-carousel>
+    </div>
+    <!--header = "LaunchBox Card"
+                description = "LaunchBox card description."-->
+</lightning-card>
+</template>

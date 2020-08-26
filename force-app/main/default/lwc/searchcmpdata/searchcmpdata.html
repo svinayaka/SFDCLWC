@@ -1,0 +1,14 @@
+<template>
+        <lightning-card >
+
+        <div class="slds-align_absolute-center" ><b>My Favorite Products</b></div>&nbsp;&nbsp;
+        <div class="slds-p-left_medium" style="height:600px">
+                <template for:each={Name} for:item="name">
+                       <li key={name}>
+                               <b>{name}</b>
+                       </li>         
+
+                </template>
+        </div>
+</lightning-card>
+</template>

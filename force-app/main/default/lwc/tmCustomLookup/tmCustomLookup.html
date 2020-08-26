@@ -1,0 +1,9 @@
+<template>
+    <lightning-record-edit-form object-api-name={childObjectApiName}>
+        <label for="fieldid">{fieldLabel}</label>
+        <lightning-input-field id="fieldid" required={required} variant="label-hidden" field-name={targetFieldApiName}
+            placeholder={placeHolder}
+            value={value} onchange={handleChange} disabled={disabled}>
+        </lightning-input-field>
+    </lightning-record-edit-form>
+</template>

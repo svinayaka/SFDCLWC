@@ -1,0 +1,134 @@
+<template>
+    <template if:false={firstPage}>
+        <div>
+            <h3 class="slds-text-title_caps slds-text-align_center slds-text-title_bold textClr">ADD PRODUCTS TO PRICING PROPOSAL</h3>
+            <h2 class="slds-text-heading_large slds-text-align_center slds-p-top_small">So you would like to add to your proposal</h2>
+        </div> 
+        <div>
+            <lightning-layout>
+                <lightning-layout-item padding="around-small" size="2">
+                    <label class="slds-text-heading_x-small" for="select-01">QUCIK VIEW</label>
+                    <div class="slds-form-element__control">
+                    <div class="slds-select_container">
+                        <select class="slds-select" id="select-01" data-id="viewdataid" onchange={onChngOfQuickViewHandler}>
+                            <option value="All" selected>All</option>
+                            <option value="VALUE 1">VALUE 1</option>
+                            <option value="VALUE 2">VALUE 2</option>
+                            <option value="VALUE 3">VALUE 3</option>
+                            <option value="VALUE 4">VALUE 4</option>  
+                        </select>
+                    </div>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="2">
+                    <label class="slds-text-heading_x-small" for="select-02">TIER 4</label>
+                    <div class="slds-form-element__control">
+                    <div class="slds-select_container">
+                        <select class="slds-select" id="select-02" data-id="tierdataid" onchange={onChnageOftierHandler}>
+                            <option value="All" selected>All</option>                
+                                <template for:each={tireVals.data} for:item="picklistItem">
+                                    <option key={picklistItem.svalue} value={picklistItem.svalue}>
+                                    {picklistItem.slabel}
+                                    </option>
+                            </template>
+                        </select>
+                    </div>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="2">
+                    <label class="slds-text-heading_x-small" for="select-03">PRODUCT L1</label>
+                    <div class="slds-form-element__control">
+                    <div class="slds-select_container">
+                        <select class="slds-select" id="select-03" data-id="prod1dataid" onchange={onChnageOfProd1Handler}>
+                            <option value="All" selected>All</option>                
+                                <template for:each={prod1Vals.data} for:item="picklistItem">
+                                    <option key={picklistItem.svalue} value={picklistItem.svalue}>
+                                    {picklistItem.slabel}
+                                    </option>
+                            </template>
+                        </select>
+                    </div>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="2">
+                    <label class="slds-text-heading_x-small" for="select-04">PRODUCT L2</label>
+                    <div class="slds-form-element__control">
+                    <div class="slds-select_container">
+                        <select class="slds-select" id="select-04" data-id="prod2dataid" onchange={onChnageOfProd2Handler}>
+                            <option value="All" selected>All</option>                
+                                <template for:each={prod2Vals.data} for:item="picklistItem">
+                                    <option key={picklistItem.svalue} value={picklistItem.svalue}>
+                                    {picklistItem.slabel}
+                                    </option>
+                            </template>
+                        </select>
+                    </div>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="2">
+                    <label class="slds-text-heading_x-small" for="select-05">PRODUCT L3</label>
+                    <div class="slds-form-element__control">
+                    <div class="slds-select_container">
+                        <select class="slds-select" id="select-05" data-id="prod3dataid" onchange={onChnageOfProd3Handler}>
+                            <option value="All" selected>All</option>                
+                                <template for:each={prod3Vals.data} for:item="picklistItem">
+                                    <option key={picklistItem.svalue} value={picklistItem.svalue}>
+                                    {picklistItem.slabel}
+                                    </option>
+                            </template>
+                        </select>
+                    </div>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="2">
+                    <label class="slds-text-heading_x-small" for="select-06">PRODUCT L4</label>
+                    <div class="slds-form-element__control">
+                    <div class="slds-select_container">
+                        <select class="slds-select" id="select-06" data-id="prod4dataid" onchange={onChnageOfProd4Handler}>
+                            <option value="All" selected>All</option>                
+                                <template for:each={prod4Vals.data} for:item="picklistItem">
+                                    <option key={picklistItem.svalue} value={picklistItem.svalue}>
+                                    {picklistItem.slabel}
+                                    </option>
+                            </template>
+                        </select>
+                    </div>
+                    </div>
+                </lightning-layout-item> 
+            </lightning-layout> 
+            <lightning-layout horizontal-align="center" vertical-align="end" class="slds-p-bottom_xx-large">
+                <lightning-layout-item padding="around-small" size="8">
+                    <lightning-input variant="label-hidden" value={searchVal} onchange={onChangeOfSearchText} type="Search" name="enterSearch" placeholder="Refine Results"></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="1">
+                    <lightning-button variant="brand" label="Search" title="Search" icon-name="standard:search" onclick={onClickOfSearchRcds}></lightning-button>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="1">
+                    <lightning-button variant="brand" label="Reset" icon-name="action:reset_password" class="fltBtn" title="reset" onclick={onClickOfReset}></lightning-button>
+                </lightning-layout-item>
+            </lightning-layout>       
+        </div>
+    </template>
+    
+    <template if:true={secondPage}>
+        <div>
+            <h3 class="slds-text-title_caps slds-text-align_center slds-text-title_bold textClr">ADD PRODUCTS TO PRICING PROPOSAL</h3>
+            <h2 class="slds-text-heading_large slds-text-align_center slds-p-top_small">Verify Additions</h2>
+        </div>
+        <div>
+            <lightning-layout horizontal-align="center" vertical-align="end" class="slds-p-bottom_xx-large">
+                <lightning-layout-item padding="around-small" size="8">
+                    <lightning-input variant="label-hidden" value={searchProdVal} onchange={onChangeOfProdSearch} type="Search" name="enterSearch" placeholder="Refine Results"></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="1">
+                    <lightning-button variant="brand" label="Search" title="Search" icon-name="standard:search" onclick={onClickOfSearchProdRcds}></lightning-button>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+
+    </template>    
+        
+            <c-tm-prod-data-table get-prod-id={recordId} onclosewindow={closeHandler} onsecondwindow={selectedRecords} search-prod-key={searchProdVal}></c-tm-prod-data-table>
+        
+    
+</template>

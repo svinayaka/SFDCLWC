@@ -1,0 +1,38 @@
+<template>
+  
+   
+    <template if:false={boolData}>
+        <div style="height: 280px">
+            <lightning-datatable 
+                key-field="id"
+                data={data}
+                columns={columns}
+                onrowselection={selectedRowHandler}>
+            </lightning-datatable>
+        </div> 
+    </template>
+    <template if:true={boolSelectedData}>
+        <div style="height: 280px;">
+            <lightning-datatable
+                    key-field="id"
+                    data={_selectedRecords}
+                    columns={columns2}
+                    onrowaction={delSelectedRow}
+                    hide-checkbox-column>
+            </lightning-datatable>
+        </div>
+    </template>
+    <template if:false={boolData}>
+        <div class="slds-col modal-footer slds-modal__footer txtClr"  >
+            <lightning-button class="slds-float_left" variant="base" label="CANCEL" onclick={onCancelHandler}></lightning-button>
+            <lightning-button variant="brand" label="Next" onclick={onNextHandler}></lightning-button>
+        </div>
+    </template>
+    <template if:true={boolSelectedData}>
+        <div class="slds-col modal-footer slds-modal__footer txtClr"  >
+            <lightning-button class="slds-float_left" variant="base" label="CANCEL" onclick={onCloseHandler}></lightning-button>
+            <lightning-button variant="success" label="ADD PRODUCTS" onclick={onSuccessHandler}></lightning-button>
+        </div>
+
+    </template>
+</template>

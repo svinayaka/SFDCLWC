@@ -1,0 +1,30 @@
+<template>
+    <template if:false={firstPage}>
+        <div>
+            <h3 class="slds-text-title_caps slds-text-align_center slds-text-title_bold textClr">ADD SERVICE TO PRICING PROPOSAL</h3>
+            <h2 class="slds-text-heading_large slds-text-align_center slds-p-top_small">So you would like to add to your proposal</h2>
+        </div>         
+    </template>
+    
+    <template if:true={secondPage}>
+        <div>
+            <h3 class="slds-text-title_caps slds-text-align_center slds-text-title_bold textClr">ADD PRODUCTS TO PRICING PROPOSAL</h3>
+            <h2 class="slds-text-heading_large slds-text-align_center slds-p-top_small">Verify Additions</h2>
+        </div>
+        <div>
+            <lightning-layout horizontal-align="center" vertical-align="end" class="slds-p-bottom_xx-large">
+                <lightning-layout-item padding="around-small" size="8">
+                    <lightning-input variant="label-hidden" value={searchServiceVal} onchange={onChangeOfserviceSearch} type="Search" name="enterSearch" placeholder="Refine Results"></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="1">
+                    <lightning-button variant="brand" label="Search" title="Search" icon-name="standard:search" onclick={onClickOfSearchServiceRcds}></lightning-button>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+
+    </template>    
+        
+            <c-tm-service-data-table get-service-id={recordId} onclosewindow={closeHandler} onsecondwindow={selectedRecords} search-service-key={searchServiceVal}></c-tm-service-data-table>
+        
+    
+</template>

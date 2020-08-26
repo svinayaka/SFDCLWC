@@ -1,0 +1,15 @@
+<template>
+    <lightning-card >
+        <div class="slds-p-left_x-small "  ><b>My Recently Viewed Pricing Proposals</b></div>&nbsp;&nbsp;
+            <div class="slds-p-left_medium rvpp-bg slds-scrollable--y"  >
+                <template iterator:it={getRecentlyViewedPPList}>
+                    <div key={it.value.Id} >
+                       <a onclick={handleClick}  data-id={it.value.Id}>{it.value.Name}</a></br>
+                        {it.value.TM_Profitability_Status__c}|{it.value.CurrencyIsoCode}</br>&nbsp;
+                        <div class="biv-bg"></div>
+                    </div>&nbsp;
+
+                </template>
+            </div>
+</lightning-card>
+</template>

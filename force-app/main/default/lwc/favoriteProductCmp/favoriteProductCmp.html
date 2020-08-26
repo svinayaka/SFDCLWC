@@ -1,0 +1,15 @@
+<template>
+<lightning-card >
+
+        <div class="slds-p-left_x-small" ><b>My Favorite Products</b></div>&nbsp;&nbsp;
+        <div class="slds-p-left_medium fpc-bg slds-scrollable--y" >
+                <template iterator:it={productDetails}>
+                        <div key={it.value.Id}>
+                           <a onclick={handleClick}  data-id={it.value.Id}>{it.value.Name}</a></br>
+                           {it.value.ProductCode}</br>&nbsp;
+                           <div class="col-bg"></div>
+                        </div>&nbsp; 
+                    </template>
+        </div>
+</lightning-card>
+</template>

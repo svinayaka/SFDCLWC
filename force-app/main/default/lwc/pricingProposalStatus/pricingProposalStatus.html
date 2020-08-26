@@ -1,0 +1,23 @@
+<template>
+    <lightning-card >
+        <div class="slds-p-left_x-small" ><b>My  Pricing Proposal status</b></div>&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;
+            <div class="slds-p-left_medium pps-bg slds-scrollable--y"  >
+                <template  for:each={StatusData} for:item="mapKey">
+                    <div key={mapKey.key}>   
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_2-of-3">
+                                {mapKey.key}
+                            </div>
+                            <div class="slds-col slds-size_1-of-3">
+                                {mapKey.value}
+                            </div>
+                          </div>&nbsp;&nbsp;
+                          <div class="col-bg"></div>
+                     </div>&nbsp;&nbsp;
+                </template>             
+            </div>
+            
+</lightning-card>
+    
+</template>

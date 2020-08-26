@@ -1,0 +1,33 @@
+<template>
+    
+    <div class="slds-text-heading_small slds-text-align_center slds-title_bold"><b>New Pricing Propoasl</b></div>
+    <div class="slds-m-around_medium slds-align_absolute-center">
+        <img src={imgLogo}> 
+    </div>
+    <div class="txtClr">
+        <p class="slds-text-align_center"><lightning-formatted-text value="Start a fresh pricing proposal"></lightning-formatted-text></p>
+    </div>
+    <div>
+        <lightning-input type="text" value={prcpropVal} name="input1" label=" "  required placeholder="Enter Pricing Proposal Name" onchange={prcpropNameChngHandler}></lightning-input>
+        <br/>
+        <c-tm-custom-lookup field-label={fieldLabel} child-object-api-name='TM_Price_Proposal__c' place-holder='Search Customer Account'
+            target-field-api-name='Customer__c' required onvalueselected={selActRcdHandler}></c-tm-custom-lookup>
+        
+    </div>
+    
+    <div>
+        <c-tm-depend-picklist-lwc oncountryselected={cntryHandler} onstateselected={stateHandler}></c-tm-depend-picklist-lwc>
+    </div>
+    
+    <template if:true={bundleCheckBox}>
+        <div class="slds-align_absolute-center">
+            <lightning-input class="alignText" type="checkbox" variant="label-inline" label="UNBUNDLED" onchange={boolHandler}></lightning-input>
+        </div>
+    </template>
+    <div class="slds-align_absolute-center">
+        <lightning-button variant="success" label="SAVE AS NEW" title="Success action" onclick={saveActionHandler}
+            class="slds-m-left_x-small"></lightning-button>
+    </div> 
+    
+    
+</template>

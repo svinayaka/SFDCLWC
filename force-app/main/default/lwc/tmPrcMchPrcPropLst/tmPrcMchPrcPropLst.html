@@ -1,0 +1,51 @@
+<template>
+    <lightning-tabset active-tab-value="prcPropVal">
+    
+    <!-- 1st tab logic-->
+    <lightning-tab label="MY PRICING PROPOSALS" value="prcPropVal"> 
+        <lightning-layout>
+            <lightning-layout-item padding="around-small">
+                <label class="slds-text-heading_x-small" for="select-01">TIME FRAME</label>
+                <div class="slds-form-element__control">
+                <div class="slds-select_container">
+                    <select class="slds-select" id="select-01" onchange={onChngTimeFrameHndlr}>
+                        <option value="All Dates" selected>All Dates</option>
+                        <option value="Last Week">Last Week</option>
+                        <option value="Last 15 Days">Last 15 Days</option>
+                        <option value="Last 30 Days">Last 30 Days</option>
+                        <option value="Last 60 Days">Last 60 Days</option>  
+                    </select>
+                </div>
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item padding="around-small">
+                <label class="slds-text-heading_x-small" for="select-02">STATUS</label>
+                <div class="slds-form-element__control">
+                <div class="slds-select_container">
+                    <select class="slds-select" id="select-02" onchange={onChngStatusHndlr}>
+                        <option value="All Statuses" selected>All Statuses</option>                
+                            <template for:each={propStatus.data} for:item="picklistItem">
+                                <option key={picklistItem.svalue} value={picklistItem.svalue}>
+                                {picklistItem.slabel}
+                                </option>
+                        </template>
+                    </select>
+                </div>
+                </div>
+            </lightning-layout-item>    
+        </lightning-layout>
+        <c-tm-pmpp-data-table></c-tm-pmpp-data-table>
+        
+    </lightning-tab>
+    
+    <!-- 2nd tab logic-->
+    <lightning-tab label="ALL CHEMICAL PRICING PROPOSALS" value="chemPrcPropVal">
+        CHEMICAL PRICING PROPOSAL CONTENT
+    </lightning-tab>
+    
+    <!-- 3rd tab logic-->
+    <lightning-tab label="MY FAVORITES" value="myFavval">
+        MY FAVORITES CONTENT
+    </lightning-tab>
+    </lightning-tabset>
+    </template>
