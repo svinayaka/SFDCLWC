@@ -1,0 +1,66 @@
+.THIS .alighHorizontal{
+    width: 25%;
+    padding-left: 2%;
+}
+.THIS .buttonStyle3{
+    float: left;   
+    margin-left: 2%;
+    margin-top: -2%;
+        
+    
+}
+@media 
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+
+    
+.THIS .tableStyle{
+        width:1300px;
+    }   
+.THIS .alignButton{
+        padding-top: 2.2%;
+}
+
+.THIS .divBorder{
+     border: 2px solid black;
+}
+.THIS label.uiLabel {
+    padding-right: 12px;
+}
+
+.THIS .field{
+  padding: 5px;
+  border: 1px solid #dce4ec;
+  border-radius: 2px;
+}
+.THIS .buttonStyle{
+    float: left;   
+    margin-top: -2%;
+        
+    
+}
+.THIS .buttonStyle1{
+    float: left;
+    margin-left: 66%;
+    margin-top: -2%;
+}
+.THIS .buttonStyle2{
+    float: right;
+    margin-left: 72%;
+}
+.THIS .divStyle{
+    margin-top: -1.5% !important;
+    margin-left: 10% !important;
+}
+.THIS .errorStyle{
+    font-size: 21px;
+    font-weight: BOLD;
+    color: red;
+    margin-left: 41%;
+    margin-top: 6%;
+}
+.THIS .fontBold{
+        font-weight: bold;
+}
+
+}

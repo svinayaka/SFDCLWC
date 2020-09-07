@@ -1,0 +1,119 @@
+<aura:component access="global"
+                controller="BHGE_MC_TS_CaseAction_Controller"
+                implements="force:lightningQuickActionWithoutHeader,flexipage:availableForRecordHome,force:hasRecordId"  >
+    
+   
+    <aura:attribute name="actionInProgress" type="boolean" default="false" />       
+    <aura:attribute name= "caseRecord" type="Object"/>
+    <aura:attribute name="errorMessage" type="String" description="error message to be shown on the component" />
+    <aura:attribute name="hasError" type="boolean" default="false"/>
+    <aura:attribute name="error" type="boolean"/>
+    <aura:attribute name="isRunTimeError" type="boolean" default="false" /> 
+    <aura:attribute name="isCloseCase" type="boolean" default="false" />   
+    <aura:attribute name="exceptionMessage" type="string" />
+    <aura:attribute name="menuItems" type="String[]" default="['Transfer to CIR','TS-CC']"/>  
+    <aura:attribute name="profileName" type="String" />
+    <aura:attribute name="newArticleId" type="String" />  
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>   
+    <lightning:quickActionAPI aura:id="quickActionAPI" />    
+    <div class="outerDiv">
+        
+        <aura:if isTrue="{!v.actionInProgress}">
+            <div class="slds-align--absolute-center slds-p" style="position:relative; padding-top: 40%">
+                <lightning:spinner aura:id="actionSpinner" variant="brand" size="small"/>
+            </div>
+        </aura:if>
+        
+        <aura:if isTrue="{!v.isRunTimeError}" >
+            <section role="alertdialog" tabindex="-1" aria-labelledby="prompt-heading-id" 
+                     class="slds-modal slds-fade-in-open slds-modal_prompt" aria-modal="true">
+                
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header slds-theme_error slds-theme_alert-texture">
+                        <h2 class="slds-text-heading_medium" id="prompt-heading-id">Error</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium slds-text-body_regular" id="modal-content-id-1">
+                        <center><p><b>{!v.exceptionMessage}</b></p></center> 
+                    </div>
+                    <footer class="slds-modal__footer slds-theme_default">
+                        <button class="slds-button slds-button_brand" onclick="{!c.closeErrorAlert}">Ok</button>
+                    </footer>
+                </div>
+            </section>
+        </aura:if>
+        
+        
+        <aura:if isTrue="{!v.hasError}">
+            
+            <div style="height: 240px;">
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+                                
+                                <span class="slds-assistive-text">Close</span> 
+                            </button>
+                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Error</h2>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                            
+                            <ui:outputRichText value="{!v.errorMessage}"/>
+                        </div>
+                        <footer class="slds-modal__footer">
+                            
+                            <button class="slds-button slds-button_brand" onclick= "{!c.changeHasError}"> OK</button>
+                        </footer>
+                    </div>
+                </section>  
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </div>     
+            
+        </aura:if>
+        <lightning:card variant="Narrow">        
+            
+             
+            <aura:set attribute="actions">  
+                  
+                <lightning:button label="Edit" onclick ="{!c.editButton}"
+                                  />
+                
+             <lightning:button label="Accept" onclick ="{!c.acceptCaseRec}"
+                                  />
+                    
+            <lightning:button label="Close Case" onclick ="{!c.closeCase}" 
+                                  />
+                       
+            <lightning:button label="Trashbin" onclick ="{!c.handleTrashBin}" 
+                                  /> 
+                            
+                &nbsp;
+            
+                <div aura:id="drpdwn" class="slds-dropdown-trigger slds-dropdown-trigger_click" onclick="{!c.toggleVisibility}" >
+                    <button class="slds-button slds-button_icon slds-button_icon-border-filled" aria-haspopup="true" title="Show More">
+                        <lightning:icon iconName="utility:down" size="x-small" />
+                        <span class="slds-assistive-text">Show More</span>
+                    </button> 
+                    <div class="slds-dropdown slds-dropdown_right">
+                        <ul class="slds-dropdown__list" role="menu" aria-label="Show More">
+                            <aura:iteration items="{!v.menuItems}" var="item">
+                                <li aura:id="testli" class="slds-dropdown__item slds-is-selected" role="presentation" aria-selected="true" data-id="{!item}" onclick="{!c.select}"> 
+                                    
+                                    <a aura:id="selectedItem" href="javascript:void(0);" role="menuitemradio" aria-checked="true" tabindex="0"  > 
+                                        <span class="slds-truncate" title="Menu Item One">{!item}</span>
+                                    </a>
+                                </li>
+                            </aura:iteration>       
+                        </ul>
+                    </div>
+                </div>   
+            </aura:set>
+        </lightning:card>   
+        
+        
+    </div>    
+    
+    
+    
+    
+</aura:component>

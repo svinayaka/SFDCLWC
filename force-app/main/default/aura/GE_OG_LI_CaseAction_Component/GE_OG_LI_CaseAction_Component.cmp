@@ -1,0 +1,108 @@
+<aura:component access="global"
+                controller="GE_OG_LI_CaseAction_Controller"
+                implements="flexipage:availableForRecordHome,force:hasRecordId"  >
+    
+    <aura:attribute name="showModal" type="boolean" default="false" />
+    <aura:attribute name="showSpinner" type="boolean" default="false" />
+    <aura:attribute name="showCloneCaseSpinner" type="boolean" default="false" />
+    <aura:attribute name="isOwnerChangeOperation" type="boolean" default="false" />
+    <aura:attribute name="showCloneCaseModal" type="boolean" default="false" />
+    <aura:attribute name="actionInProgress" type="boolean" default="false" />
+    
+    <aura:attribute name= "caseRecord" type="Object"/>
+    <aura:attribute name="status" type="string"/> 
+    <aura:attribute name="errorMessage" type="String" description="error message to be shown on the component" />
+    <aura:attribute name="hasError" type="boolean" default="false"/>
+    <aura:attribute name="openModal" type="boolean" default="false" />
+    <aura:attribute name="TATCause" type="Object[]" />
+    <aura:attribute name="error" type="boolean"/>
+    <aura:attribute name="hasPreviousOwner" type="boolean" />
+    <aura:attribute name="isRunTimeError" type="boolean" default="false" />
+    <aura:attribute name="exceptionMessage" type="string" />
+    
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <div class="outerDiv">
+        
+        <aura:if isTrue="{!v.actionInProgress}">
+            <div class="slds-align--absolute-center slds-p" style="position:relative; padding-top: 40%">
+                <lightning:spinner aura:id="actionSpinner" variant="brand" size="small"/>
+            </div>
+        </aura:if>
+        
+        <aura:if isTrue="{!v.isRunTimeError}" >
+            <section role="alertdialog" tabindex="-1" aria-labelledby="prompt-heading-id" 
+                     class="slds-modal slds-fade-in-open slds-modal_prompt" aria-modal="true">
+                
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header slds-theme_error slds-theme_alert-texture">
+                        <h2 class="slds-text-heading_medium" id="prompt-heading-id">Error</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium slds-text-body_regular" id="modal-content-id-1">
+                        <center><p><b>{!v.exceptionMessage}</b></p></center> 
+                    </div>
+                    <footer class="slds-modal__footer slds-theme_default">
+                        <button class="slds-button slds-button_brand" onclick="{!c.closeErrorAlert}">Ok</button>
+                    </footer>
+                </div>
+            </section>
+        </aura:if>
+        
+       
+          <aura:if isTrue="{!v.hasError}">
+                
+                <div style="height: 240px;">
+                    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                        <div class="slds-modal__container">
+                            <header class="slds-modal__header">
+                                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+                                    
+                                    <span class="slds-assistive-text">Close</span>
+                                </button>
+                                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Error</h2>
+                            </header>
+                            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                
+                                <ui:outputRichText value="{!v.errorMessage}"/>
+                            </div>
+                            <footer class="slds-modal__footer">
+                                
+                                <button class="slds-button slds-button_brand" onclick= "{!c.changeHasError}"> OK</button>
+                            </footer>
+                        </div>
+                    </section>
+                    <div class="slds-backdrop slds-backdrop_open"></div>
+                </div>     
+                
+            </aura:if>
+       
+        <div class="innerDiv">
+            <ul class="slds-button-group-list">
+                
+                <li>
+                    <button class="slds-button slds-button_neutral" onclick="{!c.handleChangeToCurrentOwner}">Accept</button>
+                </li>
+                <li>
+                    <button class="slds-button slds-button_neutral" onclick="{!c.handleChangeToPreviousOwner}">Return</button>
+                </li>
+                <li>
+                    <button class="slds-button slds-button_neutral" onclick="{!c.handleRecordTypeChange}">Change CS/TS</button>
+                </li>
+                <li>
+                    <button class="slds-button slds-button_neutral" onclick="{!c.handleCloneAndAttach}">Clone and Attach</button>
+                </li>
+                <li>
+                    <button class="slds-button slds-button_neutral" onclick="{!c.closeCase}">Close Case</button>
+                </li>
+                 <li>
+                    <button class="slds-button slds-button_neutral" onclick="{!c.handleTrashBin}">Trash Bin</button>
+                </li>
+            </ul>
+        </div>
+    </div>    
+    
+    
+    
+    
+</aura:component>

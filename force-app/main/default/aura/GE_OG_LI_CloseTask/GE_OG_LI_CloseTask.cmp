@@ -1,0 +1,18 @@
+<aura:component 
+                implements="force:hasRecordId,force:lightningQuickActionWithoutHeader" 
+                controller='TaskCloseController'
+                access="global" >
+      
+      <aura:attribute name= "Task" type="Object"/>
+      <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+        
+    
+    <div class="modal-header slds-modal__header">
+        <h2 class="title slds-text-heading--medium" >Task Update</h2>
+    </div>
+    <div class="scrollable slds-modal__content slds-p-around--medium"> 
+<span>This task is getting closed.</span>     
+	</div>    
+
+	
+</aura:component>

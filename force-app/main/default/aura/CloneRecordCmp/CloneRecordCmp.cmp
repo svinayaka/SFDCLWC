@@ -1,0 +1,18 @@
+<aura:component controller="MemberExt">
+	<aura:attribute name="cureentId" type="String" />
+    <aura:attribute name="strParentId" type="String"/>
+
+    <!--This event used to send the data from Lightning component to vf page-->
+    <aura:registerEvent name="vfEvent" type="c:SendDataToVFPage"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+   
+    
+    <aura:attribute name="fields" type="String[]" default="['Name','Customer__c','TM_Area__c','TM_District__c','TM_Pricing__c']" />
+    <lightning:recordForm aura:id="brokerForm"
+                        recordId="{!v.cureentId}"
+                        objectApiName="TM_Price_Proposal__c"
+                        fields="{!v.fields}"
+                        mode="edit"
+                        onsubmit="{!c.onsubmit}"/>
+    
+</aura:component>

@@ -1,0 +1,47 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    <aura:attribute name="showPPfields" type="boolean" default ="false"/>
+    
+    <lightning:buttongroup class="slds-size_1-of-1 slds-button_stretch">    
+        <lightning:button class="slds-size_1-of-1 slds-button_stretch" label="Pressure Pumping" onclick="{!c.showPPFields}"/>
+    </lightning:buttongroup>
+    
+    <aura:if isTrue="{!v.showPPfields}">
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Pressure Pumping</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <lightning:recordEditForm recordId="{!v.recordId}" objectApiName="FX5__Job__c"
+                                              onsuccess="{!c.handleOnSuccess}"
+                                              >
+                        <lightning:messages />
+                        <div class="slds-grid">
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning:inputField fieldName="SD_Sub_Product_Line__c" required="true"/>
+                                <lightning:inputField fieldName="SD_Product_Family__c" required="true"/>
+                                <lightning:inputField fieldName="SD_Job_Type__c" required="true"/>
+                                <lightning:inputField fieldName="SD_Sub_Job_Type__c" />
+                                <lightning:inputField fieldName="SD_Job_Location__c" />
+                                <lightning:inputField fieldName="SD_Well_Type__c" />
+                                <lightning:inputField fieldName="SD_Specific_Tool_BHA__c" />
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning:inputField fieldName="SD_Specific_Role__c" />
+                                <lightning:inputField fieldName="SD_Specific_Equipment__c" />
+                                <lightning:inputField fieldName="SD_HP__c" />
+                                <lightning:inputField fieldName="SD_Lightweight_Cement__c" />
+                                <lightning:inputField fieldName="SD_Shale_Formation__c" />
+                                <lightning:inputField fieldName="SD_Flammable_Fluids__c" />
+                                <lightning:inputField fieldName="SD_Foamed_Cement__c" />
+                            </div>
+                        </div><br/>
+                        <lightning:button class="slds-m-top_small" variant="brand" type="submit" name="Save" label="Save" />
+                        <lightning:button class="slds-m-top_small" label="Cancel" onclick ="{!c.closemodel}"/>
+                    </lightning:recordEditForm>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+</aura:component>

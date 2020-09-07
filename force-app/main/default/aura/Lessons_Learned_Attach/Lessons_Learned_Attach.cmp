@@ -1,0 +1,476 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes"
+                access="global" controller ="LessonsLearnedController">
+    <!--    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <lightning:spinner variant="brand" size="Large" aura:id="loading" class="slds-hide"/>   
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="columns" type="List"/>    
+    <aura:attribute name ="dataLoaded" type ="Boolean"/>
+    <aura:attribute name ="showFilters" type ="Boolean"/>
+    <aura:attribute name ="showFilterButton" type ="Boolean" default ="true"/>
+    <aura:attribute name ="hideFilters" type ="Boolean" default ="true"/>
+    <aura:attribute name ="conutryList" type ="List"/>
+    <aura:attribute name ="lessonLearnedList" type ="List"/>
+    <aura:attribute name ="jobTypeList" type ="List"/>
+    <aura:attribute name ="productCategoryList" type ="List"/>
+    <aura:attribute name ="productGroupList" type ="List"/>
+    <aura:attribute name ="statusList" type ="List"/>
+    <aura:attribute name ="selectedCountry" type="String"/>
+    <aura:attribute name ="selectedLessonLearned" type="String"/>
+    <aura:attribute name ="selectedJobType" type="String"/>
+    <aura:attribute name ="selectedProdCategory" type="String"/>
+    <aura:attribute name ="selectedProdGroup" type="String"/>
+    <aura:attribute name ="selectedStatus" type="String"/>
+    <aura:attribute name ="fieldValue" type="String"/>
+    <aura:attribute name ="workOrderValue" type="String"/>
+    <aura:attribute name ="accName" type="String"/>
+    <aura:attribute name ="prodRegion" type="String"/>
+    <aura:attribute name ="fsProject" type="String"/>
+    <aura:attribute name ="owner" type="String"/>
+    <aura:attribute name ="prodId" type="String"/>
+    <aura:attribute name ="noRecordError" type="Boolean" default ="false"/>  
+    <aura:attribute name ="fieldSetMap" type="Map"/>
+    <aura:attribute name ="installedProd" type="String"/>
+    <aura:attribute name ="productPart" type="String"/>
+    <aura:attribute name ="rigVessel" type="String"/>
+    <aura:attribute name ="well" type="String"/>   
+    <aura:attribute name ="NPTCase" type="Boolean"/>
+    <aura:attribute name ="SIRCaMCase" type="Boolean"/>
+    <aura:attribute name ="lessonsLearnt" type="Boolean"/>
+    <aura:attribute name ="showButtons" type="Boolean"/>
+    <aura:attribute name ="selectedType" type="String"/>
+    <aura:attribute name ="HSEProduct" type="String"/>
+    <aura:attribute name ="typeOfIssue" type="String"/>
+    <aura:attribute name ="customerEscalation" type="String"/>
+    <aura:attribute name ="workOrderNPT" type="String"/>
+    <aura:attribute name ="SSRegion" type="String"/>
+    <aura:attribute name ="nearMissEvent" type="String"/>
+    <aura:attribute name ="primaryFailure" type="String"/>
+    <aura:attribute name ="nonBHEvent" type="String"/>
+    <aura:attribute name ="recurrence" type="String"/>
+    <aura:attribute name ="CINNumber" type="String"/>
+    <aura:attribute name ="type" type="String"/>
+    <aura:attribute name ="lossOfProduction" type="String"/>
+    <aura:attribute name ="accntNameSIRCaM" type="String"/> 
+    <aura:attribute name ="projectRegionSIRCaM" type="String"/>
+    <aura:attribute name ="field" type="String"/>
+    <aura:attribute name ="rigVesselName" type="String"/>
+    <aura:attribute name ="wellNumber" type="String"/> 
+    <aura:attribute name ="partNo" type="String"/>
+    <aura:attribute name ="lostProdGas" type="String"/>
+    <aura:attribute name ="recType" type="String"/>
+    <aura:attribute name ="recordList" type="List"/>
+    <aura:attribute name ="workOrderRecId" type="String"/>
+    <aura:attribute name ="showAttach" type="Boolean" default ="false"/>
+    <aura:attribute name ="activeButton" type="Boolean" default ="true"/>
+    <aura:attribute name ="hideCheckbox" type="Boolean" default ="true"/>
+    <aura:attribute name ="HSEProductSafetyValues" type ="List"/>
+    <aura:attribute name ="primaryFailureValues" type ="List"/>
+    <aura:attribute name ="typeOfIssuesValues" type ="List"/>
+    <aura:attribute name ="subSeaServicesRegionValues" type ="List"/>
+    <aura:attribute name ="bhEventValues" type ="List"/>
+    <aura:attribute name ="CustomerEscalationValues" type ="List"/>
+    <aura:attribute name ="nearMissEventValues" type ="List"/>
+    <aura:attribute name ="reOccureneceValues" type ="List"/>
+    
+    
+    <br/>
+    <lightning:layout>
+        <lightning:icon class ="pointer" iconName="action:back" size="small" onclick = "{!c.clickBackButton}" />
+        <lightning:layoutItem class="slds-p-left_small slds-page-header__name"> 
+            <span style="font-size: 21px;">Lessons Learned</span>
+            
+        </lightning:layoutItem>  
+        
+        <lightning:layoutItem size="1" padding="around-small" class ="alighHorizontal"> 
+            
+            <aura:if isTrue ="{!v.hideFilters}">
+                <div> 
+                    <a href="javascript:void(0)" onclick="{!c.hideFilters}">
+                        Hide Filters
+                    </a>
+                    
+                </div> 
+            </aura:if>
+            <div>
+                <aura:if isTrue ="{!!v.hideFilters}">
+                    <a href="javascript:void(0)" onclick="{!c.showFilters}"> 
+                        Show Filters
+                    </a>         
+                </aura:if>
+            </div>
+        </lightning:layoutItem> 
+    </lightning:layout>
+    <hr style = "border-top: 3px solid rgb(205,133,63);margin: 1rem 0;"/>
+    
+    
+    <div class ="slds-p-top_xx-small slds-p-left_small" style="width:40%">
+        <aura:if isTrue="{!v.showAttach}">
+            <lightning:select label="Search for record type" aura:id="selectType" value="{!v.selectedType}" onchange ="{!c.selectType}">    
+                <option value="None">None</option>
+                <option value="NPT Case">NPT Case</option>
+                <option value="SIR-CaM">SIR-CaM</option>
+                <option value="Lessons Learnt">Lessons Learned</option>
+            </lightning:select>
+        </aura:if>
+    </div>
+    <br/><br/>
+    <div class="slds-grid slds-wrap">   
+        
+        <aura:if isTrue ="{!v.hideFilters}">
+            <aura:if isTrue ="{!v.NPTCase}">
+                <div class ="slds-box" style="width: 91%;">
+                    
+                    <lightning:layout verticalAlign="stretch" multipleRows="true">
+                        
+                        <lightning:layoutItem size="2" padding="around-small" class ="alighHorizontal"> 
+                            <lightning:select label="HSE/Product Safety Impact" value="{!v.HSEProduct}">    
+                                <aura:iteration var="option" items="{! v.HSEProductSafetyValues }">
+                                    <option value="{! option.value }">{! option.label }</option>
+                                </aura:iteration>
+                            </lightning:select>
+                            
+                            
+                            
+                            
+                            <lightning:select label="Type of Issue" value="{! v.typeOfIssue }" >
+                                
+                                <aura:iteration var="option" items="{! v.typeOfIssuesValues }">
+                                    <option value="{! option.value }">{! option.label }</option>
+                                </aura:iteration>                               
+                            </lightning:select>
+                            
+                            <aura:if isTrue ="{!v.showFilters}">
+                                
+                                <lightning:select label="Customer Escalation" value="{! v.customerEscalation }" >
+                                    
+                                    <aura:iteration var="option" items="{! v.CustomerEscalationValues }">
+                                        <option value="{! option.value }">{! option.label }</option>
+                                    </aura:iteration>
+                                    
+                                </lightning:select>
+                                
+                                
+                            </aura:if>
+                            
+                            
+                        </lightning:layoutItem> 
+                        <lightning:layoutItem size="2" padding="around-small" class ="alighHorizontal"> 
+                            <lightning:input label ="Work Order" placeholder=""
+                                             aura:id="searchField" value ="{!v.workOrderNPT}"
+                                             /> 
+                            
+                            <lightning:select label="Subsea Services Regions" value="{! v.SSRegion }" >
+                                
+                                <aura:iteration var="option" items="{! v.subSeaServicesRegionValues }">
+                                    <option value="{! option.value }">{! option.label }</option>
+                                </aura:iteration>
+                                
+                            </lightning:select>
+                            <aura:if isTrue ="{!v.showFilters}">
+                                
+                                <lightning:select label="Near Miss Event" value="{! v.nearMissEvent }" >
+                                    
+                                    <aura:iteration var="option" items="{! v.nearMissEventValues }">
+                                        <option value="{! option.value }">{! option.label }</option>
+                                    </aura:iteration>
+                                    
+                                </lightning:select>
+                                
+                            </aura:if>
+                            
+                            
+                        </lightning:layoutItem> 
+                        <lightning:layoutItem size="2" padding="around-small" class ="alighHorizontal"> 
+                            <lightning:select label="Primary Failure" value="{! v.primaryFailure }" >
+                                
+                                <aura:iteration var="option" items="{! v.primaryFailureValues }">
+                                    <option value="{! option.value }">{! option.label }</option>
+                                </aura:iteration>
+                                
+                            </lightning:select>
+                            
+                            <lightning:select label="Is it a Non-BH event?" value="{! v.nonBHEvent }" >
+                                
+                                <aura:iteration var="option" items="{! v.bhEventValues }">
+                                    <option value="{! option.value }">{! option.label }</option>
+                                </aura:iteration>
+                                
+                            </lightning:select>
+                            
+                            <aura:if isTrue ="{!v.showFilters}">
+                                
+                                <lightning:select label="Reoccurence" value="{! v.recurrence }" >
+                                    
+                                    <aura:iteration var="option" items="{! v.reOccureneceValues }">
+                                        <option value="{! option.value }">{! option.label }</option>
+                                    </aura:iteration>
+                                </lightning:select>
+                                
+                            </aura:if>
+                            
+                        </lightning:layoutItem>
+                        
+                        
+                        <lightning:layoutItem size="2" padding="around-small" class ="alighHorizontal"> 
+                            
+                            <lightning:input label ="CIN Number" placeholder=""
+                                             aura:id="searchField" value ="{!v.CINNumber}"
+                                             />                            
+                            
+                        </lightning:layoutItem>
+                        
+                        
+                        
+                        
+                    </lightning:layout> 
+                    <br/><br/>
+                    
+                    
+                </div>
+            </aura:if>
+            <aura:if isTrue ="{!v.SIRCaMCase}">
+                <div class ="slds-box" style="width: 91%;">
+                    
+                    <lightning:layout verticalAlign="stretch" multipleRows="true">
+                        <lightning:layoutItem size="2" padding="around-small" class ="alighHorizontal"> 
+                            <lightning:select label="Type" value="{! v.type }"> 
+                                <option value="None">None</option>
+                                <option value="Commision Inquiry">Commision Inquiry</option>
+                                <option value="General Support-No Impact on Production">General Support-No Impact on Production</option>
+                                <option value="Repair Inquiry">Repair Inquiry</option>
+                                <option value="Technical Inquiry">Technical Inquiry</option>
+                                <option value="Top Level Resolutions">Top Level Resolutions</option>
+                                
+                            </lightning:select>  
+                            <lightning:input label ="Lost Production Oil" placeholder=""
+                                             aura:id="searchField" value="{!v.lossOfProduction}"
+                                             />
+                            <aura:if isTrue ="{!v.showFilters}">
+                                <lightning:input label ="Account Name" placeholder=""
+                                                 aura:id="searchField" value ="{!v.accntNameSIRCaM}"
+                                                 />
+                                
+                            </aura:if>
+                            
+                            
+                        </lightning:layoutItem> 
+                        <lightning:layoutItem size="2" padding="around-small" class ="alighHorizontal"> 
+                            <lightning:input label ="Project Region" placeholder=""
+                                             aura:id="searchField" value ="{!v.projectRegionSIRCaM}"
+                                             /> 
+                            <lightning:input label ="Field" placeholder=""
+                                             aura:id="searchField" value ="{!v.field}"
+                                             />
+                            
+                            <aura:if isTrue ="{!v.showFilters}">
+                                <lightning:input label ="Rig/Vessel Name" placeholder=""
+                                                 aura:id="searchField" value ="{!v.rigVesselName}"
+                                                 />
+                                
+                                
+                            </aura:if>
+                            
+                            
+                        </lightning:layoutItem> 
+                        <lightning:layoutItem size="2" padding="around-small" class ="alighHorizontal"> 
+                            <lightning:select label="Country" value="{! v.selectedCountry }" >
+                                <aura:iteration var="option" items="{! v.conutryList }">
+                                    <option value="{! option.value }">{! option.label }</option>
+                                </aura:iteration>
+                            </lightning:select>
+                            <lightning:input label ="Part Number" placeholder=""
+                                             aura:id="searchField" value ="{!v.partNo}"
+                                             />
+                            <aura:if isTrue ="{!v.showFilters}">
+                                <lightning:input label ="Well#" placeholder=""
+                                                 aura:id="searchField" value ="{!v.wellNumber}"
+                                                 />
+                            </aura:if>
+                            
+                        </lightning:layoutItem>
+                        
+                        
+                        <lightning:layoutItem size="2" padding="around-small" class ="alighHorizontal"> 
+                            
+                            <lightning:input label ="Lost Production Gas" placeholder=""
+                                             aura:id="searchField" value ="{!v.lostProdGas}"
+                                             />
+                            
+                            
+                            
+                            
+                        </lightning:layoutItem>
+                        
+                        
+                        
+                        
+                    </lightning:layout> 
+                    <br/><br/>
+                    
+                    
+                </div>
+            </aura:if>
+            
+            <aura:if isTrue ="{!v.lessonsLearnt}">                
+                <div class ="slds-box">
+                    
+                    <lightning:layout verticalAlign="stretch" multipleRows="true">
+                        <lightning:layoutItem size="2" padding="around-small" class ="alighHorizontal"> 
+                            <!--   <lightning:input label ="Field" placeholder=""
+                                             aura:id="searchField" value = "{!v.fieldValue}" 
+                                             />    -->             
+                            
+                            <lightning:select label="Product Category" value="{! v.selectedProdCategory }" >
+                                <aura:iteration var="option" items="{! v.productCategoryList }">
+                                    <option value="{! option.value }">{! option.label }</option>
+                                </aura:iteration>
+                            </lightning:select>
+                            
+                            
+                            
+                            <lightning:select label="Product Group" value="{! v.selectedProdGroup }" >
+                                <aura:iteration var="option" items="{! v.productGroupList }">
+                                    <option value="{! option.value }">{! option.label }</option>
+                                </aura:iteration>
+                            </lightning:select>
+                            <aura:if isTrue ="{!v.showFilters}">
+                                <lightning:select label="Job Type" value="{! v.selectedJobType }" >
+                                    <aura:iteration var="option" items="{! v.jobTypeList }">
+                                        <option value="{! option.value }">{! option.label }</option>
+                                    </aura:iteration>
+                                </lightning:select>
+                                
+                                
+                            </aura:if>
+                            
+                            
+                        </lightning:layoutItem> 
+                        <lightning:layoutItem size="2" padding="around-small" class ="alighHorizontal"> 
+                            <!--    <lightning:input label ="Account Name" placeholder=""
+                                             aura:id="searchField" value ="{!v.accName}"
+                                             /> -->
+                            <lightning:input label ="Work Order" placeholder=""
+                                             aura:id="searchField" value ="{!v.workOrderValue}"
+                                             />
+                            <lightning:select label="Lesson Learned Type" value="{! v.selectedLessonLearned }" >
+                                <aura:iteration var="option" items="{! v.lessonLearnedList }">
+                                    <option value="{! option.value }">{! option.label }</option>
+                                </aura:iteration>
+                            </lightning:select>
+                            <aura:if isTrue ="{!v.showFilters}">
+                                <lightning:input label ="Project Region" placeholder=""
+                                                 aura:id="searchField" value ="{!v.prodRegion}"
+                                                 />
+                                
+                            </aura:if>
+                            
+                            
+                        </lightning:layoutItem> 
+                        <lightning:layoutItem size="2" padding="around-small" class ="alighHorizontal"> 
+                            <!--     <lightning:select label="Country" value="{! v.selectedCountry }" >
+                                <aura:iteration var="option" items="{! v.conutryList }">
+                                    <option value="{! option.value }">{! option.label }</option>
+                                </aura:iteration>
+                            </lightning:select> -->
+                            <lightning:select label="Status" value="{! v.selectedStatus }" >
+                                <aura:iteration var="option" items="{! v.statusList }">
+                                    <option value="{! option.value }">{! option.label }</option>
+                                </aura:iteration>
+                            </lightning:select>
+                            <lightning:input label ="FS Project" placeholder=""
+                                             aura:id="searchField" value ="{!v.fsProject}"
+                                             />
+                            
+                            <aura:if isTrue ="{!v.showFilters}">
+                                <lightning:input label ="Owner" placeholder=""
+                                                 aura:id="searchField" value="{!v.owner}"
+                                                 />
+                                
+                                <!--    <lightning:input label ="Product ID (P/N)" placeholder=""
+                                                 aura:id="searchField" value ="{!v.prodId}"
+                                                 /> -->
+                                
+                            </aura:if>
+                            
+                        </lightning:layoutItem>
+                        
+                        
+                        <lightning:layoutItem size="2" padding="around-small" class ="alighHorizontal"> 
+                            
+                            <!--      <lightning:input label ="Installed Product/Serial Number" placeholder=""
+                                             aura:id="searchField" value ="{!v.installedProd}"
+                                             />
+                            <lightning:input label ="Product/Part" placeholder=""
+                                             aura:id="searchField" value="{!v.productPart}"
+                                             /> -->
+                            <lightning:input label ="Product/Part Number" placeholder=""
+                                             aura:id="searchField" value="{!v.productPart}"
+                                             />
+                            <aura:if isTrue ="{!v.showFilters}">
+                                <lightning:input label ="Rig/Vessel Name" placeholder=""
+                                                 aura:id="searchField" value="{!v.rigVessel}"
+                                                 />                               
+                            </aura:if>                            
+                        </lightning:layoutItem>
+                    </lightning:layout> 
+                    <br/><br/>
+                    
+                    
+                </div>
+            </aura:if>
+            <aura:if isTrue ="{!v.showButtons}">
+                <div class="slds-p-top_medium" style="width: 91%">
+                    <lightning:button aura:id="searchButton" variant="brand"
+                                      label="Search Records"
+                                      iconName="utility:search" onclick = "{!c.searchLessonLearned}" /> 
+                    
+                    <aura:if isTrue ="{!v.showFilterButton}"> 
+                        <lightning:button variant="brand"
+                                          label="Add more filters"
+                                          onclick = "{!c.showMoreFilters}"/> 
+                    </aura:if> 
+                    <aura:if isTrue="{!v.showAttach}">
+                        <lightning:button aura:id="attachButton" variant="brand"
+                                          label="Attach" onclick = "{!c.attachNewRecords}" disabled="{!v.activeButton}"/>
+                    </aura:if>
+                    
+                </div>
+            </aura:if>
+        </aura:if>
+        <br/><br/>
+        
+        <div class="slds-p-top_medium"> 
+            <aura:if isTrue ="{!v.dataLoaded}"> 
+                <aura:if isTrue ="{!v.noRecordError}">
+                    <div style = "font-size: 21px;
+                                  font-weight: BOLD;
+                                  color: red;
+                                  margin-left: 34%;
+                                  margin-top: 4%;">No records found..Please refine your search!!!</div>
+                    <aura:set attribute="else">
+                        
+                        <lightning:card title="Search Results">
+                            <lightning:datatable
+                                                 aura:id="lessonLearntDataTable"
+                                                 columns="{! v.columns }"
+                                                 data="{! v.data }"
+                                                 keyField="Id"
+                                                 onsave ="{!c.onSave}"
+                                                 hideCheckboxColumn="{!v.hideCheckbox}" 
+                                                 onrowaction="{! c.handleRowAction }"
+                                                 onsort="{!c.updateColumnSorting}"
+                                                 sortedBy="{!v.sortedBy}"
+                                                 sortedDirection="{!v.sortedDirection}"
+                                                 showRowNumberColumn="true"
+                                                 selectedRows="{! v.selectedRows }"
+                                                 onrowselection="{! c.updateSelectedText }"/>  
+                            
+                        </lightning:card>
+                        
+                    </aura:set>
+                </aura:if>
+            </aura:if>
+        </div>
+    </div>
+</aura:component>

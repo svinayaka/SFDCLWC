@@ -1,0 +1,9 @@
+.THIS.outerDiv {
+    height: 30px;
+}
+.THIS .innerDiv {
+    float: right;
+}
+.THIS .custButton{
+    width: 34vh;
+}

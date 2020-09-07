@@ -1,0 +1,6 @@
+<aura:component implements="lightning:actionOverride,flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction" access="global" >
+	
+   <c:tmCrtPrcPropGbActLwc onclose="{!c.closeQA}" /> 
+    
+    
+</aura:component>

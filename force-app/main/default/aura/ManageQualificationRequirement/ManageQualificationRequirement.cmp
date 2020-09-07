@@ -1,0 +1,45 @@
+<aura:component implements= "force:hasRecordId" controller="SdDataTableController" access="global">
+ 
+
+    <aura:attribute name="jobId" type="Id"/>
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="selectedRowsCount" type="Integer" default="0"/>
+    <aura:attribute name="maxRowSelection" type="Integer"/>
+    <aura:attribute name="jobObj" type="FX5__Job__c" default="{'sobjectType': 'FX5__Job__c' }"/>
+    <aura:attribute name="qualificationList" type="FX5__Qualification__c[]"/>
+   <aura:handler name="init" value="{! this }" action="{! c.init }"/>
+    <aura:registerEvent name="SDJobItemEvent" type="c:SDJobItemEvent" />
+
+    <aura:attribute name="filteredData" type="List" />
+    <aura:attribute name="filter" type="String" />
+    
+
+    
+    <lightning:input type="text" onchange="{!c.filter}" value="{!v.filter}" label="Filter" />
+    
+    <div style="height: 420px">
+        <h1>Selected Rows: {! v.selectedRowsCount }</h1>
+        <!--<lightning:datatable
+                             columns="{! v.columns }"
+                             data="{! v.data}"
+                             keyField="id"
+                             maxRowSelection="{! v.maxRowSelection }"
+                             onrowselection="{! c.updateSelectedText }"/>-->
+        <lightning:datatable
+                             columns="{! v.columns }"
+                             data="{! v.filteredData}"
+                             keyField="id"
+                             maxRowSelection="{! v.maxRowSelection }"
+                             onrowselection="{! c.updateSelectedText }"/>
+    </div>
+        <br></br>
+    
+            <div class="slds-modal__footer">
+                
+	&nbsp;&nbsp;&nbsp;
+          <ui:button  class="slds-button slds-button_brand" label="Add Records " press= "{!c.Save }"/>
+          <ui:button  class="slds-button slds-button_brand" label="Cancel" press= "{!c.cancel }"/>
+    </div>
+    
+</aura:component>

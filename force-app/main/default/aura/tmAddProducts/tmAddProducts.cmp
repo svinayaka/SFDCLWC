@@ -1,0 +1,5 @@
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader,lightning:actionOverride,forceCommunity:availableForAllPageTypes" access="global" >
+    <ltng:require styles="{!$Resource.TM_modalWidthCSS}"/> 
+    <c:tmAddProductsLwc onclose="{!c.closeQA}" recordId="{!v.recordId}"/> 
+    
+</aura:component>

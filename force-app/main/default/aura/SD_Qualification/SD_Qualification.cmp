@@ -1,0 +1,95 @@
+<!--
+/*
+ * 
+ * 
+
+Modified By : Vijaya Lakshmi Murukutla
+Modified On : 07/Oct/2019
+Purpose     : If job have 0 Fundamental Qualification then Job Object related checkboxs should auto update as per the requirment.
+Modified By : Vijaya Lakshmi Murukutla
+Modified On : 09/Oct/2019
+Purpose     : Adding warning message on click Type1/Type for the below scenario : 
+				1.'fundamental tobe added' checkbox 
+						If it is checked throw an error that the user has to refresh their page as data has changed 
+
+ * /
+-->
+<aura:component implements="force:hasRecordId,flexipage:availableForAllPageTypes" 
+                controller="SdDataTableController" access="global">    
+    <aura:attribute name="jobObj" type="FX5__Job__c" default="{'sobjectType': 'FX5__Job__c' }"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doinit}"/>
+    <aura:attribute name="show" type="boolean" default ="false"/>
+    <aura:attribute name="showfundamental" type="boolean" default ="false"/>
+    <aura:attribute name="jobId" type="Id"/>
+    <aura:attribute name="setshow" type="boolean"/> 
+    <aura:handler name="SDJobItemEvent" event="c:SDJobItemEvent" action="{!c.parentComponentEvent}"/>
+    
+    <aura:attribute name="disableFundaBtn" type="boolean" default ="false"/>
+    <aura:attribute name="disableQulifyBtn" type="boolean" default ="true"/>
+ 
+    <!-- Begin : Added By vijaya on 09.10.2019 -->
+    <aura:attribute name="jobData" type="FX5__Job__c"/>  
+    <aura:if isTrue="{!v.isError}">
+        <div>{!v.errorMessage}</div>
+    </aura:if>
+   <!-- End : Added By vijaya on 09.10.2019 -->
+    
+    
+    
+    <lightning:buttongroup class="slds-size_1-of-1 slds-button_stretch">    
+    
+   <!-- <aura:if isTrue="{!v.disableFundaBtn}">  -->  
+  <!--  <lightning:button class="slds-size_1-of-2 slds-button_stretch" label="Modify Job Fundamental Qualification" title="Add Fundamental" onclick="{!c.onclick2}" disabled="{!v.disableFundaBtn}"/>-->
+    <!--</aura:if>-->
+        <!--<aura:if isTrue="{!v.show}">-->  
+     <!--   <lightning:button class="slds-size_1-of-2 slds-button_stretch" label=" Add Type1/Type2 Qualification" title="Add Qualification" onclick="{!c.onclick}" disabled="{!!v.disableFundaBtn}"/> -->
+        
+        <lightning:button class="slds-size_1-of-1 slds-button_stretch" label="Add Type 1 / Type 2 Qualification(s)" title="Add Qualification" onclick="{!c.onclick}"/>
+		 <!--</aura:if>-->              
+    </lightning:buttongroup>
+    
+    <aura:if isTrue="{!v.show}">
+        <div class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container"> 
+                <div class="slds-modal__content slds-p-around--medium">
+                    <div class="modal-header slds-modal__header slds-size_1-of-1">
+                        <h4 class="title slds-text-heading--medium" >Add Qualification </h4>
+                    </div> 
+                    <div>
+                        <c:ManageQualificationRequirement  jobId = "{!v.recordId}" data="FX5__Job__c"/>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aura:if>  
+    
+    
+    <aura:if isTrue="{!v.showfundamental}">        
+        <div class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container"> 
+                <div class="slds-modal__content slds-p-around--medium">
+                    <div class="new">
+                        
+                        <h5 style="color:red" class="title slds-text-heading--small"> Note : In case of modification of job item the non applicable fundamental qualification will be deleted.
+                        </h5>
+                        <br></br>
+                        <br></br>
+                        <h4 class="title slds-text-heading--medium " >Are you Sure you want to add all Fundamental Qualification? </h4>
+                    </div>
+                                        <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <div class="slds-align_absolute-center">
+                        <br></br>
+                        &nbsp;&nbsp;&nbsp;<lightning:button variant="brand" label="Yes" title="Yes" onclick="{!c.saveFundamental }"/>
+                        <lightning:button variant="brand" label="No" title="No" onclick="{! c.Cancel}"/>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aura:if>
+</aura:component>
