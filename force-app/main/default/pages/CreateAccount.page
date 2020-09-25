@@ -1,0 +1,62 @@
+<apex:page controller="Relationship_HierarchyController" tabStyle="Account" >
+<script>
+ window.onload=function(){ 
+ if('{!isCountryCreated}') { 
+document.getElementById('regionDisable').disabled=true;
+}
+}
+</script>
+<apex:form >
+    <apex:pageBlock >
+    <apex:pageMessages id="showmsg"></apex:pageMessages>
+  <!--   <apex:pageBlockButtons >
+   <apex:commandButton value="Save" action="{!Save}"/>
+    <apex:commandButton value="Cancel" action="{!Cancel}"/>
+    </apex:pageBlockButtons> -->
+    
+    
+ <apex:pageblockSection title="Account Edit" collapsible="false">
+          
+    <apex:inputField value="{!acc.name}"/>
+    <apex:inputField value="{!acc.Type}" required="true"/> 
+    <apex:outputText value="{!acc.Account_Tier_GEOG__c}"/>    
+    <apex:inputField value="{!acc.Classification__c}" required="true" />
+    
+    <apex:inputField value="{!acc.Commercial_Account_IsDormant_GEOG__c}"/>
+   <!-- <apex:inputField value="{!acc.Region_GEOG__c}" rendered="{!acc.Account_Tier_GEOG__c!='Global'}" id="regionDisable"/>  -->
+   
+   <apex:selectList value="{!selectedRegion}" size="1" label="Region" id="RegionName" rendered="{!acc.Account_Tier_GEOG__c!='Global'}">
+                   <apex:selectOptions value="{!allRegion}"/>
+               </apex:selectList>
+               
+     <apex:outputText ></apex:outputText>            
+    <apex:outputField value="{!acc.Country_GEOG__c}" rendered="{!acc.Account_Tier_GEOG__c=='Country'}"/>             
+ 
+                 
+      </apex:pageblockSection> 
+      
+  <!--     <apex:pageblockSection title="Contact Edit" collapsible="false">
+          <apex:inputField value="{!con.LastName}"/>
+          <apex:inputField value="{!con.firstName}" required="true"/>           
+          <apex:inputField value="{!con.Title}"/>
+          <apex:inputField value="{!con.Phone}"/>
+          <apex:inputField value="{!con.Email}" required="true"/>
+          <apex:inputField value="{!con.GE_OG_Contact_Audience__c}" required="true"/>
+          <apex:inputField value="{!con.MailingStreet}"/>
+          <apex:inputField value="{!con.MailingCity}"/>
+          <apex:inputField value="{!con.MailingState}"/>
+          <apex:inputField value="{!con.MailingCountry}"/>
+          
+        </apex:pageblockSection>    -->       
+      <apex:pageblockButtons >
+
+      <apex:commandButton value="Save" action="{!createRelationshipAccount}" style="margin-left:20%;"/>
+      <apex:commandButton value="Cancel" action="{!GoBack}" immediate="true"/>
+
+      </apex:pageblockButtons>
+      </apex:pageBlock> 
+      
+              
+  
+</apex:form>
+</apex:page>

@@ -1,0 +1,11 @@
+<template>
+    <template if:true={warningMsg}>
+        <!-- <template for:each={warningMsgList} for:item='warning' key={index}> -->
+            <!-- <p key={index}>{warning}</p> -->
+        <!-- </template> -->
+        <p class="BH-alert-warn">
+            <lightning-icon icon-name="utility:report_issue" class="BH-alert-icon slds-icon_small slds-icon-text-warning"></lightning-icon>
+            {warningMsg}
+        </p>
+    </template>
+</template>

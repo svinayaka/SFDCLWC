@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>Update_Name_Account_Plan_Name_GEOG</fullName>
+        <description>Update Name = Account_Plan_Name_GEOG__c in account planning record when its created OR (YEAR || Account Name) is changed/updated</description>
+        <field>Name</field>
+        <formula>Account_Name_GEOG__r.Name &amp; &quot; - &quot; &amp; text( Year_GEOG__c )+ &quot; - PLAN&quot;</formula>
+        <name>Update_Name_Account_Plan_Name_GEOG</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <rules>
+        <fullName>A%2FC planning workflow- to update %22NAME%22 FIELD</fullName>
+        <actions>
+            <name>Update_Name_Account_Plan_Name_GEOG</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>ISCHANGED( Account_Name_GEOG__c ) || ISCHANGED( Year_GEOG__c  )|| ISCHANGED(Name )|| Name!=&apos;&apos;</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

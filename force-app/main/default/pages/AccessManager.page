@@ -1,0 +1,390 @@
+<apex:page controller="AccessManager" id="pageId" tabStyle="GE_OG_AccessManager__c" sidebar="false" >
+    <link rel="stylesheet" href="{!URLFOR($Resource.jqueryUI, 'jqueryUI/jquery-ui.css')}" />
+    <apex:sectionHeader title="Oil & Gas" subtitle="Manage User Access"/>
+    <apex:pageBlock id="pgbk1Id"  rendered="{!NOT(pagePermissionFlag)}">
+        <br/><br/>
+        <apex:pageMessage summary="You do not have sufficient permissions to access this page." severity="info" strength="3"/>
+        <br/><br/>
+    </apex:pageBlock>
+    
+    <apex:form id="formId">
+        
+        <apex:actionfunction name="exportItems" action="{!exportItems}" rerender="results,exportItems" status="process" />
+        <apex:actionfunction name="refresh" action="{!Refresh}" rerender="updateSection,results" status="process">
+            <apex:param name="firstParam" assignTo="{!userId}" value="" />
+        </apex:actionfunction>
+        
+        <apex:pageBlock id="pgbkId" tabStyle="GE_OG_AccessManager__c" title="Let's get started" rendered="{!pagePermissionFlag}" >        
+            
+            <apex:pageBlockSection id="pgBkSecId" title="Select Action" collapsible="false" columns="1">
+                <apex:outputPanel layout="block" >
+                    <apex:selectList value="{!accessSelected}" size="1" id="selected_list" >                                  
+                        <apex:selectOptions value="{!selectMode}"/>                     
+                    </apex:selectList>
+                    <apex:outputPanel id="searchUserSectionId" >
+                        &nbsp;&nbsp;&nbsp;&nbsp; Search 
+                        <apex:outputPanel id="searchTypeId" >
+                            &nbsp;&nbsp;
+                            <apex:selectList value="{!searchTypes}" size="1" id="selected_Type" >
+                                <apex:selectOption itemValue="Users" itemLabel="Users" />
+                                <apex:selectOption itemValue="Regular" itemLabel="Public Groups" />
+                                <apex:selectOption itemValue="Role" itemLabel="Roles" />
+                                <apex:selectOption itemValue="RoleAndSubordinates" itemLabel="Roles and Internal Subordinates" />
+                                <apex:selectOption itemValue="RoleAndSubordinatesInternal" itemLabel="Roles, Internal and Portal Subordiantes" />
+                            </apex:selectList>
+                            &nbsp;&nbsp;
+                        </apex:outputPanel>
+                        for:&nbsp;&nbsp;
+                        <apex:inputText id="user" styleClass="auto001" value="{!searchUserString}" style="width:260px;" />
+                        <apex:outputPanel id="helptext1" style="display:none;color:grey;" >
+                            &nbsp;First Name, Last Name or SSO
+                        </apex:outputPanel>
+                        <apex:outputPanel id="helptext2" style="display:none;color:grey;" >
+                            &nbsp;Search by name
+                        </apex:outputPanel>     
+                    </apex:outputPanel>
+                </apex:outputPanel>
+            </apex:pageBlockSection>
+            
+            <apex:outputPanel id="results">              
+                <div style="margin-left:50%">
+                    <apex:actionStatus startText="Searching..." id="process" onstart="hideSection();" onstop="showSection()"> 
+                        <apex:facet name="start">
+                            <img src="{!URLFOR($Resource.jqueryUI, 'jqueryUI/loading.gif')}" border="0" height="42" width="42" />
+                        </apex:facet>
+                    </apex:actionStatus> 
+                </div>
+            </apex:outputPanel>
+            
+            <apex:outputPanel id="updateSection" style="display:none;">
+                
+                <apex:outputPanel rendered="{!addRemoveFlag}" >
+                    
+                    <div class="pbSubheader brandTertiaryBgr tertiaryPalette" style="font-size:12px;"><h3>{!header}</h3></div>
+                    <div align="center" style="vertical-align: middle;"></div>   
+                    <br/>
+                    
+                    <div style="width:660px;"><apex:pageMessages escape="false" /></div>
+                    
+                    <apex:outputPanel rendered="{!NOT(AND(enableditems.size==0,allitems.size==0))}" >
+                        <c:multiselectpicklist leftLabel="Available {!accessSelected}"
+                                               rightLabel="Enabled {!accessSelected}"
+                                               leftOptions="{!allitems}"                
+                                               rightOptions="{!enableditems}"
+                                               updownOption="false"
+                                               size="8"
+                                               width="300px" />
+                        <br/>
+                        <div style="width:660px;"><div style="margin-left:80%;">
+                            <apex:commandButton value="Update" action="{!saveItems}" rerender="updateSection,results" status="process" style="width:60px;" />&nbsp;&nbsp;
+                            <apex:commandButton value="Cancel" action="{!cancelPage}" style="width:60px;" />   
+                            </div></div>
+                    </apex:outputPanel>
+                    <br/>
+                </apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!roleProfile}" >
+                    
+                    <div class="pbSubheader brandTertiaryBgr tertiaryPalette" style="font-size:12px;"><h3>{!header}</h3></div>
+                    <div align="center" style="vertical-align: middle;"></div>   
+                    <br/>
+                    <div style="width:660px;"><apex:pageMessages escape="false" /></div>
+                    <div style="margin-left:10%;">
+                        <table>
+                            <tr><td class="labelCol last">
+                                Profile
+                                </td><td>
+                                <apex:selectList value="{!profileSelected}" size="1" style="width:260px;" >                                  
+                                    <apex:selectOptions value="{!allitems}"/>                     
+                                </apex:selectList>
+                                </td></tr>
+                            <tr><td class="labelCol last">
+                                Role
+                                </td><td style="padding-right: 5px;"> 
+                                <apex:inputText id="role" styleClass="auto002" value="{!roleSelected}" style="width:100%;" />
+                                </td></tr>
+                            <tr><td class="labelCol last">
+                                </td><td style="padding-right: 5px;"> 
+                                <apex:commandLink value="get roles list" action="{!redirectToXL}"/>
+                                </td></tr>
+                        </table>
+                        
+                        <apex:inputText id="roleid" value="{!roleid}" style="display:none;" />
+                    </div>
+                    <br/>
+                    <div style="width:660px;"><div style="margin-left:80%;">
+                        <apex:commandButton value="Update" action="{!saveUser}" rerender="updateSection,results" status="process" style="width:60px;" />&nbsp;&nbsp;
+                        <apex:commandButton value="Cancel" action="{!cancelPage}" style="width:60px;" />   
+                        </div></div>
+                    <br/>
+                </apex:outputPanel>    
+                
+                <apex:outputPanel rendered="{!tiers}" >
+                    <div class="pbSubheader brandTertiaryBgr tertiaryPalette" style="font-size:12px;"><h3>{!header}</h3></div>
+                    <div align="center" style="vertical-align: middle;"></div>   
+                    <br/>
+                    <div style="width:660px;"><apex:pageMessages escape="false" /></div>
+                    <div style="margin-left:10%;">
+                        <table>
+                            <tr><td class="labelCol last">
+                                Tier 1
+                                </td><td>
+                                <apex:inputField value="{!mUser.GE_HQ_Tier_1_P_L__c}" />
+                                </td></tr>     
+                            <tr><td class="labelCol last">
+                                Tier 2
+                                </td><td>
+                                <apex:inputField value="{!mUser.GE_HQ_Tier_2_P_L__c}"/>
+                                </td></tr>
+                            <tr><td class="labelCol last">
+                                Tier 3
+                                </td><td>
+                                <apex:inputField value="{!mUser.GE_HQ_Tier_3_P_L__c}"/>
+                                </td></tr>
+                        </table>               
+                    </div>
+                    <br/>
+                    <div style="width:660px;"><div style="margin-left:80%;">
+                        <apex:commandButton value="Update" action="{!saveTiers}" rerender="updateSection,results" status="process" style="width:60px;" />&nbsp;&nbsp;
+                        <apex:commandButton value="Cancel" action="{!cancelPage}" style="width:60px;" />   
+                        </div></div>
+                    <br/>              
+                </apex:outputPanel>
+                
+                <apex:outputPanel id="exportItems" style="display:none;" >
+                    <br/>
+                    <apex:pageBlockTable value="{!exportPermList}" var="per">
+                        <apex:column headerValue="{!header2} Name" value="{!per.label}"/>
+                        <apex:column headerValue="Total Licenses" rendered="{!OR(accessSelected=='Managed Package Dashboard')}" >
+                            <apex:outputText rendered="{!(per.totalCount <> null)}">{!per.totalCount}</apex:outputText>
+                            <apex:outputText rendered="{!(per.totalCount == null)}">--</apex:outputText>
+                        </apex:column>
+                        <apex:column headerValue="# of Assigned Users" rendered="{!OR(accessSelected=='Managed Package Dashboard',accessSelected=='Permission Set Dashboard')}" >
+                            <apex:outputText rendered="{!(per.assignedUsers <> null)}">{!per.assignedUsers}</apex:outputText>
+                            <apex:outputText rendered="{!(per.assignedUsers == null)}">--</apex:outputText>
+                        </apex:column>
+                        <apex:column headerValue="# of Active Users" rendered="{!OR(accessSelected=='Managed Package Dashboard',accessSelected=='Permission Set Dashboard',accessSelected=='Public Group Dashboard',accessSelected=='Queue Dashboard')}" >
+                            <apex:outputText rendered="{!(per.activeCount <> null)}">{!per.activeCount}</apex:outputText>
+                            <apex:outputText rendered="{!(per.activeCount == null)}">--</apex:outputText>
+                        </apex:column>
+                        <apex:column headerValue="Available Licenses" rendered="{!OR(accessSelected=='Managed Package Dashboard')}" >
+                            <apex:outputText rendered="{!(per.availableCount <> null)}">{!per.availableCount}</apex:outputText>
+                            <apex:outputText rendered="{!(per.availableCount == null)}">--</apex:outputText>
+                        </apex:column>
+                        <apex:column headerValue="# of Groups" rendered="{!OR(accessSelected=='Public Group Dashboard',accessSelected=='Queue Dashboard')}" >
+                            <apex:outputText rendered="{!(per.assignedGroups <> null)}">{!per.assignedGroups}</apex:outputText>
+                            <apex:outputText rendered="{!(per.assignedGroups == null)}">--</apex:outputText>
+                        </apex:column>
+                        <apex:column headerValue="# of Roles" rendered="{!OR(accessSelected=='Public Group Dashboard',accessSelected=='Queue Dashboard')}" >
+                            <apex:outputText rendered="{!(per.assignedRoles <> null)}">{!per.assignedRoles}</apex:outputText>
+                            <apex:outputText rendered="{!(per.assignedRoles == null)}">--</apex:outputText>
+                        </apex:column>
+                        <!--<apex:column headerValue="Export">
+<input type="button" onclick="openExcel('{!per.id}');" value="Export Users" title="Export {!per.label} Users"/>
+</apex:column>-->
+                    </apex:pageBlockTable>
+                </apex:outputPanel>
+                
+            </apex:outputPanel>
+            
+        </apex:pageBlock>
+        
+    </apex:form>
+    <style>
+        .ui-autocomplete {
+        
+        background: #ffffff;
+        border-radius: 0px;
+        opacity: 0.95;
+        box-shadow: 5px 5px 5px #888888;
+        width:260px;
+        }
+        .ui-autocomplete.source:hover {
+        background: #eeeeee;
+        }
+        
+        .ui-menu .ui-menu-item a{
+        border-radius: 0px;
+        font-size: 11px;
+        }
+    </style>
+    <script>
+    
+    $j = jQuery.noConflict();
+    
+    function hideSection() {
+        $j('[id$=updateSection]').hide();
+        $j('[id$=exportItems]').hide();  
+    }
+    
+    function showSection() {
+        if($j('[id$=selected_list]').val() == 'Permission Sets'||
+           $j('[id$=selected_list]').val() == 'Managed Packages'||
+           $j('[id$=selected_list]').val() == 'Public Groups'||
+           $j('[id$=selected_list]').val() == 'Profile/Role Updates'||
+           $j('[id$=selected_list]').val() == 'Tiers'||
+           $j('[id$=selected_list]').val() == 'Queues') {
+            $j('[id$=updateSection]').show();
+            
+            if($j('[id$=selected_list]').val() == 'Profile/Role Updates'){
+                
+                $j("input.auto002").autocomplete({
+                    
+                    source: function(request, response){
+                        getRoleData(response,request.term);
+                    },
+                    
+                    select: function(event, ui){
+                        $j("input.auto002").val(ui.item.value);
+                        $j('[id$=roleid]').val(ui.item.id);
+                        return false;
+                    }            
+                });
+            }
+        } else if($j('[id$=selected_list]').val() == 'Permission Set Dashboard'||
+                  $j('[id$=selected_list]').val() == 'Managed Package Dashboard'||
+                  $j('[id$=selected_list]').val() == 'Public Group Dashboard'||
+                  $j('[id$=selected_list]').val() == 'Queue Dashboard') {
+            $j('[id$=exportItems]').show();
+        }
+    }
+    
+    $j(document).ready(function(){
+        
+        $j('[id$=pgbkId]').css("background-color","white");
+        $j('[id$=bodyTable]').css("background-color","#f1f1f1");
+        
+        setSelection();
+        
+        $j('[id$=selected_list]').change(setSelection);
+        
+        $j("input.auto001").autocomplete({
+            
+            source: function(request, response){
+                getUserData(response,request.term,$j('[id$=selected_list]').val());
+            },
+            
+            select: function(event, ui){
+                $j("input.auto001").val(ui.item.value);
+                refresh(ui.item.id);                    
+                return false;
+            }      
+        });
+        
+        $j('[id$=user]')
+        .mouseover(function() {
+            var accessSelected = $j('[id$=selected_list]').val();
+            if(!('Queues'==accessSelected||'Public Groups'==accessSelected)||
+               (('Queues'==accessSelected||'Public Groups'==accessSelected)&&'Users'==$j('[id$=selected_Type]').val()))
+                $j('[id$=helptext1]').show();
+            else
+                $j('[id$=helptext2]').show();
+        })
+        .mouseout(function() {
+            var accessSelected = $j('[id$=selected_list]').val();
+            if(!('Queues'==accessSelected||'Public Groups'==accessSelected)||
+               (('Queues'==accessSelected||'Public Groups'==accessSelected)&&'Users'==$j('[id$=selected_Type]').val()))
+                $j('[id$=helptext1]').hide();
+            else
+                $j('[id$=helptext2]').hide();       
+        });
+        
+    });
+    
+    function setSelection(){
+        if($j('[id$=selected_list]').val() == 'Permission Sets'||
+           $j('[id$=selected_list]').val() == 'Managed Packages'||
+           $j('[id$=selected_list]').val() == 'Public Groups'||
+           $j('[id$=selected_list]').val() == 'Profile/Role Updates'||
+           $j('[id$=selected_list]').val() == 'Tiers'||
+           $j('[id$=selected_list]').val() == 'Queues') {
+            
+            $j('[id$=user]').val("");
+            $j('[id$=exportItems]').hide();
+            $j('[id$=searchUserSectionId]').hide(); 
+            $j('[id$=updateSection]').hide();
+            if($j('[id$=selected_list]').val() == 'Public Groups'||
+               $j('[id$=selected_list]').val() == 'Queues') {
+                $j('[id$=searchTypeId]').show();
+                $j('[id$=selected_Type]').change(function(){
+                    $j('[id$=updateSection]').hide();
+                    $j('[id$=user]').val("");
+                });
+            } else {
+                $j('[id$=searchTypeId]').hide();
+            }
+            $j('[id$=searchUserSectionId]').show();
+            $j("input.auto001").autocomplete({
+                
+                source: function(request, response){
+                    getUserData(response,request.term,$j('[id$=selected_list]').val());
+                },
+                
+                select: function(event, ui){
+                    $j("input.auto001").val(ui.item.value);
+                    refresh(ui.item.id); 
+                    //alert('Called Set Selected ' + $j('[id$=selected_list]').val());
+                    return false;
+                }            
+            });
+        } else if($j('[id$=selected_list]').val() == 'Permission Set Dashboard'||
+                  $j('[id$=selected_list]').val() == 'Managed Package Dashboard'||
+                  $j('[id$=selected_list]').val() == 'Public Group Dashboard'||
+                  $j('[id$=selected_list]').val() == 'Queue Dashboard') {
+            
+            $j('[id$=user]').val("");
+            $j('[id$=searchUserSectionId]').hide(); 
+            $j('[id$=updateSection]').hide();
+            exportItems();                
+        }
+    }
+    
+    function getUserData(response,param,param2){
+        Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.AccessManager.searchItems}',
+            param, param2, $j('[id$=selected_Type]').val(),
+            function(result, event){
+                if (event.status) {                        
+                    var objList = [];
+                    for(var i = 0; i < result.length; i++){
+                        var obj = new Object();
+                        obj.value = result[i].label;
+                        obj.id = result[i].id;
+                        objList.push(obj);
+                    }
+                    response(objList);
+                }else {
+                    //alert(event.message);
+                }
+            }, 
+            {escape: true}
+        );
+    }
+    
+    function getRoleData(response,param){
+        Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.AccessManager.searchRoles}',
+            param,
+            function(result, event){
+                if (event.status) {                        
+                    var objList = [];
+                    for(var i = 0; i < result.length; i++){
+                        var obj = new Object();
+                        obj.value = result[i].Name;
+                        obj.id = result[i].Id;
+                        objList.push(obj);
+                    }
+                    response(objList);
+                }else {
+                    //alert(event.message);
+                }
+            }, 
+            {escape: true}
+        );
+    }
+    
+    <apex:includeScript value="{!URLFOR($Resource.jqueryUI, 'jqueryUI/jquery-1.10.2.js')}"/>
+        <apex:includeScript value="{!URLFOR($Resource.jqueryUI, 'jqueryUI/jquery-ui.js')}"/>
+            </script>
+    
+</apex:page>

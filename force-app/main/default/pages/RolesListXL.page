@@ -1,0 +1,2 @@
+<apex:page controller="AccessManager" cache="true" contentType="text/csv#RolesList.csv" showHeader="false" sidebar="false" 
+standardStylesheets="false" >{!roles}</apex:page>

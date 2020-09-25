@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GE_OG_GS_Download_Link_to_Document__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Direct download of Document from a Chatter group</inlineHelpText>
+    <label>Download Link to Document</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Url</type>
+</CustomField>

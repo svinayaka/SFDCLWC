@@ -1,0 +1,89 @@
+<apex:page Controller="GE_ES_CustomClone">
+    <style>
+        .messageWrapper{
+        line-height: 20px;
+        border: 1px solid #e0e3e5;
+        padding: 10px;
+        font-size: 14px;
+        Font-weight: 500;
+        border-radius: 4px;
+        margin-bottom: 10px;
+        }
+        
+        .processButton {
+        background: rgb(135, 172, 49);
+        border: 1px solid #8BA446;
+        display: inline-block;
+        padding: 5px 10px 5px;
+        border-radius: 2px 2px 2px 2px;
+        box-shadow: 0px 1px 2px 0px rgb(173, 173, 173);
+        font-family: Arial;
+        vertical-align: middle;
+        text-decoration: none;
+        background-image:none;
+        color:white;
+        font-size: 1.08em; 
+        margin-right:10px;
+        }
+        
+        .processButton:hover {
+        background: rgb(138, 181, 41);
+        text-decoration: none;
+        color:white;
+        }
+        .DeleterowButton {
+        background: rgb(204, 0, 0);
+        border: 1px solid #BE2625;
+        display: inline-block;
+        padding: 5px 10px 5px;
+        border-radius: 2px 2px 2px 2px;
+        box-shadow: 0px 1px 2px 0px rgb(173, 173, 173);
+        font-family: Arial;
+        vertical-align: middle;
+        text-decoration: none;
+        background-image:none;
+        color:white;
+        font-size: 1.08em;
+        }
+        .div a{
+        color:white;
+        }
+        .DeleterowButton:hover {
+        background: #EE0000;
+        text-decoration: none;
+        color:white;
+        }       
+        .processBlock {
+        text-align: center; margin: 10px;
+        }
+        .processBlock a{
+        color:white;
+        }
+    </style>
+    <apex:form >
+        <apex:pageMessages />
+        <apex:pageBlock >
+            <div class="messageWrapper">
+                <p>
+                    You are cloning an {!parentObjectType}. Below are objects available for clone which are associated with the {!parentObjectType}.
+                    Please select the required option and click Continue.
+                </p>
+                <p>
+                    <b>Note: New record will be created as soon as you click continue.</b>
+                </p>
+            </div>
+            <apex:pageBlockTable value="{!cloneOptions}" var="c" id="table" styleClass="CloneOptions" rendered="{!(cloneOptions.size != 0)}">
+                <apex:column headerValue="Select">
+                    <!-- This is our selected Boolean property in our wrapper class -->
+                    <apex:inputCheckbox value="{!c.selected}"/>
+                </apex:column>
+                <!--<apex:column value="{!c.cClone.Name}" />-->
+                <apex:column value="{!c.cClone.GE_ES_Object_Name__c}" />
+            </apex:pageBlockTable>
+            <div class="processBlock">
+                <apex:commandLink value="Continue" action="{!processSelected}" styleClass="processButton"/>
+                <apex:commandLink value="Cancel" action="{!cancelClone}" styleClass="DeleterowButton"/>
+            </div>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

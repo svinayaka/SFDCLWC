@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PR__c</fullName>
+    <externalId>false</externalId>
+    <label>Pull Reason</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Grounded Down Hole</fullName>
+                <default>false</default>
+                <label>Grounded Down Hole</label>
+            </value>
+            <value>
+                <fullName>High Amps / No Start</fullName>
+                <default>false</default>
+                <label>High Amps / No Start</label>
+            </value>
+            <value>
+                <fullName>Surface Power System Issue</fullName>
+                <default>false</default>
+                <label>Surface Power System Issue</label>
+            </value>
+            <value>
+                <fullName>Converto to Other Lift Method</fullName>
+                <default>false</default>
+                <label>Converto to Other Lift Method</label>
+            </value>
+            <value>
+                <fullName>Converto to Injection</fullName>
+                <default>false</default>
+                <label>Converto to Injection</label>
+            </value>
+            <value>
+                <fullName>Abandoned / Shut-In</fullName>
+                <default>false</default>
+                <label>Abandoned / Shut-In</label>
+            </value>
+            <value>
+                <fullName>Low/No Production</fullName>
+                <default>false</default>
+                <label>Low/No Production</label>
+            </value>
+            <value>
+                <fullName>Well Work Over</fullName>
+                <default>false</default>
+                <label>Well Work Over</label>
+            </value>
+            <value>
+                <fullName>Well Test Ended</fullName>
+                <default>false</default>
+                <label>Well Test Ended</label>
+            </value>
+            <value>
+                <fullName>Resize</fullName>
+                <default>false</default>
+                <label>Resize</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Pro-Active Pull</fullName>
+                <default>false</default>
+                <label>Pro-Active Pull</label>
+            </value>
+            <value>
+                <fullName>Insufficient Information</fullName>
+                <default>false</default>
+                <label>Insufficient Information</label>
+            </value>
+            <value>
+                <fullName>Power System Change out</fullName>
+                <default>false</default>
+                <label>Power System Change out</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

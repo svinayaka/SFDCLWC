@@ -1,0 +1,1 @@
+<apex:page standardController="I__c" sidebar="false" showheader="false" applyHtmlTag="false"><SVMXC:SFM_Wizard recordId="{!I__c.Id}" /></apex:page>

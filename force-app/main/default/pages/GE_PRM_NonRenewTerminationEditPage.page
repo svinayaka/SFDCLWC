@@ -1,0 +1,169 @@
+<!--
+* page Name-----------: GE_PRM_NonRenewTerminationEditPage 
+* Used Where----------: in Non-Renew / Termination Process
+* Purpose/Overview----: to submit NRT details of a commercial line
+* Functional Area-----: PRM
+* Author--------------: Pradeep Rao Yadagiri
+* Created Date--------: 9/30/2014 
+* Test Class Name-----: 
+* Change History -
+* Date Modified : Developer Name     : Method/Section Modified/Added : Purpose/Overview of Change
+-->
+<apex:page standardController="GE_PRM_Commercial_line__c" extensions="GE_PRM_NRTerminationClass"  sidebar="false" showHeader="true" standardstylesheets="true">
+    <apex:stylesheet value="{!URLFOR($Resource.PRM_CA_UX_CSS,'PRM_UX_CSS/PRM_UX.css')}"/> 
+    <style> 
+        .statuslabel 
+        {  
+        width: 100%;
+        font-weight: 700;
+        font-size: 14px; 
+        color: #666666;
+        white-space: normal;
+        }
+        .AddrowButton
+        {
+        background: #A9A9A9;
+        border: 1px solid #8BA446;
+        display: inline-block;
+        padding: 5px 10px 5px;
+        border-radius: 2px 2px 2px 2px;
+        box-shadow: 0px 1px 2px 0px rgb(173, 173, 173);
+        font-family: Arial;
+        vertical-align: middle;
+        text-decoration: none;
+        background-image:none;
+        color:white;
+        font-size: 1em;
+        }
+        
+        .AddrowButton:hover 
+        {
+        background: rgb(138, 181, 41);
+        text-decoration: none;
+        color:white;
+        }
+        
+        .statuschxlabel 
+        {
+        width: 85%; 
+        float: left;
+        font-weight: 600;
+        text-align: left;
+        font-size: 11px;
+        color: #666666;
+        white-space: normal;
+        }
+        
+        .statuschxfield 
+        {
+        width: 15%;
+        float: right;
+        font-size: 14px;
+        color: #666666;
+        }
+        
+        .DeleterowButton
+        {
+        background: rgb(204, 0, 0);
+        border: 1px solid #BE2625;
+        display: inline-block;
+        padding: 5px 5px 5px;
+        border-radius: 2px 2px 2px 2px;
+        box-shadow: 0px 1px 2px 0px rgb(173, 173, 173);
+        font-family: Arial;
+        vertical-align: middle;
+        text-decoration: none;
+        background-image:none;
+        color:white;
+        font-size: .9em;
+        margin-left:5px;
+        }
+        
+        .DeleterowButton:hover 
+        {
+        background: #EE0000;
+        text-decoration: none;
+        color:white;
+        }
+        .RowHeading
+        {        border: 0px solid;
+        display: inline-block;
+        padding: 5px 5px 5px;
+        border-radius: 2px 2px 2px 2px;
+        font-family: Arial;
+        vertical-align: middle;
+        text-decoration: none;
+        background-image:none;
+        color:white;
+        font-size: 1.2em;
+        }
+        
+    </style>
+    <apex:includeScript value="{!URLFOR($Resource.Jquery)}"/> 
+    <script>
+    var $j = jQuery.noConflict();
+    $j(document).ready(function(){
+        $j("[id$=mlktp]").hide();  
+    });
+    </script>
+    <apex:form >
+        <apex:pagemessages ></apex:pagemessages>
+        <apex:pageBlock >  
+            <apex:pageblockButtons >       
+                <apex:commandLink value="Submit" action="{!cmdSubmit}" styleClass="AddrowButton" title="Sumbit" style="color: white; margin-bottom: 10px;" />&nbsp;
+                <input type="text" style="width:0px; border:3px;"/>
+                <apex:commandLink value="Cancel" action="{!cmdcancel}" styleClass="AddrowButton" title="Cancel" style="color: white; margin-bottom: 10px;" /> 
+            </apex:pageblockButtons>
+            <div class="label">Adverse country risk?</div>
+            <apex:outputField value="{!commline.Adverse_country_risk__c}" />
+            <br /><br />
+            <div class="label">Non-Renewal or Termination?</div>
+            <apex:inputField value="{!commline.GE_PRM_Non_Renewal_or_Termination__c}" />
+            <br /><br />
+            <div class="label">{!$ObjectType.GE_PRM_Commercial_line__c.Fields.GE_PRM_Future_market_coverage__c.label}</div>
+            <apex:inputField value="{!commline.GE_PRM_Future_market_coverage__c}"/>
+            <br /><br />
+            <div class="label">Proposed effective date of Non-Renewal or Termination?</div>
+            <apex:inputField value="{!commline.GE_PRM_Proposed_effective_date__c}"/>
+            <br />  <br />      
+            <div class="label">Non-Renewal or Termination due to Compliance issue ? </div>
+            <apex:inputField value="{!commline.GE_PRM_Due_To_Compliance_Issue__c}" />
+            <br /> <br /> 
+            <div class="label">if Yes, please provide name of Compliance owner and provide rationale below</div>
+            <apex:inputField value="{!commline.GE_PRM_If_due_to_Compliance_issue_Yes1__c}" html-cols="50"/>
+            <br /> <br />      
+            <div class="label">Is there contracts T&#38;C&#39;s risk related to ending GE &#39;s relationship with this Partner?</div>
+            <apex:inputField value="{!commline.GE_PRM_Is_there_contracts_T_C_risk__c}" />
+            <br /> <br /> <br/>  
+            <div class="label">if Yes, please provide name of Legal owner, Also reference the contract &#38; action plan in rationale below</div>
+            <apex:inputField value="{!commline.GE_PRM_If_Is_there_contracts_T_C_Yes1__c}" html-cols="50"/>
+            <br /> <br /> 
+            <div class="label">Are there outstanding receivables with this Partner?</div>
+            <apex:inputField value="{!commline.GE_PRM_outstanding_receivables__c}" />
+            <br /> <br />              
+            <div class="label">if Yes, provide the name of the Finance owner, Also provide the amount and action plan in rationale below</div>
+            <apex:inputField value="{!commline.GE_PRM_If_outstanding_receivable_Yes1__c}" html-cols="50"/>
+            <br /> <br />           
+            <div class="label">Are there outstanding payments due to this Partner?</div>
+            <apex:inputField value="{!commline.GE_PRM_Outstanding_Payments__c}"  />
+            <br /> <br /> 
+            <div class="label">if Yes, provide the name of the Finance owner, Also provide the amount and action plan in rationale below</div>
+            <apex:inputField value="{!commline.GE_PRM_If_Outstanding_Payments_Yes1__c}" html-cols="50"/>
+            <br /> <br />             
+            <div class="label">Does the Partner have any GE equipment to return ?</div>
+            <apex:inputField value="{!commline.GE_PRM_any_GE_equipment_to_return__c}" />
+            <br /> <br /> 
+            <div class="label">if Yes, provide the name of the Finance owner, Also provide the amount and action plan in rationale below</div>
+            <apex:inputField value="{!commline.GE_PRM_If_GE_Equipment_to_return_Yes1__c}" html-cols="50"/>
+            <br /> <br />            
+            <div class="label">Is the Partner authorized to sell other GE product lines?</div>
+            <apex:inputField value="{!commline.GE_PRM_Authorized_to_sell_other__c}" />
+            <br /> <br /> 
+            <div class="label">if Yes, provide the name of Sales owner, Also Provide the comments in rationale below</div>
+            <apex:inputField value="{!commline.GE_PRM_If_authorized_to_sell_other_Yes1__c}" html-cols="50"/>
+            <br /> <br />
+            <div class="label"> Non-renewal/Termination Rationale</div>
+            <apex:inputField value="{!commline.Non_renewal_Termination_Rationale__c}" html-cols="120" html-rows="5"/>
+        </apex:pageBlock>            
+    </apex:form>
+</apex:page>

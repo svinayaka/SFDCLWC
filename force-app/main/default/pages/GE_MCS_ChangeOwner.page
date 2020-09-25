@@ -1,0 +1,36 @@
+<apex:page controller="GE_MCS_ChangeOwner" action="{!reDirect}" >
+<apex:messages />
+<apex:pageMessages ></apex:pageMessages>
+<script>
+ var siteurl = window.location.href;
+   <!-- alert(siteurl);-->
+   <!-- alert("{!$Site.BaseUrl}");-->
+   <!-- alert(siteurl .indexOf('/case/'));-->
+  if(siteurl.indexOf('/case/')!= -1)
+    {
+     var isBlanksubType="{!isBlank_SubType}";
+     
+     if(isBlanksubType == "true"){
+             alert('Please select Sub Type ');
+              var locurl = "{!$Site.BaseUrl}"+'/'+"{!CaseId }";
+               <!-- alert(locurl);-->
+                window.location.href = locurl;
+     }else{
+                var locurl = "{!$Site.BaseUrl}"+'/'+"{!CaseId }";
+             <!-- alert(locurl);-->
+                window.location.href = locurl;
+            }
+    }
+    else
+    {
+ 
+     var isBlanksubType="{!isBlank_SubType}";
+     if(isBlanksubType == "true"){
+             alert('Please select Sub Type ');
+             window.top.location.href = JSENCODE(/{!CaseId});
+     }
+    }
+
+</script>
+
+</apex:page>

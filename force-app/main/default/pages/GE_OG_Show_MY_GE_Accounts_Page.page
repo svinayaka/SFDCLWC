@@ -1,0 +1,1 @@
+<apex:page action="{!URLFOR($Action.GE_HQ_Acc_AccPlan_Rel__c.List, $ObjectType.GE_HQ_Acc_AccPlan_Rel__c)}"/>

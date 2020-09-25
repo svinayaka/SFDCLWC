@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>Update_Unique_Identifier</fullName>
+        <field>unique_identifier_ge_og__c</field>
+        <formula>IF(RecordType.Name==&apos;Risk Checklist&apos;, &quot;RCL-&quot; + Text(IF(active_ge_og__c,1,0)) + &quot;-&quot; + Text(category_ge_og__c) + &quot;-&quot; +  Text(checklist_category_tier_2_ge_og__c) + &quot;-&quot; +  Text(checklist_category_tier_3_ge_og__c),
+  IF(RecordType.Name==&apos;Fulfillment Checklist&apos;, &quot;CQA-&quot;+ Text(IF(active_ge_og__c,1,0))+ &quot;-&quot; + Text(category_ge_og__c) + &quot;-&quot; + Text(checklist_category_tier_2_ge_og__c) + &quot;-&quot; +  Text(checklist_category_tier_3_ge_og__c) + &quot;-&quot; + Text( checklist_category_tier_4_ge_og__c)+ &quot;-&quot; +  Text(oppty_driver_ge_og__c),  IF(RecordType.Name==&apos;Bid Assesment&apos;, &apos;&apos;, &apos;&apos;) ) )</formula>
+        <name>Update Unique Identifier</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <rules>
+        <fullName>Generating Unique Identifier</fullName>
+        <actions>
+            <name>Update_Unique_Identifier</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Checklist_Category_ge_og__c.CreatedDate</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

@@ -1,0 +1,121 @@
+<apex:page standardController="Opportunity" extensions="seismic.NewPredictiveController" action="{!Init}" docType="html-5.0" applyHtmlTag="false" applyBodyTag="false" showHeader="false" sidebar="false" standardStylesheets="false" html-style="height:100%; width:100%;">
+
+<script type="text/javascript" src="{!URLFOR($Resource.seismic__jquery_3_1_1_min_js)}"></script>
+<script type="text/javascript" src="{!URLFOR($Resource.seismic__jquery_base64_js)}"></script>
+<script type="text/javascript" src="{!URLFOR($Resource.seismic__lodash_min_js)}"></script>
+<script type="text/javascript" src="{!URLFOR($Resource.seismic__embeddedpage_js)}"></script>
+<script type="text/javascript" src="{!URLFOR($Resource.seismic__SeismicIntegratedSDK_js)}"></script>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Seismic Content Viewer</title>
+	
+	<style type="text/css">
+		BODY, HTML, IFRAME { width: 100%; height: 100%; margin: 0; padding: 0; }
+	</style>
+</head>
+<body>
+    <iframe id="seismicAppContainer" frameborder="no" width="100%" height="100%" marginwidth="0" marginheight="0" scrolling="no" allowfullscreen="true"></iframe>
+	<script type="text/javascript">
+		getParamsReadyToInit();
+        
+        function getParamsReadyToInit(){       	
+			var initialData = {!EmbeddedAppInfoJSON};
+			
+			var pageInfo = {};
+			
+			pageInfo.objectType = 'Opportunity';
+			pageInfo.objectName = '{!ObjectName}';
+			pageInfo.objectId = '{!Opportunity.Id}';
+			
+			var vfParameter = 'Opportunity Embedded Application|%&|false|%&|true';			
+			pageInfo.applicationName = vfParameter.split('|%&|')[0];
+			
+			pageInfo.hideHeader = vfParameter.split('|%&|')[1];
+			pageInfo.openContentInline = vfParameter.split('|%&|')[2];
+			
+			var isClassic = '{!isClassic}' == 'true' ? true : false;
+			pageInfo.enableFullScreenMode = !(isClassic && pageInfo.openContentInline == 'true');
+
+    var contextInfo = initialData.ContextInfo;
+    var credentialInfo = initialData.CredentialInfo;
+    var settingsInfo = initialData.SettingsInfo;
+
+    pageInfo.backUrl = contextInfo.SFBaseUrl + '/' + pageInfo.objectId.substring(0,15);
+    pageInfo.currentPageBaseUrl = contextInfo.CurrentPageBaseUrl;
+    pageInfo.currentTabLabel = contextInfo.CurrentTabLabel;
+
+    var sObjectType = pageInfo.objectType;
+    var sObjectId = pageInfo.objectId;
+    var sObjectName = pageInfo.objectName;
+    var applicationName = pageInfo.applicationName;
+    var openContentDetailInside = pageInfo.openContentInline == 'true';
+    var currentPageBaseUrl = pageInfo.currentPageBaseUrl;
+    var currentTabLabel = pageInfo.currentTabLabel;
+
+    var configInfo = {
+    applicationName: applicationName,
+    showUserAvatar: openContentDetailInside,
+    enableCartContext: settingsInfo.EnableCartContext,
+    openContentDetailInside: openContentDetailInside,
+    showGoBack: false,
+    showHeader: pageInfo.hideHeader == 'false',
+    enableFullScreenMode: pageInfo.enableFullScreenMode,
+    pageId: sObjectId,
+    startView: {
+    type: 'predictive',
+    docCenter: {
+    },
+    workSpace: {
+    },
+    predictive: {
+    type: 'folder',
+    tabTitle: ''
+    },
+    link: {
+    }
+    }
+    };
+
+    var iframeDom = document.getElementById('seismicAppContainer');
+    var embeddedApp = Seismic.IntegratedSDK.loadEmbeddedApplication(iframeDom, contextInfo, credentialInfo, configInfo, sObjectType, sObjectId, sObjectName, currentTabLabel, currentPageBaseUrl);
+    embeddedApp.on('action',function(data){
+      switch(data.type){
+        case Seismic.IntegratedSDK.actions.showDetail:
+          handleOpenDetailRequest(pageInfo, data.data);
+          break;
+        default:
+          break;
+        }
+      });
+    }
+
+    function handleOpenDetailRequest(pageInfo, data){
+      var mainPageData = getMainPageData(pageInfo, data);
+      var url = '{!DetailPageUrl}' + '#' + $.base64.encode(JSON.stringify(mainPageData));
+      window.top.location.href = url;
+    }
+
+    function getMainPageData(pageInfo, data){
+      return {
+        EmbeddAppName: pageInfo.applicationName,
+        SObjectType: pageInfo.objectType,
+        SObjectId: pageInfo.objectId,
+        SObjectName: utf8Encode(pageInfo.objectName),
+        DocumentParam: JSON.stringify(data),
+        BackUrl: pageInfo.backUrl,
+        CurrentTabLabel: pageInfo.currentTabLabel
+      };
+    }
+
+    function utf8Encode(param)
+    {
+      // we use encodeURIComponent to get percent-encoded UTF-8, prefix encoded incase
+      // parse routine is used by more than one location.
+      return "encoded:" + encodeURIComponent(param);
+    }
+
+  </script>
+</body>
+</apex:page>

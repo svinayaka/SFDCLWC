@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <alerts>
+        <fullName>Generate_email_to_send_to_AssignedTo_User_when_the_activity_is_closed</fullName>
+        <description>Generate email to send to AssignedTo User when the activity is closed</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Accounts_and_Contacts_Email_Templates/Send_Email_when_an_Activity_is_Closed</template>
+    </alerts>
+    <alerts>
+        <fullName>Generate_email_to_send_to_AssignedTo_usesr_when_an_activity_created</fullName>
+        <description>Generate email to send to AssignedTo usesr when an activity created</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Accounts_and_Contacts_Email_Templates/Send_Email_when_a_New_Activity_is_Created</template>
+    </alerts>
+    <alerts>
+        <fullName>Generate_new_email_to_send_to_the_activity_owner_when_the_activity_is_closed</fullName>
+        <description>Generate new email to send to the activity owner when the activity is closed</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Accounts_and_Contacts_Email_Templates/Send_Email_when_an_Activity_is_Closed</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>GE_HQ_Set_CompletionDt</fullName>
+        <field xsi:nil="true"/>
+        <formula>Now()</formula>
+        <name>GE_HQ_Set_CompletionDt</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_OG_CIR_TS_Task_Completed_Rule</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>Completed_Task</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>CIR-TS Task Completed Rule</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Log_Activity_should_be_closed</fullName>
+        <field>Status</field>
+        <literalValue>Completed</literalValue>
+        <name>Log Activity should be closed</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_has_Description_on_Task_to_false</fullName>
+        <field>Has_Description_ge_og__c</field>
+        <literalValue>0</literalValue>
+        <name>Set has Description on Task to false</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_has_Description_on_Task_to_true</fullName>
+        <field>Has_Description_ge_og__c</field>
+        <literalValue>1</literalValue>
+        <name>Set has Description on Task to true</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Task_Closed_Date</fullName>
+        <field>Task_Closed_Date__c</field>
+        <formula>TODAY()</formula>
+        <name>Task Closed Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Task_Closure_DT</fullName>
+        <field>Task_Closure_date__c</field>
+        <formula>today()</formula>
+        <name>Task Closure DT</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <rules>
+        <fullName>CIR-TS Task Completed Rule</fullName>
+        <actions>
+            <name>GE_OG_CIR_TS_Task_Completed_Rule</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Task.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>CIR</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Task.Status</field>
+            <operation>equals</operation>
+            <value>Completed</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE OG Age Of Task</fullName>
+        <actions>
+            <name>Task_Closed_Date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Task.Status</field>
+            <operation>equals</operation>
+            <value>Closed,Completed,Deferred,Rejected,Cancelled</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_OG_CIR_Task_Closure_Dt_Update</fullName>
+        <actions>
+            <name>Task_Closure_DT</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>(RecordType.Name = &quot;CIR&quot;) &amp;&amp; (ISPICKVAL(Status,&quot;Completed&quot;))</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Generate email to send to the person the activity was assign to when a activity is created</fullName>
+        <actions>
+            <name>Generate_email_to_send_to_AssignedTo_usesr_when_an_activity_created</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <description>Generate email to send to the person the activity was assign to when a activity is created</description>
+        <formula>AND( BEGINS( WhatId , &apos;001&apos;), OR( AND(Owner:User.FirstName &lt;&gt; &apos;System&apos;, Owner:User.LastName &lt;&gt;&apos;Integration&apos;) , AND(Owner:User.FirstName &lt;&gt; &apos;Webmethods&apos;, Owner:User.LastName &lt;&gt;&apos;Integration&apos;)), RecordType.Name = &apos;Task Account&apos;)</formula>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Generate new email to send to the activity owner or creator when the activity is closed</fullName>
+        <actions>
+            <name>Generate_new_email_to_send_to_the_activity_owner_when_the_activity_is_closed</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <description>Generate new email to send to the activity owner or creator when the activity is closed</description>
+        <formula>AND( CreatedById &lt;&gt; OwnerId ,BEGINS( WhatId , &apos;001&apos;), OR( AND(CreatedBy.FirstName &lt;&gt; &apos;System&apos;, CreatedBy.LastName &lt;&gt;&apos;Integration&apos;) , AND(CreatedBy.FirstName &lt;&gt; &apos;Webmethods&apos;, CreatedBy.LastName &lt;&gt;&apos;Integration&apos;)), RecordType.Name = &apos;Task Account&apos;, AND(ISCHANGED(Status), 
+OR( ISPICKVAL(Status, &quot;Completed&quot;), 
+ISPICKVAL(Status, &quot;Closed&quot;))))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Generate new email to send to the person the activity was assign to when the activity is closed</fullName>
+        <actions>
+            <name>Generate_email_to_send_to_AssignedTo_User_when_the_activity_is_closed</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <description>Generate new email to send to the person the activity was assign to when the activity is closed</description>
+        <formula>AND(ISCHANGED(Status),BEGINS( WhatId , &apos;001&apos;), OR( AND(Owner:User.FirstName &lt;&gt; &apos;System&apos;, Owner:User.LastName &lt;&gt;&apos;Integration&apos;) , AND(Owner:User.FirstName &lt;&gt; &apos;Webmethods&apos;, Owner:User.LastName &lt;&gt;&apos;Integration&apos;)),RecordType.Name = &apos;Task Account&apos;, 
+OR( ISPICKVAL(Status, &quot;Completed&quot;), 
+ISPICKVAL(Status, &quot;Closed&quot;)))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Set Has Description field to False</fullName>
+        <actions>
+            <name>Set_has_Description_on_Task_to_false</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Rule to set Has Description field to False when Comments field is blank.</description>
+        <formula>AND( RecordType.Name=&apos;Deal Machine Task&apos;,ISBLANK(Description))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Set Has Description field to True</fullName>
+        <actions>
+            <name>Set_has_Description_on_Task_to_true</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Workflow Rule sets Has Description field to True when Description(Comments) field is filled.</description>
+        <formula>AND( RecordType.Name=&apos;Deal Machine Task&apos;,NOT(ISBLANK(Description)))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Status</fullName>
+        <actions>
+            <name>Log_Activity_should_be_closed</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Task.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Log Activity</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

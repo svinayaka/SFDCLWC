@@ -1,0 +1,219 @@
+<apex:page controller="GE_OG_TechDatacontrl" sidebar="false" >
+<script type="text/javascript">
+    function newpage() {
+        var newpage = window.Open('/apex/GE_OG_TechnicianAttachmentPage?techId1='+{!technician.Id}');
+    }
+</script>
+<apex:pageBlock >
+  <h1><U>Technician/Equipment Details:</U></h1><BR/><BR/>
+    
+  <table border ='0'>
+      <tr>
+          <td><B><apex:outputText value="Technician Name:"/></B></td>
+          <td><apex:outputText value="{!technician.Name}"/></td>
+          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>          
+          <td><B><apex:outputText value="Service Team:"/></B></td>
+          <td><apex:outputText value="{!technician.SVMXC__Service_Group__r.Name}"/></td>
+          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>    
+          <td><B><apex:outputText value="Career Track Level:"/></B></td>
+          <td><apex:outputText value="{!careerTrackLevel}" rendered="{!($Profile.Name=='GE_SS Field Service Engineer/Technician')}"/></td>
+      </tr>
+  </table>
+  </apex:pageBlock>
+  <apex:form >
+  
+  <apex:pageBlock id="exprt" >
+  
+  <h2><b><u>Expertise :</U></b></h2>
+  
+  <apex:pageBlockTable value="{!lstExpertiseBeans}" var="expertise" styleclass="tableContainer">
+   <apex:column headerValue="Sign Off"> 
+       <apex:inputCheckbox Value="{!expertise.signOff}" id="signOff" disabled="true" />
+   </apex:column>
+   <apex:column headerValue="Skill Category" value="{!expertise.skillCategory}"/>   
+   <apex:column headerValue="Skill Group" value="{!expertise.skillGroup}"/> 
+   <apex:column headerValue="Skill" value="{!expertise.skill}"/> 
+   <apex:column headerValue="Skill Description" value="{!expertise.skillDescription}"/> 
+   <apex:column headerValue="Skill Level" value="{!expertise.skillLevel}"/>
+   <apex:column >
+   <apex:facet name="header">
+            Current<BR/>Target Level
+        </apex:facet> 
+    <apex:outputText value="{!expertise.currentTargetLevel}"/> 
+    </apex:column>
+   <apex:column >
+   <apex:facet name="header">
+            Next<BR/>Target Level
+        </apex:facet> 
+    <apex:outputText value="{!expertise.nextTargetLevel}"/> 
+    </apex:column>    
+   <apex:column headerValue="Expertise Level" value="{!expertise.expertiseLevel}"/> 
+   <apex:column >
+       <apex:facet name="header">
+            Work Orders<br/>Completed
+        </apex:facet> 
+    <apex:outputText value="{!expertise.workOrdersCompleted}"/> 
+    </apex:column>
+   <apex:column >
+       <apex:facet name="header">
+            Last Completed <br/>Work Order
+        </apex:facet> 
+    <apex:outputText value="{!expertise.lastCompletedWorkOrder}"/>
+    </apex:column>    
+  
+   
+  </apex:pageBlockTable>   
+             
+        <apex:commandButton action="{!expPrevious}" value="Previous" reRender="exprt" disabled="{!expPrevBool}"/>        
+        <apex:commandButton action="{!expNext}" value="Next"  reRender="exprt" disabled="{!expNextBool}"/>
+        <apex:commandButton value="New/Edit" action="{!callexpertPage }" disabled="{!showedit}" rendered="{!($Profile.Name=='GE_SS Field Service Engineer/Technician')}" />   
+   
+  </apex:pageBlock> 
+  
+  <apex:pageBlock id="courseAsgn" >
+  
+  <h2><b><u>Course Assignments :</U></b></h2>
+  
+  <apex:pageBlockTable value="{!lstCourseAssignmentBeans}" var="courseAsgn" styleclass="tableContainer">
+   
+   <apex:column headerValue="Course Code" Value="{!courseAsgn.courseCode}" style="width:10%"/>
+
+   
+   <apex:column headerValue="Course Name" value="{!courseAsgn.courseNameAll}" rendered="{!OR($Profile.Name=='GE_SS Field Service Engineer/Technician',$Profile.Name=='GE_PC_Super Technician',$Profile.Name=='GE_AL_FS Technician')}" /> 
+   <apex:column headerValue="Course Name" Value="{!courseAsgn.courseName}" rendered="{!$Profile.Name=='GE_DS_FS Technician'}"/> 
+   <apex:column headerValue="Course Category" Value="{!courseAsgn.courseCategory}"/>
+   <apex:column headerValue="Course Source" value="{!courseAsgn.courseSource}"/> 
+   <apex:column headerValue="Criticality" value="{!courseAsgn.criticality}"/> 
+   <apex:column headerValue="Course Status" value="{!courseAsgn.courseStatus}"/> 
+   <apex:column headerValue="Current Level" value="{!courseAsgn.currentLevel}"/>  
+   <apex:column headerValue="Target Level" value="{!courseAsgn.targetLevel}"/> 
+   <apex:column headerValue="Training Path" value="{!courseAsgn.trainingPath}"/>   
+   <apex:column >
+       <apex:facet name="header">
+            Cross<BR/>Training Plan
+        </apex:facet>
+       <apex:inputCheckbox Value="{!courseAsgn.crossTrainingPlan}" id="ctp" disabled="true" />
+   </apex:column>  
+    <apex:column headerValue="Attended Date" value=" {!courseAsgn.attendedDate}"/>     
+   <apex:column headerValue="Passed Date" value=" {!courseAsgn.passedDate}"/>    
+   <apex:column >
+   <apex:facet name="header">
+            Course<BR/>Expiry
+        </apex:facet>
+
+    <apex:outputText escape="false" Value="{!courseAsgn.courseExpiry}"/>
+   </apex:column>   
+   
+  </apex:pageBlockTable>   
+             
+        <apex:commandButton action="{!coursePrevious}" value="Previous" reRender="courseAsgn" disabled="{!coursePrevBool}"/>        
+        <apex:commandButton action="{!courseNext}" value="Next"  reRender="courseAsgn" disabled="{!courseNextBool}"/>   
+        <apex:commandButton value="New/Edit" action="{!callcoursePage}" disabled="{!showedit}"/> 
+  </apex:pageBlock>  
+  
+  <apex:pageBlock id="certification" >
+  
+  <h2><b><u>Certifications:</U></b></h2>
+  
+  <apex:pageBlockTable value="{!lstCertificationBeans}" var="certi" styleclass="tableContainer">
+   
+   
+   <apex:column headerValue="Certification Name" Value="{!certi.certificationName }"/> 
+    <apex:column headerValue="Category" Value="{!certi.category }"/>
+   <apex:column headerValue="Status" value="{!certi.status}"/> 
+   <apex:column headerValue="Acquired Date" value=" {!certi.acquiredDate}"/> 
+   <apex:column headerValue="Expiry Date" value=" {!certi.expiryDate }"/>  
+   <apex:column >
+   <apex:facet name="header">
+            Additional<BR/>Information
+   </apex:facet>
+   <apex:outputText escape="false" Value="{!certi.additionalInfo}"/>
+   </apex:column>
+   <apex:column headerValue="Legacy Id" value=" {!certi.legacyId}"/>  
+  </apex:pageBlockTable>   
+             
+        <apex:commandButton action="{!certiPrevious}" value="Previous" reRender="certification" disabled="{!certiPrevBool}"/>        
+        <apex:commandButton action="{!certiNext}" value="Next"  reRender="certification" disabled="{!certiNextBool}"/>  
+        <apex:commandButton value="New/Edit" action="{!callCertsPage}" disabled="{!showedit}"/>  
+   
+  </apex:pageBlock>  
+  
+  <apex:pageBlock id="passport" >
+  
+  <h2><b><u>Passports:</U></b></h2>
+  
+  <apex:pageBlockTable value="{!lstPassportBeans}" var="passprt" styleclass="tableContainer">   
+   
+   <apex:column headerValue="Passport Name" Value="{!passprt.passportName}"/> 
+   <apex:column headerValue="Passport Number" Value="{!passprt.passportNumber}"/>
+   <apex:column headerValue="Passport Country" value="{!passprt.passportCountry}"/> 
+    <apex:column headerValue="Passport Expiry">
+    <apex:outputText escape="false" Value="{!passprt.passportExpiry}"/>
+    </apex:column>
+   <apex:column headerValue="Passport Expiry Date" value=" {!passprt.passportExpiryDate}"/> 
+   <apex:column headerValue="Passport Type" value="{!passprt.passportType}"/> 
+   <apex:column headerValue="Remaining Pages" value="{!passprt.remainingPages}"/>  
+  </apex:pageBlockTable>   
+             
+        <apex:commandButton action="{!passportPrevious}" value="Previous" reRender="passport" disabled="{!passportPrevBool}"/>        
+        <apex:commandButton action="{!passportNext}" value="Next"  reRender="passport" disabled="{!passportNextBool}"/>  
+        <apex:commandButton value="New/Edit" action="{!callPassportPage}" disabled="{!showedit}"/>  
+   
+  </apex:pageBlock>
+  
+  <apex:pageBlock id="viisa" >
+  
+  <h2><b><u>Visas:</U></b></h2>
+  
+  <apex:pageBlockTable value="{!lstVisaBeans}" var="visa" styleclass="tableContainer">    
+   
+
+    <apex:column headerValue="Passport" Value="{!visa.passport}"/>
+   <apex:column headerValue="Passport Expiry">
+   <apex:outputText escape="false" Value="{!visa.passportExpiry}"/>
+    </apex:column>
+   <apex:column headerValue="Visa Expiry">
+    <apex:outputText escape="false" Value="{!visa.visaExpiry}"/>
+    </apex:column>   
+   <apex:column headerValue="Visa Expiry Date" value=" {!visa.visaExpiryDate}"/>  
+   <apex:column headerValue="Visa Country" value="{!visa.visaCountry}"/>  
+   <apex:column headerValue="Visa For" value="{!visa.visaFor}"/>  
+  </apex:pageBlockTable>   
+             
+        <apex:commandButton action="{!visaPrevious}" value="Previous" reRender="viisa" disabled="{!visaPrevBool}"/>        
+        <apex:commandButton action="{!visaNext}" value="Next"  reRender="viisa" disabled="{!visaNextBool}"/> 
+        <apex:commandButton value="New/Edit" action="{!callVisaPage}" disabled="{!showedit}"/>   
+   
+  </apex:pageBlock>
+ <!--Addition--> 
+  <apex:pageBlock id="techattach" >
+  
+  <h2><b><u>Technician Attachments:</U></b></h2>
+  
+  <apex:pageBlockTable value="{!lsttechAttachBeans}" var="TA" styleclass="tableContainer">    
+   
+   
+   <apex:column headerValue="Reference">
+   <apex:outputLink value="/{!TA.techAttachId}" target="_blank">{!TA.techreference}
+   </apex:outputLink>   
+   </apex:column>   
+   <apex:column headerValue="Attachment Name" Value="{!TA.techattachName }"/>
+   <apex:column headerValue="Associated To" value=" {!TA.associatedTo}"/>  
+   <apex:column headerValue="Expertise" value="{!TA.expertiseName}"/> 
+   <apex:column headerValue="Course" value="{!TA.courseName}" rendered="{!$Profile.Name=='GE_DS_FS Technician'}"/> 
+   <apex:column headerValue="Course" value="{!TA.courseNameRef }" rendered="{!OR($Profile.Name=='GE_SS Field Service Engineer/Technician',$Profile.Name=='GE_PC_Super Technician',$Profile.Name=='GE_AL_FS Technician')}"/> 
+   <apex:column headerValue="Certification" value="{!TA.certificateName}"/> 
+   <apex:column headerValue="Passport" value="{!TA.passportName}"/> 
+   <apex:column headerValue="Visa" value="{!TA.visaName}"/> 
+   <apex:column headerValue="Link to Document" value="{!TA.linktodoc}"/> 
+   <apex:column headerValue="Download Link" value="{!TA.downloadLink}"/>   
+   </apex:pageBlockTable>   
+             
+        <apex:commandButton action="{!techAttachPrevious}" value="Previous" reRender="techattach" disabled="{!techAttachPrevBool}"/>        
+        <apex:commandButton action="{!techAttachNext}" value="Next"  reRender="techattach" disabled="{!techAttachNextBool}"/> 
+        <!--<apex:commandButton action="{!callTechAttachmentPage}" onclick="newpage()" value="Add New"  /> -->
+        <apex:commandLink action="{!callTechAttachmentPage}" target="_blank" value="Add New"  /> 
+          
+  </apex:pageBlock>
+  </apex:form>
+</apex:page>

@@ -1,0 +1,9 @@
+<apex:page standardController="GE_PRM_Channel_Appointment_Approver__c" extensions="GE_PRM_Channel_Appointment_Approvers" action="{!redirectChAppApproval}" >
+    <apex:outputPanel id="a" rendered="{!isApprover==false}">
+    <apex:form >
+        <apex:messages rendered="{!isApprover==false}"/>
+        <!-- <apex:commandLink action="{!goBack}" value="Go Back"/> -->
+        <apex:commandButton action="{!goBack}" value="Back to Channel Appointment" />
+    </apex:form>
+    </apex:outputPanel>
+</apex:page>

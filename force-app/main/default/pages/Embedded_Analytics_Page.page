@@ -1,0 +1,40 @@
+<apex:page >
+<!--<apex:page standardController="GE_HQ_Account_Plan__c" extensions="Embedded_Analytics_Extn">
+<script type="text/javascript" src="{!URLFOR($Resource.Jquery,'../Jquery')}"></script>
+
+<script type="text/javascript">
+    $("#ReportFrame0").ready(function(){
+       alert('inside');
+      //var frame=document.getElementById("{!$Component.ReportDiv.ReportFrame0}");
+      var frame=document.getElementById("ReportFrame0");
+      alert(frame);
+       var insideFrame=frame.contentWindow || frame.contentDocument;
+       //var Frame=insideFrame.contents().find("html").html();
+       alert(insideFrame);
+       var l=insideFrame.document.getElementsByName("memorize").length;
+       alert(l);
+       insideFrame.document.getElementsByName("memorize").click();
+    });
+</script>-->
+
+ <!--<apex:iframe src="/{!Report0Id}?pv0={!DDUNS}" id="ReportFrame0" scrolling="true"/>-->
+      <!--  <c:Embedded_Analytics_Component id="EAC"
+           Report0Id="{!Report0Id}" Report0Name="{!Report0Name}" 
+           Report1Id="{!Report1Id}" Report1Name="{!Report1Name}" 
+           Report2Id="{!Report2Id}" Report2Name="{!Report2Name}"
+           Report3Id="{!Report3Id}" Report3Name="{!Report3Name}"  
+           Report4Id="{!Report4Id}" Report4Name="{!Report4Name}" 
+           Report5Id="{!Report5Id}" Report5Name="{!Report5Name}" 
+           Report6Id="{!Report6Id}" Report6Name="{!Report6Name}"  
+           Report7Id="{!Report7Id}" Report7Name="{!Report7Name}" 
+           Report8Id="{!Report8Id}" Report8Name="{!Report8Name}" 
+           Report9Id="{!Report9Id}" Report9Name="{!Report9Name}" 
+           Report10Id="{!Report10Id}" Report10Name="{!Report10Name}" 
+           Report11Id="{!Report11Id}" Report11Name="{!Report11Name}" 
+           Report12Id="{!Report12Id}" Report12Name="{!Report12Name}" 
+           Report13Id="{!Report13Id}" Report13Name="{!Report13Name}" 
+           Report14Id="{!Report14Id}" Report14Name="{!Report14Name}" 
+           DashboardId="{!DashId}" pv0="{!DDUNS}"/>
+           -->
+
+</apex:page>

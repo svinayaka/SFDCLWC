@@ -1,0 +1,127 @@
+<!--
+================================================================
+Page Name        : GE_DS_LocWithIps
+Author          : Jagan Mohan Cherlakola
+Created Date    : 12/12/2013
+Reason          : This Page is used with 'GE_DS_LocWithIPs_Controller' class to display the configuration of Installed Products on Location.
+Test Class      : GE_DS_LocWithIPs_ControllerTest
+================================================================
+-->
+
+
+
+
+
+<apex:page standardcontroller="SVMXC__Site__c" extensions="GE_DS_LocWithIPs_Controller" showHeader="false" sidebar="false">
+   <script type="text/javascript" src="/path/to/jquery-latest.js"></script> 
+<script type="text/javascript" src="/path/to/jquery.tablesorter.js"></script>
+   <style>
+   .headerRow .headerStyle{background-color:#D1E9F5;color:#FFFFFF};
+   #loc_IP
+   {
+    font:15px arial,Arial Black;
+     margin-left:auto;
+     margin-right:auto;
+     width:100%;
+     background-color:#D1E9F5;
+     text-align:left;
+     padding:8px;
+     }
+   
+  
+   }
+   
+   
+   </style>
+   
+   <script>
+        function switchMenu(obj,obj1,obj2) 
+        {
+            var el = document.getElementById(obj);                                       
+            if ( el.style.display != 'none' ) {
+            el.style.display = 'none';
+            }
+            else {
+            el.style.display = '';
+            }
+            var e2 = document.getElementById(obj1);                                       
+            if ( e2.style.display != 'none' ) {
+            e2.style.display = 'none';
+            }
+            else {
+            e2.style.display = '';
+            }
+             var e3 = document.getElementById(obj2);                                       
+            if ( e2.style.display != 'none' ) {
+            e3.style.display = 'none';
+            }
+            else {
+            e3.style.display = '';
+            }
+
+        }
+        
+        
+        $(document).ready(function() 
+    { 
+        $("#myTable").tablesorter( {sortList: [[0,0], [1,0]]} ); 
+    } 
+); 
+    
+    
+        
+        
+</script>
+
+    <apex:pageblock >     
+        <apex:pageblocktable value="{!x}"  var="i">
+            <apex:column >
+                   <apex:facet name="header">                                        
+                         Location                                                                               
+                    </apex:facet>
+                    <apex:outputpanel id="plusimage">
+                          <apex:image url="{!$Resource.Plus_Image}" onclick="switchMenu('{!$Component.inlinetablesec}','{!$Component.minusimage}','{!$Component.plusimage}')" /> 
+                    </apex:outputpanel>
+                    <apex:outputpanel id="minusimage" style="display:none;">
+                          <apex:image url="{!$Resource.Minus_Image}" onclick="switchMenu('{!$Component.inlinetablesec}','{!$Component.plusimage}','{!$Component.minusimage}')" />
+                    </apex:outputpanel>{!SVMXC__Site__c.Name}
+                    
+                    <apex:outputpanel id="inlinetablesec" style="display:none;">
+                                                <apex:variable value="{!0}" var="rowNum"/>
+                                                <apex:repeat var="count" value="{!Ips}">
+                                                 <apex:variable var="rowNum" value="{!rowNum+1}"/>   
+                                                </apex:repeat>
+                            <apex:outputText rendered="{!rowNum=0}">  No Installed Product  </apex:outputText>
+                        
+                        <apex:pageblocktable id="myTable"  style="font-style:Courier New;font-weight:font-weight:lighter;" value="{!Ips}" var="tm" align="right" rendered="{!rowNum>0}">  
+                            <apex:column headerClass="loc_IP"  headerValue="Installed Product" >
+                          <apex:image url="{!$Resource.GE_DS_IP_Icon}" width="13" height="13"/> <apex:outputLink target="blank" value="/{!tm.Id}"> <apex:outputfield value="{!tm.Name}"/></apex:outputLink>
+                             </apex:column>
+                             <apex:column headerValue="Product Name" >
+                                   <apex:outputfield value="{!tm.SVMXC__Product_Name__c}"/>
+                             </apex:column>  
+                             <apex:column headerValue="Serial/LotNumber">
+                                   <apex:outputfield value="{!tm.SVMXC__Serial_Lot_Number__c}"/>
+                             </apex:column>  
+                             <apex:column headerValue="Status">
+                                   <apex:outputfield value="{!tm.SVMXC__Status__c}"/>
+                             </apex:column>  
+                             <apex:column headerValue="City" >
+                                   <apex:outputfield value="{!tm.SVMXC__City__c}"/>
+                             </apex:column> 
+                             <apex:column style="" headerValue="Country" >
+                                   <apex:outputfield value="{!tm.SVMXC__Country__c}"/>
+                             </apex:column>                          
+                        </apex:pageblocktable>
+                        
+                   </apex:outputpanel>  
+                       
+           
+            </apex:column>
+            
+          
+            
+           
+        </apex:pageblocktable>
+    </apex:pageblock>
+</apex:page>

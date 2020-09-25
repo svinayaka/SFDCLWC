@@ -1,0 +1,25 @@
+<apex:page standardcontroller="Sub_Dealer__c" extensions="GE_PRM_SubDealer_Class" sidebar="false" showHeader="true"  standardstylesheets="true">
+    <apex:form id="frm">
+        <apex:pageBlock title="Branch Office / Subsidiary Details" mode="view">
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Back" action="{!backToChApp}"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection columns="2"> 
+                <apex:outputField value="{!Sub_Dealer__c.GE_PRM_Affiliate_dependent_type__c}"/>
+                <apex:outputField value="{!Sub_Dealer__c.GE_PRM_Legal_name__c}"/>
+                <apex:outputField value="{!Sub_Dealer__c.GE_PRM_Address_line_1__c}"/>
+                <apex:outputField value="{!Sub_Dealer__c.GE_PRM_Phone__c}"/>
+                <apex:outputField value="{!Sub_Dealer__c.GE_PRM_Address_line_2__c}"/>
+                <apex:outputField value="{!Sub_Dealer__c.GE_PRM_Mobile__c}"/>
+                <apex:outputField value="{!Sub_Dealer__c.GE_PRM_City__c}"/>
+                <apex:outputField value="{!Sub_Dealer__c.GE_PRM_Email__c}"/>
+                <apex:outputField value="{!Sub_Dealer__c.GE_PRM_Postal_code__c}"/>
+                <apex:outputField value="{!Sub_Dealer__c.GE_PRM_City_of_registration__c}"/>
+                <apex:outputField value="{!Sub_Dealer__c.GE_PRM_Country__c}"/>
+                <apex:outputField value="{!Sub_Dealer__c.GE_PRM_Ownership__c}"/>
+                <apex:outputField value="{!Sub_Dealer__c.GE_PRM_Authorized_commercial_lines__c}"/> 
+                <apex:outputField value="{!Sub_Dealer__c.GE_PRM_Prinicipal_Conatct_Text__c}"/> 
+             </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

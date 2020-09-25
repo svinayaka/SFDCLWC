@@ -1,0 +1,2616 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Big_Deal_Alert</fullName>
+        <description>DM Email Notifications - Opportunity; Opportunity crossing Big Deal threshold; Sent to set of Leadership users through batch job</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Big_Deal_Alert_Users</recipient>
+            <type>group</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales - Primary</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Opportunity_Email_Templates/Big_Deal_Alerts</template>
+    </alerts>
+    <alerts>
+        <fullName>Deal_Team_alert_for_Risk_Reject</fullName>
+        <description>DM Email Notifications - Opportunity; Opportunity Risk Rejection; Email sent to-Sales Primary, CPR</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Commercial Primary Resource</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales - Primary</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Risk_Process_Email_Templates/Deal_Team_notification_on_Risk_Module_rejection</template>
+    </alerts>
+    <alerts>
+        <fullName>Deal_Team_alert_for_Risk_approve</fullName>
+        <description>DM Email Notifications - Opportunity; Opportunity Risk Approved; Email sent to-Sales Primary, CPR</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Commercial Primary Resource</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales - Primary</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Risk_Process_Email_Templates/Deal_team_notification_on_Risk_module_approval</template>
+    </alerts>
+    <alerts>
+        <fullName>Deal_team_alert_for_Oppty_PreBid_approval</fullName>
+        <description>DM Email Notifications - Opportunity; Opportunity Prebid Approval; Email sent to- all Deal Team Members</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Application Engineer</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Application Engineer - Primary</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial Finance</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial Primary Resource</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial Resource</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Compliance</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Following</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>HSE</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Legal</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Marketing</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>OTR/Execution</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Pricing</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Reviewer</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales - Primary</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Risk_Process_Email_Templates/Deal_Team_notification_on_PreBid_approval</template>
+    </alerts>
+    <alerts>
+        <fullName>Deal_team_alert_for_Oppty_PreBid_rejection</fullName>
+        <description>DM Email Notifications - Opportunity; Opportunity PreBid Rejection; Email sent to- All Deal Team Members</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Application Engineer</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Application Engineer - Primary</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial Finance</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial Primary Resource</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial Resource</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Compliance</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Following</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>HSE</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Legal</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Marketing</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>OTR/Execution</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Pricing</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Reviewer</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales - Primary</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Risk_Process_Email_Templates/Deal_Team_notification_on_PreBid_rejection</template>
+    </alerts>
+    <alerts>
+        <fullName>Deal_team_alert_on_Opportunity_Deal_approval</fullName>
+        <description>DM Email Notifications - Opportunity; Opportunity Deal Approval; Email sent to-Sales Primary, CPR</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Commercial Primary Resource</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales - Primary</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Risk_Process_Email_Templates/Deal_Team_notification_on_DealDesk_approval</template>
+    </alerts>
+    <alerts>
+        <fullName>Deal_team_alert_on_Opportunity_Deal_rejection</fullName>
+        <description>DM Email Notifications - Opportunity; Opportunity Deal Rejection; Email sent to-Sales Primary, CPR</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Commercial Primary Resource</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales - Primary</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Risk_Process_Email_Templates/Deal_Team_notification_on_DealDesk_rejection</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_notification_to_Owner</fullName>
+        <description>NOT Used - Email notification to Owner</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/Pipelinemanagement</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PW_AP_Bid_validity_date</fullName>
+        <description>NOT Used - Current Date is two weeks in excess of the Bid validity Date,Opportunity creator will recieve a mail</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/GE_PW_AP_Bid_Date_Expired</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PW_AP_Contract_Signing_Date</fullName>
+        <description>NOT Used - Current Date is two weeks in excess of the Expected contract Signed Date,Opportunity creator will recieve a mail</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/GE_PW_AP_Contract_Signing_Date</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PW_AS_Expected_Order_Date_OverDue_In_14Days</fullName>
+        <description>NOT Used - GE_PW_AS_Expected Order Date_OverDue_In_14Days</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Pipelinemanagement/GE_PW_AS_Expected_Order_Date_Overdue_In_14_Days</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PW_AS_Expected_Order_Date_OverDue_YesteDay</fullName>
+        <description>NOT Used - GE_PW_AS_Expected Order Date_OverDue_YesteDay</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Pipelinemanagement/GE_PW_AS_Expected_Order_Date_Overdue_Yesterday</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PW_NUC_CommOps_Status</fullName>
+        <ccEmails>dlenergy.genebilling@ge.com</ccEmails>
+        <description>NOT Used - GE PW NUC CommOps Status</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Account Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Application Engineer</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Approver</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Channel Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>CommOPs Mgr</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial Director</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial Leader</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial Operations</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial Primary Resource</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial Support</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Corporate Accounts</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Director</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Domain Leader</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Ecosystems Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Field Engineer</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Field Support Agent</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>GDSI</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>ITP Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Inside Sales Rep</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Other CommOps Leader</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>P&amp;L</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Primary Channel Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Proposal Manager (GPO)</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>RCT &amp; APM</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>RSL</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>SWAT Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales Director</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales Leader</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales Manager - Primary</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales Owner</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Service Area Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Services</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sourcing Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Tech Director</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Technical Application Engineer</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Technical Sales Director</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Pipelinemanagement/GE_PW_NUC_CommOps_OrderAccptd</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PW_NUC_Mail_Sales_Team</fullName>
+        <description>NOT Used - Send mail to sales team if expected order date is changed</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Account Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Application Engineer</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Approver</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Channel Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>CommOPs Mgr</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial Director</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial Leader</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial Operations</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial Primary Resource</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial Support</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Corporate Accounts</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Director</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Domain Leader</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Ecosystems Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Field Engineer</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Field Support Agent</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>GDSI</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>ITP Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Inside Sales Rep</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Other CommOps Leader</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>P&amp;L</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Proposal Manager (GPO)</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>RCT &amp; APM</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>RSL</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>SWAT Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales Director</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales Leader</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales Manager - Primary</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales Owner</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Service Area Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Services</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sourcing Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Tech Director</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Technical Application Engineer</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Technical Sales Director</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/GE_PW_NUC_Sales_team_Notification</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PW_TML_AS_Opportunity_Disposition_Alert</fullName>
+        <description>NOT Used - Opportunity Disposition Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Account Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Application Engineer</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Approver</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Channel Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>CommOPs Mgr</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial Director</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial Leader</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial Operations</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial Primary Resource</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial Support</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Director</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Domain Leader</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Ecosystems Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Field Engineer</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Field Support Agent</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>ITP Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Inside Sales Rep</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Other CommOps Leader</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>P&amp;L</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>RCT &amp; APM</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>RSL</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>SWAT Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales Director</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales Manager - Primary</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales Owner</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Service Area Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Services</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sourcing Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Tech Director</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Technical Application Engineer</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Technical Sales Director</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/GE_PW_TML_AS_Oppty_Dispositioned</template>
+    </alerts>
+    <alerts>
+        <fullName>Notification_when_new_member_is_added_to_Deal_Team</fullName>
+        <description>DM Email Notifications - Opportunity; New Deal Team Member; Email sent to- Users with Sales Role</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Sales</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Opportunity_Email_Templates/Deal_Team_notification_on_new_member_addition</template>
+    </alerts>
+    <alerts>
+        <fullName>Notify_the_members_of_the_opportunity_if_ito_otr_checklist_is_completed</fullName>
+        <description>Notify the members of the opportunity if ito-otr checklist is completed</description>
+        <protected>false</protected>
+        <recipients>
+            <field>OTR_OWNER_EMAIL_Ge_Og__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <recipient>AVA/Quality</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Application Engineer</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Application Engineer - Primary</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial Finance</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial Primary Resource</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial Resource</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Compliance</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Contracts Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Executive Sponsor</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Field Sales</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Following</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>HSE</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Legal</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Marketing</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>OTR/Execution</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Pricing</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Project Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Quality</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Reviewer</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales - Primary</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <field>ITO_OWNER_Ge_Og__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Opportunity_Email_Templates/ITOOTR_email_notification_template</template>
+    </alerts>
+    <alerts>
+        <fullName>OG_GS_Include_for_Rollup_is_changed</fullName>
+        <description>NOT Used - OG GS Include for Rollup is changed</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Account Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Application Engineer</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Approver</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Channel Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>CommOPs Mgr</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial Director</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial Leader</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial Operations</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial Primary Resource</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial Support</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Corporate Accounts</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Director</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Domain Leader</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Ecosystems Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Field Engineer</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Field Support Agent</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>GDSI</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>ITP Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Inside Sales Rep</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Other CommOps Leader</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>P&amp;L</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Primary Channel Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Proposal Manager (GPO)</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>RCT &amp; APM</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>RSL</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>SWAT Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales Director</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales Leader</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales Manager - Primary</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales Owner</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Service Area Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Services</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sourcing Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Tech Director</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Technical Application Engineer</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Technical Sales Director</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/OG_GS_Rollup_Change_Notification</template>
+    </alerts>
+    <alerts>
+        <fullName>Quote_expiration_date_is_approaching</fullName>
+        <description>NOT Used - Quote expiration date is approaching</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Operations/GE_ES_Proposal_Expiring</template>
+    </alerts>
+    <alerts>
+        <fullName>To_notify_OTR_owner_if_the_oppty_is_closed_lost_or_cancelled</fullName>
+        <description>To notify OTR owner if the oppty is closed lost or cancelled</description>
+        <protected>false</protected>
+        <recipients>
+            <field>OTR_OWNER_EMAIL_Ge_Og__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Opportunity_Email_Templates/OTR_opty_is_closed_cancelled</template>
+    </alerts>
+    <alerts>
+        <fullName>email_t_be_sent_to_sales_team_when_stage_is_changed</fullName>
+        <description>NOT Used - email t be sent to sales team when stage is changed</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Account Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Application Engineer</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Approver</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Channel Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>CommOPs Mgr</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial Director</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial Leader</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial Operations</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial Primary Resource</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial Support</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Corporate Accounts</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Director</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Domain Leader</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Ecosystems Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Field Engineer</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Field Support Agent</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>GDSI</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>ITP Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Inside Sales Rep</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Other CommOps Leader</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>P&amp;L</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Primary Channel Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Process Engineer</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Proposal Manager (GPO)</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>RCT &amp; APM</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>RSL</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>SWAT Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales Director</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales Leader</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales Manager - Primary</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales Owner</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Service Area Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Services</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sourcing Manager</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>TQC</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Tech Director</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Technical Application Engineer</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Technical Sales Director</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/Nuclear_Stage_Change</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Bid_To_Win_Approval_Date_Update</fullName>
+        <field>bid_to_win_approval_date_ge_og__c</field>
+        <formula>Today()</formula>
+        <name>Bid To Win Approval Date Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Bid_To_Win_Approval_Date_to_Empty</fullName>
+        <field>bid_to_win_approval_date_ge_og__c</field>
+        <name>Bid To Win Approval Date to Empty</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Bid_To_Win_Approval_to_False</fullName>
+        <field>bid_to_win_approval_ge_og__c</field>
+        <literalValue>0</literalValue>
+        <name>Bid To Win Approval to False</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Bid_To_Win_Approval_to_True</fullName>
+        <field>bid_to_win_approval_ge_og__c</field>
+        <literalValue>1</literalValue>
+        <name>Bid To Win Approval to True</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Blank_Link_to_Documentation</fullName>
+        <description>Make the link to documentation field blank if there are no supporting documents</description>
+        <field>LINK_TO_DOCUMENTATION_IFAPPLICABLE_Ge_og__c</field>
+        <name>Blank Link to Documentation</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Blank_Out_Date_Completed_ITO_OTR</fullName>
+        <field>Date_Completed_ITO_OTR_GE_OG__c</field>
+        <name>Blank Out Date Completed ITO OTR</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Blank_Out_F_PT_segment_field</fullName>
+        <field>F_AND_PT_Segment_GE_OG__c</field>
+        <name>Blank Out F&amp;PT segment field</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>DSA_WF_Blank_out</fullName>
+        <field>dsa_workflow_ge_og__c</field>
+        <name>DSA WF # Blank out</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Deal_Desk_Rating_Equals_Deal_Desk</fullName>
+        <field>deal_path_ge_og__c</field>
+        <literalValue>Deal Desk</literalValue>
+        <name>Deal Desk Rating Equals Deal Desk</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Deal_Desk_Rating_Equals_Express</fullName>
+        <field>deal_path_ge_og__c</field>
+        <literalValue>Express</literalValue>
+        <name>Deal Desk Rating Equals Express</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Deal_Desk_Rating_Equals_Undtermined</fullName>
+        <field>deal_path_ge_og__c</field>
+        <literalValue>Pending</literalValue>
+        <name>Deal Desk Rating Equals Undtermined</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>EOD_Year_Beyond_Quarter_Convertible</fullName>
+        <field>EOD_Year_Beyond_Qtr_Convertible_ge_og__c</field>
+        <formula>0</formula>
+        <name>EOD Year (Beyond Quarter) Convertible($)</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Forecast_Changed_To_True</fullName>
+        <field>Forecast_Changed_ge_og__c</field>
+        <literalValue>1</literalValue>
+        <name>Forecast Changed To True</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_OGGS_StageHigh</fullName>
+        <field>StageName</field>
+        <literalValue>Active - High Probability</literalValue>
+        <name>GE_OGGS_StageHigh</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PW_WES_Stage_Closed_Won</fullName>
+        <field>StageName</field>
+        <literalValue>Closed Won</literalValue>
+        <name>Stage Closed Won</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>HRCW_blank_out</fullName>
+        <field>countryworkflow_ge_og__c</field>
+        <name>HRCW # blank out</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Increase_Revision_Count</fullName>
+        <field>Bid_Revision_Counter_ge_og__c</field>
+        <formula>IF( Bid_Revision_Counter_ge_og__c &gt;0,Bid_Revision_Counter_ge_og__c+1,1)</formula>
+        <name>Increase Revision Count</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Need_Commps_Support_to_checked</fullName>
+        <field>need_comm_ops_support_ge_og__c</field>
+        <literalValue>1</literalValue>
+        <name>Need Commps Support to checked</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Opportunity_Type_Field_Update</fullName>
+        <field>opportunity_type_ge_og__c</field>
+        <formula>RecordType.Name</formula>
+        <name>Opportunity Type Field Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Opporunity_Competitor_to_false</fullName>
+        <field>competitor_ge_og__c</field>
+        <literalValue>0</literalValue>
+        <name>Opporunity Competitor to false</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Opporunity_Competitor_to_true</fullName>
+        <field>competitor_ge_og__c</field>
+        <literalValue>1</literalValue>
+        <name>Opporunity Competitor to true</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_Big_Deal_Alert_Sent_field_to_True</fullName>
+        <field>Big_Deal_Alert_Sent_ge_og__c</field>
+        <literalValue>1</literalValue>
+        <name>Set Big Deal Alert Sent field to True</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_IsExpress_To_True_On_Creation</fullName>
+        <field>Is_express_ge_og__c</field>
+        <literalValue>Yes</literalValue>
+        <name>Set IsExpress To True On Creation</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_Is_Negotiating_checkbox_to_false</fullName>
+        <field>Is_Negotiating_ge_og__c</field>
+        <literalValue>0</literalValue>
+        <name>Set Is Negotiating checkbox to false</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_Is_Negotiating_checkbox_to_true</fullName>
+        <field>Is_Negotiating_ge_og__c</field>
+        <literalValue>1</literalValue>
+        <name>Set Is Negotiating checkbox to true</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_multi_tier_flag_as_false</fullName>
+        <field>MultiTier3_ge_og__c</field>
+        <literalValue>0</literalValue>
+        <name>Set multi tier flag as false</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Bid_Sent_Count</fullName>
+        <field>Bid_Sent_Count_ge_og__c</field>
+        <formula>IF(ISBLANK(Bid_Sent_Count_ge_og__c ),0, Bid_Sent_Count_ge_og__c ) + 1</formula>
+        <name>Update Bid Sent Count</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Bid_Sent_Date</fullName>
+        <field>bid_sent_date_ge_og__c</field>
+        <formula>Today()</formula>
+        <name>Update Bid Sent Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_ClosedDate_for_closedGrouped_Flow</fullName>
+        <field>CloseDate</field>
+        <formula>IF(PRIORVALUE(CloseDate) &gt; Today(), PRIORVALUE(CloseDate), CloseDate)</formula>
+        <name>Update ClosedDate for closedGrouped Flow</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Competitor_1_GE_OG</fullName>
+        <field>competitor_1_ge_og__c</field>
+        <name>Update_Competitor_1_GE_OG</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Competitor_2_GE_OG</fullName>
+        <field>competitor_2_ge_og__c</field>
+        <name>Update_Competitor_2_GE_OG</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Convertibilty_to_NULL</fullName>
+        <field>GE_OG_Convertible_Amount__c</field>
+        <name>Update Convertibilty to NULL</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Date_On_Stage_Change_Action</fullName>
+        <description>Updates the Stage Change Date on change of opportunity stage.</description>
+        <field>stage_changed_date_ge_og__c</field>
+        <formula>TODAY()</formula>
+        <name>Update Date On Stage Change Action</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Delivery_Date</fullName>
+        <field>delivery_date_ge_og__c</field>
+        <formula>CloseDate</formula>
+        <name>Update Delivery Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Disposition_Date_GE_OG</fullName>
+        <field>disposition_date_ge_og__c</field>
+        <formula>Today()</formula>
+        <name>Update_Disposition_Date_GE_OG</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_IsGlobal_To_false</fullName>
+        <field>is_global_ge_og__c</field>
+        <literalValue>0</literalValue>
+        <name>Update IsGlobal To false</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_IsGlobal_To_true</fullName>
+        <field>is_global_ge_og__c</field>
+        <literalValue>1</literalValue>
+        <name>Update IsGlobal To true</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Is_Lockecd_Opportunity</fullName>
+        <field>is_locked_opportunity_ge_og__c</field>
+        <formula>if( Or(is_locked_opportunity_ge_og__c = null,is_locked_opportunity_ge_og__c = 0),   1,is_locked_opportunity_ge_og__c+1)</formula>
+        <name>Update_Is_Lockecd_Opportunity</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Opportunity_CM</fullName>
+        <field>oppty_cm_ge_og__c</field>
+        <formula>If(AND(has_product_value_ge_og__c), 
+If(primary_product_cm_ge_og__c!=0 &amp;&amp; pipeline_amount_ge_og__c!=0, 
+If(primary_product_cm_ge_og__c &gt; 0 &amp;&amp; pipeline_amount_ge_og__c &gt; 0, (primary_product_cm_ge_og__c/pipeline_amount_ge_og__c), 
+If(primary_product_cm_ge_og__c &gt; 0 &amp;&amp; pipeline_amount_ge_og__c &lt; 0, (primary_product_cm_ge_og__c/pipeline_amount_ge_og__c) * -1, 
+If(primary_product_cm_ge_og__c &lt; 0 &amp;&amp; pipeline_amount_ge_og__c &gt; 0, (primary_product_cm_ge_og__c/pipeline_amount_ge_og__c), 
+If(primary_product_cm_ge_og__c &lt; 0 &amp;&amp; pipeline_amount_ge_og__c &lt; 0, (primary_product_cm_ge_og__c/pipeline_amount_ge_og__c) * -1, 0)))), 
+0),0)</formula>
+        <name>Update_Opportunity_CM</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Opportunity_Closed_Won_GE_OG</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>O_G_Closed</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Update_Opportunity_Closed_Won_GE_OG</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_PreviousAmount</fullName>
+        <field>Previous_Amount__c</field>
+        <formula>PRIORVALUE(Amount_USD_ge_og__c)</formula>
+        <name>Update_PreviousAmount</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Push_Count</fullName>
+        <field>Push_Count_ge_og__c</field>
+        <formula>IF(ISBLANK(Push_Count_ge_og__c ),0, Push_Count_ge_og__c ) + 1</formula>
+        <name>Update Push Count</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Ship_Date</fullName>
+        <field>delivery_date_ge_og__c</field>
+        <formula>CloseDate</formula>
+        <name>Update Ship Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_StageName_To_Negotiating</fullName>
+        <field>StageName</field>
+        <literalValue>Negotiating</literalValue>
+        <name>Update StageName To Negotiating</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Stage_to_Active_Commit</fullName>
+        <description>Updates the Opp Stage to Active - Commit.</description>
+        <field>StageName</field>
+        <literalValue>Active - Commit</literalValue>
+        <name>Update Stage to Active - Commit</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Year_Convertibilty_to_NULL</fullName>
+        <field>EOD_Year_Beyond_Qtr_Convertible_ge_og__c</field>
+        <name>Update Year Convertibilty to NULL</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_estimated_Amount</fullName>
+        <field>amount_ge_og__c</field>
+        <formula>pipeline_amount_ge_og__c</formula>
+        <name>Update_estimated_Amount</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Was_Budgetary_Update_GE_OG</fullName>
+        <field>was_budgetary_ge_og__c</field>
+        <literalValue>1</literalValue>
+        <name>Was Budgetary Update GE OG</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>blank_antiboycott_WF_on_Chnage</fullName>
+        <field>Anti_Boycott_Workflow_ge_og__c</field>
+        <name>blank antiboycott WF # on Chnage</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>blank_out_DSA_when_amount_50k</fullName>
+        <field>dsa_workflow_ge_og__c</field>
+        <name>blank out DSA when amount &lt; 50k</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>blank_out_antiboycott</fullName>
+        <field>Anti_boycott_ge_og__c</field>
+        <name>blank out antiboycott</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>blank_out_antiboycott_WF</fullName>
+        <field>Anti_Boycott_Workflow_ge_og__c</field>
+        <name>blank out antiboycott WF#</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>blank_out_antiboycott_wf_blank</fullName>
+        <field>Anti_Boycott_Workflow_ge_og__c</field>
+        <name>blank out antiboycott wf# blank</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>mark_display_ito_otr_to_true</fullName>
+        <field>Display_ITR_OTR_Checklist__c</field>
+        <literalValue>1</literalValue>
+        <name>mark display ito otr to true</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>mark_the_historic_opportunity_false</fullName>
+        <field>historic_opportunity_ge_og__c</field>
+        <literalValue>0</literalValue>
+        <name>mark the historic opportunity false</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>populate_opty_amount</fullName>
+        <field>opty_amount_GE_OG__c</field>
+        <formula>IF((primary_product_count_ge_og__c &gt;0),(Amount/CURRENCYRATE(TEXT(CurrencyIsoCode))) ,(amount_ge_og__c/ CURRENCYRATE(TEXT(CurrencyIsoCode))))</formula>
+        <name>populate opty amount</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>updateBidRevisionneeded</fullName>
+        <field>Bid_Revision_Needed_ge_og__c</field>
+        <literalValue>0</literalValue>
+        <name>updateBidRevisionneeded</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>updateLastamountmodified</fullName>
+        <field>AmountLastModified__c</field>
+        <formula>LastModifiedDate</formula>
+        <name>updateLastamountmodified</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>update_bid_due_date_count0</fullName>
+        <field>Rev_Bid_Due_Date_Count__c</field>
+        <formula>0</formula>
+        <name>update bid due date count0</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>update_bid_due_date_count_0</fullName>
+        <field>Rev_Bid_Due_Date_Count__c</field>
+        <formula>0</formula>
+        <name>update bid due date count  0</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>update_bid_sent_date0</fullName>
+        <field>Rev_Bid_Sent_Date_Count__c</field>
+        <formula>0</formula>
+        <name>update bid sent date0</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>update_bid_sent_date_blank</fullName>
+        <field>bid_sent_date_ge_og__c</field>
+        <name>update bid sent date blank</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>update_email_sent_checkbox_on_opty</fullName>
+        <field>ITO_OTR_mail_sent_Ge_og__c</field>
+        <literalValue>1</literalValue>
+        <name>update email sent checkbox on opty</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>update_otr_owner_emailsent</fullName>
+        <field>otr_email_sent_for_closed_opty_ge_og__c</field>
+        <literalValue>1</literalValue>
+        <name>update otr owner emailsent</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>update_rev_bid_due_count</fullName>
+        <field>Rev_Bid_Due_Date_Count__c</field>
+        <formula>IF(Rev_Bid_Due_Date_Count__c&gt;0,Rev_Bid_Due_Date_Count__c+1,1)</formula>
+        <name>update rev bid due count</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>update_rev_bid_sent_count</fullName>
+        <field>Rev_Bid_Sent_Date_Count__c</field>
+        <formula>IF( Rev_Bid_Sent_Date_Count__c&gt;0,Rev_Bid_Sent_Date_Count__c+1,1)</formula>
+        <name>update rev bid sent count</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>update_todays_date</fullName>
+        <field>Date_Completed_ITO_OTR_GE_OG__c</field>
+        <formula>today()</formula>
+        <name>update todays date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <outboundMessages>
+        <fullName>SendOpportunityIdToPII</fullName>
+        <apiVersion>35.0</apiVersion>
+        <description>Send Opportunity Id To PII</description>
+        <endpointUrl>https://api.geoilandgas.com/v1/pii/exports/opportunity?api_key=wtewe7agwd6uhfjqxzv4yyxz</endpointUrl>
+        <fields>Id</fields>
+        <includeSessionId>false</includeSessionId>
+        <integrationUser>energy.integration.og@ge.com</integrationUser>
+        <name>SendOpportunityIdToPII</name>
+        <protected>false</protected>
+        <useDeadLetterQueue>false</useDeadLetterQueue>
+    </outboundMessages>
+    <rules>
+        <fullName>Big Deal Alert for Opportunity</fullName>
+        <active>false</active>
+        <formula>RecordType.Name == &apos;O&amp;G&apos; 
+&amp;&amp; !ISNULL(Amount_USD_ge_og__c) 
+&amp;&amp; Amount_USD_ge_og__c &gt;= VALUE($Label.Big_Deal_Amount) 
+&amp;&amp; Big_Deal_Alert_Sent_ge_og__c = false</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Big_Deal_Alert</name>
+                <type>Alert</type>
+            </actions>
+            <actions>
+                <name>Set_Big_Deal_Alert_Sent_field_to_True</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <timeLength>1</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>Blank Out Date Completed ITO OTR</fullName>
+        <actions>
+            <name>Blank_Out_Date_Completed_ITO_OTR</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Opportunity.ITO_OTR_HANDOVER_CHECKLISTCOMPLETE_GE_OG__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.Date_Completed_ITO_OTR_GE_OG__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Blank_out_FANDPT_Segment</fullName>
+        <actions>
+            <name>Blank_Out_F_PT_segment_field</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND (NOT(ISPICKVAL( tier_3_ge_og__c , &apos;Flow &amp; Process Technologies&apos;)), NOT(ISPICKVAL( F_AND_PT_Segment_GE_OG__c , &apos;&apos;) ))</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Change_in_Forecast_Category</fullName>
+        <actions>
+            <name>Forecast_Changed_To_True</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>If Forecast category changes and stagename not change then make forecast category Change = True</description>
+        <formula>ISCHANGED( ForecastCategoryName ) &amp;&amp; NOT( ISCHANGED( StageName ) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Check Bid to Approval</fullName>
+        <actions>
+            <name>Bid_To_Win_Approval_Date_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Bid_To_Win_Approval_to_True</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Opportunity.active_and_approve_dd_count_ge_og__c</field>
+            <operation>greaterThan</operation>
+            <value>0</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>O&amp;G</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Closed Grouped Flow Date Update</fullName>
+        <actions>
+            <name>Update_ClosedDate_for_closedGrouped_Flow</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Opportunity.opportunity_type_ge_og__c</field>
+            <operation>equals</operation>
+            <value>Grouped Flow</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.StageName</field>
+            <operation>equals</operation>
+            <value>Closed Won</value>
+        </criteriaItems>
+        <description>Rule to rollback the Closed Date to existing value if the EOD date is future date.</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Competitor to false</fullName>
+        <actions>
+            <name>Opporunity_Competitor_to_false</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Competitor_1_GE_OG</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Competitor_2_GE_OG</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Opportunity.pre_bid_count_ge_og__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Competitor to true</fullName>
+        <actions>
+            <name>Opporunity_Competitor_to_true</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Opportunity.pre_bid_count_ge_og__c</field>
+            <operation>greaterThan</operation>
+            <value>0</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Estimated Amount updation</fullName>
+        <actions>
+            <name>Update_estimated_Amount</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Estimate amount will be populated from opportunity amount if primaray product is added/deleted/modified.</description>
+        <formula>IF( (ISCHANGED( pipeline_amount_ge_og__c) || ISCHANGED(OLICount_ge_og__c)) &amp;&amp; OLICount_ge_og__c &gt; 0, true, false)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Forecast Change When Opportunity Created</fullName>
+        <actions>
+            <name>Forecast_Changed_To_True</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>If Forecast Category is not Commit when new Opportunity is created, then make categoty as is.</description>
+        <formula>Not(ISPICKVAL(ForecastCategoryName , &apos;Commit&apos;) )</formula>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>ITOOTR email notification</fullName>
+        <actions>
+            <name>Notify_the_members_of_the_opportunity_if_ito_otr_checklist_is_completed</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>update_email_sent_checkbox_on_opty</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Opportunity.ITO_OTR_mail_sent_Ge_og__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.ITO_OTR_HANDOVER_CHECKLISTCOMPLETE_GE_OG__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.tier_2_ge_og__c</field>
+            <operation>notEqual</operation>
+            <value>Turbomachinery &amp; Process Solutions</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>If Amount is Updated</fullName>
+        <actions>
+            <name>Update_PreviousAmount</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>updateLastamountmodified</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND( ISCHANGED(amount_ge_og__c),ISCHANGED(Amount_USD_ge_og__c),      NOT(ISBLANK(TEXT(Amount_USD_ge_og__c))) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>If Delivery Date is Null</fullName>
+        <actions>
+            <name>Update_Delivery_Date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Opportunity.delivery_date_ge_og__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Populate Date completed for ITO OTR checklist</fullName>
+        <actions>
+            <name>update_todays_date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(( ITO_OTR_HANDOVER_CHECKLISTCOMPLETE_GE_OG__c = true ) , OR( ISCHANGED( ITO_OWNER_Ge_Og__c ), ISCHANGED( OTR_OWNER_EMAIL_Ge_Og__c ) , ISCHANGED( OTR_OWNER_SSO_GE_OG__c ) , ( (TEXT(PRIORVALUE(ITO_Supporting_Documents_Included_Ge_Og__c   )) &lt;&gt;  (TEXT(ITO_Supporting_Documents_Included_Ge_Og__c   ))))  ) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Record Type Name Update on opportunity</fullName>
+        <actions>
+            <name>Opportunity_Type_Field_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Update Record Type Name in a custom field so that it can be tracked when the opportunity is closed and it&apos;s Record Type changes to O&amp;G Closed.</description>
+        <formula>AND(RecordType.Name !=&apos;&apos;,RecordType.Name != &apos;O&amp;G Closed&apos;)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Revision Counter</fullName>
+        <actions>
+            <name>Increase_Revision_Count</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>updateBidRevisionneeded</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>update_bid_due_date_count0</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>update_bid_sent_date0</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>update_bid_sent_date_blank</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Opportunity.Bid_Revision_Needed_ge_og__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Set Is Negotiating checkbox to false</fullName>
+        <actions>
+            <name>Set_Is_Negotiating_checkbox_to_false</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>(ISCHANGED( StageName ) &amp;&amp; !ISPICKVAL(StageName , &apos;Negotiating&apos;) &amp;&amp; has_won_lost_reason_ge_og__c = false)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Set Is Negotiating checkbox to true</fullName>
+        <actions>
+            <name>Set_Is_Negotiating_checkbox_to_true</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>ISPICKVAL(StageName , &apos;Negotiating&apos;) &amp;&amp; Is_Negotiating_ge_og__c = false</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Set_IsExpress_To_True_On_Creation_Of_GroupedFlow_And_Hedge</fullName>
+        <actions>
+            <name>Set_IsExpress_To_True_On_Creation</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 OR 2</booleanFilter>
+        <criteriaItems>
+            <field>Opportunity.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Grouped Flow</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Hedge</value>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>StageName_Negotiating_For_GroupedFlow_And_Hedge</fullName>
+        <actions>
+            <name>Update_StageName_To_Negotiating</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 OR 2</booleanFilter>
+        <criteriaItems>
+            <field>Opportunity.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Grouped Flow</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Hedge</value>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>TriggerOMtoPII</fullName>
+        <actions>
+            <name>SendOpportunityIdToPII</name>
+            <type>OutboundMessage</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Opportunity.tier_1_ge_og__c</field>
+            <operation>equals</operation>
+            <value>Oil &amp; Gas</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.tier_2_ge_og__c</field>
+            <operation>equals</operation>
+            <value>Digital Solutions</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.tier_3_ge_og__c</field>
+            <operation>equals</operation>
+            <value>PII Pipeline Solutions</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.StageName</field>
+            <operation>equals</operation>
+            <value>Closed Won,Negotiating</value>
+        </criteriaItems>
+        <description>Rule is intended to detect Digital Solutions - PII Pipeline Solutions opportunities which are Closed Won. Rule triggers an outbound message to a listner service to accomplish the automatic creation of a sales order in the ERP system (Oracle).</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Uncheck Bid to Approval</fullName>
+        <actions>
+            <name>Bid_To_Win_Approval_Date_to_Empty</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Bid_To_Win_Approval_to_False</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Opportunity.active_and_approve_dd_count_ge_og__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>O&amp;G</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Uncheck Multi tier flag for no Oppty products</fullName>
+        <actions>
+            <name>Set_multi_tier_flag_as_false</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>!ISNEW() &amp;&amp; has_opty_product_ge_og__c = false</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Bid Sent Count on Oppty</fullName>
+        <actions>
+            <name>Update_Bid_Sent_Count</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>ISCHANGED( bid_sent_date_ge_og__c)  &amp;&amp; ( PRIORVALUE(bid_sent_date_ge_og__c) &lt; bid_sent_date_ge_og__c)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Comm Ops Support to true for Deal desk</fullName>
+        <actions>
+            <name>Need_Commps_Support_to_checked</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Opportunity.deal_path_ge_og__c</field>
+            <operation>equals</operation>
+            <value>Deal Desk</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>O&amp;G</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Convertibility to NULL when Tier 2 is OFS</fullName>
+        <actions>
+            <name>Update_Convertibilty_to_NULL</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Year_Convertibilty_to_NULL</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Opportunity.tier_2_ge_og__c</field>
+            <operation>equals</operation>
+            <value>Oil Field Services</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>O&amp;G,O&amp;G Closed,Grouped Flow</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Date On Stage Change</fullName>
+        <actions>
+            <name>Update_Date_On_Stage_Change_Action</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Date to be updated with Last stage change date</description>
+        <formula>OR (ISCHANGED(StageName),ISNEW())</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Deal Desk Rating On Opportunity To Express</fullName>
+        <actions>
+            <name>Deal_Desk_Rating_Equals_Express</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>ISPICKVAL(Is_express_ge_og__c,&apos;Yes&apos;) &amp;&amp; (RecordType.Name == $Label.O_G)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Deal Desk Rating On Opportunity To Undetermined</fullName>
+        <actions>
+            <name>Deal_Desk_Rating_Equals_Undtermined</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(is_global_ge_og__c  == false, ISPICKVAL(Is_express_ge_og__c, &apos;&apos;),(RecordType.Name == $Label.O_G))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update EOD Year %28Beyond Quarter%29 Convertible %28%24%29 to zero</fullName>
+        <actions>
+            <name>EOD_Year_Beyond_Quarter_Convertible</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <formula>( amount_ge_og__c = GE_OG_Convertible_Amount__c )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update IsGlobal To false</fullName>
+        <actions>
+            <name>Update_IsGlobal_To_false</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Opportunity.opportunity_region_ge_og__c</field>
+            <operation>equals</operation>
+            <value>Regional</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update IsGlobal To true</fullName>
+        <actions>
+            <name>Update_IsGlobal_To_true</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1</booleanFilter>
+        <criteriaItems>
+            <field>Opportunity.opportunity_region_ge_og__c</field>
+            <operation>equals</operation>
+            <value>Global</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Push Count on Oppty</fullName>
+        <actions>
+            <name>Update_Push_Count</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>ISCHANGED( CloseDate ) &amp;&amp; ( PRIORVALUE(CloseDate ) &lt; CloseDate )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update_Opportunity_CM</fullName>
+        <actions>
+            <name>Update_Opportunity_CM</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>IF(AND(OR(RecordType.Name =  $Label.O_G, RecordType.Name =  $Label.Grouped_Flow, RecordType.Name = $Label.Hedge, RecordType.Name = $Label.O_G_Closed)),True,False)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update_Opportunity_RecordType_OG_Closed_GE_OG</fullName>
+        <actions>
+            <name>Update_Disposition_Date_GE_OG</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Is_Lockecd_Opportunity</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Opportunity_Closed_Won_GE_OG</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(OR(IsPickVal(StageName,&apos;Closed Won&apos;), IsPickVal(StageName,&apos;Closed Lost&apos;), IsPickVal(StageName,&apos;Cancelled&apos;)),     OR(RecordType.DeveloperName = &apos;Grouped_Flow&apos;, RecordType.DeveloperName = &apos;Hedge&apos;,RecordType.DeveloperName = &apos;OG&apos;)    )</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update_Ship_Date_To_Close_Date</fullName>
+        <actions>
+            <name>Update_Ship_Date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>If(AND( RecordType.Name = $Label.O_G,   ISPICKVAL( deal_path_ge_og__c ,&apos;Express&apos;), need_comm_ops_support_ge_og__c = True , ISBLANK(delivery_date_ge_og__c)),True,False)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update_WasBugetary_To_True_GE_OG</fullName>
+        <actions>
+            <name>Was_Budgetary_Update_GE_OG</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1</booleanFilter>
+        <criteriaItems>
+            <field>Opportunity.isbudgetary_ge_og__c</field>
+            <operation>equals</operation>
+            <value>Budgetary</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>balnk out anti boycott request id</fullName>
+        <actions>
+            <name>blank_antiboycott_WF_on_Chnage</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Opportunity.Anti_boycott_ge_og__c</field>
+            <operation>equals</operation>
+            <value>Potential Boycott Language NOT Identified</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.Anti_Boycott_Workflow_ge_og__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>balnk out anti boycott request id when blank</fullName>
+        <actions>
+            <name>blank_out_antiboycott_wf_blank</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Opportunity.Anti_boycott_ge_og__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.Anti_Boycott_Workflow_ge_og__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>blank out DSA when amount %3C 50k</fullName>
+        <actions>
+            <name>blank_out_DSA_when_amount_50k</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Opportunity.Amount_USD_ge_og__c</field>
+            <operation>lessThan</operation>
+            <value>50000</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>blank out HRWF%23 and DSA WF %23</fullName>
+        <actions>
+            <name>DSA_WF_Blank_out</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>HRCW_blank_out</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>blank_out_antiboycott</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>blank_out_antiboycott_WF</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>ISCHANGED( install_country_ge_og__c )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>display ITO OTR checklist</fullName>
+        <actions>
+            <name>mark_display_ito_otr_to_true</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Opportunity.deal_path_ge_og__c</field>
+            <operation>equals</operation>
+            <value>Deal Desk</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.tier_2_ge_og__c</field>
+            <operation>notEqual</operation>
+            <value>Turbomachinery &amp; Process Solutions</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>do not allow adding characters in antiboycottWF</fullName>
+        <actions>
+            <name>mark_the_historic_opportunity_false</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Opportunity.historic_opportunity_ge_og__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.StageName</field>
+            <operation>notEqual</operation>
+            <value>Closed Won,Closed Lost,Cancelled</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>notify OTR when opportunity is closed lost or cacelled</fullName>
+        <actions>
+            <name>To_notify_OTR_owner_if_the_oppty_is_closed_lost_or_cancelled</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>update_otr_owner_emailsent</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(OR( ISPICKVAL( StageName , &apos;Closed Lost&apos;),ISPICKVAL( StageName , &apos;Cancelled&apos;)) , NOT(ISPICKVAL( tier_2_ge_og__c , &apos; Turbomachinery &amp; Process Solutions&apos;)),NOT(otr_email_sent_for_closed_opty_ge_og__c),ITO_OTR_HANDOVER_CHECKLISTCOMPLETE_GE_OG__c)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>populate opportunity amount</fullName>
+        <actions>
+            <name>populate_opty_amount</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>(1 AND 2) OR (3 AND 4)</booleanFilter>
+        <criteriaItems>
+            <field>Opportunity.Amount_USD_ge_og__c</field>
+            <operation>notEqual</operation>
+            <value>0</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.opportunity_amount_in_USD__c</field>
+            <operation>equals</operation>
+            <value>USD 0</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.opportunity_amount_in_USD__c</field>
+            <operation>notEqual</operation>
+            <value>USD 0</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.primary_product_count_ge_og__c</field>
+            <operation>greaterThan</operation>
+            <value>0</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>update bid due count</fullName>
+        <actions>
+            <name>update_rev_bid_due_count</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>ISCHANGED( bid_due_date_ge_og__c )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>update bid sent count</fullName>
+        <actions>
+            <name>update_rev_bid_sent_count</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>!ISNULL(bid_sent_date_ge_og__c)&amp;&amp; ISCHANGED( bid_sent_date_ge_og__c)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <tasks>
+        <fullName>Complete_Parent_Company_Guarantee</fullName>
+        <assignedTo>Commercial Primary Resource</assignedTo>
+        <assignedToType>opportunityTeam</assignedToType>
+        <description>http://supportcentral.ge.com/ProcessMaps/form_new_request.asp?prod_id=50451&amp;form_id=303995&amp;node_id=697692&amp;map_id=&amp;reference_id=&amp;reference_type</description>
+        <dueDateOffset>7</dueDateOffset>
+        <notifyAssignee>false</notifyAssignee>
+        <priority>Normal</priority>
+        <protected>false</protected>
+        <status>Not Started</status>
+        <subject>Complete Parent Company Guarantee</subject>
+    </tasks>
+    <tasks>
+        <fullName>Opportunity_needs_Post_Mortem</fullName>
+        <assignedToType>owner</assignedToType>
+        <description>Opportunity needs Post Mortem.</description>
+        <dueDateOffset>14</dueDateOffset>
+        <notifyAssignee>true</notifyAssignee>
+        <priority>Normal</priority>
+        <protected>false</protected>
+        <status>Not Started</status>
+        <subject>Opportunity needs Post Mortem</subject>
+    </tasks>
+    <tasks>
+        <fullName>Post_Mortem_Completion</fullName>
+        <assignedToType>owner</assignedToType>
+        <description>Please complete Post Mortem for this Opportunity.</description>
+        <dueDateOffset>30</dueDateOffset>
+        <notifyAssignee>true</notifyAssignee>
+        <priority>Normal</priority>
+        <protected>false</protected>
+        <status>Not Started</status>
+        <subject>Post Mortem Completion</subject>
+    </tasks>
+    <tasks>
+        <fullName>Review_Opportunity_R3_Queue_Status</fullName>
+        <assignedToType>owner</assignedToType>
+        <description>The Opportunity has been updated to R status = R3 Queue.  Please review the opportunity for any changes.</description>
+        <dueDateOffset>5</dueDateOffset>
+        <notifyAssignee>false</notifyAssignee>
+        <priority>Normal</priority>
+        <protected>false</protected>
+        <status>Not Started</status>
+        <subject>Review Opportunity - R3 Queue Status</subject>
+    </tasks>
+</Workflow>

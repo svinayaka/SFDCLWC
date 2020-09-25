@@ -1,0 +1,117 @@
+<apex:page controller="GE_HQ_TechnicianResumeController" contenttype="application/pdf" renderAs="pdf" cache="true" >
+<style>
+    @page
+    {
+        size: 8.5in 11in;
+        margin-top: 1.25in;
+        margin-left: 1in;
+        margin-right: 1in;
+        margin-bottom: .5in;
+        
+        @bottom-left {
+            font-size:9px;
+            content: "CONFIDENTIAL";
+        }
+        @bottom-center {
+            font-size:9px;
+            content: "page "  counter(page)  " of " counter(pages);           
+        }
+        @bottom-right {
+            font-size:9px;
+            content: "<apex:outputText value="{0,date,yyyyMMM}" ><apex:param value="{!Today}" /></apex:outputText>";
+        }
+        
+        @top-center {
+            content: element(header);
+        }
+    
+    }
+    
+      
+   div.header {
+       position:running(header);
+       text-align:center;
+       font-size:18px;
+       font-weight: bold;
+   }
+   
+   .subheader {
+       text-align:center;
+       font-size:12px;
+       font-weight: bold;
+   }
+   
+   .section {
+       text-align:left;
+       font-size:12px;
+   }
+   
+   .subsection {
+       text-align:left;
+       font-size:12px;
+       position: relative;
+       float:left;
+       padding-left: .25in;
+       width:6.5in;
+       padding-botton: 20px;
+   }
+
+</style>
+
+<div class="header"  ><apex:outputText value="{!Technician.Name}" /><br/><div class="subheader" >Baker Hughes General Electric</div></div>
+
+<div style="clear:both;"></div>
+<apex:outputPanel styleClass="section" rendered="{!DisplaySkills }" >
+    <div class="section" style="text-decoration:underline;" >QUALIFICATIONS</div>
+    <div class="subsection">
+        <ul>
+           <apex:repeat value="{!lstExpertiseBeans}" var="skill" >
+               <!--<li><apex:outputText value="{! skill.SVMXC__Skill__r.Name} - {! skill.SVMXC_Qualification_Status__c} {! skill.Competency_Level__c}" /></li>-->
+               <li><apex:outputText value="{! skill.skill} - {! skill.qualificationStatus} {! skill.expertiseLevel}" /></li>
+           </apex:repeat>
+        </ul>
+    </div>
+    <div style="clear:both;height:5px"></div>
+</apex:outputPanel>
+
+<apex:outputPanel styleClass="section" rendered="{!DisplayWorkExperience}" >
+    <div class="section" style="text-decoration:underline;" >WORK EXPERIENCE</div>
+   <!-- <apex:repeat value="{!WOList}" var="wo">-->
+    <apex:repeat value="{!TechMWO}" var="wo">
+    <!--<div class="subsection">
+        <div style="height:auto;">
+        <div style="float:left; width:2in;" ><apex:outputText value="{0,date,MM/yy}" ><apex:param value="{!wo.SVMXC__Scheduled_Date_Time__c}" /></apex:outputText> - <apex:outputText value="Present" rendered="{!wo.SVMXC__Closed_On__c == null}" /><apex:outputText value="{0,date,MM/yy}" rendered="{!wo.SVMXC__Closed_On__c != null}" ><apex:param value="{!wo.SVMXC__Closed_On__c}" /></apex:outputText></div>
+        <div style="float:left; width:2in; height:auto;" ><apex:outputText value="{!wo.SVMXC__Company__r.Name}" /></div>
+        <apex:outputPanel rendered="{!wo.SVMXC__City__c != null && (wo.SVMXC__Country__c != null || wo.SVMXC__State__c != null)}" ><div style="float:left; width:2in;" ><apex:outputText value="{!wo.SVMXC__City__c}" />, <apex:outputText value="{!wo.SVMXC__Country__c}" rendered="{!wo.SVMXC__State__c == null}" /><apex:outputText value="{!wo.SVMXC__State__c}" rendered="{!wo.SVMXC__State__c != null}" /></div></apex:outputPanel>
+        </div>
+        <div style="clear:both;" ></div>
+        <ul><li><apex:outputPanel rendered="{!wo.SVMXC__Skill__c != null}" ><apex:outputText value="{!wo.SVMXC__Skill__r.Name}" /> - </apex:outputPanel><apex:outputText value="{!wo.GE_SM_HQ_Technology__c}"/></li></ul>
+    </div>-->
+    <div class="subsection">
+        <div style="height:auto;">
+        <div style="float:left; width:2in;" >
+        <apex:outputText value="{0,date,MM/yy}" ><apex:param value="{!wo.SVMXC__Scheduled_Date_Time__c}" />
+        </apex:outputText> - <apex:outputText value="Present" rendered="{!wo.SVMXC__Closed_On__c == null}" />
+        <apex:outputText value="{0,date,MM/yy}" rendered="{!wo.SVMXC__Closed_On__c != null}" >
+            <apex:param value="{!wo.SVMXC__Closed_On__c}" />
+            </apex:outputText></div>
+        <div style="float:left; width:2in; height:auto;" >
+            <apex:outputText value="{!wo.SVMXC__Company__r.Name}" />
+        </div>
+        <apex:outputPanel rendered="{!wo.SVMXC__City__c != null && (wo.SVMXC__Country__c != null || wo.SVMXC__State__c != null)}" ><div style="float:left; width:2in;" >
+        <apex:outputText value="{!wo.SVMXC__City__c}" />, <apex:outputText value="{!wo.SVMXC__Country__c}" rendered="{!wo.SVMXC__State__c == null}" />
+        <apex:outputText value="{!wo.SVMXC__State__c}" rendered="{!wo.SVMXC__State__c != null}" /></div></apex:outputPanel>
+        </div>
+        <div style="clear:both;" ></div>
+        <ul><li><apex:outputPanel rendered="{!wo.SVMXC__Skill__c != null}" >
+        <apex:outputText value="{!wo.SVMXC__Skill__r.Name}" /> - </apex:outputPanel></li></ul>
+    </div>
+    </apex:repeat>
+    <div style="clear:both;height:5px"></div>
+</apex:outputPanel>
+<apex:outputPanel styleClass="section" rendered="{!Technician.GE_SM_HQ_Education__c != null }" >
+    <div class="section" style="text-decoration:underline;" >EDUCATION</div>
+    <div class="subsection"><apex:outputText value="{!Technician.GE_SM_HQ_Education__c}" /></div>
+</apex:outputPanel>
+
+</apex:page>

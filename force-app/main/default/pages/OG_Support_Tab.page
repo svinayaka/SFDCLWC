@@ -1,0 +1,505 @@
+<apex:page StandardController="SFDC_Support_Case__c" extensions="OG_Support_Tab" tabStyle="SFDC_Support_Case__c" sidebar="FALSE">
+    
+    
+    <!-- Define Tab panel .css styles -->
+    <style type="text/css">
+    .activeTab {background-color: #1987D1; color:black; background-image:none; font-size:25px; font-family:"Helvetica",Helvetica;font-weight: bold; -webkit-border-radius: 34px 0px 0px 35px; -moz-border-radius: 34px 0px 0px 35px; border-radius: 34px 0px 0px 35px; font-size:20px; font-style: italic; font-weight: bold; -webkit-box-shadow: #75A3FF 26px 26px 26px; -moz-box-shadow: #75A3FF 26px 26px 26px; box-shadow: #75A3FF 26px 26px 26px; border:2px solid #0052A3;}
+    .inactiveTab { background-color: #8BC2E8; color:white; background-image:none; font-size:25px; font-family:"Helvetica",Helvetica;;font-weight: bold; -webkit-border-radius: 34px 0px 0px 35px; -moz-border-radius: 34px 0px 0px 35px; border-radius: 34px 0px 0px 35px; font-size:20px; font-style: italic; font-weight: bold; -webkit-box-shadow: #9EBFFF 26px 26px 26px; -moz-box-shadow: #9EBFFF 26px 26px 26px; box-shadow: #9EBFFF 26px 26px 26px; border:2px solid #0052A3;}
+    </style>
+    <style type="text/css">
+        .custPopup{
+            background-color: black;
+            border-width: 2px;
+            border-style: solid;
+            z-index: 9999;
+            left: 50%;
+            padding:10px;
+            position: absolute;
+            /* These are the 3 css properties you will need to change so the popup
+            displays in the center of the screen. First set the width. Then set
+            margin-left to negative half of what the width is. You can add
+            the height property for a fixed size pop up if you want.*/
+            width: 500px;
+            margin-left: -250px;
+            top:100px;
+        }
+        .popupBackground{
+            background-color:black;
+            opacity: 0.20;
+            filter: alpha(opacity = 20);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 9998;
+        }
+
+    </style>
+    <script type="text/javascript">
+        
+        function ChangeColor(clr)
+        {   
+            var ids=clr.id;
+            var ctrl = document.getElementById(ids);
+            ctrl.style.color = 'red';
+            var cellelement=ctrl.parentNode ;
+            var rowelement=cellelement.parentNode ;
+            for(var i=1;i<rowelement.cells.length;i++)
+            {
+                rowelement.cells[i].style.color='red';
+            }
+         }
+         
+         function TabClick(selTab)
+         {   
+            var hiddenSec = document.getElementById(hiddenSecId);
+            document.getElementById(hiddenSecId).value = selTab;
+            //alert(selTab);
+         }
+    </script>
+   
+    <apex:tabPanel switchType="Ajax" value="{!strSelTab}" id="theTabPanel"  tabClass="activeTab" inactiveTabClass="inactiveTab">
+    
+     
+        <apex:tab label="HOME" name="Home" id="tabOne" >
+            <apex:form style="background-color: #EDF5FB">
+            
+            
+                <table height="100%" width="100%">
+                    <tr height="100%" width="100%">
+                        <td width="20%" vertical-align="top" >
+                        
+                            <table height="400px" width="200px" >
+                            <tr>
+                                    <td>
+                                        <table height="20px" width="200px" >
+                                        </table>
+                                    </td>
+                                </tr>
+                            <tr align="center">
+                                <td align="center" >
+                                    <apex:outputLabel value="SFDC Help & Tips" style="font-size:20px; font-family:Helvetica;font-weight: bold; text-align:center; vertical-align:middle" />
+                                    <p><apex:outputLabel value="Join the conversation. Share tips, questions and solutions with Compass users all around the world." style="font-size:10px; font-family:Helvetica;font-weight: bold; text-align:center;" /></p>
+                                </td>
+                            </tr>
+                        
+                                <tr align="center">
+                                    <td align="center">
+                                        <p><apex:image value="{!$Resource.Support_Chatter_Logo}" onClick="window.open('/_ui/core/chatter/groups/GroupProfilePage?g=0F9A0000000CyJy');" style="height:100px; width: 100px;" /></p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <table height="30px" width="200px" >
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr align="center">
+                                    <td align="center" >
+                                        <apex:outputLabel value="Feedback" style="font-size:20px; font-family:Helvetica;font-weight: bold; text-align:center; vertical-align:middle" />
+                                        <p><apex:outputLabel value="Did you find this page helpful? Please click the image and answer our Poll question" style="font-size:10px; font-family:Helvetica;font-weight: bold; text-align:center;" /></p>
+                                    </td>
+                                </tr>
+                                <tr align="center">
+                                    <td align="center">
+                                        <p><apex:image value="{!$Resource.Support_Poll}" onClick="window.open('/_ui/core/chatter/groups/GroupProfilePage?g=0F9A0000000CyJy');" style="height:100px; width: 100px;" /></p>
+                                    </td>
+                                </tr>
+                            </table>
+                            
+                                
+                        </td>
+                        <td width="80%" align="center">
+                        <table height="70px" width="100%" text-align="center">
+                            <tr align="center">
+                                <td align="center" >
+                                    <apex:image value="{!$Resource.GE_LOGO_New}" style="height:70px; width: 70px;" />        
+                                </td>
+                            </tr>
+                                <tr align="center" >
+                                    <td align="left" >
+                                    <!-- <p><apex:outputLabel value="If you are reporting issues related to recent commercial transformation release, the process for reporting issues/suggestions is streamlined within Deal Machine. Please report under workspace>>Create>>New Suggestion" style="font-size:17px; font-family:Helvetica;font-weight: bold; text-align:center; color:red;" />
+                                     </p>-->
+                                    <p align="center">
+                                   <!--
+                                   
+                                   <apex:outputLabel value="If you have any" style="font-size:17px; font-family:Helvetica;font-weight: bold; text-align:center; color:red;" />   
+                                  <br> </br><apex:outputLabel value="•  Suggestions – Let us know in Deal Machine Opportunity under Create button" style="font-size:17px; font-family:Helvetica;font-weight: bold; text-align:center; color:red;" />   
+                                  
+                                   <br> </br><apex:outputLabel value="•  Suggestions – Let us know in Deal Machine Opportunity under Create button" style="font-size:17px; font-family:Helvetica;font-weight: bold; text-align:center; color:red;" />   
+                                  <br> </br><apex:outputLabel value="•  Questions and DoA CommOps process inquiries – Chat in 'Ask the Expert' chatter group https://geog.my.salesforce.com/_ui/core/chatter/groups/GroupProfilePage?g=0F912000000TgI5" style="font-size:17px; font-family:Helvetica;font-weight: bold; text-align:center; color:red;" />   
+                                  <br> </br><apex:outputLabel value="•  Bugs and Data Issues – Create Support ticket https://geog--c.na18.visual.force.com/apex/OG_Support_Tab?sfdc.tabName=01rA0000000JqAQ" style="font-size:17px; font-family:Helvetica;font-weight: bold; text-align:center; color:red;" />   
+                                   -->
+                                   
+                                   <dl>
+                                       <dt> <apex:outputLabel value="Related to Deal Machine:" style="font-size:15px; font-family:Helvetica;font-weight: bold; text-align:center; color:red;text-decoration:underline;" />   
+                                           <br></br><br></br></dt>
+  <dt> <apex:outputLabel value="If you have any:" style="font-size:12px; font-family:Helvetica;font-weight: bold; text-align:center; color:red;" />   
+                            <br></br><br></br></dt>
+ 
+  <dd><apex:outputLabel value="•  Suggestions – Let us know in Deal Machine: Create button >> ‘New Suggestion’" style="font-size:12px; font-family:Helvetica;font-weight: bold; text-align:center; color:red;" />   
+                                  <br></br><br></br></dd>
+  <dd><apex:outputLabel value="•  Questions and DoA CommOps process inquiries – Chat in 'Ask the Expert' chatter group" style="font-size:12px; font-family:Helvetica;font-weight: bold; text-align:center; color:red;" />   
+ <br></br>
+ &nbsp; &nbsp; <apex:outputLink value="/" style="font-size:12px; font-family:Helvetica;font-weight: bold; text-align:center;color:red;">https://geog.my.salesforce.com/_ui/core/chatter/groups/GroupProfilePage?g=0F912000000TgI5</apex:outputLink> 
+   <br></br><br></br></dd>
+  <dd><apex:outputLabel value="•  Bugs and Data Issues – Create Support ticket by clicking on the ‘SFDC’ tab above" style="font-size:12px; font-family:Helvetica;font-weight: bold; text-align:center; color:red;" />   
+  <br></br> 
+                                  </dd>
+</dl>
+                                    </p>
+
+                                </td></tr>
+                                  <tr align="center">
+                                     <td align="center">        
+                                    <apex:outputLabel value="Welcome to your new GE Application Help Center! " style="font-size:30px; font-family:Helvetica;font-weight: bold; text-align:center; vertical-align:middle" />
+                                    <p><apex:outputLabel value="Help is on the way! Please select from the menu above the application is giving you trouble and open a case. " style="font-size:15px; font-family:Helvetica;font-weight: bold; text-align:center;" /></p>
+                                </td>
+                            </tr>
+                        </table>
+                            <!--<apex:image url="/servlet/servlet.FileDownload?file= 015Z0000000DZtN" style="text-align:center; height:400px; width:900px;" />-->
+                            <img id="img1" src="{!$Resource.OG_Support_Home_Page_Logo}" style="align:center; height:400px; width:500;"/>
+                        </td>
+                    </tr> 
+                </table>
+           
+                <script language="javascript" type="text/javascript">
+                    var timerid = 0;
+                    var images = new Array( "{!$Resource.OG_Support_Home_Page_Logo_2}",
+                    "{!$Resource.OG_Support_Home_Page_Logo_3}",
+                    "{!$Resource.OG_Support_Home_Page_Logo_4}",
+                    "{!$Resource.OG_Support_Home_Page_Logo}");
+                    var countimages = 0;
+                    function startTime()
+                    {
+                    //alert('INNNN'+countimages);
+                    if(timerid)
+                    {
+                    timerid = 0;
+                    }
+                    var tDate = new Date();
+                    if(countimages == images.length)
+                    {
+                    countimages = 0;
+                    }
+                    if(tDate.getSeconds() % 5 == 0)
+                    {
+                    document.getElementById("img1").src = images[countimages];
+                    }
+                    countimages++;
+                    timerid = setTimeout("startTime()", 1000);
+                    }
+                    startTime();
+            </script>
+        
+   
+            
+            
+            
+                </apex:form>
+                
+        </apex:tab>
+        <apex:tab label="SFDC" name="SFDC" id="tabTwo" onClick="TabClick('SFDC')">
+            <apex:form >
+                <apex:inputHidden id="hiddenSecId" value="{!strSelTab}"/>
+                <p><!--<apex:outputLabel value="If you are reporting issues related to recent commercial transformation release, the process for reporting issues/suggestions is streamlined within Deal Machine. Please report under workspace>>Create>>New Suggestion" style="font-size:17px; font-family:Helvetica;font-weight: bold; text-align:center; color:red;" /> --></p>
+                <apex:outputPanel id="opDummy"></apex:outputPanel>
+                <apex:pageBlock >
+                    <apex:pageBlockSection columns="1" title="Need a new User Account">
+                        <apex:commandLink onClick="window.open('https://idm.infra.ge.com/idm/user/');" value="SFDC User Account" id="theSFDC" style="color: blue;margin-left: 16px;font-style: italic;font-size:13px;font-weight: bold;" rerender="opDummy"/>
+                        <!--<apex:commandLink onClick="window.open('http://supportcentral.ge.com/ProcessMaps/form_new_request.asp?prod_id=87486&form_id=292805&node_id=650590&map_id=&reference_id=&reference_type=');" value="Partner User Account" id="thePartner" style="color: blue;margin-left: 16px;font-style: italic;font-size:13px;font-weight: bold;"  rerender="opDummy"/>-->
+                        <apex:commandLink onClick="window.open('http://supportcentral.ge.com/ProcessMaps/form_new_request.asp?prod_id=87486&form_id=292805&node_id=650590&map_id=&reference_id=&reference_type=');" value="Chatter User Account" id="theChatter" style="color: blue;margin-left: 16px;font-style: italic;font-size:13px;font-weight: bold;"  rerender="opDummy"/>
+                  <!--Added By Seema Reason: R-18409! Reason:- Add Risk Configuration Data Setup link
+                    <apex:commandLink onClick="window.open('/apex/GE_OG_Risk_Config_Data_setup');" value="Risk Configuration Data Setup" id="theRisk" style="color: blue;margin-left: 16px;font-style: italic;font-size:13px;font-weight: bold;"  rendered="{!(riskCfgAdmin)}"  rerender="opDummy"/>
+                   End Reason: R-18409-->
+                   
+                    </apex:pageBlockSection>
+                    <apex:outputPanel >
+                        <apex:pageBlockSection columns="2" title="Risk Approver Update" rendered="{!IF(Contains($Profile.Name,'System Administrator') || riskAdmin, true,false)}"  >
+                            <!--<apex:commandLink onClick="window.open('http://supportcentral.ge.com/ProcessMaps/form_new_request.asp?prod_id=87486&form_id=309453&node_id=719733&map_id=&reference_id=&reference_type=');" value="SFDC Risk Approver" id="theRisk" style="color: blue;margin-left: 16px;font-style: italic;font-size:13px;font-weight: bold;" rerender="opDummy"/>-->
+                            <apex:commandLink onClick="window.open('/apex/GE_OG_Risk_Approver_Update');" value="SFDC Risk Approver (Old CheckList)" id="theRisk" style="color: blue;margin-left: 16px;font-style: italic;font-size:13px;font-weight: bold;" rerender="opDummy"/>
+                            <br/><apex:commandLink onClick="window.open('/apex/RiskAdmin');" value="SFDC Risk Approver (Smart DOA)" id="theRisk1" style="color: blue;margin-left: 16px;font-style: italic;font-size:13px;font-weight: bold;" rerender="opDummy"/>
+                        </apex:pageBlockSection>
+                    </apex:outputPanel>
+                </apex:pageBlock>
+              </apex:form>
+              
+              
+              
+              <!--Added on 4th August for Report issues-->       
+              
+              <apex:form >
+                <apex:inputHidden id="hiddenSecId" value="{!strSelTab}"/>
+                
+                <apex:outputPanel id="Rep"></apex:outputPanel>
+                
+                <apex:pageBlock >
+                
+                
+                        <apex:Outputlabel Value="If you are experiencing any issues related to Reports, Follow the instructions in the below document" style="font-size:15px; font-family:Helvetica;font-weight: bold; text-align:center; color:red;text-decoration:underline;">
+                        </apex:OutputLabel>  
+                        <br></br>
+                        <br></br>
+                 
+                <apex:pageblockSection >                            
+                        <apex:commandLink onClick="window.open('{!strDocUrl}');" value="Deal Machine Report Issues Documentation" id="theRisk" style="color: blue;margin-left: 16px;font-style: italic;font-size:13px;font-weight: bold;" rerender="Red"/>
+                </apex:pageblockSection>                                   
+                </apex:pageBlock>
+                
+              </apex:form>
+              
+        <!--Added on 4th August for Report issues-->               
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              <apex:form >
+              
+                <apex:pageBlock title="Oil & Gas SFDC Helpdesk" mode="detail">
+                   
+                    <apex:outputPanel id="opMessage">
+                        <apex:pagemessages />
+                    </apex:outputPanel>
+                    <apex:pageBlockButtons >
+                        <apex:commandButton action="{!saveTicketSFDC}" value="Submit" />
+                    </apex:pageBlockButtons>
+                    <apex:outputPanel id="opSFDC">
+                        <apex:pageBlockSection columns="1" title="Please fill in the User details">
+                            <apex:pageBlockSectionItem helpText="User facing Issue">
+                                <!--
+                                <apex:inputText value="{!strUserSSOId}" required="TRUE"></apex:inputText>-->
+                                <apex:outputLabel value="Caller / User"></apex:outputLabel>
+                                <apex:inputField value="{!SFDC_Support_Case__c.Caller_SSO_ID__c}" required="TRUE"/>
+                                                    
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem helpText="Business / P&L Affected">
+                                <!--<apex:inputField value="{!SFDC_Support_Case__c.Caller_SSO_ID__c}"/>
+                                <apex:inputField value="{!SFDC_Support_Case__c.Application__c}"/>-->
+                                <apex:outputLabel value="Business"></apex:outputLabel>
+                                <apex:selectList value="{!strBusiness}" size="1" required="TRUE">
+                                    <apex:selectOptions value="{!BusinessSFDC}"/>
+                                </apex:selectList>
+                            </apex:pageBlockSectionItem>
+                        </apex:pageBlockSection>
+                            
+                        <apex:pageBlockSection columns="1" title="Please fill in the ticket details">
+                            <apex:pageBlockSectionItem HelpText="Something that was working yesterday but broken today is a Breakfix. New Request, Information Request are Service Request">
+                                <apex:outputLabel value="Tell us more about your issue"></apex:outputLabel>
+                                <apex:inputField value="{!SFDC_Support_Case__c.Type__c}" required="TRUE"/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem helpText="Urgency">
+                                <apex:outputLabel value="Severity Level"></apex:outputLabel>
+                                <apex:inputField value="{!SFDC_Support_Case__c.Priority__c}" required="TRUE" />
+                            </apex:pageBlockSectionItem>
+                             <apex:pageBlockSectionItem helpText="Area affected">
+                                <apex:outputLabel value="I need assistance with"></apex:outputLabel>
+                                <apex:inputField value="{!SFDC_Support_Case__c.I_need_assistance_with__c}" required="TRUE" />
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem helpText="Please mention the Opportunity / Account / Deal Management Record that could be referenced to replicate the issue">
+                                <apex:outputLabel value="Record Affected"></apex:outputLabel>
+                                <apex:inputField value="{!SFDC_Support_Case__c.Record_Affected__c}" required="TRUE"/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem helpText="Number of Users Affceted by the Issue">
+                                <apex:outputLabel value="Users Affected"></apex:outputLabel>
+                                <apex:inputField value="{!SFDC_Support_Case__c.People_Affected__c}" required="TRUE" />
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem helpText="Short Description / Highlight of the issue">
+                                <apex:outputLabel value="Short Description"></apex:outputLabel>
+                                <apex:inputField value="{!SFDC_Support_Case__c.Short_Description__c}" style="width:250px" required="TRUE" />
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem helpText="Brief summary / description of the issue">
+                                <apex:outputLabel value="Issue Details"></apex:outputLabel>
+                                <apex:inputField value="{!SFDC_Support_Case__c.Issue_Details__c}" style="width:400px" required="TRUE" />
+                            </apex:pageBlockSectionItem>   
+                        </apex:pageBlockSection>
+                    </apex:outputPanel>
+                    <apex:outputPanel id="abc"></apex:outputPanel>
+                    <apex:pageBlockSection columns="2" title="Attachments">
+                        <apex:outputLabel value="Please select file:" style="font-weight:bold"></apex:outputLabel>
+                         <apex:inputFile value="{!attachment.Body}"  filename="{!attachment.name}" style="margin-right: 360px;"/>
+                    </apex:pageBlockSection>
+                </apex:pageBlock>
+            </apex:form>
+            
+        </apex:tab>
+        <apex:tab label="Big Machines/Intelliquip" name="BM" id="tabThree" onClick="TabClick('BM')">
+              <apex:form > 
+              <apex:inputHidden id="hiddenSecId" value="{!strSelTab}"/>  
+                <apex:pageBlock title="Oil & Gas SFDC Helpdesk" mode="detail" >
+                    <apex:outputPanel id="opMessage">
+                        <apex:pagemessages />
+                    </apex:outputPanel>
+                    <apex:pageBlockButtons >
+                        <apex:commandButton action="{!saveTicketBigMachines}" value="Submit" />
+                    </apex:pageBlockButtons>
+                    <apex:outputPanel id="opBM">
+                        <apex:pageBlockSection columns="1" title="Please fill in the User details">
+                            <apex:pageBlockSectionItem helpText="User facing Issue">
+                                <!--
+                                <apex:inputText value="{!strUserSSOId}" required="TRUE"></apex:inputText>-->
+                                <apex:outputLabel value="Caller / User"></apex:outputLabel>
+                                <apex:inputField value="{!SFDC_Support_Case__c.Caller_SSO_ID__c}" required="TRUE"/>
+                                                    
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem helpText="Business / P&L Affected">
+                                <!--<apex:inputField value="{!SFDC_Support_Case__c.Caller_SSO_ID__c}"/>
+                                <apex:inputField value="{!SFDC_Support_Case__c.Application__c}"/>-->
+                                <apex:outputLabel value="Business"></apex:outputLabel>
+                                <apex:selectList value="{!strBusiness}" size="1" required="TRUE">
+                                    <apex:selectOptions value="{!BusinessBigMachines}"/>
+                                </apex:selectList>
+                            </apex:pageBlockSectionItem>
+                        </apex:pageBlockSection>
+                            
+                      <apex:pageBlockSection columns="1" title="Please fill in the ticket details" id="pbsBigMachine" >                                   
+                            <apex:pageBlockSectionItem HelpText="Something that was working yesterday but broken today is a Breakfix. New Request, Information Request are Service Request">
+                                <apex:outputLabel value="Tell us more about your issue"></apex:outputLabel>
+                            <apex:actionRegion >    
+                                    <apex:inputField value="{!SFDC_Support_Case__c.Type__c}" required="TRUE">
+                                        <apex:actionSupport event="onchange" rerender="pbsBigMachine"/>
+                                    </apex:inputField>   
+                            </apex:actionRegion>   
+                            </apex:pageBlockSectionItem>    
+                            
+  <!--                       <apex:pageBlockSection columns="1" title="Please select request Type" > 
+                            <apex:pageBlockSectionItem HelpText="Something that was working yesterday but broken today is a Breakfix. New Request, Information Request are Service Request">
+                                <apex:outputLabel value="Select request Type"></apex:outputLabel>
+                                <apex:inputField value="{!SFDC_Support_Case__c.Type__c}" required="TRUE"/>
+                            </apex:pageBlockSectionItem>
+                       </apex:pageBlockSection>
+                      
+                       <apex:pageblockSection columns="1" title="Please fill in the ticket details" >     -->
+                                                                                 
+                            <apex:pageBlockSectionItem helpText="Urgency" rendered="{!SFDC_Support_Case__c.Type__c != 'BigMachines User Provision'}" id="pbsi1">
+                                <apex:outputLabel value="Priority"></apex:outputLabel>
+                                <apex:inputField value="{!SFDC_Support_Case__c.Priority__c}" required="{!SFDC_Support_Case__c.Type__c != 'BigMachines User Provision'}"/>
+                            </apex:pageBlockSectionItem>
+                            
+                            <apex:pageBlockSectionItem helpText="Area affected">
+                                <apex:outputLabel value="I need assistance with"></apex:outputLabel>
+                                <apex:inputField value="{!SFDC_Support_Case__c.I_need_assistance_with_BM__c}" required="TRUE" />
+                            </apex:pageBlockSectionItem>
+                            
+                            <apex:pageBlockSectionItem helpText="Quote Number to replicate the issue" rendered="{!SFDC_Support_Case__c.Type__c != 'BigMachines User Provision'}" id="pbsi2">
+                                <apex:outputLabel value="Quote Number"></apex:outputLabel>
+                                <apex:inputField value="{!SFDC_Support_Case__c.Quote_Number__c}" required="{!SFDC_Support_Case__c.Type__c != 'BigMachines User Provision'}" />
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem helpText="Number of Users Affceted by the Issue" rendered="{!SFDC_Support_Case__c.Type__c != 'BigMachines User Provision'}" id="pbsi3">
+                                <apex:outputLabel value="Users Affected"></apex:outputLabel>
+                                <apex:inputField value="{!SFDC_Support_Case__c.People_Affected__c}" required="{!SFDC_Support_Case__c.Type__c != 'BigMachines User Provision'}" />
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem helpText="Short Description / Highlight of the issue" rendered="{!SFDC_Support_Case__c.Type__c != 'BigMachines User Provision'}" id="pbsi4">
+                                <apex:outputLabel value="Short Description"></apex:outputLabel>
+<!--                                <apex:inputField value="{!SFDC_Support_Case__c.Short_Description__c}" style="width:250px" required="{!SFDC_Support_Case__c.Type__c != 'BigMachines User Provision'}" /> -->
+                                  <apex:inputField value="{!SFDC_Support_Case__c.Short_Description__c}" style="width:250px" required="TRUE" />
+                            </apex:pageBlockSectionItem>
+                             <apex:pageBlockSectionItem helpText="Brief summary / description of the issue" rendered="{!SFDC_Support_Case__c.Type__c != 'BigMachines User Provision'}" id="pbsi5">
+                                <apex:outputLabel value="Issue Details"></apex:outputLabel>
+                                <apex:inputField value="{!SFDC_Support_Case__c.Issue_Details__c}" style="width:400px" required="TRUE" />
+                            </apex:pageBlockSectionItem>      
+          <!--              </apex:pageBlockSection>
+                        
+                        <apex:pageBlockSection columns="1" title="Please fill in the ticket details">
+                            <apex:outputLabel value="Issue Details"></apex:outputLabel>     
+                                <apex:inputField value="{!SFDC_Support_Case__c.Issue_Details__c}" style="width:400px" required="TRUE" />  -->
+                        </apex:pageBlockSection>    
+                                                                     
+                    </apex:outputPanel>
+                
+                    <apex:pageBlockSection columns="2" title="Attachments">
+                        <apex:outputLabel value="Please select file:" style="font-weight:bold"></apex:outputLabel>
+                         <apex:inputFile value="{!attachment.Body}"  filename="{!attachment.name}" style="margin-right: 360px;"/>
+                    </apex:pageBlockSection>
+                </apex:pageBlock>
+            </apex:form>
+        </apex:tab>
+        <apex:tab label="Service Max" name="SM" id="tabFour" onClick="TabClick('SM')">
+            <apex:form >  
+            <apex:inputHidden id="hiddenSecId" value="{!strSelTab}"/> 
+                <apex:pageBlock title="Oil & Gas SFDC Helpdesk" mode="detail">
+                    <apex:outputPanel id="opMessage">
+                        <apex:pagemessages />
+                    </apex:outputPanel>
+                    <apex:pageBlockButtons >
+                        <apex:commandButton action="{!saveTicketServiceMax}" value="Submit" />
+                    </apex:pageBlockButtons>
+                    <apex:outputPanel id="opSM">
+                        <apex:pageBlockSection columns="1" title="Please fill in the User details">
+                            <apex:pageBlockSectionItem helpText="User facing Issue">
+                                <!--
+                                <apex:inputText value="{!strUserSSOId}" required="TRUE"></apex:inputText>-->
+                                <apex:outputLabel value="Caller / User"></apex:outputLabel>
+                                <apex:inputField value="{!SFDC_Support_Case__c.Caller_SSO_ID__c}" required="TRUE"/>
+                                                    
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem helpText="Business / P&L Affected">
+                                <!--<apex:inputField value="{!SFDC_Support_Case__c.Caller_SSO_ID__c}"/>
+                                <apex:inputField value="{!SFDC_Support_Case__c.Application__c}"/>-->
+                                <apex:outputLabel value="Business"></apex:outputLabel>
+                                <apex:selectList value="{!strBusiness}" size="1" required="TRUE">
+                                    <apex:selectOptions value="{!BusinessServiceMax}"/>
+                                </apex:selectList>
+                            </apex:pageBlockSectionItem>
+                        </apex:pageBlockSection>
+                            
+                        <apex:pageBlockSection columns="1" title="Please fill in the ticket details">
+                            <apex:pageBlockSectionItem HelpText="Something that was working yesterday but broken today is a Breakfix. New Request, Information Request are Service Request">
+                                <apex:outputLabel value="Tell us more about your issue"></apex:outputLabel>
+                                <apex:inputField value="{!SFDC_Support_Case__c.Type__c}" required="TRUE"/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem helpText="Urgency">
+                                <apex:outputLabel value="Priority"></apex:outputLabel>
+                                    <apex:inputField value="{!SFDC_Support_Case__c.Priority__c}" required="TRUE" />
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem helpText="Short Description / Highlight of the issue">
+                                <apex:outputLabel value="Short Description"></apex:outputLabel>
+                                <apex:inputField value="{!SFDC_Support_Case__c.Short_Description__c}" style="width:250px" required="TRUE" />
+                            </apex:pageBlockSectionItem>
+                             <apex:pageBlockSectionItem helpText="Brief summary / description of the issue">
+                                <apex:outputLabel value="Issue Details"></apex:outputLabel>
+                                <apex:inputField value="{!SFDC_Support_Case__c.Issue_Details__c}" style="width:400px" required="TRUE" />
+                            </apex:pageBlockSectionItem>
+                        </apex:pageBlockSection>
+                    </apex:outputPanel>
+               
+           
+                    <apex:pageBlockSection columns="2" title="Attachments">
+                         <apex:outputLabel value="Please select file:" style="font-weight:bold"></apex:outputLabel>
+                         <apex:inputFile value="{!attachment.Body}"  filename="{!attachment.name}" style="margin-right: 360px;"/>
+                    </apex:pageBlockSection>
+                </apex:pageBlock>
+            </apex:form>
+        </apex:tab>
+        <apex:tab label="Marketo" name="Marketo" id="tabFive">
+            <apex:form >
+                <apex:pageBlock >
+                    <apex:outputPanel id="opDummyMar"></apex:outputPanel>
+                        <apex:pageBlockSection columns="1" title="Marketo Issue">
+                            <apex:commandLink onClick="window.open('http://supportcentral.ge.com/ProcessMaps/form_new_request.asp?prod_id=254845&form_id=438465&node_id=1222048&map_id=&reference_id=&reference_type=');" value="Log a Issue" id="theMarketo" style="color: blue;margin-left: 16px;font-style: italic;font-size:13px;font-weight: bold;" rerender="opDummyMar"/>
+                     </apex:pageBlockSection>
+                 </apex:pageBlock>
+             </apex:form>
+        </apex:tab>
+        <apex:tab label="Miller Heiman" name="Miller Heiman" id="tabSix">
+            <apex:form >
+                <apex:pageBlock >
+                    <apex:outputPanel id="opDummyMH"></apex:outputPanel>
+                        <apex:pageBlockSection columns="1" title="Miller Heimen Access Request">
+                            <apex:commandLink onClick="window.open('http://supportcentral.ge.com/ProcessMaps/LaunchProcess.asp?prod_id=87486&proc_id=978975');" value="Access to Miller Heiman" id="theMarketo" style="color: blue;margin-left: 16px;font-style: italic;font-size:13px;font-weight: bold;" rerender="opDummyMar"/>
+                     </apex:pageBlockSection>
+                 </apex:pageBlock>
+             </apex:form>
+        </apex:tab>
+        <div style="text-align:right;">
+         <b> Visitors </b><img src='http://www.hit-counts.com/counter.php?t=MTI1Mzk3NA==' border='0' alt='Free Hit Counter'/>
+       <br/>
+    </div>
+    </apex:tabPanel>
+   
+</apex:page>

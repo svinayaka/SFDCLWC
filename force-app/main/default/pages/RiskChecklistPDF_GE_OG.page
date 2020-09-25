@@ -1,0 +1,369 @@
+<apex:page id="MainPage"
+           showHeader="false" 
+           controller="RiskChecklistPDF_GE_OG"  contentType="application/x-pdf#{!dealDeskName}.pdf" action="{!GeneratePDF}">
+  <apex:form > 
+  
+  <apex:sectionHeader title="Risk Review"  subtitle="  Account -  {!oppty.Account.Name}" />
+  <apex:sectionHeader subtitle=" Oppty Name - {!oppty.Name}" />
+  
+  <apex:pageBlock helpTitle="Help" helpUrl="/help/doc/user_ed.jsp" title="Deal Review Details">
+
+  <table height="500px" cellspacing="0" cellpadding="0" align="center" width="900px" border="0px">
+  <tr valign="top">
+            <td valign="top">
+               <table width="450px" border="0px" cellspacing="0" cellpadding="0">
+                     <th colspan="2" height="30px" bgcolor="#DDFFFF">
+                         Opportunity Info
+                     </th>
+                     
+                      <tr>
+                         <td >
+                           <table border="0px" rules="rows" align="top" VALIGN="top" cellspacing="0" cellpadding="0">
+                                  <tr id="row1" height="30px">
+                                       <td width="200px">
+                                           <apex:outputText styleClass="labelCol first" value="Account Name" />
+                                       </td>
+                                       <td width="250px" >  
+                                           <apex:outputText value="{!oppty.Account.Name}" />
+                                       </td>
+                                   </tr>
+                                  <tr id="row10" height="30px">
+                                       <td width="100px">
+                                           <apex:outputText styleClass="labelCol first" value="Install Country" />
+                                       </td>
+                                       <td width="200px">  
+                                           <apex:outputText value="{!oppty.install_country_ge_og__c}" />
+                                       </td>
+                                   </tr>     
+                                  <!--tr id="row10" height="30px">
+                                       <td width="100px">
+                                           <apex:outputText styleClass="labelCol first" value="Install State" />
+                                       </td>
+                                       <td width="200px">  
+                                           <apex:outputText value="{!GE_ES_Deal_Management__c.GE_ES_Opportunity__r.GE_OG_PII_State__c}" />
+                                       </td>
+                                   </tr-->   
+                                   <tr id="row10" height="30px">
+                                       <td width="100px">
+                                           <apex:outputText styleClass="labelCol first" value="Quote Type" />
+                                       </td>
+                                       <td width="200px">  
+                                           <apex:outputText value="{!oppty.quote_type_ge_og__c}" />
+                                       </td>
+                                   </tr>
+                                     <!--tr id="row10" height="30px" style="{!IF(isTier2HQ,"","display:none")}">
+                                       <td width="100px">
+                                           <apex:outputText styleClass="labelCol first" value="Proposal Type" />
+                                       </td>
+                                       <td width="200px">  
+                                           <apex:outputText value="{!GE_ES_Deal_Management__c.GE_OG_GS_Prpsal__c}" />
+                                       </td>
+                                   </tr-->
+                                     
+                                  <tr id="row10" height="30px">
+                                       <td width="100px">
+                                           <apex:outputText styleClass="labelCol first" value="Install Region" />
+                                       </td>
+                                       <td width="200px">  
+                                            <apex:outputText value="{!oppty.region_ge_og__c}" />
+                                       </td>
+                                   </tr>
+                                   <!--tr id="row4" height="30px">
+                                       <td width="100px">
+                                           <apex:outputText styleClass="labelCol first" value="Scope of Supply" />
+                                       </td>
+                                       <td width="200px">  
+                                           <apex:outputText value="{!GE_ES_Deal_Management__c.GE_ES_Opportunity__r.GE_OG_TM_Scope_of_Supply__c}" />
+                                       </td>
+                                   </tr--> 
+                                   <!--tr id="row6" height="30px">
+                                       <td width="100px">
+                                           <apex:outputText styleClass="labelCol first" value="Lead Platform" />
+                                       </td>
+                                       <td width="200px">  
+                                           <apex:outputText value="{!GE_ES_Deal_Management__c.GE_OG_DP_Ld_Pltfm__c}" />
+                                       </td>
+                                   </tr--> 
+                                   <!--tr id="row6" height="30px" style="{!IF(isTier2HQ,"","display:none")}">
+                                       <td width="100px">
+                                           <apex:outputText styleClass="labelCol first" value="Tier 3" />
+                                       </td>
+                                       <td width="200px">  
+                                           <apex:outputText value="{!GE_ES_Deal_Management__c.GE_OG_GS_Tier_3__c}" />
+                                       </td>
+                                   </tr--> 
+                                   
+                                   <!--tr id="row12" height="30px">
+                                       <td width="100px">
+                                           <apex:outputText styleClass="labelCol first" value="Commercial Center" />
+                                       </td>
+                                       <td width="200px">  
+                                           <apex:outputText value="{!GE_ES_Deal_Management__c.GE_ES_Opportunity__r.GE_OG_TM_Commercial_Center__c}" />
+                                       </td>
+                                   </tr-->                                   
+                                   <!--tr id="row7" height="30px">
+                                       <td width="100px">
+                                           <apex:outputText styleClass="labelCol first" value="Risk Path" />
+                                       </td>
+                                       <td width="200px">  
+                                           <apex:outputText value="{!GE_ES_Deal_Management__c.GE_ES_Risk_Path__c}" />
+                                       </td>
+                                   </tr-->  
+                                   <tr id="row11" height="30px">
+                                       <td width="100px">
+                                           <apex:outputText styleClass="labelCol first" value="Opportunity Owner" />
+                                       </td>
+                                       <td width="200px">  
+                                           <apex:outputText value="{!oppty.Owner.Name}" />
+                                       </td>
+                                   </tr>
+                                   <tr id="row12" height="30px">
+                                       <td width="100px">
+                                           <apex:outputText styleClass="labelCol first" value="Comm Primary Resource" />
+                                       </td>
+                                       <td width="200px">  
+                                           <!--apex:outputText value="{!oppty.commercial_primary_resource_ge_og__c}" /-->
+                                           <apex:outputText value="{!commPrimaryResource}" /> 
+                                       </td>
+                                   </tr>
+                                    <!--tr id="row7" height="30px">
+                                       <td width="100px">
+                                           <apex:outputText styleClass="labelCol first" value="Risk Status" />
+                                       </td>
+                                       <td width="200px">  
+                                           <apex:outputText value="{!GE_ES_Deal_Management__c.GE_OG_GS_RStatus__c}" />
+                                       </td>
+                                   </tr--> 
+                                   <tr id="row7" height="30px" >
+                                       <td width="100px">
+                                           <apex:outputText styleClass="labelCol first" value="GE O&G legal entity" />
+                                       </td>
+                                       <td width="200px">  
+                                           <apex:outputText value="{!oppty.ge_legal_entity_ge_og__r.name}" />
+                                       </td>
+                                   </tr> 
+                                   <!--tr id="row8" height="30px" style="{!IF(isTier2DP,"","display:none")}">
+                                       <td width="100px">
+                                           <apex:outputText styleClass="labelCol first" value="Is RRC Required" />
+                                       </td>
+                                       <td width="200px">  
+                                           <apex:outputText value="{!IF(GE_ES_Deal_Management__c.GE_OG_DP_Is_RRC_Need__c,'Yes','No')}" />
+                                       </td>
+                                   </tr--> 
+                                   
+                            </table>     
+                         </td>
+                      </tr>
+               </table>
+            </td>
+            <!-- start of second column -->
+       <td width="450px">
+         <table valign="top" align="top" width="450px" border="0" cellspacing="0" cellpadding="0">
+                    <th colspan="2" align="top" height="30px" bgcolor="#DDFFFF">
+                         Financial Section
+                     </th>                     
+                      <tr>
+                         <td >
+                         <!-- start of financial Section -->
+                              <table border="0px" rules="rows" align="top" VALIGN="top" cellspacing="0" cellpadding="0">
+                                  <tr id="row1" height="30px">
+                                       <td width="200px">
+                                           <apex:outputText styleClass="labelCol first" value="Oppty CM%" />
+                                       </td>
+                                       <td width="250px" >  
+                                           <apex:outputText value="{!VALUE(TEXT(oppty.oppty_cm_ge_og__c))}" />
+                                           <apex:outputLabel rendered="{!NOT(ISNULL(oppty.oppty_cm_ge_og__c))}">%</apex:outputLabel>
+                                       </td>
+                                   </tr>
+                                   <!--id="row6" height="30px">
+                                       <td width="100px">
+                                           <apex:outputText styleClass="labelCol first" value="Opportunity Currency" />
+                                       </td>
+                                       <td width="200px">  
+                                           <apex:outputField value="{!oppty.CurrencyIsoCode}" />
+                                       </td>
+                                   </tr--> 
+                                   <!--tr id="row5" height="30px">
+                                       <td width="100px">
+                                           <apex:outputText styleClass="labelCol first" value="Opportunity Amount"/>
+                                       </td>
+                                       <td width="200px">  
+                                           <apex:outputField value="{!GE_ES_Deal_Management__c.GE_ES_Price__c}" />
+                                       </td>
+                                   </tr--> 
+                                    
+                                   <!--                               
+                                   <tr id="row9" height="30px">
+                                       <td width="100px">
+                                           <apex:outputText styleClass="labelCol first" value="Total Amount" />
+                                       </td>
+                                       <td width="200px">  
+                                           <apex:outputField value="{!oppty.pipeline_amount_ge_og__c}" />
+                                       </td>
+                                   </tr>   -->
+                                </table>   
+                              <!-- End of financial section --> 
+                         </td>
+                      </tr>
+                      <tr height="100px" valign="top">
+                         <td valign="top">
+                         <!-- start of key dates section -->
+                             <table height="100px" valign="top" align="top" width="450px" border="0px" cellspacing="0" rules="rows" cellpadding="0">
+                                 <th colspan="2" height="40px" bgcolor="#DDFFFF">
+                                  <span > <h2>Key Dates </h2></span>
+                                 </th>
+                                  <tr id="row1" height="30px">
+                                       <td width="200px">
+                                           <apex:outputText styleClass="labelCol first" value="Bid Due Date" />
+                                       </td>
+                                       <td width="250px">  
+                                           <apex:outputField value="{!oppty.bid_due_date_ge_og__c}" />
+                                       </td>
+                                   </tr> 
+                                   <!--tr id="row1" height="30px" style="{!IF(isTier2HQ,"","display:none")}">
+                                       <td width="200px">
+                                           <apex:outputText styleClass="labelCol first" value="Proposal Sent Date" />
+                                       </td>
+                                       <td width="250px">  
+                                           <apex:outputField value="{!GE_ES_Deal_Management__c.GE_OG_Bid_Sent_Date__c}" />
+                                       </td>
+                                   </tr--> 
+                                   <!--tr id="row3" height="30px" style="{!IF(isTier2DP,"","display:none")}">
+                                       <td width="150px">
+                                           <apex:outputText styleClass="labelCol first" value="Bid Sent Date" />
+                                       </td>
+                                       <td width="150px">  
+                                           <apex:outputField value="{!GE_ES_Deal_Management__c.GE_OG_DP_Bid_Sent_Date__c}" />
+                                       </td>
+                                   </tr--> 
+                                   <!--tr id="row4" height="30px" style="{!IF(isTier2DP,"","display:none")}">
+                                       <td width="150px">
+                                           <apex:outputText styleClass="labelCol first" value="Bid validity in Days" />
+                                       </td>
+                                       <td width="150px">  
+                                           <apex:outputField value="{!GE_ES_Deal_Management__c.GE_OG_DP_Bid_Days__c}" />
+                                       </td>
+                                   </tr--> 
+                                   <!-- tr id="row5" height="30px" style="{!IF(isTier2DP,"","display:none")}">
+                                       <td width="150px">
+                                           <apex:outputText styleClass="labelCol first" value="Bid Expiration Date" />
+                                       </td>
+                                       <td width="150px">  
+                                           <apex:outputField value="{!GE_ES_Deal_Management__c.GE_OG_DP_Bid_Exp_Dt__c}" />
+                                       </td>
+                                   </tr--> 
+                                   <!--tr id="row6" height="30px" style="{!IF(isTier2DP,"","display:none")}">
+                                       <td width="150px">
+                                           <apex:outputText styleClass="labelCol first" value="Extension Agreed Date" />
+                                       </td>
+                                       <td width="150px">  
+                                           <apex:outputField value="{!GE_ES_Deal_Management__c.GE_OG_DP_Extension_Agreed_Date__c}" />
+                                       </td>
+                                   </tr--> 
+                                   <!--tr id="row7" height="30px">
+                                       <td width="150px">
+                                           <apex:outputText styleClass="labelCol first" value="R0 Date" />
+                                       </td>
+                                       <td width="150px">  
+                                           <apex:outputField value="{!GE_ES_Deal_Management__c.GE_OG_DP_R0_Date__c}" />
+                                       </td>
+                                   </tr--> 
+                                   <!--tr id="row7" height="30px" style="{!IF(isTier2HQ,"","display:none")}">
+                                       <td width="150px">
+                                           <apex:outputText styleClass="labelCol first" value="R1 Accepted Date" />
+                                       </td>
+                                       <td width="150px">  
+                                           <apex:outputField value="{!GE_ES_Deal_Management__c.GE_ES_R1_Accepted_Date__c}" />
+                                       </td>
+                                   </tr--> 
+                                   <!--tr id="row7" height="30px" style="{!IF(isTier2HQ,"","display:none")}">
+                                       <td width="150px">
+                                           <apex:outputText styleClass="labelCol first" value="R2 Completed Date" />
+                                       </td>
+                                       <td width="150px">  
+                                           <apex:outputField value="{!GE_ES_Deal_Management__c.GE_ES_R2_Completed_Date__c}" />
+                                       </td>
+                                   </tr-->
+                                   <!--tr id="row7" height="30px" style="{!IF(isTier2HQ,"","display:none")}">
+                                       <td width="150px">
+                                           <apex:outputText styleClass="labelCol first" value="R3 Completed Date" />
+                                       </td>
+                                       <td width="150px">  
+                                           <apex:outputField value="{!GE_ES_Deal_Management__c.GE_ES_R3_Completed_Date__c}" />
+                                       </td>
+                                   </tr-->  
+                                   <!--tr id="row8" height="30px" style="{!IF(isTier2DP,"","display:none")}">
+                                       <td width="150px">
+                                           <apex:outputText styleClass="labelCol first" value="R1 Date" />
+                                       </td>
+                                       <td width="150px">  
+                                           <apex:outputField value="{!GE_ES_Deal_Management__c.GE_OG_TM_R1_Date__c}" />
+                                       </td>
+                                   </tr-->
+                                   <!--tr id="row9" height="30px" style="{!IF(isTier2DP,"","display:none")}">
+                                       <td width="150px">
+                                           <apex:outputText styleClass="labelCol first" value="R2 Date" />
+                                       </td>
+                                       <td width="150px">  
+                                           <apex:outputField value="{!GE_ES_Deal_Management__c.GE_OG_TM_R2_Date__c}" />
+                                       </td>
+                                   </tr-->
+                                   <!--tr id="row10" height="30px" style="{!IF(isTier2DP,"","display:none")}">
+                                       <td width="150px">
+                                           <apex:outputText styleClass="labelCol first" value="RRC Date" />
+                                       </td>
+                                       <td width="150px">  
+                                           <apex:outputField value="{!GE_ES_Deal_Management__c.GE_OG_DP_RRC_Date__c}" />
+                                       </td>
+                                   </tr--> 
+                                   <!--tr id="row11" height="30px" style="{!IF(isTier2DP,"","display:none")}">>
+                                       <td width="150px">
+                                           <apex:outputText styleClass="labelCol first" value="R3 Date" />
+                                       </td>
+                                       <td width="150px">  
+                                           <apex:outputField value="{!GE_ES_Deal_Management__c.GE_OG_TM_R3_Date__c}" />
+                                       </td>
+                                   </tr-->                                                                                                                                                                              
+                             </table>
+                         </td>
+                      </tr>
+       </table>                     
+       </td>
+            <!--end of second column-->
+  </tr>
+  </table >
+  <!--Section for showing the Opportunity product related to the Opportunity-->
+      
+  </apex:pageBlock>
+ </apex:form>
+  
+<!-- Opportunity line items -->
+  <apex:pageBlock title="Products">  
+       <apex:dataTable value="{!OpptyLineItem }" var="each" headerClass="headerRow" styleClass="list" > 
+            <apex:column headerValue="Product">{!each.pricebookentry.name}</apex:column>
+            <!--apex:column headerValue="Offering" value="{!each.GE_ES_Offering__c}"/-->
+            <!--apex:column headerValue="Product Service">{!each.GE_ES_Product_Services__c}</apex:column--
+            <!--apex:column headerValue="Bid Currency Amount">{!each.GE_OG_TM_Bid_Currency_Amount__c}</apex:column-->
+            <!--apex:column headerValue="Currency Code">{!each.GE_OG_TM_Currency_Code__c}</apex:column-->
+            <apex:column headerValue="Quantity">{!each.Quantity}</apex:column>              
+            <apex:column headerValue="Total Price"><apex:outputText value="{0, number}"><apex:param value="{!each.TotalPrice}" /></apex:outputText></apex:column>
+            <!--apex:column headerValue="Unit of Measure">{!each.GE_OG_DP_Unit_of_Measure__c}</apex:column-->
+       </apex:dataTable>    
+   </apex:pageBlock>
+   
+  <!-- Related list for Risk checklist item -->
+ 
+  <apex:pageBlock title="Risk Checklist">  
+       <apex:dataTable value="{!rcdList}" var="each" headerClass="headerRow" styleClass="list" >        
+            <apex:column headerValue="Category"> {!each.risk_checklist_category_id_ge_og__r.rcl_category_ge_og__c}</apex:column>
+            <!--apex:column headerValue="Item Code"><a href="/{!each.Id}">{!each.Name}</a></apex:column-->
+            <apex:column headerValue="Name" value="{!each.risk_checklist_ge_og__c}"/>
+            <!--apex:column headerValue="Answer">{!each.rcl_deviation_ge_og__c}</apex:column--> 
+            <apex:column headerValue="Answer">{!each.deviation_reference_ge_og__r.deviation_ge_og__c}</apex:column> 
+            <apex:column headerValue="Deviation Level" >{!each.rcl_deviation_level_ge_og__c}</apex:column>
+            <apex:column headerValue="Comments">{!each.comments_ge_og__c}</apex:column>
+            <apex:column headerValue="Approver">{!each.risk_checklist_category_id_ge_og__r.rcl_reviewer_ge_og__r.name}</apex:column> 
+            
+       </apex:dataTable>    
+   </apex:pageBlock>  
+</apex:page>

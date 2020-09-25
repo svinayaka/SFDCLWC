@@ -1,0 +1,2 @@
+<apex:page standardController="Order" extensions="GE_ConfigOrderRedirectControllerExt" action="{!redirectToPage}">
+</apex:page>

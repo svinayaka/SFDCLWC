@@ -1,0 +1,35 @@
+<apex:page >
+<!--
+<apex:page standardController="Account"  extensions="GE_HQ_ManualMigration" >
+<apex:pageMessages />
+
+<apex:form >
+
+<style>
+.s1{
+font-family: GE Inspira Pitch, Verdana, Arial;
+font-size:16px;
+font-weight:Bold;
+color:#48B63A}
+</style>
+
+<apex:pageBlock title="Account Merge Tool">
+<apex:outputLabel styleClass="s1" >
+<br/>
+Merge Successful! 
+<br/>
+<br/>
+</apex:outputLabel>
+
+<apex:outputLabel styleClass="s1" >
+You have successfully merged all related lists from DUNS Number {!OrigDUNS} to {!NewDUNS}.
+<br/>
+<br/>
+</apex:outputLabel>
+
+<apex:commandLink styleClass="s1" value="Click here to view the new Account" action="{!MastrAccPage}"/>
+
+</apex:pageBlock>
+</apex:form>
+-->
+</apex:page>

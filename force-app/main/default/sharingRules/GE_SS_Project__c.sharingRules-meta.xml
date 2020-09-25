@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>FS_Project_Record_ypeEQUALSSS_Project</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>FS Project: Record TypeEQUALSSS Projecta</label>
+        <sharedTo>
+            <role>SMax_SS_User</role>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>SS Project</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>SS_FS_Project</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>SS FS Project</label>
+        <sharedTo>
+            <role>SMax_SS_Admin</role>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>SS Project</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>TMS_FS_Project</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>TMS FS Project</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>SMax_TMS_Admin</roleAndSubordinatesInternal>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>GS - TMS/DTS Training,GS - TMS/DTS HQ,GS - TMS/DTS Requirement</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+</SharingRules>

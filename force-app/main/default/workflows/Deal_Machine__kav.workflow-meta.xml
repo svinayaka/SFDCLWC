@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>MC_TS_BN_Email_Alert_After_Rejection</fullName>
+        <description>MC-TS BN Email Alert After Rejection</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>All/MC_TS_Approval_Process_Email_Template_Rejected</template>
+    </alerts>
+    <alerts>
+        <fullName>MC_TS_BN_Email_Alert_after_article_Approval</fullName>
+        <description>MC-TS_BN_Email Alert after article Approval</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>All/MC_TS_Approval_Process_Email_Template_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>MC_TS_CS_Email_Alert_After_Rejection</fullName>
+        <description>MC-TS CS Email Alert After Rejection</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>All/MC_TS_Approval_Process_Email_Template_Rejected</template>
+    </alerts>
+    <alerts>
+        <fullName>MC_TS_CS_Email_Alert_after_article_Approval</fullName>
+        <description>MC-TS_CS_Email Alert after article Approval</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>All/MC_TS_Approval_Process_Email_Template_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>MC_TS_IT_Email_Alert_After_Rejection</fullName>
+        <description>MC-TS IT Email Alert After Rejection</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>All/MC_TS_Approval_Process_Email_Template_Rejected</template>
+    </alerts>
+    <alerts>
+        <fullName>MC_TS_IT_Email_Alert_after_article_Approval</fullName>
+        <description>MC-TS_IT_Email Alert after article Approval</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>All/MC_TS_Approval_Process_Email_Template_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>MC_TS_MS_Email_Alert_After_Rejection</fullName>
+        <description>MC-TS MS Email Alert After Rejection</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>All/MC_TS_Approval_Process_Email_Template_Rejected</template>
+    </alerts>
+    <alerts>
+        <fullName>MC_TS_MS_Email_Alert_after_article_Approval</fullName>
+        <description>MC-TS_MS_Email Alert after article Approval</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>All/MC_TS_Approval_Process_Email_Template_Approved</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>BHGE_MCTS_ValidatioStatusUpdate</fullName>
+        <field>ValidationStatus</field>
+        <literalValue>Draft</literalValue>
+        <name>BHGE_MCTS_ValidatioStatusUpdate</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>MC_TS_BN_ValidationStatusApproved</fullName>
+        <field>ValidationStatus</field>
+        <literalValue>Approved</literalValue>
+        <name>MC-TS BN ValidationStatusApproved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>MC_TS_BN_ValidationStatusDraft</fullName>
+        <field>ValidationStatus</field>
+        <literalValue>Draft</literalValue>
+        <name>MC-TS BN ValidationStatusDraft</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>MC_TS_BN_ValidationStatusPending</fullName>
+        <field>ValidationStatus</field>
+        <literalValue>Pending Approval</literalValue>
+        <name>MC-TS BN ValidationStatusPending</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>MC_TS_CS_ValidationStatusApproved</fullName>
+        <field>ValidationStatus</field>
+        <literalValue>Approved</literalValue>
+        <name>MC-TS CS ValidationStatusApproved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>MC_TS_CS_ValidationStatusDraft</fullName>
+        <field>ValidationStatus</field>
+        <literalValue>Draft</literalValue>
+        <name>MC-TS CS ValidationStatusDraft</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>MC_TS_CS_ValidationStatusPending</fullName>
+        <field>ValidationStatus</field>
+        <literalValue>Pending Approval</literalValue>
+        <name>MC-TS CS ValidationStatusPending</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>MC_TS_IT_ValidationStatusApproved</fullName>
+        <field>ValidationStatus</field>
+        <literalValue>Approved</literalValue>
+        <name>MC-TS IT ValidationStatusApproved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>MC_TS_IT_ValidationStatusDraft</fullName>
+        <field>ValidationStatus</field>
+        <literalValue>Draft</literalValue>
+        <name>MC-TS IT ValidationStatusDraft</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>MC_TS_IT_ValidationStatusPending</fullName>
+        <field>ValidationStatus</field>
+        <literalValue>Pending Approval</literalValue>
+        <name>MC-TS IT ValidationStatusPending</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>MC_TS_MS_ValidationStatusApproved</fullName>
+        <field>ValidationStatus</field>
+        <literalValue>Approved</literalValue>
+        <name>MC-TS MS ValidationStatusApproved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>MC_TS_MS_ValidationStatusDraft</fullName>
+        <field>ValidationStatus</field>
+        <literalValue>Draft</literalValue>
+        <name>MC-TS MS ValidationStatusDraft</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>MC_TS_MS_ValidationStatusPending</fullName>
+        <field>ValidationStatus</field>
+        <literalValue>Pending Approval</literalValue>
+        <name>MC-TS MS ValidationStatusPending</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <rules>
+        <fullName>BHGE_MCTSKnowledgeUpdateValidationStatusDraft</fullName>
+        <actions>
+            <name>BHGE_MCTS_ValidatioStatusUpdate</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(ISPICKVAL(ValidationStatus,&apos;Approved&apos;), ISCHANGED(Changes_to_Article_Version__c))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

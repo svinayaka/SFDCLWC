@@ -1,0 +1,560 @@
+<!--
+Page Name: GE_ES_SearchAddCaseProducts
+Used Where ? : Used for Add Case Product functionality 
+Purpose/Overview : Implements the search and add case products for the ES & Industrial business
+Functional Area : Service Management (Case)
+Author: Jayaraju Nulakachandanam 
+Created Date: June 16th,2011
+
+Date Modified : Developer Name     : Section/PageBlock Modified/Added : Purpose/Overview of Change
+
+-->
+
+<apex:page standardController="Case"  id="CasePage" showHeader="true" sidebar="true">
+<!-- 
+  
+    <apex:includeScript value="{!URLFOR($Resource.RProcess, '/jquery/js/jquery-1.4.2.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.RProcess, '/jquery/js/jquery-ui-1.8.1.custom.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.RProcess, '/dataTables/media/js/jquery.dataTables.js')}"/>
+  
+  <apex:form id="form1" > -->
+        <!--  Component to display the processing message and freezes the screen while in operation -->
+       
+       
+       <!--Section Header to display the title similar to the standard page -->
+      <!--   <apex:sectionHeader title="Case : {!CaseObj.CaseNumber} "  subtitle="Case Product Selection" /> -->
+       <!-- Page Messages to display  messages  -->  
+     <!--   <apex:pageMessage id="pgMsg" Title="No Product Books found please contact your administrator" severity="info" strength="2" rendered="{!proBook = false}"></apex:pageMessage>    
+       <apex:pageBlock id="pageblock" rendered="{!proBook = true}"> --> <!--Page Block Starts-->
+   <!--         <apex:actionRegion >  
+               <apex:outputPanel id="outPnlpgMsg">   
+                   <apex:pageMessage id="pgMsg" Title="No products found for the given search criteria" severity="info" strength="2" rendered="{!pgMsgTxt!= ''}"></apex:pageMessage>    
+               </apex:outputPanel>
+        -->   
+               <!-- Page Messages to display  messages  -->
+           <!--     <apex:messages styleClass="error" id="errmsg"/>
+               <apex:actionFunction name="getfilterSearch" action="{!ProductFilterSearch}" reRender="outPnlFilter,pbsFilter,SearchResult,PrdSeletions,pbsProdSel,pgMsg,outPnlpgMsg,SearchString,SearchString2,Search,pagingPanel,AddButton,Search1" status="loading" />
+               <apex:actionFunction name="getSubPnls" action="{!SubPnlLovs}" reRender="pgMsg,pbsFilter,outPnlpgMsg,pbsiProService,pbsiOffering,theButton2"  status="loading"/>
+               <apex:actionFunction name="getDrivers" action="{!DriverLovs}" reRender="pgMsg,pbsFilter,outPnlpgMsg,pbsiProService,pbsiOffering"  status="loading"/>
+               <apex:actionFunction name="getServices" action="{!ServiceLovs}" reRender="pgMsg,pbsFilter,outPnlpgMsg,pbsiProService,pbsiOffering"  status="loading"/>
+               <apex:actionFunction name="getServices2" action="{!ServiceLovs}" reRender="pgMsg,pbsFilter,outPnlpgMsg,pbsiProService2,pbsiOffering,theButton2"  status="loading"/>
+               <apex:actionFunction name="getOfferings" action="{!OfferingLovs}" reRender="pgMsg,pbsFilter,outPnlpgMsg" status="loading"/>
+               <apex:actionFunction name="NextRecords" action="{!getNext}" reRender="SearchResult,PrdSeletions,pbsProdSel,pgMsg,outPnlpgMsg,pagingPanel" status="loading"/>
+               <apex:actionFunction name="PreviousRecords" action="{!getPrevious}" reRender="SearchResult,PrdSeletions,pbsProdSel,pgMsg,outPnlpgMsg,pagingPanel" status="loading"/>               
+               
+               <apex:actionFunction name="getProHosts" action="{!ProHostLovs}" reRender="pgMsg,outPnlpgMsg,pbsFilter2,pbsiProHost,pbsiProTch,pbsiProLn,pbsiProOffering" status="loading" />
+               <apex:actionFunction name="getProTechies" action="{!ProTechLovs}" reRender="pgMsg,outPnlpgMsg,pbsFilter2,pbsiProTch,pbsiProLn,pbsiProOffering" status="loading" />
+               <apex:actionFunction name="getProLines" action="{!ProLineLovs}" reRender="pgMsg,pbsFilter,outPnlpgMsg,pbsFilter2,pbsiProLn,pbsiProOffering" status="loading" />               
+               <apex:actionFunction name="getProOfferings" action="{!ProOfferingLovs}" reRender="pgMsg,pbsFilter,outPnlpgMsg,pbsFilter2,pbsiProOffering" status="loading" />
+               <apex:actionStatus id="stSearch" startText="Searching...."></apex:actionStatus>
+               <apex:actionStatus id="loading" onstart="loading(true)" onstop="loading(false)" /> -->
+               <!-- table to display Product Name and Code text fields --> 
+             <!--   <table>         
+                   <tr>
+                        <td>    
+                            <apex:outputPanel id="Search" title="Search Result"  >
+                            <b> Product Name: </b> <apex:inputText value="{!SearchString}" id="SearchString"  onkeypress="handleKeyPress(event);" />
+                            <apex:inputText style="display:none" />&nbsp;&nbsp;&nbsp;&nbsp;
+                            <b> Product Code: </b> <apex:inputText value="{!ProductCode}" id="SearchString2"  onkeypress="handleKeyPress(event);"/>
+                            <apex:inputText style="display:none" />
+                            <p/>
+                            <apex:commandButton action="{!ProductSearch}" value="Search" id="theButton" reRender="outPnlFilter,pbsFilter,SearchResult,PrdSeletions,pbsProdSel,pgMsg,outPnlpgMsg,pagingPanel,Search1"  status="loading"/>                            
+                            </apex:outputPanel>
+                        </td>
+                        <td> &nbsp;&nbsp;
+                        </td>
+                        <td> &nbsp;&nbsp;
+                        </td>
+                        <td> &nbsp;&nbsp;
+                        </td>
+            
+                   </tr>
+                   <tr>
+                        <apex:outputPanel >
+                             &nbsp;&nbsp;
+                        </apex:outputPanel>
+                   </tr>
+        
+               </table>
+               
+               <div id="contentLoading" style="display:none;">
+                    <div style="text-align: center; border:none,padding:15px,backgroundColor:#000,-webkit-border-radius: 10px,-moz-border-radius:10px,opacity: .5,color:#fff">
+                       <FONT FACE="Helvetica,Verdana,Arial" SIZE="3" COLOR="#000066"><B>Please wait...</B></FONT>
+                    </div>
+                </div>
+               <apex:outputPanel id="outPnlFilter" > -->
+                    <!--Filter Criteria Page block Section -->
+                   <!--  <apex:pageBlockSection title="Filter Criteria" id="pbsFilter0" columns="1" rendered="{!CaseObj.recordtype.Name != 'Nuclear' }">                    
+                        <apex:inputField value="{!PBE.GE_ES_P_L__c}" onchange="javascript:getSubPnl();" id="pckLstPnl" />
+                        <apex:inputField value="{!PBE.GE_ES_Sub_P_L__c}" onchange="javascript:getDriver();" />
+                        <apex:inputField value="{!PBE.GE_ES_Oppty_Driver__c}" onchange="javascript:getService();" />                
+                    </apex:pageBlockSection>    
+                    <apex:pageBlockSection id="pbsFilter" columns="1" rendered="{!CaseObj.recordtype.Name != 'Nuclear' }">                        
+                        <apex:pageBlockSectionItem id="pbsiProService" >
+                            <apex:outputLabel value="{!$ObjectType.Product2.fields.GE_ES_Product_Service__c.label}"></apex:outputLabel>
+                            <apex:selectList value="{!selectedService}" size="1" onchange="javascript:getOffering();" disabled="{!PBE.GE_ES_Sub_P_L__c = null || PBE.GE_ES_P_L__c = null || PBE.GE_ES_Oppty_Driver__c = null}" >
+                                <apex:selectOptions value="{!ServiceValues}"/>
+                            </apex:selectList>
+                        </apex:pageBlockSectionItem>
+                        
+                        
+                     
+                        <apex:pageBlockSectionItem id="pbsiOffering">
+                            <apex:outputLabel value="{!$ObjectType.Product2.fields.GE_ES_Offering__c.label}"></apex:outputLabel>
+                            <apex:selectList value="{!selectedOffering}" size="1" disabled="{!PBE.GE_ES_Sub_P_L__c = null || PBE.GE_ES_P_L__c = null || PBE.GE_ES_Oppty_Driver__c = null || selectedService = ''}" >
+                                <apex:selectOptions value="{!OfferingValues}"/>
+                            </apex:selectList>
+                        </apex:pageBlockSectionItem>                                   
+                    </apex:pageblockSection>
+                    
+                     <apex:pageBlockSection title="Filter Criteria" id="pbsFilter2" columns="2" rendered="{!CaseObj.recordtype.Name = 'Nuclear' }"> -->
+                        <!-- tier values with dependencies -->
+                       <!--  <apex:pageblockSectionItem >
+                            <apex:outputLabel style="width: 250px" value="Tier 1 P&L"></apex:outputLabel>
+                            <apex:inputField value="{!PBE.GE_Tier1_PnL__c}" onchange="javascript:getProHost();"/>
+                        </apex:pageblockSectionItem>
+                        
+                          <apex:pageBlockSectionItem id="pbsiProHost" >
+                            <apex:outputLabel value="{!$ObjectType.Product2.fields.GEEM_HstEqpmt__c.label}"></apex:outputLabel>
+                            <apex:selectList value="{!selectedProHost}" size="1" onchange="javascript:getProTech();" disabled="{!PBE.GE_Tier1_PnL__c = null && PBE.GE_Tier2_PnL__c = null && PBE.GE_Tier3_PnL__c = null && PBE.GE_Tier4_PnL__c = null}">
+                            <apex:selectOptions value="{!ProHostValues}"/>
+                            </apex:selectList>
+                        </apex:pageBlockSectionItem>
+                        
+                        <apex:pageblockSectionItem >
+                            <apex:outputLabel style="width: 250px" value="Tier 2 P&L"></apex:outputLabel>
+                            <apex:inputField value="{!PBE.GE_Tier2_PnL__c}" onchange="javascript:getProHost();"/>
+                        </apex:pageblockSectionItem>
+                        
+                          <apex:pageBlockSectionItem id="pbsiProTch" >
+                            <apex:outputLabel value="{!$ObjectType.Product2.fields.Technology__c.label}"></apex:outputLabel>
+                            <apex:selectList value="{!selectedProTech}" size="1" onchange="javascript:getProLine();" disabled="{!selectedProHost = ''}">
+                            <apex:selectOptions value="{!ProTechValues}"/>
+                            </apex:selectList>
+                        </apex:pageBlockSectionItem>
+                        
+                        <apex:pageblockSectionItem >
+                            <apex:outputLabel style="width: 250px" value="Tier3 P&L"></apex:outputLabel>
+                            <apex:inputField value="{!PBE.GE_Tier3_PnL__c}" onchange="javascript:getProHost();"/>
+                        </apex:pageblockSectionItem>
+                        
+                         <apex:pageBlockSectionItem id="pbsiProLn" >
+                            <apex:outputLabel value="{!$ObjectType.Product2.fields.GEEM_ProLn__c.label}"></apex:outputLabel>
+                            <apex:selectList value="{!selectedProLine}" size="1" onchange="javascript:getProOffering();" disabled="{!selectedProTech = ''}">
+                            <apex:selectOptions value="{!ProLineValues}"/>
+                            </apex:selectList>
+                        </apex:pageBlockSectionItem>
+                        
+                        <apex:pageblockSectionItem >
+                            <apex:outputLabel style="width: 250px" value="Tier 4 P&L"></apex:outputLabel>
+                            <apex:inputField value="{!PBE.GE_Tier4_PnL__c}" onchange="javascript:getProHost();"/>
+                        </apex:pageblockSectionItem>
+                        
+                        <apex:pageBlockSectionItem id="pbsiProOffering">
+                            <apex:outputLabel value="Product Offering"></apex:outputLabel>
+                            <apex:selectList value="{!selectedProOffering}" size="1" disabled="{!selectedProLine = ''}">
+                            <apex:selectOptions value="{!ProOfferingValues}"/>
+                            </apex:selectList>
+                        </apex:pageBlockSectionItem>
+                        
+                        <apex:pageblockSectionItem >
+                         <apex:outputLabel style="width: 250px" value="Tier 5 P&L"></apex:outputLabel>
+                        <apex:inputField value="{!PBE.GE_Tier5_PnL__c}" onchange="javascript:getProHost();"/>
+                        </apex:pageblockSectionItem>
+                        
+                         <apex:pageblockSectionItem >
+                             &nbsp;
+                        </apex:pageblockSectionItem>
+                          
+                        <apex:pageblockSectionItem >
+                            <apex:outputLabel style="width: 250px" value="Tier 6 P&L"></apex:outputLabel>
+                            <apex:inputField value="{!PBE.GE_Tier6_PnL__c}" onchange="javascript:getProHost();"/>
+                        </apex:pageblockSectionItem>
+                        
+                         <apex:pageblockSectionItem >
+                             &nbsp;
+                        </apex:pageblockSectionItem>
+                        
+                    </apex:pageBlockSection>
+                    -->
+                    <!--  button to perform filter search -->
+                   <!--  <apex:commandButton action="{!ProductFilterSearch}" value="Search" id="theButton2" reRender="outPnlFilter,pbsFilter,SearchResult,PrdSeletions,pbsProdSel,pgMsg,outPnlpgMsg,SearchString,SearchString2,Search,pagingPanel,AddButton,Search1"  status="loading" />                            
+               </apex:outputPanel>      
+           </apex:actionRegion> 
+    -->
+           <!--Product Selections Page Block Section-->
+       <!--     <apex:pageBlockSection title="Product Selections" id="pbsProdSel"  >
+               <apex:outputpanel id="PrdSeletions" rendered="{!NOT(errorStatus)}"> -->
+                    <!--Page Block Table Start-->                  
+                   <!--  <apex:pageBlockTable id="SearchResult" value="{!prodRes}" var="PR"  width="100%" rendered="{!pids.size > 0}">
+                        <apex:column headerValue="Select All">
+                            <apex:facet name="header">
+                                  
+                                                                       
+                             </apex:facet>  
+                             <apex:inputCheckbox id="ids" value="{!PR.checked}" onclick="selectthis(this);" />
+                                               
+                             
+                        </apex:column>                              
+                        <apex:column rendered="false">
+                              <apex:facet name="header">Product Code   </apex:facet>
+                              <apex:outputText value="{!IF((PR.PBooke.ProductCode<>''),PR.PBooke.ProductCode,' - ')}"/>
+                        </apex:column>  
+                        <apex:column >
+                             <apex:facet name="header">Product Name   </apex:facet>
+                             <apex:commandLink action="/{!PR.PBooke.ID}" value="{!PR.PBooke.Name}">
+                                      <apex:param name="id" value="{!PR.PBooke.Id}"/>
+                             </apex:commandLink>
+                        </apex:column>                      
+                     <apex:column >
+                          <apex:facet name="header">Product Code </apex:facet>
+                          <apex:outputText value="{!PR.PBooke.ProductCode}"/>
+                     </apex:column>                                                 
+                     <apex:column rendered="{!CaseObj.recordtype.Name != 'Nuclear' }">
+                          <apex:facet name="header">{!$ObjectType.Product2.fields.GE_ES_P_L__c.label} </apex:facet>
+                          <apex:outputText value="{!PR.PBooke.GE_ES_P_L__c}"/>
+                     </apex:column>                 
+                     <apex:column rendered="{!CaseObj.recordtype.Name != 'Nuclear' }">
+                          <apex:facet name="header">{!$ObjectType.Product2.fields.GE_ES_Sub_P_L__c.label}   </apex:facet>
+                          <apex:outputText value="{!PR.PBooke.GE_ES_Sub_P_L__c}"/>
+                     </apex:column>
+                     <apex:column rendered="{!CaseObj.recordtype.Name != 'Nuclear' }">
+                          <apex:facet name="header">Oppty Driver</apex:facet>
+                          <apex:outputText value="{!PR.PBooke.GE_ES_Oppty_Driver__c}"/>
+                     </apex:column>
+                     <apex:column rendered="{!CaseObj.recordtype.Name != 'Nuclear' }">
+                          <apex:facet name="header">Product Service </apex:facet>
+                          <apex:outputText value="{!PR.PBooke.GE_ES_Product_Service__c}"/>
+                     </apex:column>
+                     <apex:column rendered="{!CaseObj.recordtype.Name != 'Nuclear' }">
+                          <apex:facet name="header">Offering </apex:facet>
+                          <apex:outputText value="{!PR.PBooke.GE_ES_Offering__c}"/>
+                     </apex:column>          
+                     
+                     <apex:column rendered="{!CaseObj.recordtype.Name = 'Nuclear' }">
+                          <apex:facet name="header">{!$ObjectType.Product2.fields.GE_Tier1_PnL__c.label} </apex:facet>
+                          <apex:outputText value="{!PR.PBooke.GE_Tier1_PnL__c}"/>
+                     </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">{!$ObjectType.Product2.fields.GE_Tier2_PnL__c.label} </apex:facet>
+                            <apex:outputText value="{!PR.PBooke.GE_Tier2_PnL__c}"/>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">{!$ObjectType.Product2.fields.GE_Tier3_PnL__c.label} </apex:facet>
+                            <apex:outputText value="{!PR.PBooke.GE_Tier3_PnL__c}"/>
+                        </apex:column> 
+                        
+                         <apex:column rendered="{!CaseObj.recordtype.Name = 'Nuclear'}">
+                          <apex:facet name="header">{!$ObjectType.Product2.fields.GE_Tier4_PnL__c.label} </apex:facet>
+                          <apex:outputText value="{!PR.PBooke.GE_Tier4_PnL__c}"/>
+                     </apex:column>
+                     
+                      <apex:column rendered="{!CaseObj.recordtype.Name = 'Nuclear' }">
+                          <apex:facet name="header">{!$ObjectType.Product2.fields.GE_Tier5_PnL__c.label} </apex:facet>
+                          <apex:outputText value="{!PR.PBooke.GE_Tier5_PnL__c}"/>
+                     </apex:column>
+                     
+                      <apex:column rendered="{!CaseObj.recordtype.Name = 'Nuclear'}">
+                          <apex:facet name="header">{!$ObjectType.Product2.fields.GE_Tier6_PnL__c.label} </apex:facet>
+                          <apex:outputText value="{!PR.PBooke.GE_Tier6_PnL__c}"/>
+                     </apex:column>
+                     
+                                         
+                     <apex:column rendered="{!CaseObj.recordtype.Name = 'Nuclear' }">
+                          <apex:facet name="header">{!$ObjectType.Product2.fields.Description.label} </apex:facet>
+                          <apex:outputText value="{!PR.PBooke.Description}"/>
+                     </apex:column>                                                        
+                </apex:pageBlockTable> --> <!--Page Block Table End-->
+            <!-- </apex:outputpanel>   
+         </apex:pageBlockSection>
+         <apex:outputPanel id="pagingPanel"  > -->
+              <!-- table to display Next Previous buttons-->
+             <!--  <table border="0" align="left">
+                   <tr>                                                                     
+                        <td width="50"></td>
+                        <td >                        
+                              <apex:outputLabel rendered="{!isPreviousRender || isNextRender}"><B>Products {!resultsStartNumber}-{!resultsStopNumber} of {!totalResults}</B></apex:outputLabel>
+                        </td>
+                        <td width="50"></td>
+                        <td align="left" >                        
+                             <B><apex:commandLink value="Previous"  rendered="{!isPreviousRender}" reRender="SearchResult,PrdSeletions,pbsProdSel,pgMsg,outPnlpgMsg,pagingPanel" onclick=" return chkPrevious();" /> </B>
+                        </td> 
+                        <td width="25"></td>
+                        <td align="right">                        
+                             <B><apex:commandLink value="Next"  rendered="{!isNextRender}" reRender="SearchResult,PrdSeletions,pbsProdSel,pgMsg,outPnlpgMsg,pagingPanel" onclick="return chkNext();" /></B>
+                        </td>                                                 
+                    </tr>
+               </table>
+         </apex:outputPanel>
+         -->
+         <!-- page block buttons that will be displayed as the detail page buttons -->
+        <!--  <apex:pageBlockButtons >
+              <apex:outputPanel id="Search1" title="Search Result" rendered="{!NOT(errorStatus)}" >
+                   <apex:commandButton value="Select"  action="{!ProcessSelected}"   id="AddButton"  onclick="return validateSelection1();"   /> 
+                   <apex:commandButton value="Cancel"    id="CancelButton" action="/{!CaseObj.Id}"/>         
+              </apex:outputPanel>
+         </apex:pageBlockButtons>
+
+     
+  </apex:pageblock> --> <!--Page Block End-->
+  <!-- </apex:form>
+  
+  <script type="text/javascript">
+  
+  function show()
+     {
+         $.blockUI({ message: '<h1>Please wait</h1>', css: { 
+                    border: 'none', 
+                    padding: '15px', 
+                    backgroundColor: '#000', 
+                    '-webkit-border-radius': '10px', 
+                    '-moz-border-radius': '10px', 
+                    opacity: .5, 
+                    color: '#fff' 
+                } });        
+     }
+     
+     function hide()
+     {
+         $.unblockUI();
+     }
+  
+     
+     //function to validate the filter criteria
+     function filterSearch()
+     {
+         
+         var pnl = document.getElementById('page:form1:pageblock:pbsFilter:pckLstPnl');
+         
+         if(pnl.value == null)
+         {                   
+               alert('Insufficient privilages on Product object, please contact your administrator');
+               return false;
+         }
+         if(pnl.options[pnl.selectedIndex].value == pnl.options[0].value)
+         {                  
+               alert('Please select at least one filter criteria');
+               return false;
+         }      
+                 
+              
+         getfilterSearch();
+         return false;
+     }
+     
+     
+     //function to get the Sub PnL LOVs
+     function getSubPnl()
+     {
+         
+         getSubPnls();
+     }
+     
+     //function to get the Driver LOVs
+     function getDriver()
+     {
+      
+         getDrivers();
+     }
+     
+     //function to get the Service LOVs
+     function getService()
+     {
+        
+         getServices();
+     }
+     function getService2()
+     {
+         
+         getServices2();
+     }
+     
+     //function to get the Offering LOVs
+     function getOffering()
+     {
+         
+         getOfferings();
+     }
+     
+     function getProHost()
+     {
+          
+         getProHosts();
+     }
+     
+     function getProTech()
+     {
+          
+         getProTechies();
+     }
+     
+     //function to get the Service LOVs
+     function getProLine()
+     {
+         
+         getProLines();
+     }
+     
+     
+     //function to get the Offering LOVs
+     function getProOffering()
+     {
+         
+         getProOfferings();
+     }
+     
+      var selectedCount = 0;   
+     //function to validate the product selections
+     function validateSelection1()
+     {
+        
+        
+        
+        
+        if(selectedCount == 0)
+        {
+            alert('Please select at least one product');
+            return false;
+        }
+        return true;
+     }
+        
+      
+        //function to display alert message when clicked on Next  button with products selected
+        function chkNext()
+        {    
+            var inputElem = document.getElementsByTagName("input");
+            //loop through all the input checkbox elements
+            for(var i=0; i<inputElem.length; i++)
+            {
+            
+                if(inputElem[i].id.indexOf("ids")!=-1 || inputElem[i].id.indexOf("chkSelectAll")!=-1)
+                {
+                    if(inputElem[i].checked==true)
+                    {
+                    selectedCount=1;
+                    }
+                }   
+            }
+        
+        
+              if(selectedCount > 0)
+              {
+                  var cnfrm = confirm('Your selections on this page will be lost. Do you want to continue?');
+                  if(cnfrm)
+                  {
+                      selectedCount = 0;
+                     
+                      NextRecords();
+                      return true;
+                  }
+                  else
+                  return false;
+              }
+                selectedCount = 0;
+                NextRecords();
+                
+                return true;
+        }
+        
+        //function to display alert message when clicked on Previous button with products selected
+        function chkPrevious()
+        {
+        
+            var inputElem = document.getElementsByTagName("input");
+            //loop through all the input checkbox elements
+            for(var i=0; i<inputElem.length; i++)
+            {
+            
+                if(inputElem[i].id.indexOf("ids")!=-1 || inputElem[i].id.indexOf("chkSelectAll")!=-1)
+                {
+                    if(inputElem[i].checked==true)
+                    {
+                    selectedCount=1;
+                    }
+                }   
+            }
+            
+            
+              if(selectedCount > 0)
+              {
+                  var cnfrm = confirm('Your selections on this page will be lost. Do you want to continue?');
+                  if(cnfrm)
+                  {
+                      selectedCount = 0;
+                      
+                      
+                      PreviousRecords();
+                      return true;
+                  }
+                  else
+                  return false;
+              }
+            selectedCount = 0;
+            
+            PreviousRecords();
+            
+            return true;
+        }
+
+        //function to submit the page when the enter key is pressed
+        function handleKeyPress(e){
+            var sbutton;
+            var key= 0;
+            
+          if(window.event){
+            key= e.keyCode;
+            }else if(e.which){
+           key= e.which;
+          }
+            if(key==13)
+            {
+              sbutton = document.getElementById("{!$Component.page.form1.pageblock.theButton}"); 
+         
+         
+             sbutton.click();
+         
+             
+            }
+        } 
+        
+        function checkAll(all,cnt)
+        {
+           
+           alert('***'+cnt);
+           var inputElem = document.getElementsByTagName("input");
+           for(var i=0; i < inputElem.length; i++)
+               {
+                   if(inputElem[i].id.indexOf("ids")!=-1)
+                   inputElem[i].checked = all.checked;
+               }
+            //selectAll(all.checked); 
+            
+            if(all.checked == true)
+            selectedCount = cnt;
+            else
+            selectedCount = 0;
+        }
+        function selectthis(th)
+        {
+            if(th.checked == true)
+            selectedCount = selectedCount + 1;
+            else
+            selectedCount = selectedCount - 1;
+        }
+        
+        function loading(val) {
+           if (val) {
+              document.getElementById('contentLoading').style.display = 'block';
+             
+            }
+            else {
+              document.getElementById('contentLoading').style.display = 'none';
+              
+            }
+      }
+       
+       
+</script>
+   -->
+</apex:page>

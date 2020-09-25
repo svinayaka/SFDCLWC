@@ -1,0 +1,85 @@
+<apex:page standardController="SD_Post_Run_Bit_Report__c" extensions="FX5.ReportTemplateExtension">
+
+<apex:includeScript value="{!$Resource.FX5__jquery1102minjs}"/>
+
+<style type="text/css">
+
+div.apexp {
+
+margin-left:-10px;
+
+}
+
+body {
+
+margin-left:0px !important;
+
+}
+
+a
+
+{
+
+text-decoration:none;
+
+}
+
+</style>
+
+<script type="text/javascript">
+
+$('td.labelCol.empty').remove();
+
+$('td.dataCol.empty').css('width','50%');
+
+$('td.labelCol.first').css('vertical-align', 'bottom');
+
+$('td.dataCol.first').css('vertical-align', 'bottom');
+
+$('input[type=submit]').appendTo('td.dataCol.empty');
+
+function jsOpenReport(entityId, templateId, objectTypeId, namespace)
+
+{
+
+var pagePath ='apex';
+
+var ctrl = document.querySelectorAll("[id$='reportPagePath']")[0];
+
+var customUrl='';
+
+if(ctrl!=null)
+
+{
+
+pagePath = ctrl.innerText;
+
+if(pagePath && pagePath.toLowerCase()!='apex')
+
+{
+
+customUrl='&customUrl=' + pagePath;
+
+}
+
+}
+
+var href = '/' + pagePath + '/' + namespace + 'Reporting?templateId='+ templateId + '&objectId=' + entityId + '&objectType=' + objectTypeId + customUrl;
+
+window.open(href, '_blank');
+
+window.top.location=window.top.location;
+
+}
+
+</script>
+
+<div style="display:none;">
+
+<apex:outputText id="reportPagePath" value="{!PagePath}" />
+
+</div>
+
+<apex:dynamicComponent componentValue="{!form}" id="dynamic"/>
+
+</apex:page>

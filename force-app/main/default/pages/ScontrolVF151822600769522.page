@@ -1,0 +1,1 @@
+<apex:page standardController="SVMXC__Service_Order_Line__c" sidebar="false" showheader="false" applyHtmlTag="false"><SVMXC:SFM_Wizard recordId="{!SVMXC__Service_Order_Line__c.Id}" /></apex:page>

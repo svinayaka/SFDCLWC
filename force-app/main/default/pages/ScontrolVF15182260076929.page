@@ -1,0 +1,1 @@
+<apex:page standardController="SVMXC_Timesheet__c" sidebar="false" showheader="false" applyHtmlTag="false"><SVMXC:SFM_Wizard recordId="{!SVMXC_Timesheet__c.Id}" /></apex:page>

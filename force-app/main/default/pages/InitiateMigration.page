@@ -1,0 +1,47 @@
+<apex:page standardController="Account" extensions="AccountRelatedListMigration">
+<apex:form >
+<apex:pageBlock > 
+<apex:pageMessage detail="Clicking the Continue with Migration button will delete the Account request record after successful migration." severity="Warning" strength="2" ></apex:pageMessage>
+<apex:pagemessages />
+            <apex:pageBlockButtons >
+            <apex:commandButton value="Continue with Migration" action="{!Migrate}" />
+            <apex:commandButton value="Cancel Migration" action="{!CancelMigration}"/>
+            </apex:pageBlockButtons>                     
+                                
+<apex:pageBlockSection title="Current Account Information">
+<apex:pageBlockTable value="{!arrAccMig}" var="acc">
+<apex:column value="{!acc.name}"/>
+<apex:column value="{!acc.GE_HQ_Proposed_DUNS__c}"/>
+<apex:column value="{!acc.GE_HQ_New_Account_Street__c}"/>
+<apex:column value="{!acc.GE_HQ_New_Account_City__c}"/>
+<apex:column value="{!acc.GE_HQ_New_Account_State_Province__c}"/>
+<apex:column value="{!acc.GE_HQ_New_Account_Zip_Postal_Code__c}"/>
+<apex:column value="{!acc.GE_HQ_New_Account_Country__c}"/>
+<apex:column value="{!acc.Phone}"/>
+<apex:column value="{!acc.GE_HQ_Request_Status__c}"/>
+
+</apex:pageBlockTable>
+</apex:pageBlockSection>
+
+<apex:pageBlockSection title="Proposed Account Information" rendered="{!arrAccDUNSInfo!=null}">
+<apex:pageBlockTable value="{!arrAccDUNSInfo}" var="duns">
+
+<apex:column headerValue="Account Name">
+<apex:outputLink value="/{!duns.id}" target="_blank">{!duns.name}</apex:outputLink>
+</apex:column>
+<apex:column value="{!duns.GE_HQ_DUNS_Number__c}" />
+<apex:column headerValue="Street" value="{!duns.ShippingStreet}" />
+<apex:column headerValue="City" value="{!duns.ShippingCity}" />
+<apex:column headerValue="State/Province" value="{!duns.ShippingState}" />
+<apex:column headerValue="Zip/Postal Code" value="{!duns.ShippingPostalCode}" />
+<apex:column headerValue="Country" value="{!duns.ShippingCountry}" />
+<apex:column value="{!duns.Phone}" />
+<apex:column value="{!duns.GE_HQ_Request_Status__c}" />
+</apex:pageBlockTable>
+</apex:pageBlockSection>
+
+
+</apex:pageBlock>
+
+</apex:form>
+</apex:page>

@@ -1,0 +1,47 @@
+<apex:page controller="GE_SS_Work_Detail_Eqp_on_WellLoc"  >
+   <apex:pageBlock title="Installed Equipment" >
+       <apex:pageBlockTable value="{!lstWorkDetails}" var="objWDEqp" style="width:100%;"  >
+       
+           
+           
+           <apex:column style="width: 15%;" >
+               <apex:facet name="header" >Serial Number</apex:facet>
+               <apex:outputlink value="/{!objWDEqp.SVMXC__Serial_Number__c}" >{!objWDEqp.SVMXC__Serial_Number__r.Name}</apex:outputlink>
+           </apex:column>
+           
+           <apex:column style="  width: 15%;" >
+               <apex:facet name="header" >Product Name</apex:facet>
+               <apex:outputText value="{!objWDEqp.GE_SS_Product_Name__c}" ></apex:outputText>
+           </apex:column>
+           
+           <apex:column style="  width: 20%;" >
+               <apex:facet name="header"  >Product Description</apex:facet>
+               <apex:outputText value="{!objWDEqp.GE_SS_Product_Description__c}" ></apex:outputText>
+           </apex:column>
+           
+          <apex:column style="  width: 15%;" >
+               <apex:facet name="header" >WO Number</apex:facet>
+               <apex:outputlink value="/{!objWDEqp.SVMXC__Service_Order__c}" >{!objWDEqp.SVMXC__Service_Order__r.Name}</apex:outputlink>
+           </apex:column>
+           
+           <apex:column style="  width: 15%;" >
+               <apex:facet name="header" >Work Detail</apex:facet>
+               <apex:outputlink value="/{!objWDEqp.Id}" >{!objWDEqp.Name}</apex:outputlink>
+           </apex:column>
+
+            <apex:column style="  width: 10%;" >
+               <apex:facet name="header" >IP Status</apex:facet>
+               <apex:outputText value="{!objWDEqp.GE_SS_IP_Status__c}" ></apex:outputText>
+           </apex:column>
+
+            <apex:column style="  width: 10%;" >
+               <apex:facet name="header" >Last Modified By</apex:facet>
+               <apex:outputlink value="/{!objWDEqp.LastModifiedById}" >{!objWDEqp.LastModifiedBy.Name}</apex:outputlink>
+              
+           </apex:column>
+
+           
+       </apex:pageBlockTable>
+   </apex:pageBlock>
+   
+</apex:page>

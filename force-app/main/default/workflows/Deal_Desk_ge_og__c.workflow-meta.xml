@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Notify_Commercial_Approver</fullName>
+        <ccEmails>madhuri.sharma@ge.com</ccEmails>
+        <ccEmails>nitish.pandey@ge.com</ccEmails>
+        <description>NOT Used - Notify Commercial Approver</description>
+        <protected>false</protected>
+        <recipients>
+            <field>approver_deal_desk_ge_og__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Risk_Process_Email_Templates/Notify_Commercial_Approver</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_to_Reviewer_when_Deal_Desk_is_recalled</fullName>
+        <description>DM Email Notifications - Opportunity; Opportunity Deal Desk is recalled; Email sent to- Reviewer</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Deal_Approver_Do_not_use_ge_og__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Risk_Process_Email_Templates/Send_to_Reviewer_when_Deal_Desk_is_recalled</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Bid_To_Win_Approval_Date_to_be_Empty</fullName>
+        <field>bid_to_win_approval_date_ge_og__c</field>
+        <name>Bid To Win Approval Date to be Empty</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+        <targetObject>deal_desk_opportunity_id_ge_og__c</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Bid_To_Win_Approval_to_be_False</fullName>
+        <field>bid_to_win_approval_ge_og__c</field>
+        <literalValue>0</literalValue>
+        <name>Bid To Win Approval to be False</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <targetObject>deal_desk_opportunity_id_ge_og__c</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Bid_To_Win_Rejection_to_be_False</fullName>
+        <field>Bid_to_Win_Rejection__c</field>
+        <literalValue>0</literalValue>
+        <name>Bid To Win Rejection to be False</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <targetObject>deal_desk_opportunity_id_ge_og__c</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Bid_to_Win_Approver_to_be_Empty</fullName>
+        <field>Bid_to_Win_Approver_ge_og__c</field>
+        <name>Bid to Win Approver to be Empty</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+        <targetObject>deal_desk_opportunity_id_ge_og__c</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Change_Status_to_Approved</fullName>
+        <field>status_ge_og__c</field>
+        <literalValue>Approved</literalValue>
+        <name>Change Status to Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Deal_Desk_Status_To_Initiated</fullName>
+        <field>status_ge_og__c</field>
+        <literalValue>Initiated</literalValue>
+        <name>Deal Desk Status To Initiated</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Remove_Approver</fullName>
+        <description>Remove Approver if Deal Desk rejected</description>
+        <field>approver_deal_desk_ge_og__c</field>
+        <name>Remove Approver</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Submission_For_Appproval_Date_To_Blank</fullName>
+        <field>submission_for_appproval_date_ge_og__c</field>
+        <name>Submission_For_Appproval_Date_To_Blank</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Submitted_By_To_Blank</fullName>
+        <field>Submitted_By_ge_og__c</field>
+        <name>Submitted By To Blank</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Bid_To_Win_Approval_Date</fullName>
+        <field>bid_to_win_approval_date_ge_og__c</field>
+        <formula>TODAY()</formula>
+        <name>Update Bid To Win Approval Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <targetObject>deal_desk_opportunity_id_ge_og__c</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Bid_To_Win_Approval_to_True</fullName>
+        <field>bid_to_win_approval_ge_og__c</field>
+        <literalValue>1</literalValue>
+        <name>Update Bid To Win Approval to True</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <targetObject>deal_desk_opportunity_id_ge_og__c</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Bid_to_Win_Approver</fullName>
+        <field>Bid_to_Win_Approver_ge_og__c</field>
+        <formula>approver_deal_desk_ge_og__r.FirstName  &amp; &apos; &apos;  &amp;  approver_deal_desk_ge_og__r.LastName</formula>
+        <name>Update Bid to Win Approver</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <targetObject>deal_desk_opportunity_id_ge_og__c</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Deal_Rejection_to_NULL</fullName>
+        <field>approver_comments_ge_og__c</field>
+        <name>Update Deal Rejection to NULL</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Risk_Checklist_Submission_Date</fullName>
+        <field>risk_checklist_submission_date_ge_og__c</field>
+        <formula>Today()</formula>
+        <name>Update Risk Checklist Submission Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <targetObject>deal_desk_opportunity_id_ge_og__c</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Status_to_Rejected</fullName>
+        <field>status_ge_og__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Update Status to Rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Submission_for_Appproval_Date</fullName>
+        <field>submission_for_appproval_date_ge_og__c</field>
+        <formula>TODAY()</formula>
+        <name>Update Submission for Appproval Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <rules>
+        <fullName>Check Bid to Win Approval</fullName>
+        <actions>
+            <name>Update_Bid_To_Win_Approval_Date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Bid_To_Win_Approval_to_True</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Bid_to_Win_Approver</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <formula>active_deal_desk_ge_og__c &amp;&amp; ISPICKVAL(status_ge_og__c , &apos;Approved&apos;)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Deal Desk Status To Initiated</fullName>
+        <actions>
+            <name>Deal_Desk_Status_To_Initiated</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>(active_deal_desk_ge_og__c = True) &amp;&amp;   ISPICKVAL(status_ge_og__c , &apos;Not Started&apos;)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>RCL Support Confimation Date</fullName>
+        <actions>
+            <name>Update_Risk_Checklist_Submission_Date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Deal_Desk_ge_og__c.rcl_support_confimation_date_ge_og__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Uncheck Bid to Win Approval</fullName>
+        <actions>
+            <name>Bid_To_Win_Approval_Date_to_be_Empty</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Bid_To_Win_Approval_to_be_False</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Bid_to_Win_Approver_to_be_Empty</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Deal_Desk_ge_og__c.active_deal_desk_ge_og__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Deal_Desk_ge_og__c.status_ge_og__c</field>
+            <operation>notEqual</operation>
+            <value>Approved</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Uncheck Bid to Win Rejection</fullName>
+        <actions>
+            <name>Bid_To_Win_Rejection_to_be_False</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Deal_Rejection_to_NULL</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Deal_Desk_ge_og__c.active_deal_desk_ge_og__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Deal_Desk_ge_og__c.status_ge_og__c</field>
+            <operation>notEqual</operation>
+            <value>Rejected</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>When Deal Desk is Submitted</fullName>
+        <actions>
+            <name>Update_Submission_for_Appproval_Date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Deal_Desk_ge_og__c.status_ge_og__c</field>
+            <operation>equals</operation>
+            <value>Submitted</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

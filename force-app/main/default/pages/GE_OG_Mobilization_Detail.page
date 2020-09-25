@@ -1,0 +1,65 @@
+<apex:page showHeader="False" Sidebar="False" standardController="GE_OG_Legal_Entity_Deal_Structure__c" extensions="GE_OG_Mobilization_Detail">
+<apex:form id="frm">    
+ 
+             <tr style="background: #d5dbe2;">
+        <td><span style="color: black;padding-left: 10px;font-weight:bold;font-size:30px;">{!uppercountr}</span> </td>
+        <td>&nbsp; &nbsp; <a href="#" onclick="personalUpdate();">Click here to see Country GuideLine</a></td>         
+    </tr> 
+            
+   <apex:pageBlock >  
+   <apex:outputPanel rendered="{!IF(Country_Highlight.size == 0 || countrylist.size == 0, false , true)}">
+   <apex:pageBlockSection Title="Country Legal Entity and Deal Structure"   columns="1" >  
+   <apex:pageBlockSectionItem >              
+            <apex:pageBlockTable value="{!acclist}" var="s"  columnswidth="300px,300px"   cellpadding="4" id="details"  >             
+                <apex:column headervalue="Legal Entitites" value="{!s.Legal_Entity__c}" />
+                <apex:column headervalue="POA Holders" value="{!s.POA_Holder__c}"  />
+                 <apex:column headerValue="SSO" value="{!s.SSO__c }" />
+               </apex:pageBlockTable>
+     </apex:pageBlockSectionItem>
+<apex:pageBlockSectionItem >
+        <apex:commandlink style="Float:left;" value="<Previous" rerender="details" action="{!previous}"/>
+        <apex:commandlink style="Float:right;" value="Next>" rerender="details" action="{!next}" />
+           </apex:pageBlockSectionItem>    
+               </apex:pageblockSection>
+               
+    
+        
+        
+        <apex:pageBlockSection Title="Country Highlights"   columns="1" >            
+            <apex:pageBlockTable value="{!Country_Highlight }" var="c"  columnswidth="100px,100px"   cellpadding="4"  >             
+             <apex:column headerValue="Country Related Information" value="{!c.Country_Highlights__c }" />   
+            </apex:pageBlockTable>
+        </apex:pageBlockSection>
+        
+        
+            <apex:pageBlockSection Title="Primary Contacts"   columns="1" >            
+            <apex:pageBlockTable value="{!Primary_contact }" var="p"  columnswidth="300px,300px"   cellpadding="4"  >             
+                <apex:column headervalue="Function" value="{!p.Function__c}" />
+                    <apex:column headervalue="Primary Contact Name" value="{!p.Name}" />
+                <apex:column headervalue="Location" value="{!p.Location__c}"  />
+                 <apex:column headerValue="Contact Number" value="{!p.Contact_Number__c}" />
+                  </apex:pageBlockTable>
+            </apex:pageBlockSection>
+            <!-- HARI START-->
+            <apex:pageblockSection title="Visa Details" columns="1">
+              
+            </apex:pageblockSection>
+            <!-- HARI END -->
+        </apex:outputPanel>
+        <apex:Outputpanel rendered="{!IF(Country_Highlight.size == 0 || countrylist.size == 0 , true,false)}">
+                    No Records found for the country you have selected.
+        </apex:Outputpanel>
+        
+        </apex:pageBlock> 
+          
+   </apex:form>
+  <script type="text/javascript"> 
+  function personalUpdate()
+      {
+      var link;
+      link='{!getURL}';
+      window.open(link, 'mywin',"left=20,top=20,width=900,height=600,resizable=false");
+      return false;
+      }
+</script>
+</apex:page>

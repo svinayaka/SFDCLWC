@@ -1,0 +1,66 @@
+<apex:page standardController="Case" extensions="GE_MCS_AttactContactCtrl" tabStyle="case"  >
+
+
+
+   <apex:outputpanel id="frm" >    
+   <apex:pagemessages />
+ <!--  <apex:pageBlock mode="edit" id="block" title="Attach Contact"> -->
+<!--  <apex:commandButton value="Find" action="{!Find}"/> -->
+<script type="text/javascript">
+function rel(){
+   
+   <!--var isErrorvar ="{!isErrored}";-->
+    var isErrorvar = Boolean('{!JSENCODE(IF(isErrored,"true", "false"))}'); 
+     <!-- alert(isErrorvar);-->
+      <!-- if(isErrorvar  == "false")-->
+      <!--alert(isErrorvar);-->
+         window.top.location.href='/{!caseId}';
+}
+</script> 
+ <style>
+     .headStyle {border-left: 1px solid #FFFFFF; background-color:#0099ff; color: white;} 
+     </style>
+
+
+ <!-- <apex:outputPanel id="refresh1" rendered="{!refreshPage}">
+
+  <script>
+   window.top.location='/{!caseId}';
+  </script>
+</apex:outputPanel>  -->
+  </apex:outputpanel> 
+   <apex:form ><!-- <apex:inputtext value="{!contactEmail}" >Email</apex:inputtext> -->
+  
+ 
+  
+<apex:outputPanel id="dataDisplay" rendered="{!displayTable}" layout="block" style="overflow:auto; height:260px;margin: 0 2px"> 
+
+<apex:dataTable var="con" value="{!lstWrapContact}" cellspacing="2" cellpadding="2" border="1" headerClass="headStyle" width="95%">
+        <apex:column headerValue="Attach"> <apex:commandButton value="Pick" action="{!attach}"   oncomplete="rel();" rerender="frm" >
+                    <apex:param name="assignContact"
+                value="{!con.contactId}"
+                assignTo="{!contactIdNew}"/>
+        </apex:commandButton></apex:column>
+  
+     <apex:column headerValue="Name" ><apex:outputLink value="{!currentUrl}/{!con.contactId}" target="_blank" >{!con.Name}</apex:outputLink>  </apex:column>
+    
+  <!-- <apex:column headerValue="Email" >{!con.Email}</apex:column> -->
+<apex:column headerValue="Account Name" ><apex:outputLink value="{!currentUrl}/{!con.accountid}" target="_blank">{!con.accountName}</apex:outputLink></apex:column>
+
+       <apex:column headerValue="DUNS" >{!con.DUNS}</apex:column>
+      <apex:column headerValue="Address"  width="40%">{!con.accountAddress}</apex:column>  
+        <apex:column headerValue="Status" ><span style="background-color:#0099ff;"> <b>{!con.Status}</b></span></apex:column>
+     <apex:column headerValue="Active?" >{!con.contactStatus}</apex:column>
+        </apex:dataTable>
+
+    
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!displayMessage}">
+<span style="font-size:15px" >No Contacts available to Attach</span>
+</apex:outputPanel>
+  
+<!--    </apex:pageBlock>  -->
+</apex:form>
+
+</apex:page>

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>BHGE_Reservoir_Software_Support</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>ECRM Cases R-30218</description>
+        <label>BHGE Reservoir Software Support</label>
+        <sharedTo>
+            <group>BHGE_Reservoir_Software_Support</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Reservoir Software</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Cir_Users_access</fullName>
+        <accessLevel>Read</accessLevel>
+        <label>Cir Users access</label>
+        <sharedTo>
+            <group>Group_for_CIR_Initiator_User_Roles</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>CIR</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>FS_AL_Sharing</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>FS-AL Sharing</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>SMax_AL_Admin</roleAndSubordinatesInternal>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>FS-AL</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>MCS_Record_with_OG_MC_CC</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>MCS Record with OG-MC-CC</label>
+        <sharedTo>
+            <group>OG_MC_CC_CaseMergers</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>MCS - CS</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Predix_Sharing_Rule</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Predix Sharing Rule</label>
+        <sharedTo>
+            <group>Predix_Agent</group>
+        </sharedTo>
+        <booleanFilter>1 OR 2</booleanFilter>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Predix IPS</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Predix UO</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>SMax_DS_Sharing</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>SMax DS Sharing</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>SMax_DS_Admin</roleAndSubordinatesInternal>
+        </sharedTo>
+        <criteriaItems>
+            <field>GE_SM_HQ_Business_Unit__c</field>
+            <operation>equals</operation>
+            <value>IT,CS,BN,MS</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>SMax_Drilling</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>SMax Drilling</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>SMax_DRL_Admin</roleAndSubordinatesInternal>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>FS-D&amp;S</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>SMax_PC_Sharing</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>SMax PC Sharing</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>SMax_PC_Admin</roleAndSubordinatesInternal>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>FS-PC</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Sir_Cam_IT_Support_Case_visibility</fullName>
+        <accessLevel>Read</accessLevel>
+        <label>Sir Cam IT Support Case visibility</label>
+        <sharedTo>
+            <group>SIR_CAM_It_Support_visibility</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>SIR - CaM</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>SubSea</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>SubSea</label>
+        <sharedTo>
+            <group>GE_OG_SS</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>FS-SS</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Tech_Support_Case_Sharing</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Tech Support Case Sharing</label>
+        <sharedTo>
+            <group>OG_MC_TS_BN_QueuesViews_Access</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>MC-TS</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingOwnerRules>
+        <fullName>Cases_owned_by_OG_MC_CC_with_OG_MC_CC</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Cases owned by OG-MC-CC with OG-MC-CC</label>
+        <sharedTo>
+            <group>OG_MC_CC_CaseMergers</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>OG_MC_CC_CaseMergers</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Owner_in_Role_and_Internal_Subordinates_Executive</fullName>
+        <accessLevel>Read</accessLevel>
+        <label>Owner in Role and Internal Subordinates: Executive</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>Executive</roleAndSubordinatesInternal>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>Executive</roleAndSubordinatesInternal>
+        </sharedFrom>
+    </sharingOwnerRules>
+</SharingRules>

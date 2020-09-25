@@ -1,0 +1,219 @@
+<!--
+Page Name              : GE_OG_Directory
+Used Where ?           : OG Directory
+Purpose/Overview       : This page is used to provide directory for oil & Gas by specific filters
+Functional Area        : Innovation 
+Author                 : Jain Kirtesh,Nalle Prasanth
+Created Date           : 14/03/2014
+Change History -
+Date Modified : Developer Name     : Method/Section Modified/Added : Purpose/Overview of Change
+-->
+<apex:page id="Page" standardController="user" extensions="GEOGDirectoryController" action="{!addCodeUtilization}" >
+<style>
+strong, b {
+font-weight: bold;
+}
+select {
+background-color: #f7f8fa;
+border: 1px solid #e1e2e5;
+height: 28px;
+}
+</style>
+    <head>
+        <marquee bgcolor="#99EBFF" direction="right" behavior="alternate" scroll="continuous" scrollamount="2"><blink><a href="#" onclick="personalUpdate();"><FONT size="5">Click Here to UPDATE Your Personal Information</FONT></a></blink></marquee>
+        <apex:sectionHeader subtitle="Oil & Gas Directory"/> 
+    </head>
+    <body>
+        <apex:outputpanel id="containerDiv">
+            <apex:form id="form1" prependId="false" >
+                <table>
+                    <tr><td> <table width="100%" border="0" id="tab" cellspacing="0">
+                        <apex:outputPanel styleClass="fieldToHide" >
+                            <apex:inputField value="{!user.GE_HQ_Tier_1_P_L__c}" id="tier1" />
+                        </apex:outputpanel>
+                        <tr>
+                            <td align="left">
+                                <b>Function*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+                            </td>
+                            <td align="left">
+                                <apex:inputField id="funct" value="{!user.Function__c}" onchange="selectedFunctVal('{!$Component.Page.form1.funct}');"/>
+                            </td>
+                        </tr>         
+                        <tr>
+                            <td align="left">
+                                <b>Tier 2 P&amp;L* </b>
+                            </td>
+                            <td align="left">
+                                <apex:inputField value="{!user.GE_HQ_Tier_2_P_L__c}" id="tier2" onchange="selectedTier2Val('{!$Component.Page.form1.tier2}');"/>
+                                * Indicates Mandatory Fields
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left">
+                                <b>Tier 3 P&amp;L </b>
+                            </td>
+                            <td align="left">
+                                <apex:inputField value="{!user.GE_HQ_Tier_3_P_L__c}" id="tier3" onchange="selectedTier3Val('{!$Component.Page.form1.tier3}');" />
+                            </td>
+                        </tr>
+                        </table></td></tr>
+                    <tr><a style="float:right;" onclick="groupid();" target="_blank"><img src="{!$Resource.feedback}" alt="Feed Back" width="200" height="50"></img></a> </tr>
+        </table>          
+    </apex:form>
+    
+    
+    <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false&libraries=places"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script> 
+    <script type="text/javascript"> 
+    
+    
+    
+    var valText='Oil & Gas (O&G)';
+    var defalt=document.getElementById('{!$Component.form1.Tier1}');
+    defalt.value=valText;
+    defalt.disabled = true;
+    var value1;
+    var value2='';
+    var country='';
+    var functon;
+    $('.fieldToHide').hide();
+    
+    function personalUpdate()
+    {
+        var link;
+        link='/apex/GEOGDPersonalInfo'+'?Id='+'{!usrid}';
+        // alert("entered");
+        window.open(link, 'mywin',"left=20,top=20,width=600,height=550,resizable=false");
+        return false;
+    }
+    function selectedTier2Val(data)
+    {
+        value1 = document.getElementById(data).value;
+        //alert("You are Entered:"+value1);
+    }
+    function selectedTier3Val(data)
+    {
+        value2 = document.getElementById(data).value;
+        //alert("You are Entered:"+value2);
+    }
+    function selectedFunctVal(data)
+    {
+        functon = document.getElementById(data).value;
+        //alert("You are entered:"+functon);
+    }
+    function groupid()
+    {
+        var link='{!$Label.GE_OG_Directory_FeedbackGroupurl}';
+        window.open(link);
+    }
+    function getReport()
+    {
+        var tier21;
+        var tier31;
+        tier21=encodeURIComponent(value1);
+        tier31=encodeURIComponent(value2);
+        if(!value1 && !functon)
+         alert("Please Select the Function and Tier2 P&L Values");
+        else if(!value1)
+          alert("Please Select Tier2 P&L Value");
+        else if(!functon)
+           alert("Please Select the Function Value");
+         else{
+                    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) )
+                    {
+                        sforce.one.navigateToURL('/apex/GEOGDirectoryReport_Mobile?Function='+functon+'&tier2='+tier21+'&country='+country+'&tier3='+tier31);
+                        
+                    }
+                    else
+                    {
+                        window.open('/apex/GEOGDirectoryReport?Function='+functon+'&tier2='+tier21+'&country='+country+'&tier3='+tier31,'','height=800,width=1000,resizable=yes,scrollbars=yes,toolbar=yes,menubar=yes,location=yes' );
+                    }
+                }     
+    }
+    
+    $(document).ready(function()
+                      {
+                          var myOptions = {zoom:2,center: new google.maps.LatLng(38.747012,0.512694)}
+                          var map;
+                          var geocoder = new google.maps.Geocoder();
+                          map = new google.maps.Map(document.getElementById("map"), myOptions);
+                          google.maps.event.addListener(map, 'click', function(e) {
+                          placeMarker(e.latLng, map);
+                          var str = e.latLng.toString() ;
+                          var rest = str.split(',');
+                          var vrlat = rest[0].substring(1,rest[0].length);
+                          var vrlng = rest[1].substring(0,rest[1].length -1 );
+                          var latlng = new google.maps.LatLng(vrlat,vrlng );
+                          geocoder.geocode({'latLng': latlng}, function(results, status) {
+                          if (status == google.maps.GeocoderStatus.OK)
+                           {
+                             if (results.length > 0 ) 
+                                      {       
+                                        country = results[(results.length)-1].address_components[0].short_name;
+                                        jsregionalkeyplayercall();               
+                                      } 
+                                      else 
+                                      {
+                                          alert('No results found');
+                                      }
+                                  } 
+                                  else 
+                                  {
+                                      alert('Geocoder failed due to: ' + status);
+                                  }
+                              });
+                          }); 
+                          function resizeIframe() 
+                          {
+                              var me = window.name;
+                              if (me) 
+                              {
+                                  var iframes = parent.document.getElementsByName(me);
+                                  if (iframes && iframes.length == 1) 
+                                  {
+                                      height = document.body.offsetHeight;
+                                      iframes[0].style.height = height + "px";
+                                  }
+                              }
+                          }
+                      });
+    
+    function placeMarker(position, map) 
+    {
+        'http://maps.googleapis.com/maps/api/geocode/json?latlng='+position+'&sensor=false';
+    }
+    </script>
+    <style>
+        .pagination ul > li > a:hover{
+        background-color: #3b73b9;
+        border-color: #3b73b9;
+        color: white;
+        }
+        
+        .pagination ul > .disabled > a:hover{
+        color: #bfc2c5;
+        background-color: transparent;
+        cursor: default;
+        border-color: #e1e2e5;
+        }
+        #map 
+        {
+        font-family: Arial;
+        font-size:12px;
+        line-height:normal !important;
+        height:600px;
+        background:transparent;
+        }
+    </style>
+    
+    <div id="map"></div> 
+    
+    <apex:form id="frm">
+        <div id="overrideAlert">
+            <apex:actionFunction action="{!regionKeyPlayerCall}"  name="jsregionalkeyplayercall" rerender="frm" oncomplete="getReport();" >
+            </apex:actionFunction>
+        </div>  
+    </apex:form>
+</apex:outputpanel>
+</body>
+</apex:page>

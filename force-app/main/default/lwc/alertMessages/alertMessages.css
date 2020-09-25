@@ -1,0 +1,25 @@
+:host {
+    background: transparent;
+    margin:0.1%;
+}
+.BH-alert-warn {
+    color: #D7DFE5;
+    font-size: 0.875rem;
+    background: #7794a9;
+    padding: 10px;
+    border-radius: 4px;
+    font-style: italic;
+}
+.BH-alert-icon {
+    width: 3.5%;
+    display: inline-block;
+    text-align: center;
+}
+.BH-alert-icon svg {
+    fill: #c5dfe2 !important;
+    height: 30px !important;
+    width: 30px !important;
+}
+.BH-alert-icon svg svg {
+    fill: #c5dfe2 !important;
+}

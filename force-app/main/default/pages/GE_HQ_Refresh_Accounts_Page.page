@@ -1,0 +1,3 @@
+<apex:page standardController="GE_HQ_Account_Plan__c" extensions="GE_HQ_Refresh_Accounts" action="{!RefreshAccts}">
+    Test Page
+</apex:page>

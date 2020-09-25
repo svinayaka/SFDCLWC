@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Deal_team_alert_for_new_member_addition</fullName>
+        <description>DM Email Notifications - Deal Team; New Deal Team Member; Email sent to-Sales Primary,CPR,Last Modified User</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Commercial Primary Resource</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales - Primary</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <field>UserId</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Opportunity_Email_Templates/Deal_Team_notification_on_new_member_addition</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_on_Sales_Primary_Change</fullName>
+        <description>DM Email Notifications - Deal Team; Deal Team new Sales Primary; Email sent to-Sales Primary,Sales,CPR</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Commercial Primary Resource</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Sales - Primary</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Opportunity_Email_Templates/Deal_Team_notification_on_new_member_addition</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_to_previous_Sales_Primary</fullName>
+        <description>NOT Used - Email to previous Sales Primary</description>
+        <protected>false</protected>
+        <recipients>
+            <field>UserId</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Opportunity_Email_Templates/Deal_Team_notification_on_new_member_addition</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_Email_to_CPR</fullName>
+        <description>DM Email Notifications - Deal Team; Deal Team new member CPR; Email sent to-CPR</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Commercial Primary Resource</recipient>
+            <type>opportunityTeam</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Risk_Process_Email_Templates/Notify_Commercial_Primary_Resource</template>
+    </alerts>
+    <rules>
+        <fullName>Deal team notification rule for new member</fullName>
+        <actions>
+            <name>Deal_team_alert_for_new_member_addition</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <description>Email to send to entire GE Deal Team and the person that was added when a new member has been added</description>
+        <formula>NOT(ISPICKVAL(TeamMemberRole, &apos;Sales - Primary&apos;))</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Email to Commercial Primary Resource</fullName>
+        <actions>
+            <name>Send_Email_to_CPR</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>OpportunityTeamMember.TeamMemberRole</field>
+            <operation>equals</operation>
+            <value>Commercial Primary Resource</value>
+        </criteriaItems>
+        <description>When ever a new Commercial Primary Resource is added, sent a mail notifying about Opportunity</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

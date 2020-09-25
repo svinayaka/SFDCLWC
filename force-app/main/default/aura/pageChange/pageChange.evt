@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION" description="Event template">
+    <aura:attribute name="direction" type="String"/>
+    <aura:attribute name="ModalPagination" type="Boolean" default="false"/>
+</aura:event>

@@ -1,0 +1,140 @@
+<apex:page standardController="GE_OG_ERP_Detail__c" extensions="GE_OG_Start_ERP_Process_Controller" action="{!LoadERP}">
+
+  <script>
+        var ids = '';
+        function getDeleteAttach(input,delId,hid)
+            { 
+              
+            if(input.checked)
+                {
+                ids = ids + document.getElementById(delId).value + ';';
+                document.getElementById(hid).value = ids;
+                
+                }
+                
+            if (!(input.checked))
+                {
+                ids=ids.substring(0,ids.indexOf(document.getElementById(delId).value)) + ids.substring(ids.indexOf(document.getElementById(delId).value) + (document.getElementById(delId).value.length+1),ids.length);
+                document.getElementById(hid).value = ids;
+                }
+              
+            }
+       function checkAll(cb)
+                    {
+                            var inputElem = document.getElementsByTagName("input");
+                            for(var i=0; i<inputElem.length; i++)
+                            {
+                                if(inputElem[i].id.indexOf("checkedone")!=-1)
+                                inputElem[i].checked = cb.checked;
+                            }
+                    }
+                    
+        
+    </script>
+
+  <apex:form >
+  
+<apex:pageBlock title="Please Start the ERP Process" rendered="{!CheckKYCexist}">
+    
+  <apex:pageMessages >
+</apex:pageMessages> 
+  </apex:pageBlock>
+  <apex:pageBlock title="Please Start the ERP Process" rendered="{!startERPProcess}">
+      <apex:commandButton action="{!startERP}" value="Start ERP Process"/>
+  </apex:pageblock>
+  <apex:pageBlock title="Additional ERP Details" rendered="{!erpPending}">
+      <apex:pageBlockButtons >
+          <apex:commandButton action="{!saveERPDetails}" value="Save ERP Details"/>
+      </apex:pageBlockButtons> 
+<apex:pageMessages >
+</apex:pageMessages> 
+      <apex:pageBlockSection title="Advance Users" columns="1">
+          <!--<apex:pageBlockTable value="{!advUsers}" var="a">
+              <apex:column headerValue="Advance Users">
+                  <apex:outputText value="{!adv.GE_OG_ERP_Advance_User__c}"></apex:outputText>
+              </apex:column>
+          </apex:pageBlockTable>-->
+          <apex:selectRadio value="{!GE_OG_ERP_Detail__c.GE_OG_Advance_User__c}" layout="pageDirection">
+              <apex:selectOptions value="{!options}"></apex:selectOptions>
+          </apex:selectRadio>
+      </apex:pageBlockSection>
+      
+      <apex:pageBlockSection title="Tax Information" columns="1">
+          <apex:inputField value="{!GE_OG_ERP_Detail__c.GE_OG_ERP_Is_this_Customer_Tax_Exempt__c}"  required="true">
+              <apex:actionSupport event="onchange" action="{!checkERPAttachment}"/>
+          </apex:inputField>
+          
+          <apex:pageBlockSection title="Attachment Section" columns="1" collapsible="false" id="ERP_Attachments" rendered="{!erpAttachment}">
+          <apex:outputPanel >
+              <apex:commandButton value="Add Attachment" action="{!addAttachment}"/>
+              <apex:commandButton value="Save" action="{!saveAttachment}"/>
+          </apex:outputPanel>
+          <apex:outputPanel >
+          <apex:pageBlockSection columns="1" rendered="{!NOT(ISNULL(erpDocs))}" collapsible="false"> 
+              <apex:pageBlockTable value="{!erpDocs}" var="A" width="100%">
+                  <apex:column headerValue="Delete">
+                      <apex:inputCheckbox onclick="getDeleteAttach(this,'{!$Component.attachId}','{!$Component.hidd}');" rendered="{!AND(A.parentId!=null,A.Id!=null)}"/>
+                  </apex:column>
+                  <apex:column headerValue="File Name">
+                      <apex:inputhidden value="{!A.Id}" id="attachId" rendered="{!AND(A.parentId != null, A.id !=null)}"/>
+                      <apex:outputField value="{!A.name}" rendered="{!AND(A.parentId != null, A.id !=null)}"/>
+                  </apex:column>
+                  <apex:column headerValue="Attachment">
+                      <apex:inputFile value="{!A.body}" fileName="{!A.name}" rendered="{!AND(A.parentId != null, A.id ==null)}"></apex:inputFile> 
+                  </apex:column>
+              </apex:pageBlockTable>
+          </apex:pageBlockSection>
+          </apex:outputPanel>
+      </apex:pageBlockSection>  
+      
+      <apex:pageblocksection rendered="{!erpTax}" columns="2" title="Tax Details">
+          <apex:inputField value="{!GE_OG_ERP_Detail__c.GE_OG_ERP_Tax_ID__c}"/>
+          <apex:outputField value="{!GE_OG_ERP_Detail__c.GE_OG_ERP_Tax_ID_Format__c}"/>
+      </apex:pageblocksection>
+      </apex:pageBlockSection>
+      
+      <apex:pageBlockSection title="Sales Person Details" collapsible="false" columns="1">
+          <apex:pageblockSection >
+              <apex:inputfield value="{!GE_OG_ERP_Detail__c.GE_OG_ERP_Sales_Person__c}">
+                  <apex:actionSupport event="onchange" action="{!populateSAP}" reRender="SalesPersonDetails"/>
+              </apex:inputfield>
+          </apex:pageBlockSection>
+          <apex:pageBlockSection id="SalesPersonDetails">
+              <apex:inputField id="spFirst" value="{!GE_OG_ERP_Detail__c.GE_OG_ERP_Sales_Person_First_Name__c}"/>
+              <apex:inputField id="spLast" value="{!GE_OG_ERP_Detail__c.GE_OG_ERP_Sales_Person_Last_Name__c}"/>
+              <apex:inputField id="spEmail" value="{!GE_OG_ERP_Detail__c.GE_OG_ERP_Sales_Person_Email__c}"/>
+          </apex:pageblockSection>
+          <apex:pageblockSection >
+              <apex:inputField id="spID" value="{!GE_OG_ERP_Detail__c.GE_OG_ERP_Sales_Person_ID__c}"/>
+          </apex:pageblockSection>
+      </apex:pageBlockSection>
+      
+      <apex:pageBlockSection title="CSR Details" collapsible="false" columns="1" rendered="{!OracleERP}">
+          <apex:pageBlockSection >
+              <apex:inputfield value="{!GE_OG_ERP_Detail__c.GE_OG_ERP_CSR_Person__c}">
+                  <apex:actionSupport event="onchange" action="{!populateCSR}" reRender="CSRDetails"/>
+              </apex:inputfield>
+          </apex:pageBlockSection>
+          <apex:pageBlockSection id="CSRDetails">
+              <apex:inputField value="{!GE_OG_ERP_Detail__c.GE_OG_ERP_CSR_First_Name__c}"/>
+              <apex:inputField value="{!GE_OG_ERP_Detail__c.GE_OG_ERP_CSR_Last_Name__c}"/>
+              <apex:inputField value="{!GE_OG_ERP_Detail__c.GE_OG_ERP_CSR_Email__c}"/>
+          </apex:pageBlockSection>
+          <apex:pageBlockSection >
+              <apex:inputField value="{!GE_OG_ERP_Detail__c.GE_OG_ERP_CSR_Number__c}"/>
+          </apex:pageBlockSection>
+      </apex:pageBlockSection>
+      
+  </apex:pageBlock>
+  
+  
+  <apex:pageBlock title="ERP Process Completed" rendered="{!erpCompleted}">
+      <apex:pageBlockSection id="ERP_Saved" columns="1">
+          <apex:pageMessage severity="confirm">
+          <h1>ThankYou...ERP Process is completed!!</h1><br/>
+          <h2>Please Refresh the Page now to see the updated ERP details.</h2>
+          </apex:pageMessage>
+      </apex:pageBlockSection>
+  </apex:pageBlock>
+  </apex:form>
+</apex:page>

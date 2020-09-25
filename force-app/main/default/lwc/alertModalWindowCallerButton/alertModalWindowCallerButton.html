@@ -1,3 +1,10 @@
 <template>
-    <lightning-button-icon icon-name="utility:alert" alternative-text="Alert" title="Alert" class="BH-alert-icon" onclick={handleClick}></lightning-button-icon>
+    <div class="notification-Icon">
+        <lightning-button-icon icon-name="utility:alert" alternative-text="Alert" title="Alert" class="BH-alert-icon" onclick={handleClick}>
+        </lightning-button-icon>
+        <span class="notification-alert">{alertCount}</span>
+    </div>
+    <!-- <template for:each={alertBodyInformation} for:item="alertInfo" key={index}>
+        <c-alert-messages key={index} warning-msg="This opportunity pre bid needs to be done"></c-alert-messages>
+    </template> -->
 </template>

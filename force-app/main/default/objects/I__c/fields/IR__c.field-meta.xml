@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IR__c</fullName>
+    <externalId>false</externalId>
+    <label>Install Reason</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Perm - New</fullName>
+                <default>false</default>
+                <label>Perm - New</label>
+            </value>
+            <value>
+                <fullName>Perm - Reinstall</fullName>
+                <default>false</default>
+                <label>Perm - Reinstall</label>
+            </value>
+            <value>
+                <fullName>Perm - Resize</fullName>
+                <default>false</default>
+                <label>Perm - Resize</label>
+            </value>
+            <value>
+                <fullName>Perm - Convert WT/Rntl</fullName>
+                <default>false</default>
+                <label>Perm - Convert WT/Rntl</label>
+            </value>
+            <value>
+                <fullName>WT/Rntl - New</fullName>
+                <default>false</default>
+                <label>WT/Rntl - New</label>
+            </value>
+            <value>
+                <fullName>WT/Rntl - Replace</fullName>
+                <default>false</default>
+                <label>WT/Rntl - Replace</label>
+            </value>
+            <value>
+                <fullName>WT/Rntl - Resize</fullName>
+                <default>false</default>
+                <label>WT/Rntl - Resize</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,5 @@
+<apex:page standardController="Opportunity" recordSetVar="c"
+
+extensions="skuid.Redirects" action="{!redirect}?page=GEOG_Sales_OpportunityList">
+
+</apex:page>

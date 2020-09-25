@@ -1,0 +1,84 @@
+<apex:page standardController="GE_HQ_Acc_AccPlan_Rel__c" extensions="GEHQAccountSearchPageController" action="{!MyGEAccts}">
+ <apex:form >
+  <apex:pageBlock id="Pagination">         
+  <apex:pageBlockButtons >
+         <apex:commandButton action="{!DeleteSelected}" value="Delete" id="DeleteButton"  onclick="return validateSelection1();" />
+         &nbsp; 
+         <apex:commandButton action="{!Cancel}" value="Cancel"/> 
+         &nbsp;  
+     </apex:pageBlockButtons>
+ <apex:pageBlockSection title="MY GE Accounts" id="MyGEAccountsSection" columns="1" collapsible="True">
+  <apex:pageBlockTable value="{!AccountResults1}" id="TableData" var="a">
+    <apex:column headerValue="My GE Accounts" >
+      <apex:facet name="header">
+       <apex:inputCheckbox id="chkSelectAll"  title="Select All" value="{!chkFlag1}">
+         <apex:actionSupport event="onclick" action="{!chkAllBox1}" reRender="MyGEAccountsSection"/>
+       </apex:inputCheckbox>
+      </apex:facet>
+      <apex:selectCheckboxes value="{!Selected1}" id="ids" >
+        <apex:selectOption itemvalue="{!a.ID}"/>
+      </apex:selectCheckBoxes> 
+   </apex:column> 
+  
+ <!-- <apex:column headerValue="Account Name">
+   <apex:outputLink target="new" value="{!a.Name}">{!a.Name}</apex:outputLink>
+  </apex:column> -->
+  <apex:column headerValue="Account Name" ><apex:outputField value="{!a.GE_HQ_Account__c}"/></apex:column>
+  <apex:column headerValue="Duns Number" ><apex:outputField value="{!a.GE_HQ_DUNS_Number__c}"/></apex:column>
+  <apex:column headerValue="Site Code"><apex:outputField value="{!a.GE_HQ_Site_Use_Code__c}" /></apex:column>
+  <apex:column headerValue="Street"><apex:outputField value="{!a.GE_HQ_Street__c}" /></apex:column>
+  <apex:column headerValue="City"><apex:outputField value="{!a.GE_HQ_City__c}" /></apex:column>
+  <apex:column headerValue="State"><apex:outputField value="{!a.GE_HQ_State__c}" /></apex:column>
+  <apex:column headerValue="Country"><apex:outputtext value="{!a.GE_HQ_Country__c}" /></apex:column>
+  <apex:column headerValue="Phone"><apex:outputField value="{!a.GE_HQ_Phone__c}" /></apex:column>
+  <apex:column headerValue="GE Energy HQ Region"><apex:outputField value="{!a.GE_HQ_Phone__c}" /></apex:column>
+  <apex:column headerValue="Station Name"><apex:outputField value="{!a.GE_HQ_Station_Name__c}" /></apex:column>
+  </apex:pageBlockTable>
+</apex:pageBlockSection>
+
+<apex:pageBlockButtons location="bottom" rendered="{!NOT(ISNULL(DelAcctMyGE))}">
+        <table width="100%"  rendered="{!NOT(ISNULL(DelAcctMyGE))}"><tr></tr><tr><td align="left">
+        <apex:commandLink value="<< First" action="{!getFirst}" reRender="Pagination" rendered="{!hasFirst}" />
+        <apex:outputText value="<< First" rendered="{!NOT(hasFirst)}" /> &nbsp;
+        <apex:commandLink value="< Previous" action="{!getPrev}" reRender="Pagination" rendered="{!hasPrev}" />
+        <apex:outputText value="< Previous" rendered="{!NOT(hasPrev)}" /> &nbsp;
+        <apex:commandLink value="Next >" action="{!getNext}" reRender="Pagination" rendered="{!hasNext}" />
+        <apex:outputText value="Next >" rendered="{!NOT(hasNext)}" /> &nbsp;
+        <apex:commandLink value="Last >>" action="{!getLast}" reRender="Pagination" rendered="{!hasLast}" />
+        <apex:outputText value="Last >>" rendered="{!NOT(hasLast)}" /> &nbsp;
+        </td><td align="right">
+        <apex:outputText >Records {!StartRec}-{!EndRec} of {!TotalNoOfAccounts} </apex:outputText>
+        </td></tr></table>
+</apex:pageBlockButtons>
+</apex:pageBlock>   
+</apex:form>      
+ 
+ <script type="text/javascript">
+
+    var selectedCount = 0;  
+    function validateSelection1()
+    {        
+        var inputElem = document.getElementsByTagName("input");
+        for(var i=0; i<inputElem.length; i++)
+        {
+        
+        if(inputElem[i].id.indexOf("ids")!=-1 || inputElem[i].id.indexOf("chkSelectAll")!=-1)
+        {
+            if(inputElem[i].checked==true)
+            {
+            selectedCount=1;
+            }
+        }   
+    }
+     if(selectedCount == 0)
+      {
+          alert('Please select at least one Account');
+          
+          return false;
+      }
+        (confirm('Are you sure, you want to delete the selected Accounts')) ;
+        return true;
+    }  
+
+</script>
+</apex:page>

@@ -1,0 +1,223 @@
+<!--
+Page Name:GE_OG_InlineFinance
+Used Where ? :   On KYC PageLayouts
+Purpose/Overview : Serve the Finance Inline VF page on KYC pagelayouts
+Functional Area : Accounts
+Author: Malemleima Chanu
+Created Date: 3 June 2013
+GE_PRM_KYC_Termination_Checklist__c
+-->
+
+<apex:page standardController="GE_OG_Finance_Details__c" extensions="GE_OG_Finance_DetailsInline" action="{!PRMProfilePermissionSet}" standardStylesheets="true" >         
+    
+    <!-- Added By Rekha for moving focus from fince details on KYC record - R-15011 -->
+    <input id="hiddenElement" type="hidden" />
+    
+    <script type="text/javascript">
+    window.onload = setFocus
+    function setFocus() {
+        document.getElementById("hiddenElement").focus();
+    }
+    </script>
+    <!-- End of Rekha code-->
+    
+    <apex:form id="mainForm" > 
+        <apex:pageBlock id="mainBlock"  >
+            <!--<apex:pageMessage summary="You do not have sufficient priviledge to Complete/Reject." severity="error" strength="3" rendered="{!unsufficientAccess}"></apex:pageMessage>-->
+            <apex:pageMessage summary="The customer accepted Advanced Payment terms, and the initial transaction size is less than $50,000 USD." severity="success" strength="3" rendered="{!advanflag}"></apex:pageMessage>
+            <apex:pageMessages >
+            </apex:pageMessages>                  
+            <apex:pageblockButtons location="top">
+        
+                <apex:commandButton value="Finance Completed" action="{!Completed}" style="display:{!IF(OR(isKycPermissionExist==true, $Profile.Name=='GE_ES Developer',$Profile.Name == 'GE_ES System Integration', $Profile.Name == 'System Administrator'),'inline','none' )}"/>
+                <apex:commandButton value="Pending User Review - On Hold" action="{!Rejected}" style="display:{!IF(OR(isKycPermissionExist==true,$Profile.Name=='GE_ES Developer',$Profile.Name == 'GE_ES System Integration', $Profile.Name == 'System Administrator'),'inline','none' )}" /> 
+                <apex:commandButton value="Resubmit" action="{!Resubmitted}" style="display:{!IF(NOT(isKycPermissionExist==true),'inline','none')}" /> 
+                <apex:commandButton value="Save" onclick="myFunction();" reRender="mainSection2" style="display:{!IF(OR(isKycPermissionExist==true,$Profile.Name=='GE_ES Developer',$Profile.Name == 'GE_ES System Integration', $Profile.Name == 'System Administrator'),'inline','none' )}" /> 
+                <apex:commandButton value="Escalate to Finance" action="{!EscalateToFinance}" style="display:{!IF(OR(isKycPermissionExist==true,$Profile.Name=='GE_ES Developer',$Profile.Name == 'GE_ES System Integration', $Profile.Name == 'System Administrator'),'inline','none' )}" />
+                <!--<apex:outputText value="{!ErrMsg}" rendered="{!NOT(ISNULL(ErrMsg))}" style="color:red; font-weight: bold;" ><br/></apex:outputText>-->
+            </apex:pageblockbuttons>  
+            
+            <apex:pageBlockSection title="Finance Information">      
+                <apex:outputPanel id="render">
+                    <apex:pageBlockTable width="900px" value="{!fin}" var="f"  >
+                        <apex:column width="400px" headerValue="Finance #"> 
+                            
+                            <apex:outputLink target="_blank" value="/{!f.id}">{!f.Name}</apex:outputLink>
+                            
+                        </apex:column>
+                        <apex:column width="300px" headerValue="Tier 1 P&L"> 
+                            <apex:outputtext value="{!f.GE_OG_Tier1__c}" id="t1"/>
+                        </apex:column>
+                        <apex:column width="300px" headerValue="Tier 2 P&L"> 
+                            <apex:outputtext value="{!f.GE_OG_Tier2__c}" id="t2"/>
+                        </apex:column>
+                        <apex:column width="300px" headerValue="Tier 3 P&L"> 
+                            <apex:outputtext value="{!f.GE_OG_Tier3__c}" id="t3"/> 
+                        </apex:column>
+                        <apex:column width="300px" headerValue="Finance Country Risk"> 
+                            <apex:outputtext value="{!f.GE_OG_Finance_Country_Risk__c}" id="t7" /> 
+                        </apex:column>
+                        <apex:column width="300px" headerValue="Finance Status"> 
+                            <apex:outputtext value="{!f.GE_OG_Finance_Status__c}" id="t4"/> 
+                        </apex:column>
+                        <apex:column width="600px" headerValue=" Account CMF Status"> 
+                            <apex:outputtext value="{!f.Ge_OG_Account_Status__c}" id="t8" /> 
+                        </apex:column>
+                    </apex:pageBlockTable>
+                </apex:outputPanel>
+            </apex:pageBlockSection>
+            
+            <!--  <apex:pageblockSection columns="1"   >
+                        <div style="color:#0000FF">
+                        <p>Has the customer accepted Cash-in-Advance terms and the initial transaction size is less than $50,000 USD? And/Or, will this be a credit card transaction? </p>
+                        </div>
+                        <apex:inputfield label="" value="{!fin.GE_OG_Cust_accepted__c}" style="align:left">
+                        <apex:actionSupport event="onchange" action="{!check}" reRender="mainSection2"/>
+                        </apex:inputfield>
+                        </apex:pageBlockSection> -->
+            
+            <!--Requestor Inputs and save method -->
+            <apex:pageBlockSection title="Requestor Inputs" columns="1"  id="req">
+                <apex:commandButton title="Save" value="Save" onclick="reqfunction();" />
+                
+                <apex:outputtext value="{!fin.GE_OG_level1_met__c}" id="level"/>
+                <apex:inputField value="{!fin.GE_OG_Credit_Line_Request__c}" id="creditline" style="width: 200px; height: 40px;"/> 
+                <apex:inputfield value="{!fin.GE_OG_Comment__c}" id="comment" style="width: 400px; height: 40px;" />
+                <apex:inputfield value="{!fin.GE_OG_Approx_of_Employees__c}" id="emp"/>
+                <apex:inputField value="{!fin.GE_OG_Approx_yrs_in_Business__c}" id="business"/>
+                <apex:inputField value="{!fin.GE_OG_Currnt_Yr_Sales__c}" id="csales" />
+                <apex:inputField value="{!fin.GE_OG_Pre_Yr_Sales__c}" id="psales"/>
+            </apex:pageBlockSection>
+            <apex:actionFunction name="hitMe3" action="{!savereq}"  rerender="req">
+                <apex:param name="level" value="" />
+                <apex:param name="creditline"  value="" />
+                <apex:param name="comment" value=""/>
+                <apex:param name="emp" value=""/>
+                <apex:param name="business" value=""/>
+                <apex:param name="csales" value=""/>
+                <apex:param name="psales" value=""/>
+                
+            </apex:actionFunction>
+            
+            
+            <script>
+            function reloadPage()
+            {
+                document.location.reload()
+            }
+            function reqfunction()
+            {
+                var r1,r2,r3,r4,r5,r6,r7;
+                r1=document.getElementById("{!$Component.mainForm.mainBlock.req.level}").value;
+                r2=document.getElementById("{!$Component.mainForm.mainBlock.req.creditline}").value;
+                r3=document.getElementById("{!$Component.mainForm.mainBlock.req.comment}").value;
+                r4=document.getElementById("{!$Component.mainForm.mainBlock.req.emp}").value;
+                r5=document.getElementById("{!$Component.mainForm.mainBlock.req.business}").value;
+                r6=document.getElementById("{!$Component.mainForm.mainBlock.req.csales}").value;
+                r7=document.getElementById("{!$Component.mainForm.mainBlock.req.psales}").value;
+                
+                //alert('/*---Please Refresh the Page after Save---*/');
+                hitMe3(r1,r2,r3,r4,r5,r6,r7);
+            }
+            
+            function refreshPage(){   
+                alert('************* refresh ***************');             
+                window.top.location='/{!kyc.id}';
+            }
+            </script>
+            
+            <apex:pageBlockSection title="Finance Escalation Comments" columns="1" id="escalate">
+                <apex:pageMessage summary="There is no Finance Escalation Comments !!! Please Save Finance Escalation Comments " severity="error" strength="3" rendered="{!ChkEscaComm}"></apex:pageMessage>    
+                <apex:commandButton title="Save" value="Save" onclick="escfunction();" rerender="escalate" />       
+                <apex:inputField value="{!fin.GE_OG_Escalation_Comments__c}" id="esccom" style="width: 500px; height: 50px;" />
+            </apex:pageblocksection>
+            
+            <apex:actionFunction name="hitMe1" action="{!saveesc}"  rerender="escalate">
+                <apex:param name="esccom" value="" />
+                
+            </apex:actionFunction>
+            
+            <script>
+            
+            function escfunction()
+            {
+                var esccom;
+                
+                esccom=document.getElementById("{!$Component.mainForm.mainBlock.escalate.esccom}").value;
+                
+                //alert('/*---Please Refresh the Page after Save---*/');
+                hitMe1(esccom);
+            }
+            
+            function refreshPage(){   
+                alert('************* refresh ***************');             
+                window.top.location='/{!kyc.id}';
+            }
+            </script>
+            
+            <apex:pageBlockSection title="Finance Details" id="mainSection2"  columns="1" >
+                <apex:commandButton value="Save" onclick="myFunction();" reRender="mainSection2" style="display:{!IF(OR($User.Id == 'PRMProfile[0]',$Profile.Name=='GE_ES Vertical Lead',$Profile.Name=='GE_ES Developer',$Profile.Name == 'GE_ES System Integration', $Profile.Name == 'System Administrator'),'inline','none' )}" /> 
+                <apex:outputPanel id="refreshpage" rendered="{!refreshPage}">
+                    <script>
+                    window.top.location='/{!kyc.id}';
+                    </script>
+                </apex:outputPanel>                
+                
+                <apex:pageMessage summary="There is no Finance T&Cs !!! Please Select another Combination " severity="error" strength="3" rendered="{!chkflag}"></apex:pageMessage>   
+                <apex:outputText value="{!fin.GE_OG_Finan_TC__c}" />
+                <apex:inputfield value="{!fin.GE_OG_Finance_Credit_Limit__c}" id="FinanceCredit"/> 
+                <apex:inputfield value="{!fin.GE_HQ_Finance_Risk_Score__c}" id="FinanceRisk"/> 
+                <apex:inputfield value="{!fin.GE_OG_Actual__c}" id="ActualCreditLimit"/>
+                <!--<apex:outputText value="{!fin.GE_OG_Credit_Line_Request__c}" />
+                                <apex:outputText value="{!fin.GE_OG_Comment__c}" style="width: 700px; height: 90px;" /> -->
+            </apex:pageBlockSection>
+            
+            <apex:actionFunction name="hitMe" action="{!saveData}"  rerender="mainSection2">
+                <apex:param name="FinanceRisk" value="" />
+                <apex:param name="FinanceCredit"  value="" />
+                <apex:param name="ActualCreditLimit" value=""/>
+                
+            </apex:actionFunction>           
+            
+            <script>
+            function reloadPage()
+            {
+                document.location.reload()
+            }
+            function myFunction()
+            {
+                var t4,t5,t6,t7,t8;
+                t4=document.getElementById("{!$Component.mainForm.mainBlock.mainSection2.FinanceRisk}").value;
+                t5=document.getElementById("{!$Component.mainForm.mainBlock.mainSection2.FinanceCredit}").value;
+                t6=document.getElementById("{!$Component.mainForm.mainBlock.mainSection2.ActualCreditLimit}").value;
+                // t7=document.getElementById("{!$Component.mainForm.mainBlock.mainSection2.CreditLimit}").value;
+                // t8=document.getElementById("{!$Component.mainForm.mainBlock.mainSection2.Comment}").value;
+                
+                //alert('/*---Please Refresh the Page after Save---*/');
+                hitMe(t4,t5,t6);
+            }
+            
+            function refreshPage(){   
+                alert('************* refresh ***************');             
+                window.top.location='/{!kyc.id}';
+            }
+            </script>
+            
+            <apex:pageBlockSection title="Additional Finance T&C's"   >
+                <apex:commandButton value="Display Additional T&Cs" action="{!display}"  rerender="disp" />
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection columns="1" id="disp"  >
+                <apex:pageBlockTable value="{!displaybus}" var="dis">
+                    <apex:column value="{!dis.GE_OG_Buss_Tier_RL__r.GE_HQ_Parent_P_L_Name__r.Name}"/>
+                    <apex:column value="{!dis.GE_OG_Buss_Tier_RL__r.Name}"/>
+                    <apex:column value="{!dis.GE_OG_Fin_Risk__c}"/>
+                    <apex:column value="{!dis.GE_OG_Fin_Credit_Lmt__c }"/>
+                    <apex:column value="{!dis.GE_OG_Fin_Ctry_Risk__c }"/>
+                    <apex:column value="{!dis.GE_OG_Fin_TC__c }"/>
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>  
+            
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

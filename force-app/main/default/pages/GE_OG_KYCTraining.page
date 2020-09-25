@@ -1,0 +1,11 @@
+<apex:page controller="GE_OG_KYCTraining" showHeader="false" showChat="false"  sidebar="false" readOnly="true" action="{!ContentVersion}" >
+
+<!--<apex:pageBlockSection title="Finance Details" columns="1"  id="mainSection"  >
+
+<apex:pageMessage summary="Opps!!!  You dont Have access  to this link " severity="success" strength="3"  rendered="{!numcheck}" >
+
+</apex:pageMessage>
+
+</apex:pageBlockSection>-->
+   
+</apex:page>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>SS_Course_Email_Alert</fullName>
+        <description>SS - Course Email Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>bjornar.fahle@ge.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>hasan.omar@ge.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>leigh.martin@ge.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>lydie.victoire@bhge.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>rajareddy.gaddam@ge.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>roar.sletta@ge.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>therese.hansen@ge.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/SS_Course_Email_Template</template>
+    </alerts>
+    <rules>
+        <fullName>SS - Course Email Notification</fullName>
+        <actions>
+            <name>SS_Course_Email_Alert</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula>NOT( ISBLANK( Name ) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

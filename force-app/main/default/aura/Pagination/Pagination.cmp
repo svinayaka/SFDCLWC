@@ -1,0 +1,19 @@
+<aura:component >   
+    <aura:attribute name="page" type="integer"/>
+    <aura:attribute name="pages" type="integer"/>
+    <aura:attribute name="total" type="integer"/>
+    <aura:attribute name="ModalPagination" type="Boolean"/>
+    <aura:registerEvent name="pageChange" type="c:pageChange"/>
+    <div class="slds-card__footer slds-text-align_right slds-m-top_none" style="border:none;">
+        <aura:renderIf isTrue="{!v.page > 1}">
+            <ui:button class="slds-button slds-button--brand"  press="{!c.previousPage}" >
+                Previous
+            </ui:button>
+        </aura:renderIf>
+        <aura:renderIf isTrue="{!v.page &lt; v.pages}">
+            <ui:button class="slds-button slds-button--brand"  press="{!c.nextPage}">
+                Next
+            </ui:button>
+        </aura:renderIf>
+    </div>
+</aura:component>

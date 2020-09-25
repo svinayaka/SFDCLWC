@@ -1,0 +1,3 @@
+<apex:page standardController="Commercial_Account_Request_GEOG__c" extensions="skuid.Redirects" action="{!redirect}&objecttype=Commercial_Account_Request_GEOG__c&actiontype=View">
+
+</apex:page>

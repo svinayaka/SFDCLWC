@@ -1,0 +1,386 @@
+<apex:page id="myPage" controller="GE_OG_CompetencyManagementController" sidebar="False">
+<apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"/>
+
+    <script type="text/javascript">
+        function checkAll(cb) {        
+            var inputElem = document.getElementsByTagName("input");
+            for(var i=0; i<inputElem.length; i++) {
+                if(inputElem[i].id.indexOf("checkedone")!=-1){
+                    inputElem[i].checked = cb.checked;
+                }                
+            }
+        }  
+        
+        function CheckSelection(){
+            alert('Please Select Time sheet to approve');
+        }
+        
+        function setVal()
+        {
+            document.getElementById("{!$Component.TTid}").value = "TestValue";
+
+        }
+
+        
+         
+        
+    </script>
+    
+    <apex:outputPanel id="javaScriptPanel">     
+        <script language="javascript">
+
+        function addLoadEvent(func) {
+            var oldonload = window.onload;
+            
+            if (typeof window.onload != 'function') {
+            window.onload = func;
+            } else {
+                window.onload = function() {
+                    if (oldonload) {
+                        oldonload();
+                    }
+                    func();
+                }
+            }
+        }
+        
+        function dotest() {
+        
+            var id = document.getElementById('myPage:frm:pb1:pbs1:pbTable');
+            var obj = '{!expertwrprList.size}';
+            
+            for(var i=0;i<obj;i++){
+                var myId = 'myPage:frm:pb1:pbs1:pbTable:'+i+':collapseSubSection';
+                console.log(myId);
+                twistSection(document.getElementById(myId).childNodes[0].childNodes[0]);
+            }
+        }
+        
+        addLoadEvent(dotest);
+
+
+        </script>
+    </apex:outputPanel>
+    <apex:pageMessages />
+    <apex:form id="frm">
+        <apex:outputPanel id="idop1">
+            <apex:pageMessages id="msg1"/>
+        </apex:outputPanel>
+        
+        <apex:actionStatus id="myStatus" startText="Processing..." stopText="" />
+        
+        <apex:pageBlock id="msg" rendered="{!OR ($Profile.Name == 'GE_DS_Titanium Service Manager', $Profile.Name=='GE_DS_FS Technician')}">
+            <script>function setFocusOnLoad() {}</script>
+            <apex:pageBlockSection id="pbs2" title="Technician Search Section" showheader="true" collapsible="True" columns="3" >
+                <apex:pageBlocktable id="pbTable1" value="{!expert}" var="a" columnswidth="50px,50px" cellpadding="4" border="0">
+                    <apex:column style="width:250px">
+                        <apex:facet name="header"> Technician </apex:facet>
+                        <apex:inputField Id="TTid" value="{!expert.SVMXC__Group_Member__c}"/>
+                    </apex:column>
+                    <apex:column style="width:250px">
+                        <apex:facet name="header"> Skill Category </apex:facet>
+                        <apex:inputField Id="TTid1" value="{!expert.GE_DRL_Skill_Category__c}">
+                        </apex:inputField>
+                    </apex:column>
+                    <apex:column style="width:250px">   
+                        <apex:commandButton value="Go" action="{!Go}" reRender="idpan,javaScriptPanel,msg,msg1,idop1" oncomplete="dotest();" status="GoStatusId">
+                        <apex:param name="technicianName" value="{!expert.SVMXC__Group_Member__c}"/>
+                        </apex:commandButton>
+                    </apex:column>
+                    <apex:actionStatus id="GoStatusId">
+                            <apex:facet name="start" >
+                            <img src="/img/loading.gif" /> <b>Searching.... </b>          
+                            </apex:facet>
+                    </apex:actionStatus>
+                </apex:pageBlocktable>
+            </apex:pageBlockSection>
+            </apex:pageBlock>
+            
+            <apex:pageBlock rendered="{!OR ($Profile.Name == 'GE_SS Field Service Admin', $Profile.Name=='GE_SS Field Service Engineer/Technician' , $Profile.Name=='GE_SS Field Service Read Only')}">
+            <apex:pageBlockSection id="pbs5" title="Technician Search Section" showheader="true" collapsible="True" columns="3">
+            
+            <apex:pageBlocktable id="pbTable5" value="{!expert}" var="a" columnswidth="50px,50px" cellpadding="4" border="0">
+             <apex:column style="width:250px">
+                        <apex:facet name="header"> Technician </apex:facet>
+                        <apex:inputField Id="TTid" value="{!expert.SVMXC__Group_Member__c}"/>
+                    </apex:column>
+                    
+                    <apex:column style="width:250px">
+                        <apex:facet name="header">                         
+                         <apex:outputPanel layout="block" title="For Subsea: select Controls,Manifold and Connection Systems,X-Trees,Wellheads.
+                                                                                 For D&S: Select ET/HT (Lead, Master, Professional)">
+                          Skill Category
+                            </apex:outputPanel>
+                            </apex:facet>
+                        <apex:inputField Id="TTid1" value="{!expert.GE_DRL_Skill_Category__c}">
+                        </apex:inputField>                        
+                    </apex:column>
+                    <apex:column style="width:250px">
+                        <apex:facet name="header"> Skill Group </apex:facet>
+                        <apex:inputField Id="TTid2" value="{!expert.GE_SS_Skill_Group__c}">
+                        </apex:inputField>
+                        </apex:column>  
+                        
+             </apex:pageBlockTable>
+            
+             </apex:pageBlockSection>
+             
+      <table border="0" showheader="true" value="{!expert}">       
+             <apex:actionFunction name="rerenderBSubBusiness" rerender="Listsub" >
+            <apex:param name="firstParam" assignTo="{!field}" value="" />
+            </apex:actionFunction>
+          <tr><td><b>Business</b></td>
+          <td><apex:selectList id="ListBusiness" value="{!business}" size="1" onchange="rerenderBSubBusiness(this.value)">
+                <apex:selectOptions value="{!businesslist}"></apex:selectOptions>
+                </apex:selectList>
+          </td>
+          <td><b>Sub Business</b></td>
+          <td><apex:selectList id="Listsub" value="{!subBusines}" size="1">
+                <apex:selectOptions value="{!subBusinessList}"></apex:selectOptions>
+                </apex:selectList>
+          </td>       
+          </tr>          
+          <tr>          
+          <td><apex:commandButton value="Go" action="{!Go}" reRender="idpan,javaScriptPanel,msg,msg1,idop1" oncomplete="dotest();" status="GoStatusId">
+                            <apex:param name="technicianName" value="{!expert.SVMXC__Group_Member__c}"/>
+                            </apex:commandButton>
+          </td>
+          <apex:actionStatus id="GoStatusId">
+                    <apex:facet name="start" >
+                     <img src="/img/loading.gif" /> <b>Searching.... </b>          
+                     </apex:facet>
+          </apex:actionStatus>
+          </tr>         
+                   
+          </table>
+             
+            
+           <!-- <apex:pageBlockSection id="pbs5" title="Technician Search Section" showheader="true" collapsible="True" columns="3" rendered="{!OR ($Profile.Name == 'GE_SS Field Service Admin', $Profile.Name=='GE_SS Field Service Engineer/Technician' , $Profile.Name=='GE_SS Field Service Read Only')}">
+               
+                <apex:pageBlocktable id="pbTable5" value="{!expert}" var="a" columnswidth="50px,50px" cellpadding="4" border="0">
+                    <apex:column style="width:250px">
+                        <apex:facet name="header"> Technician </apex:facet>
+                        <apex:inputField Id="TTid" value="{!expert.SVMXC__Group_Member__c}"/>
+                    </apex:column>
+                    <apex:column style="width:250px">
+                        <apex:facet name="header"> Skill Category </apex:facet>
+                        <apex:inputField Id="TTid1" value="{!expert.GE_DRL_Skill_Category__c}">
+                        </apex:inputField>
+                    </apex:column>
+                    <apex:column style="width:250px">
+                        <apex:facet name="header"> Skill Group </apex:facet>
+                        <apex:inputField Id="TTid2" value="{!expert.GE_SS_Skill_Group__c}">
+                        </apex:inputField>
+                        </apex:column> 
+                    
+                    <apex:column style="width:250px">   
+                        <apex:commandButton value="Go" action="{!Go}" reRender="idpan,javaScriptPanel,msg,msg1,idop1" oncomplete="dotest();" status="GoStatusId">
+                        <apex:param name="technicianName" value="{!expert.SVMXC__Group_Member__c}"/>
+                        </apex:commandButton>
+                    </apex:column>
+                    <apex:actionStatus id="GoStatusId">
+                            <apex:facet name="start" >
+                            <img src="/img/loading.gif" /> <b>Searching.... </b>          
+                            </apex:facet>
+                    </apex:actionStatus> 
+                                                                           
+                 </apex:pageBlocktable>
+                 
+            </apex:pageBlockSection>-->
+        </apex:pageBlock>
+        
+        <apex:outputPanel id="idpan">
+        
+            <apex:pageBlock id="pb1">
+                <apex:pageBlockSection id="pbs3" title="Technician Details" showheader="true" collapsible="True" columns="2" rendered="{!showTechDetails}">
+                            <apex:pageBlockSectionItem dataStyle="width: 30%;">
+                                <apex:outputLabel value="Service Team" for="ServiceteamLink"/> 
+                                <apex:outputLink id="ServiceteamLink" value="/{!techObj.SVMXC__Service_Group__c}" target="_blank" title="Service Team">
+                                    {!techObj.SVMXC__Service_Group__r.Name}
+                                </apex:outputLink>
+                            </apex:pageBlockSectionItem>
+            
+                            <apex:pageBlockSectionItem dataStyle="width: 30%;" >
+                                <apex:outputLabel >  FSE Discipline </apex:outputLabel> 
+                                <apex:outputField value="{!techObj.GE_DS_FSE_Discipline__c}" title="FSE Discipline" />
+                            </apex:pageBlockSectionItem>
+                            
+                            <apex:pageBlockSectionItem dataStyle="width: 30%;">
+                                <apex:outputLabel >  Business Unit </apex:outputLabel> 
+                                <apex:outputField value="{!techObj.GE_SM_HQ_Business_Unit__c}" title="FSE Discipline"/>
+                            </apex:pageBlockSectionItem>
+                            
+                            <apex:pageBlockSectionItem dataStyle="width: 30%">
+                                <apex:outputLabel >  Career Track Level </apex:outputLabel> 
+                                <apex:outputLink value="/{!techObj.Id}" title="Link to Technician" target="_blank">
+                                {!techObj.GE_DS_Career_Track_Level__c}
+                                </apex:outputLink>
+                            </apex:pageBlockSectionItem>
+                            
+                            <apex:pageBlockSectionItem dataStyle="width: 30%;">
+                                <apex:outputLabel >  Supervisor Name </apex:outputLabel> 
+                                <apex:outputField value="{!techObj.GE_OG_DS_Supervisor_Name__c}" title="Supervisor Name"/>
+                            </apex:pageBlockSectionItem>
+                            
+                            <apex:pageBlockSectionItem dataStyle="width: 30%;">
+                                <apex:outputLabel >  Target Date </apex:outputLabel> 
+                                <apex:outputField value="{!techObj.GE_DRL_Target_Date__c}" title="Target Date"/>
+                            </apex:pageBlockSectionItem>
+                            
+                            
+                </apex:pageBlockSection>
+                
+                <div align="center">
+                    <apex:commandButton value="Save Expertise" action="{!saveExpertise}" status="myStatus" reRender="idpan,msg,msg1,idop1"  rendered="{!showEditpanel}" /> 
+                    <apex:commandButton value="Cancel" action="{!Cancel}" status="myStatus" reRender="idpan,msg,msg1,idop1"  rendered="{!showEditpanel}" />                 
+                </div>
+            <div align="center">
+                    <apex:commandButton value="Edit Expertise" action="{!showRecords}" status="myStatus" reRender="idpan,pb1,msg1,msg,idop1"  rendered="{!AND((expertwrprList.size != 0),!showEditpanel)}" oncomplete="dotest();"/><br/>                   
+            </div>                
+                <apex:pageBlockSection id="pbs1" title="Expertise" showheader="true" collapsible="True" columns="1">
+                    <apex:pageBlocktable id="pbTable" value="{!expertwrprList}" var="a" columnswidth="50px,50px" cellpadding="4" border="3" rendered="{! AND(showEditpanel,(expertwrprList.size != 0))}">
+                       <apex:column ><br/>
+                            <apex:facet name="header"><apex:inputCheckbox onClick="checkAll(this);"/></apex:facet>
+                            <Apex:inputCheckbox Value="{!a.isSelect}" id="checkedone" />
+                        </apex:column>
+                        <apex:column style="width:250px">
+                            <apex:facet name="header"> 
+                             Skill Id
+                            </apex:facet>
+                            <apex:outputLink value="/{!a.objExpert.id}" target="_blank">{!a.objExpert.SVMXC__Skill__r.GE_OG_DS_FSCC_EX_ID__c}
+                            </apex:outputLink>
+                        </apex:column>
+                        
+                        <apex:column style="width:250px">
+                            <apex:facet name="header">Skill Name</apex:facet>
+                            <apex:outputLink value="/{!a.objExpert.SVMXC__Skill__c}" target="_blank">{!a.objExpert.SVMXC__Skill__r.Name}
+                            </apex:outputLink>
+                        </apex:column>
+                        
+                        <apex:column style="width:400px">
+                            <apex:facet name="header">Skill Description</apex:facet>
+                            {!a.objExpert.GE_OG_Skill_Description__c}
+                        </apex:column>
+                        
+                        <apex:column style="width:200px">
+                            <apex:facet name="header">Expertise Level</apex:facet>
+                            <apex:inputField value="{!a.objExpert.Expertise_Level__c}"/>
+                        </apex:column>
+                        
+                        <apex:column style="width:200px">
+                            <apex:facet name="header">Current Target Level</apex:facet>
+                            <apex:inputField value="{!a.objExpert.GE_DRL_Current_Target_Level__c}"/>
+                        </apex:column>
+                        
+                        
+                        <apex:column style="width:200px">
+                            <apex:facet name="header">Next Target Level</apex:facet>
+                            <apex:inputField value="{!a.objExpert.GE_DRL_Target_Level__c}"/>
+                        </apex:column>
+                        
+                        <apex:column style="width:250px">
+                            <apex:facet name="header">Last Modified By</apex:facet>
+                            {!a.objExpert.LastModifiedBy.Name}
+                        </apex:column>
+                        <apex:column style="width:250px">
+                            <apex:facet name="header">Last Modified Date</apex:facet>
+                            <apex:outputText value=" {!a.objExpert.LastModifiedDate}"/>
+                        </apex:column>
+                    
+                    </apex:pageBlocktable>
+                    <apex:pageBlocktable id="pbTable2" value="{!expertwrprList}" var="a" columnswidth="50px,50px" cellpadding="4" border="3" rendered="{! AND(!showEditpanel,(expertwrprList.size != 0))}">
+                        
+                        <apex:column style="width:250px">                           
+                            <apex:facet name="header"> 
+                            <apex:commandLink action="{!Go}" value="Skill Id{!IF(sortExpression=='SVMXC__Skill__r.GE_OG_DS_FSCC_EX_ID__c',IF(sortDirection='ASC','▼','▲'),'')}" id="cmdSort">
+                            <apex:param value="SVMXC__Skill__r.GE_OG_DS_FSCC_EX_ID__c" name="column" assignTo="{!sortExpression}" ></apex:param>
+                            </apex:commandLink> 
+                            </apex:facet>
+                            <apex:outputLink value="/{!a.objExpert.id}" target="_blank">{!a.objExpert.SVMXC__Skill__r.GE_OG_DS_FSCC_EX_ID__c}
+                            </apex:outputLink>
+                        </apex:column>
+                        
+                        <apex:column style="width:250px">
+                            <apex:facet name="header">Skill Name</apex:facet>
+                            <apex:outputLink value="/{!a.objExpert.SVMXC__Skill__c}" target="_blank">{!a.objExpert.SVMXC__Skill__r.Name}
+                            </apex:outputLink>
+                        </apex:column>
+                        
+                        <apex:column style="width:400px">
+                            <apex:facet name="header">Skill Description</apex:facet>
+                            {!a.objExpert.GE_OG_Skill_Description__c}
+                        </apex:column>
+                        
+                        <apex:column style="width:200px">
+                            <apex:facet name="header">Expertise Level</apex:facet>
+                            {!a.objExpert.Expertise_Level__c}
+                        </apex:column>
+                        
+                        <apex:column style="width:200px">
+                            <apex:facet name="header"> Current Target Level</apex:facet>
+                            {!a.objExpert.GE_DRL_Current_Target_Level__c}
+                        </apex:column>
+                        
+                        <apex:column style="width:200px">
+                            <apex:facet name="header"> Next Target Level</apex:facet>
+                            {!a.objExpert.GE_DRL_Target_Level__c}
+                        </apex:column>
+                        
+                        <apex:column style="width:250px">
+                            <apex:facet name="header">Last Modified By</apex:facet>
+                            {!a.objExpert.LastModifiedBy.Name}
+                        </apex:column>
+                        
+                        <apex:column style="width:250px">
+                            <apex:facet name="header">Last Modified Date</apex:facet>
+                            <apex:outputText value=" {!a.objExpert.LastModifiedDate}"/>
+                        </apex:column>
+                    
+                    </apex:pageBlocktable>
+                    <apex:outputText rendered="{!(expertwrprList.size = 0)}" value="There are no Expertise to display." />
+                </apex:pageBlockSection>
+                
+                <div align="center">
+                        <apex:commandButton style="float:centre;" value="Add Expertise" action="{!addExpertise}" rerender="pbs1,idpan,pbs11,pbTable,msg,msg1" rendered="{!(skillwrprList.size != 0)}"/>
+                </div> 
+                <apex:pageBlockSection id="pbs11" title="Skills" showheader="true" collapsible="True" columns="1">  
+                    <apex:pageBlocktable id="pbTable3" value="{!skillwrprList}" var="a" columnswidth="50px,50px" cellpadding="4" border="3" rendered="{!(skillLst.size != 0)}">
+                        <apex:column style="width:5%"><br/>
+                            <apex:facet name="header"><apex:inputCheckbox onClick="checkAll(this);"/></apex:facet>
+                            <apex:inputCheckbox Value="{!a.isSelect1}" id="checkedone" />
+                        </apex:column>
+                        
+                        <apex:column style="width:10%">
+                            <apex:facet name="header">Skill Id</apex:facet>
+                            {!a.objSkill.GE_OG_DS_FSCC_EX_ID__c}
+                        </apex:column>
+                        
+                        <apex:column style="width:20%">
+                            <apex:facet name="header">Skill Name</apex:facet>
+                            <apex:outputLink value="/{!a.objSkill.id}" target="_blank">{!a.objSkill.Name}
+                            </apex:outputLink>
+                        </apex:column>
+                        
+                        <apex:column style="width:30%">
+                            <apex:facet name="header">Skill Description</apex:facet>
+                            {!a.objSkill.SVMXC__Description__c}
+                        </apex:column>
+
+
+                        <apex:column style="width:20%">
+                            <apex:facet name="header">Skill Category</apex:facet>
+                            {!a.objSkill.GE_DRL_Skill_Category__c}
+                        </apex:column>
+                        
+                    </apex:pageBlocktable>
+                </apex:pageBlockSection>
+            
+            </apex:pageBlock>   
+        </apex:outputPanel>
+        
+        
+    </apex:form>
+    <script>
+    setVal();
+    </script>
+</apex:page>

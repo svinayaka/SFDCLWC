@@ -1,0 +1,73 @@
+<apex:page controller="GE_OG_TechnicianAttachmentContrl" sidebar="false" docType="html-5.0">
+   <apex:form >
+   <apex:outputPanel id="idop1">
+            <apex:pageMessages id="msg1"/>
+        </apex:outputPanel>
+   <apex:pageBlock title="Technician Attachments: ">
+  
+     <div align="center"> 
+        <apex:commandButton value="Save" action="{!addTechAttachment}"/>
+       <apex:commandButton value="Reset" action="{!reset}" reRender="msg1"/>
+   </div> 
+  
+   <apex:PageBlockSection >
+   
+    <apex:pageBlockSectionItem >  
+     <apex:outputLabel value="Attachment Name ">
+      <apex:inputText value="{!techattachName}"/></apex:outputLabel>
+      </apex:pageblockSectionItem>
+      
+      <apex:pageBlockSectionItem >   
+    <apex:outputLabel value="Associated To ">      
+      <apex:selectList id="associatedTo" value="{!associatedTo}" size="1">
+           <apex:selectOptions value="{!AssociatedTo1}"></apex:selectOptions>
+           <apex:actionSupport event="onchange" action="{!selectedvalue}" /> 
+    </apex:selectList>
+    </apex:outputLabel>
+    </apex:pageBlockSectionItem>  
+    
+      <apex:pageBlockSectionItem rendered="{!expertDisplayfield}" > 
+      <apex:outputLabel value="Select Expertise ">      
+      <apex:selectList id="expertise" value="{!expertise}" size="1">
+            <apex:selectOptions value="{!ExpertiseLst}"></apex:selectOptions>
+    </apex:selectList>
+    </apex:outputLabel>
+    </apex:pageBlockSectionItem>   
+    
+      <apex:pageBlockSectionItem rendered="{!courseDisplayfield}"> 
+      <apex:outputLabel value="Select Course "  >      
+      <apex:selectList id="course" value="{!courseName}" size="1">
+            <apex:selectOptions value="{!CourseLst}"></apex:selectOptions>
+    </apex:selectList>
+    </apex:outputLabel>
+    </apex:pageBlockSectionItem>
+       
+    <apex:pageBlockSectionItem rendered="{!certsDisplayfield}">   
+    <apex:outputLabel value="Select Certificate " >      
+      <apex:selectList id="cert" value="{!certName}" size="1">
+            <apex:selectOptions value="{!CertificateLst}"></apex:selectOptions>
+    </apex:selectList>
+    </apex:outputLabel>
+    </apex:pageBlockSectionItem>
+        
+    
+       <apex:pageBlockSectionItem rendered="{!passportDisplayfield}"> 
+      <apex:outputLabel value="Select Passport " >      
+      <apex:selectList id="passport" value="{!passportNumber}" size="1">
+            <apex:selectOptions value="{!PassportLst}"></apex:selectOptions>
+    </apex:selectList>
+    </apex:outputLabel>
+    </apex:pageBlockSectionItem>
+    
+     <apex:pageBlockSectionItem rendered="{!visaDisplayfield}"> 
+      <apex:outputLabel value="Select Visa Country" >      
+      <apex:selectList id="visa" value="{!visaCountry}" size="1">
+            <apex:selectOptions value="{!visaLst}"></apex:selectOptions>
+    </apex:selectList>
+    </apex:outputLabel>
+    </apex:pageBlockSectionItem>    
+  
+    </apex:PageBlockSection>  
+   </apex:pageBlock> 
+   </apex:form> 
+</apex:page>

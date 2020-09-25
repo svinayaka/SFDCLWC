@@ -1,0 +1,1741 @@
+<apex:page sidebar="false" showHeader="false" controller="CaseDetailControllerNew" action="{!ShowFeed_Comment}" standardStylesheets="false" >
+ 
+<apex:stylesheet value="{!URLFOR($Resource.Predix_NewUI, 'fonts.css')}"/>
+<apex:stylesheet value="{!URLFOR($Resource.Predix_NewUI, 'bootstrap.css')}"/>
+<apex:stylesheet value="{!URLFOR($Resource.Predix_NewUI, 'screen.css')}"/>
+<apex:includeScript value="{!URLFOR($Resource.Predix_NewUI, 'jquery-2.1.4.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.Predix_NewUI, 'jquery-ui.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.Predix_NewUI, 'jquery.mousewheel.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.Predix_NewUI, 'jquery.mCustomScrollbar.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.Predix_NewUI, 'js.cookie.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.Predix_NewUI, 'casescript.js')}"/>
+<!--<apex:includeScript value="{!URLFOR($Resource.Predix_NewUI, 'script.js')}"/-->
+<!--<apex:includeScript value="{!URLFOR($Resource.Predix_files, 'ad_status.js')}"/>-->
+<apex:includeScript value="{!URLFOR($Resource.Predix_NewUI, 'c3.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.Predix_NewUI, 'd3.js')}"/>
+<html>
+<head>
+<title>GE Oil and Gas - CaseDetail</title>
+<script>
+
+ 
+   var profileName = "{!$Profile.Name}";
+   //alert(profileName);
+   if(profileName == 'II Partner Community UO'){
+   //  alert('system admmin---'+profileName);   
+      includeCSSfile('/Predix/resource/1448367194000/Predix_NewUI/conocoscreen.css');   
+      document.getElementById('dashB').style.display ="none";
+      document.getElementById('concoB').style.display ="block";      
+     
+   }else if(profileName == 'II Partner Community IPS'){
+    includeCSSfile('/Predix/resource/1448367194000/Predix_NewUI/columbiascreen.css'); 
+   }
+   else if(profileName == 'System Administrator'|| profileName == 'GE_ES Developer'|| profileName == 'GE OG Predix Agent' ){
+   // alert('Normal user---'+profileName);
+    var url = window.location.href;
+   // alert(url);
+   // alert(url.indexOf('/Predix/'));
+   if(url.indexOf('/Predix/')!= -1)
+   {
+     includeCSSfile('/Predix/resource/1448367194000/Predix_NewUI/AdminScreen.css');
+     }
+else{
+        includeCSSfile('/resource/1448367194000/Predix_NewUI/screen.css');
+    }
+           
+   }
+    
+     
+ 
+function includeCSSfile(href) {
+   // alert(href);
+    var head_node = document.getElementsByTagName('head')[0];
+    var link_tag = document.createElement('link');
+    link_tag.setAttribute('rel', 'stylesheet');
+    link_tag.setAttribute('type', 'text/css');
+    link_tag.setAttribute('href', href);
+    head_node.appendChild(link_tag);
+}
+
+</script>
+
+<title>GE Oil and Gas</title>
+</head>
+
+<body onload="onloadCallBack()">
+
+    <script type="text/javascript">
+    var __sfdcSessionId = '{!GETSESSIONID()}';
+    
+    </script>
+    <script src="../../soap/ajax/34.0/connection.js" type="text/javascript"></script>
+   
+    <script>
+ 
+    function uploadFile(){
+    var input = document.getElementById('file-input');
+    var parentId = '{!$CurrentPage.parameters.id}'; // Your ID here, I suggest using a merge field to get this
+    //alert(parentId);
+    var filesToUpload = input.files;
+     
+    for(var i = 0, f; f = filesToUpload[i]; i++)
+    {
+        var reader = new FileReader();     
+
+        // Keep a reference to the File in the FileReader so it can be accessed in callbacks
+        reader.file = f; 
+
+        reader.onerror = function(e) 
+        {
+            switch(e.target.error.code) 
+            {
+                case e.target.error.NOT_FOUND_ERR:
+                    alert('File Not Found!');
+                    break;
+                case e.target.error.NOT_READABLE_ERR:
+                    alert('File is not readable');
+                    break;
+                case e.target.error.ABORT_ERR:
+                    break; // noop
+                default:
+                    alert('An error occurred reading this file.');
+            };
+        };     
+
+        reader.onabort = function(e) 
+        {
+            alert('File read cancelled');
+        };
+
+        reader.onload = function(e) 
+        {
+            var att = new sforce.SObject("Attachment");
+            att.Name = this.file.name;
+            att.ContentType = this.file.type;
+            att.ParentId = parentId;
+            alert('File attachment is in process.');
+            att.Body = (new sforce.Base64Binary(e.target.result)).toString();
+
+            sforce.connection.create([att],
+                {
+            
+                onSuccess : function(result, source) 
+                {
+                    if (result[0].getBoolean("success")) 
+                    {
+                        alert("New attachment created successfully with id " + result[0].id);
+                        document.location.reload(true);
+                    } 
+                    else 
+                    {
+                        alert("failed to create attachment " + result[0]);
+                    }
+                }, 
+                onFailure : function(error, source) 
+                {
+                    alert("An error has occurred " + error);
+                }
+            });
+        };
+
+        reader.readAsBinaryString(f);
+    }
+        
+  }
+    
+     function ShowHideActionpanel(getParam){
+     //alert(getParam);
+        if(getParam == 'File'){
+            //alert('Hi');
+            document.getElementById('postFeed').style.display='none';
+            document.getElementById('idfileUpload').style.display='block';
+        }
+        if(getParam == 'Post'){
+            //alert('Hi');
+            document.getElementById('postFeed').style.display='block';
+            document.getElementById('idfileUpload').style.display='none';
+        }
+    }
+    
+    
+    function onloadCallBack() {
+    var cstat = document.getElementById('stat');
+        //alert('stat:' + cstat);
+    
+                   doChangeDiv(cstat);
+                 
+    }
+
+function doChangeDiv(cstat)
+{
+    //alert('W.indow onload called');
+ if(this.cstat == 'New')
+ {  //alert('case status:' + this.cstat);
+    document.getElementById("divPercent20").style.display = 'Block';
+    document.getElementById("divPercent20").style.display= 'None';
+    document.getElementById("divPercent20").style.display= 'None';
+    }
+ else if(this.cstat == 'Attended')
+ { //alert('case status:' + this.cstat);
+    document.getElementById("divPercent40").style.visibility="visible";
+    document.getElementById("divPercent40").style.visibility="Hidden";
+    document.getElementById("divPercent40").style.visibility="Hidden";
+     }
+ else if(this.cstat == 'Closed')
+    {document.getElementById("divPercent40").style.visibility="visible";
+    document.getElementById("divPercent40").style.visibility="Hidden";
+    document.getElementById("divPercent40").style.visibility="Hidden";
+     }
+}    
+ 
+
+    
+var previousOnload = window.onload; 
+    //window.onload = function() { if (previousOnload) { previousOnload(); } alert('loading...'); }
+
+  
+function CallingmethodOneInJavascript(repeatName){
+
+    methodOneInJavascript(repeatName);
+} 
+function LikeUnlike(getId){
+    //alert(document.getElementById(getId).value)
+}      
+function PostingComment(){
+    
+    var getPost = document.getElementById('postChatter').value;
+// alert(getPost);
+    document.getElementById('postChatter').value='';
+    CallingPostingComment(getPost);
+}
+
+function showCommentBox(itemId){
+        $('#comBox_'+itemId).show();
+    }
+    
+    function showCommentBodyBox() {
+        document.getElementById('commentbodyId').style.display='block';
+        
+    }
+    
+function addCommentToFeedItem(itemId){
+   // alert('hi-----' + itemId);
+        //var commentToAdd = $('#comIn_'+itemId).val();
+        var commentToAdd = $('#text_'+itemId).val();
+        
+      //  alert(commentToAdd);
+        //var commentToAdd = document.getElementById('#comIn_'+itemId).value;
+       addComment(itemId, commentToAdd);
+      
+       
+     //   alert(addComment);
+    }
+    
+
+var likeCommentIds;
+function CallingmethodLikeInJavascript(likeCommentId){
+//     alert(likeCommentId);
+     likeCommentIds = likeCommentId;
+  //   alert('ok');
+  //-----------------------------------------------
+  //alert(likeCommentId);
+     var str = "like" + likeCommentId;
+     var str1 = $("[id$='str']");
+    // alert('ID-->' + str1);
+   // alert(document.getElementById("like"+ likeCommentId).text);
+     var status = document.getElementById("like"+ likeCommentId).text;
+ //    alert('==Status=='+status);
+    methodFiveInJavascript(likeCommentId, status);
+} 
+
+function ChaningLikeUnlike(){
+      //alert('ChaningLikeUnlike'+likeCommentIds);
+      var innter = document.getElementById('like'+likeCommentIds).text;
+     // alert(innter);
+    if(document.getElementById('like'+likeCommentIds).text=='Like')
+    {   
+        //alert('I m in like');
+        document.getElementById('like'+likeCommentIds).text = 'UnLike';
+    }
+    else if(document.getElementById('like'+likeCommentIds).text=='UnLike')
+    {
+       //alert('I m in unlike');
+       document.getElementById('like'+likeCommentIds).text='Like';
+    }   
+}
+    
+function CallingmethodFollowInJavascript(){
+     
+  //   alert('ok');
+    methodThreeInJavascript();
+}  
+$('html').click(function (e) {
+    //alert(e.target.id);
+    if (e.target.id == 'spanRecentActivity') {
+        //do something
+        //alert('My div');
+    } else {
+        //alert('outside');
+        //do something
+        $("#idRecentActivity").hide(); 
+      
+        
+    }
+});  
+
+function CallingmethodRecentActInJS(repeatName){
+   //alert(repeatName);
+     $('#spanRecentActivity').html(repeatName);
+     
+     methodRecentActInJS(repeatName);
+    $('#idRecentActivity').hide(); 
+        
+   //  alert('after methodRA repeatName');
+     }
+  
+   getValuesCaseDetail = function() {
+        //var newCaseSubject = document.getElementById('j_id0:j_id13:j_id111').value;
+        var accId = document.getElementById('j_id0:frm:j_id136');
+        var conId = document.getElementById('j_id0:frm:j_id138');
+        if((accId === null || accId.value == '') || (conId === null || conId.value == '')) {
+            alert('Please enter account/contact name');
+            return false;
+        }
+        return true;
+        //alert(newCaseSubject);
+        //alert(accId);
+    }  
+</script>
+
+<Script>
+
+     
+function CallRecentActivity(){
+   //alert('testtt');
+   $("#idRecentActivity").show(); 
+}
+function CallingDetailRTFunction(){
+        var recCount= {!recordTypeCount};
+        
+        if (recCount> 1) {
+       document.getElementById("DetailPgRTId").style.display= "block";
+       
+       document.getElementById("DetailNewTbId").style.display ="none";
+    } else {
+        document.getElementById("DetailPgRTId").style.display= "none";
+         document.getElementById('DetailNewTbId').style.display ="block";
+    }
+       
+    }
+    
+    
+function HideDetailCaseFormData(){
+            
+            document.getElementById('DetailPgRTId').style.display ="none";
+            document.getElementById('DetailNewTbId').style.display ="block";       
+    }
+    
+    
+function CallingDetailRTEnhancementFunction(){
+        var recCount= {!recordTypeCount};
+
+        if (recCount> 1) {
+       document.getElementById("DetailEnhancRTId").style.display= "block";
+       
+       document.getElementById('DetailEnhanId').style.display ="none";
+    } else {
+        document.getElementById("DetailEnhancRTId").style.display= "none";
+         document.getElementById('DetailEnhanId').style.display ="block";
+    }
+       
+    }   
+    
+function HideDetailEnhancementFormData(){
+            
+            document.getElementById('DetailEnhancRTId').style.display ="none";
+            document.getElementById('DetailEnhanId').style.display ="block";       
+    }  
+
+   function OnSubmitNullPlusCase(){
+         //alert('hi');
+         var accId = $('#j_id0:frm:j_id136:accId').val(); 
+         var conId = $('#j_id0:frm:j_id138:conId').val();
+         var subId =$('#j_id0:frm:j_id140').val(); 
+         var Description = $('#j_id0:frm:j_id142').val();
+         //alert(conId);
+         //alert(accId);
+         //alert(subId);
+         //alert(Description);
+         
+         if(accId == undefined && conId == undefined && subId == undefined && Description ==undefined){
+            alert('Please select atleast one field to create the case.');
+            return false;
+         }
+            if(accId == '' && conId == '' )
+    { 
+        alert('Enter atleast one criteria in Advanced Search and click search!') ;     
+    }   
+  }  
+    
+
+</script>
+<script type="text/javascript">
+    var __sfdcSessionId = '{!GETSESSIONID()}';
+   
+    </script>
+    <script src="../../soap/ajax/34.0/connection.js" type="text/javascript"></script>
+    <script type="text/javascript">    
+    var writtenHTML = '';
+   
+    
+    
+    function setupPage() {
+      //function contains all code to execute after page is rendered
+      var searchKey = $('#idglobalsearch').val();
+      console.log(searchKey);
+      if(searchKey =='')
+      {
+         $('#idULsuggestedcases').html('');
+         $('#idULsuggestedcases').Hide(); 
+          return;
+      }
+      writtenHTML = '<ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content" id="ui-id-1" tabindex="0" style="display: block; position: relative; top: 0px; left: 1px; width: 1258px;"><li class="ui-menu-category">cases</li>';
+     
+      var resultCases =  sforce.connection.query("Select Id, Subject,CaseNumber,RecordType.Name From Case where  (Subject like '"+searchKey+"%' and Subject !=null) OR (CaseNumber like '"+searchKey+"%' and CaseNumber !=null) limit 10");
+      //console.log(resultCases.size);
+      var resultKnowledge = sforce.connection.query(
+          "SELECT Summary,Title,UrlName, Language, PublishStatus, KnowledgeArticleId FROM KnowledgeArticleVersion where Title like '"+searchKey+"%' and PublishStatus ='Online' and Language='en_US' and Title !=null limit 10");
+         
+    if (resultCases.size > 0) {
+      //get the records array
+      var records = resultCases.getArray('records');
+      //loop through the records and construct html string
+      for (var i = 0; i < records.length; i++) {
+        var cases = records[i];
+       
+       writtenHTML +=  '<li aria-label="Case : '+cases.CaseNumber +':'+ cases.Subject +'" class="ui-menu-item" id="ui-id-'+cases.Id+'" tabindex="-1"><a href="#top">' +cases.CaseNumber +':'+ cases.Subject+'</a></li>';
+      }
+    
+    }
+    else{
+        writtenHTML +=  '<li aria-label="Case : No data" class="ui-menu-item" id="ui-id-255" tabindex="-1"><a href="#top">No data</a>  </li>';
+    }
+    
+    //console.log(resultKnowledge.size);
+    writtenHTML +='<li class="ui-menu-category">knowledge</li>';
+    if(resultKnowledge.size > 0){
+       var records = resultKnowledge.getArray('records');
+       
+ 
+      //loop through the records and construct html string
+      for (var i = 0; i < records.length; i++) {
+        var knowledge = records[i];
+ 
+        writtenHTML +=  '<li aria-label="Knowledge : '+knowledge.Summary +'" class="ui-menu-item" id="ui-id-255" tabindex="-1"><a href="#top">' + knowledge.Summary+'</a> </li>';
+       
+      }
+      
+      }
+      else{
+         writtenHTML +=  '<li aria-label="Knowledge : No data" class="ui-menu-item" id="ui-id-255" tabindex="-1"><a href="#top">No data</a> </li>';
+      }
+      if(resultCases.size > 0 || resultKnowledge.size > 0){
+            writtenHTML+='</ul>';  
+            $('#idULsuggestedcases').html(writtenHTML);  
+            $('#idULsuggestedcases').Show();  
+      }
+     /* else
+      {
+        $('#idULsuggestedcases').html('');   
+      }
+      */
+     
+    //render the generated html string
+   
+    
+  }
+ 
+  function queryFailed(error, source) {
+    source.output.innerHTML = "An error has occurred: " + error;
+  }
+ 
+  </script>
+
+
+<aside>
+  <h1><a class="external-link" href="http://www.ge.com">GE Oil and Gas</a></h1>
+  <!--/ Logo -->
+  <nav>
+    <ul>
+      <li class="icon link-new-case js-flyout" data-target="#newCaseFlyout" data-distance="44" data-role="nav"><a href="javascript:;" class="icon" onClick="CallingDetailRTFunction()">New case</a></li>
+      <li class="icon"><a href="{!$site.prefix}/apex/PredixDashboardPage"><span class="icon icon-dashboard"></span>Dashboard</a></li>
+      <li class="icon active"><a href="{!$site.prefix}/apex/PredixCasesPage"><span class="icon icon-cases"></span>Cases</a></li>
+    <!--  <li class="icon js-flyout" data-target="#enhancementsFlyout" data-distance="232" data-role="nav"><a href="javascript:;"><span class="icon icon-enhancements"></span>Enhancements</a></li>
+      <li class="icon"><a href="Knowledge.html"><span class="icon icon-knowledge"></span>Knowledge</a></li> -->
+    </ul>
+  </nav>
+  <!--/ Nav -->
+</aside>
+<apex:form id="frm">
+ 
+<apex:actionFunction action="{!PostComment}" name="CallingPostingComment" rerender="tableDetails" status="actStatusId">
+    <apex:param name="firstParam" assignTo="{!PostComments}" value="" />
+    
+</apex:actionFunction>
+
+<apex:actionFunction name="methodFiveInJavascript" action="{!likeunlike1}" rerender="tableDetails" status="loadStatus" oncomplete="ChaningLikeUnlike()">
+   
+  <apex:param name="likeCommentId" assignTo="{!likeCommentId}" value=""/>
+  <apex:param name="feedItemstatus" assignTo="{!feedItemstatus}" value=""/>
+ 
+</apex:actionFunction>
+
+<apex:actionFunction action="{!FollowCase}" name="methodThreeInJavascript"  rerender="followOutputPanel" status="loadStatus">
+</apex:actionFunction> 
+
+<apex:actionFunction name="addComment" action="{!addCommentToFeedItem}" rerender="tableDetails" status="loadStatus">
+<apex:param name="ItemId" assignTo="{!feedItemId}" value="" />
+                <apex:param name="theComment" assignTo="{!commentToAdd}" value="" />
+</apex:actionFunction>
+
+<apex:actionFunction action="{!ShowRecentActivityFeeds}" name="methodRecentActInJS" status="loadStatus" rerender="tableDetails">
+<apex:param name="firstParam" assignTo="{!renderedAllTable}" value="" />
+</apex:actionFunction>
+
+<!--/ Aside -->
+<div class="wrapper">
+  <header>
+    <div class="top-bar">
+      <div class="expand-side">
+        <div class="widget pull-left widget-search">
+          <div class="icon icon-search">
+             <input type="text" class="js-autocomplete" id="idglobalsearch" placeholder="Find cases, articles, documentation" onKeyup="setupPage()"/>
+            <a href="javascript:;" class="icon search-btn"></a>
+             <div id='idULsuggestedcases' style='overflow:auto; '>
+        </div>
+          </div>
+        </div>
+        <!--/ .widget-search -->
+        <div class="widget widget-user pull-right js-flyout" data-target="#profileFlyout" data-left="137" data-width="full" data-role="header">
+          <a href="javascript:;" class="icon icon-drop">
+           <apex:image url="{!URLFOR($Resource.Predix_files,'user-thumbnail.png')}" width="50" height="50"/>
+          {!$User.FirstName} {!$User.LastName}
+          </a>
+        </div>
+        <!--/ .widget-user -->
+      </div>
+      <div class="widget widget-fullsize pull-right disabled">
+        <a href="javascript:;" class="icon icon-fullsize"></a>
+      </div>
+      <!--/ .widget-config -->
+      <div class="widget widget-config pull-right js-flyout disabled hide" data-target="#configFlyout" data-left="137" data-role="header">
+        <a href="javascript:;" class="icon icon-config"></a>
+      </div>
+      <!--/ .widget-config -->
+    </div>
+    <!--/ .top-bar -->
+  </header>
+  <!--/ Header -->
+  <div class="main-container case-details-container">
+    <div class="section section-case-details">
+      <h2><a href="{!$site.prefix}/apex/PredixCasesPage" class="pull-left icon icon-back"></a>Case Details</h2>
+      <div class="container-fluid">
+        <div class="col-xs-12">
+          <div class="panel panel-case-details blue">
+            <div class="panel-heading">
+              <div class="bar-actions">
+               <apex:outputPanel id="followOutputPanel"> 
+                <a href="javascript:;" id="idFollow" onclick="CallingmethodFollowInJavascript()" class="pull-left icon icon-follow js-follow">{!strFollowUnFollow}</a>
+              </apex:outputPanel> 
+               
+                <a href="javascript:;" class="pull-left icon icon-print" onclick="window.print();"></a>
+                <!--<a href="javascript:;" class="pull-left icon icon-help"></a> -->
+              </div>
+              <!--/ .bar-actions -->
+              <h2>{!caseDetails.subject}</h2>
+              <a class="icon icon-attachment hide" href="javascript:;"></a>
+            </div>
+            <!--/ .panel-heading -->
+            <div class="panel-body">
+              <div class="description">
+                <p>{!caseDetails.Description}</p>
+              </div>
+              <!--/ .description -->
+              <div class="bar-progress">
+                <span class="forward">CASE PROGRESS</span>
+                <div class="progress">
+                 <!-- <div class="percents"></div>-->
+                 <apex:outputPanel rendered="{!IF(caseDetails.status == 'New',true,false)}"><div class="percents"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(caseDetails.status == 'New',true,false)}"><span>1 of 5 steps</span></apex:outputPanel>
+
+                <apex:outputPanel rendered="{!IF(caseDetails.status == 'Acknowledged',true,false)}"><div class="percents40"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(caseDetails.status == 'Acknowledged',true,false)}"><span>2 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(caseDetails.status == 'Working',true,false)}"><div class="percents60"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(caseDetails.status == 'Working',true,false)}"><span>3 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(caseDetails.status == 'Resolved',true,false)}"><div class="percents80"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(caseDetails.status == 'Resolved',true,false)}"><span>4 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(caseDetails.status == 'Closed',true,false)}"><div class="percents100"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(caseDetails.status == 'Closed',true,false)}"><span>5 of 5 steps</span></apex:outputPanel>
+                    
+                </div>
+                <!--<span>1 of 5 steps</span>-->
+                <!--/ .progress -->
+              </div>
+              <dl class="meta clearfix">
+                <dt>Case number</dt>
+                <dd>{!caseDetails.casenumber}</dd>
+                <dt>Status</dt>
+                <dd><span class="new"><apex:outputtext value="{!caseDetails.Status}" id="stat" rendered="true"/></span></dd>
+                <dt>Priority</dt>
+                    <apex:outputPanel rendered="{!IF(caseDetails.Priority == 'P1–Level 1–Catastrophic service failure',true,false)}" ><dd><span class="icon icon-priority icon-P1Red"></span>{!LEFT(caseDetails.Priority,2)}</dd></apex:outputPanel>
+                
+                    <apex:outputPanel rendered="{!IF(caseDetails.Priority == 'P2–Level 2–Service failure',true,false)}"> <dd><span class="icon icon-priority icon-P2Yellow"></span>{!LEFT(caseDetails.Priority,2)}</dd></apex:outputPanel>
+                
+                    <apex:outputPanel rendered="{!IF(caseDetails.Priority == 'P3–Level 3–Limited loss of service',true,false)}"> <dd><span class="icon icon-priority icon-P3Blue">{!LEFT(caseDetails.Priority,2)}</span></dd></apex:outputPanel>
+                
+                    <apex:outputPanel rendered="{!IF(caseDetails.Priority == 'P4–Level 4–No impact to service',true,false)}"> <dd><span class="icon icon-priority icon-P4Purple">{!LEFT(caseDetails.Priority,2)}</span></dd></apex:outputPanel>
+                
+                <dt>Date</dt>
+                <apex:outputText value="{0,date,MM/dd/yyyy  hh:mm a}"><apex:param value="{!caseDetails.createddate}" /> </apex:outputText>
+              </dl>
+              <!--/ .meta -->
+              <div class="container-fluid actions-group is-actions-tab hide">
+                <div class="col-xs-2">
+                  <a href="javascript:;" class="icon icon-post active first">Post</a>
+                </div>
+                <div class="col-xs-2">
+                  <a href="javascript:;" class="icon icon-call">Call</a>
+                </div>
+                <div class="col-xs-2">
+                  <a href="javascript:;" class="icon icon-community">Community</a>
+                </div>
+                <div class="col-xs-2">
+                  <a href="javascript:;" class="icon icon-status">Status</a>
+                </div>
+                <div class="col-xs-2">
+                  <a href="javascript:;" class="icon icon-file">File</a>
+                </div>
+                <div class="col-xs-2">
+                  <a href="javascript:;" class="icon icon-more">More</a>
+                </div>
+              </div>
+              <!--/ .container -->
+              <div class="post-file">
+                <label class="custom-radio post-type" style="">
+                  <input name="post-file" type="radio" checked='true'/>
+                  <span class="icon"></span>Post
+                </label>
+                <label class="custom-radio file-type">
+                  <input type="radio" name="post-file"/>
+                  <span class="icon"></span>File
+                </label>
+              </div>
+              <div class="input-group js-post-feed clearfix">
+                <input type="text" class="form-control" id="postChatter" placeholder="Write something you’ll like to post here" />
+                <a href="javascript:;" onclick="PostingComment();" class="btn btn-primary">Post</a>
+              </div>
+              <div class="input-group js-post-feed clearfix hide">
+                <input id="file-input"  style ="top: 0;right: 0; z-index: 10;" type="file" name="file" class="form-control" placeholder="Upload file." />
+                <a href="javascript:;" onclick="uploadFile();" class="btn btn-primary">Upload</a>
+              </div>
+              <div class="section-details">
+                <nav class="tabs-detals general-tabs">
+                  <ul>
+                    <li class="active"><a href="javascript:;">DETAILS</a></li>
+                    <li><a href="javascript:;">FEED</a></li>
+                    <li><a href="javascript:;">INFO</a></li>
+                  </ul>
+                </nav>
+                <!--/ .tabs-detals -->
+                <div>
+                  <div class="details-content tab-content-area">
+                    <div class="row">
+                      <div class="col-xs-6 lefts">
+                        <h3>CASE DETAILS</h3>
+                        <ul>
+                          <li>
+                            <span class="txt">- Case Number</span>
+                            <span class="value"><span class="mark">-</span>{!caseDetails.casenumber}<br/></span>
+                          </li>
+                          <li>
+                            <span class="txt">- Status + Sub Status</span>
+                            <span class="value"><span class="mark">-</span><span class="new">{!caseDetails.Status}<br/></span></span>
+                          </li>
+                         <li>
+                            <span class="txt">- Priority</span>
+                            <span class="value"><span class="mark">-</span>
+                            
+                          <apex:outputPanel rendered="{!IF(caseDetails.Priority == 'P1–Level 1–Catastrophic service failure',true,false)}" ><dd><span class="icon icon-priority icon-P1Red"></span>{!LEFT(caseDetails.Priority,2)}</dd></apex:outputPanel>
+                
+                    <apex:outputPanel rendered="{!IF(caseDetails.Priority == 'P2–Level 2–Service failure',true,false)}"> <dd><span class="icon icon-priority icon-P2Yellow"></span>{!LEFT(caseDetails.Priority,2)}</dd></apex:outputPanel>
+                
+                    <apex:outputPanel rendered="{!IF(caseDetails.Priority == 'P3–Level 3–Limited loss of service',true,false)}"> <dd><span class="icon icon-priority icon-P3Blue">{!LEFT(caseDetails.Priority,2)}</span></dd></apex:outputPanel>
+                
+                    <apex:outputPanel rendered="{!IF(caseDetails.Priority == 'P4–Level 4–No impact to service',true,false)}"> <dd><span class="icon icon-priority icon-P4Purple">{!LEFT(caseDetails.Priority,2)}</span></dd></apex:outputPanel>
+                </span>
+                            <br/>
+                          </li>
+                          <li>
+                            <span class="txt">- Open Date</span>
+                            <span class="value"><span class="mark">-</span>    
+                            <apex:outputText value="{0,date,MM/dd/yyyy  hh:mm a}"> 
+                            <apex:param value="{!caseDetails.createddate}" /> 
+                            </apex:outputText>
+                            <br/>
+                            </span>
+                          </li>
+                          <li>
+                            <span class="txt">- Subject</span>
+                            <span class="value"><span class="mark">-</span>{!caseDetails.Subject}<br/></span>
+                          </li>
+                          <li>
+                            <span class="txt">- Description</span>
+                            <span class="value"><span class="mark">-</span>{!caseDetails.Description}<br/></span>
+                          </li>
+                          
+                        </ul>
+                      </div>
+                      <div class="col-xs-6 rights">
+                        <h3>STATS</h3>
+                        <ul>
+                          <!--<li class="bottom8">
+                            <span class="txt">- Initial Response</span>
+                            <span class="value"><span class="mark">-</span>{!caseDetails.GE_Initial_Response_Time2__c}<br/></span>
+                          </li>-->
+                          <li>
+                            <span class="txt">- Expected Completion Date</span>
+                            <span class="value"><span class="mark">-</span>
+                            <apex:outputText value="{0,date,MM/dd/yyyy  hh:mm a}"> 
+                            <apex:param value="{!caseDetails.GE_Expected_Completion_Date__c}" /> 
+                            </apex:outputText>
+                            <br/>
+                            </span>
+                          </li>
+                          <!--
+                          <li>
+                            <span class="txt">- Time Pending GE</span>
+                            <span class="value"><span class="mark">-</span>{!caseDetails.GE_Time_Pending_GE__c}<br/></span>
+                          </li>
+                          <li>
+                            <span class="txt">- Resolution Time</span>
+                            <span class="value"><span class="mark">-</span>{!caseDetails.GE_Resolution_Time__c}<br/></span>
+                          </li>-->
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <!--/ .details-content -->
+                  
+                  <div class="feed-content tab-content-area hide">
+                    <div class="panel-case-feeds">
+                      <div class="panel-heading">
+                        <div class="pull-right filter">
+                          <!--<span class="label">Filter:</span>
+                          <div class="dropdown is-dropdown js-dropdown-filter">
+                            <span class="icon">All updates</span>
+                          </div> -->
+                          <!--/ .dropdown -->
+                          <span class="label">Filter by:</span>
+                          <div class="dropdown is-dropdown js-dropdown-filter">
+                        <span class="icon"  id="spanRecentActivity" onClick="CallRecentActivity();">All</span>
+                        <ul id="idRecentActivity" style="display:none;">
+                            <li onclick='CallingmethodRecentActInJS("AllFeeds")' >All</li>
+                            <li onclick='CallingmethodRecentActInJS("MostRecentActivity")' >Most Recent Activity</li>
+                            <li onclick='CallingmethodRecentActInJS("LastPost")'>Last post</li>
+                      </ul>   
+                    </div>
+                          <!--/ .dropdown -->
+                        </div>
+                        <!--/ .filter -->
+                        <ul class="user-list clearfix">
+                        <!--  <li class="pull-left">
+                            <a href="javascript:;" class="js-tip" data-name="Randy West"><img src="i/small-user-thumbnail.jpg" alt="Randy West" /></a>
+                          </li> 
+                          <li class="pull-left">
+                            <a href="javascript:;" class="js-tip" data-name="Wood West"><img src="i/small-user-thumbnail.jpg" alt="Wood West" /></a>
+                          </li>
+                          <li class="pull-left">
+                            <a href="javascript:;" class="js-tip" data-name="Jhon West"><img src="i/small-user-thumbnail.jpg" alt="Jhon West" /></a>
+                          </li>
+                          <li class="pull-left">
+                            <a href="javascript:;" class="js-tip" data-name="Well West"><img src="i/small-user-thumbnail.jpg" alt="Well West" /></a>
+                          </li> -->
+                          <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(firstUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!firstUser}" href="javascript:;" >
+                                    <!--<img alt="{!firstUser}" src="https://geog--SandBox1--c.cs9.content.force.com/profilephoto/005/F"></img>-->
+                                    <apex:image alt="{!firstUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" />
+                                </a>
+                                </apex:outputPanel>
+                           </li> 
+                          <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(secUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!secUser}" href="javascript:;"><apex:image alt="{!secUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                          </li>
+                          <li class="pull-left">
+                                <apex:outputPanel rendered="{!if(thirdUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!thirdUser}" href="javascript:;"><apex:image alt="{!thirdUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                          </li>
+                          <li class="pull-left">
+                                <apex:outputPanel rendered="{!if(fourthUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!fourthUser}" href="javascript:;"><apex:image alt="{!fourthUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                          </li>
+                        </ul>
+                      </div>
+                      <!--/ .panel-heading -->
+                      <div class="panel-body">
+                        <div class="scrollbar">
+                          <ul class="media-list js-feeds-context">
+                          <!-- <li class="media">
+                              <div class="media-left">
+                                <a href="javascript:;" class="thumbnails"><img src="i/user-thumbnail-grey.png" alt="User" /></a>
+                              </div>
+                              <div class="media-body">
+                                <a href="javascript:;" class="name">Seth Richards</a>
+                                <span class="date">2 hrs</span>
+                                <p>We are attending the event in downtown atlanta service. We should probably send a tecnician to the site. We are 
+                                attending the event in downtown atlanta service</p>
+                                <ul class="clearfix">
+                                  <li class="pull-left icon"><a href="javascript:;">Comment</a></li>
+                                  <li class="pull-left icon last"><a href="javascript:;">Like</a></li>
+                                </ul>
+                              </div>
+                            </li>    -->
+                           <!-- <apex:actionPoller reRender="tableDetails" action="{!ShowFeed_Comment}"/>-->
+                            <apex:outputPanel id="tableDetails">
+                                <!---start of outputpanel to rerender-->
+                                <apex:repeat value="{!display_feedItemList}" var="userFeed" id="tableFeed" rendered="{!renderedAllTable='AllFeeds'}"  >
+                                <li class="media">
+                                    <div class="media-left">
+                                      <a href="javascript:;" class="thumbnails"><apex:image alt="User"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                    </div>
+                                    <div class="media-body">
+                                      <a href="javascript:;" class="name">{!userFeed.feedItemObject.CreatedBy.Name}</a>
+                                        <span class="date"><apex:outputtext value="{!userFeed.dateTimeFeed}"></apex:outputtext></span>
+                                      <p>{!userFeed.feedItemObject.Body}</p>
+                                      <ul class="clearfix">
+                                       <li class="pull-left icon" id="comIn_{!userFeed.feedItemObject.Id}">
+                                        <a href="javascript:;" onclick="showCommentBox('{!userFeed.feedItemObject.Id}')">Comment</a></li>
+                                        <li class="pull-left icon last">
+                                        
+                                         <apex:outputPanel id="Like">
+                                            <a id="like{!userFeed.feedItemObject.Id}" href="javascript:;" onclick="CallingmethodLikeInJavascript('{!userFeed.feedItemObject.Id}','')">{!userFeed.feedItemstatus}</a>
+ 
+ 
+                                            <!---<apex:commandLink id="likeid" value="Like" title="Like this post" onclick="showStuff"/>-->
+                                        </apex:outputPanel>
+                                        
+                                        
+                                      <!--  <apex:outputPanel rendered="{!IF(userFeed.feedItemObject.FeedLikes.size = 0,true,false)}" >
+                                            <a id="like{!userFeed.feedItemObject.Id}" href="javascript:;" onclick="LikeUnlike(this)">Like</a>
+                                        </apex:outputPanel>
+                                        <apex:outputPanel rendered="{!IF(userFeed.feedItemObject.FeedLikes.size != 0,true,false)}" >
+                                            <a id="unlike{!userFeed.feedItemObject.Id}" href="javascript:;" onclick="LikeUnlike(this)">Unlike</a>
+                                        </apex:outputPanel>-->
+                                        </li>
+                                      </ul>
+                                    <!-------START DIV FOR COMMENT----->
+                                         <div class="addComment" id="comBox_{!userFeed.feedItemObject.Id}" style="display:none">
+                                        <input type="text" class="form-control" id="text_{!userFeed.feedItemObject.Id}" placeholder="Write something you’ll like to comment here" />
+                                        
+                             <apex:commandButton value="comment" action="{!addCommentToFeedItem}" onclick="addCommentToFeedItem('{!userFeed.feedItemObject.Id}')" reRender="tabledetails"  ></apex:commandButton>
+                                         
+                                        </div> 
+                                        
+                                        <!----END DIV FOR COMMENT --->
+                                        </div> 
+                                        
+                                    <!----START DIV FOR DISPLAYING COMMENTS ON PAGE LOAD--->    
+                                         <!-- <apex:outputPanel rendered="{!IF(userFeed.feedItemObject.commentCount >0, true, false)}" >-->
+     
+                        <div class="commentBox">
+                        
+                            <apex:repeat value="{!display_feedCommentsList}" var="commentInfo"  id="commenttable">
+                                <div class="commentBox-inner">
+                                    <div style="vertical-align:top;padding-left:120px;">
+                                       <!--  <a href="javascript:;" ><apex:image url="{!URLFOR($Resource.Predix_files,'user-thumbnail.png')}" />
+          {!$User.FirstName} {!$User.LastName}</a>-->
+                                    </div>
+ 
+                                    <div  style="vertical-align:top;width:80%;padding-left:120px;">
+                                      <apex:outputPanel rendered="{!IF(userFeed.feedItemObject.Id ==commentInfo.feedCommentObject.FeedItemId, true, false)}" >
+                                      
+                                     
+                                        
+                                        <p>{!commentInfo.feedCommentObject.CommentBody}  </p>
+                                        
+ <span class="date"><apex:outputtext value="{!commentInfo.dateTimeFeed}"></apex:outputtext></span>  
+ 
+                                    
+                                        </apex:outputPanel>
+                                      <!--  <div class="createdDate">
+                                            <apex:outputText value="{!commentInfo.relativeCreatedDate}" />
+                                        </div>-->
+                                    </div>
+
+                                </div>
+                            </apex:repeat>
+                        </div>
+                   <!-- </apex:outputPanel>-->
+                    <!----END DIV FOR DISPLAYING COMMENTS ON PAGE LOAD--->
+                                </li>
+                                </apex:repeat>
+                            
+                        <!--DISLAYING MOST RECENT FeedItems START-->
+                   
+                        <apex:repeat value="{!MostRecentFeedsDisplay}" var="MostRecentFI" id="MostRecentFI" rendered="{!renderedAllTable='MostRecentActivity'}" >        
+                         <li class="media">
+                            <div class="media-left">
+                              <a href="javascript:;" class="thumbnails"><apex:image alt="User"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                            </div>
+                            <div class="media-body">
+                              <a href="javascript:;" class="name">{!MostRecentFI.feedItemObject.CreatedBy.Name}</a>
+                                <span class="date"><apex:outputtext value="{!MostRecentFI.dateTimeFeed}"></apex:outputtext></span>
+                              <p>{!MostRecentFI.feedItemObject.Body}</p>
+                              <ul class="clearfix">
+                                <li class="pull-left icon" id="comIn_{!MostRecentFI.feedItemObject.Id}">
+                                        <a href="javascript:;" onclick="showCommentBox('{!MostRecentFI.feedItemObject.Id}')">Comment</a></li>
+                                <li class="pull-left icon last">
+                                
+                                <apex:outputPanel id="Like">
+                                            <a id="like{!MostRecentFI.feedItemObject.Id}" href="javascript:;" onclick="CallingmethodLikeInJavascript('{!MostRecentFI.feedItemObject.Id}','')">{!MostRecentFI.feedItemstatus}</a>
+ 
+ 
+                                            <!---<apex:commandLink id="likeid" value="Like" title="Like this post" onclick="showStuff"/>-->
+                                        </apex:outputPanel>
+                                        
+                                <!--<apex:outputPanel rendered="{!IF(MostRecentFI.feedItemObject.FeedLikes.size = 0,true,false)}" >
+                                    <a id="like{!MostRecentFI.feedItemObject.Id}" href="javascript:;" onclick="LikeUnlike(this)">Like</a>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!IF(MostRecentFI.feedItemObject.FeedLikes.size != 0,true,false)}" >
+                                    <a id="unlike{!MostRecentFI.feedItemObject.Id}" href="javascript:;" onclick="LikeUnlike(this)">Unlike</a>
+                                </apex:outputPanel>-->
+                                </li>
+                              </ul>
+                            <!-------START DIV FOR COMMENT----->
+                                         <div class="addComment" id="comBox_{!MostRecentFI.feedItemObject.Id}" style="display:none">
+                                        <input type="text" class="form-control" id="text_{!MostRecentFI.feedItemObject.Id}" placeholder="Write something you’ll like to comment here" />
+                                        
+                             <apex:commandButton value="comment" action="{!addCommentToFeedItem}" onclick="addCommentToFeedItem('{!MostRecentFI.feedItemObject.Id}')" reRender="tabledetails"  ></apex:commandButton>
+                                         
+                                        </div> 
+                                        
+                                        <!----END DIV FOR COMMENT --->
+                                        </div> 
+                                        
+                                    <!----START DIV FOR DISPLAYING COMMENTS ON PAGE LOAD--->    
+                                         <!-- <apex:outputPanel rendered="{!IF(userFeed.feedItemObject.commentCount >0, true, false)}" >-->
+     
+                        <div class="commentBox">
+                        
+                            <apex:repeat value="{!display_feedCommentsList}" var="commentInfo"  id="commenttable" rendered="{!renderedAllTable='MostRecentActivity'}">
+                                <div class="commentBox-inner">
+                                    <div style="vertical-align:top;padding-left:120px;">
+                                       <!--  <a href="javascript:;" ><apex:image url="{!URLFOR($Resource.Predix_files,'user-thumbnail.png')}" />
+          {!$User.FirstName} {!$User.LastName}</a>-->
+                                    </div>
+ 
+                                    <div  style="vertical-align:top;width:80%;padding-left:120px;">
+                                      <apex:outputPanel rendered="{!IF(MostRecentFI.feedItemObject.Id ==commentInfo.feedCommentObject.FeedItemId, true, false)}" >
+                                      
+                                     
+                                        
+                                        <p>{!commentInfo.feedCommentObject.CommentBody}  </p>
+                                        
+ <span class="date"><apex:outputtext value="{!commentInfo.dateTimeFeed}"></apex:outputtext></span>  
+ 
+                                    
+                                        </apex:outputPanel>
+                                      <!--  <div class="createdDate">
+                                            <apex:outputText value="{!commentInfo.relativeCreatedDate}" />
+                                        </div>-->
+                                    </div>
+
+                                </div>
+                            </apex:repeat>
+                        </div>
+                   <!-- </apex:outputPanel>-->
+                    <!----END DIV FOR DISPLAYING COMMENTS ON PAGE LOAD--->
+                          </li>
+                 
+                        </apex:repeat>
+                   
+                   <!--DISPLAYING MOST RECENT FeedItems END-->
+                        <!--/ .media -->
+                         <!--DISLAYING LAST POST START-->
+                   
+                   <apex:repeat value="{!LastPostDisplay}" var="LastPostFI" id="LastPostFI" rendered="{!renderedAllTable='LastPost'}" >        
+                 <li class="media">
+                    <div class="media-left">
+                      <a href="javascript:;" class="thumbnails"><apex:image alt="User"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                    </div>
+                    <div class="media-body">
+                      <a href="javascript:;" class="name">{!LastPostFI.feedItemObject.CreatedBy.Name}</a>
+                        <span class="date"><apex:outputtext value="{!LastPostFI.dateTimeFeed}"></apex:outputtext></span>
+                      <p>{!LastPostFI.feedItemObject.Body}</p>
+                      <ul class="clearfix">
+                        <li class="pull-left icon" id="comIn_{!LastPostFI.feedItemObject.Id}">
+                                        <a href="javascript:;" onclick="showCommentBox('{!LastPostFI.feedItemObject.Id}')">Comment</a></li>
+                          
+                         
+                         
+                        <li class="pull-left icon last">
+                        
+                          <apex:outputPanel id="Like">
+                                            <a id="like{!LastPostFI.feedItemObject.Id}" href="javascript:;" onclick="CallingmethodLikeInJavascript('{!LastPostFI.feedItemObject.Id}','')">{!LastPostFI.feedItemstatus}</a>
+ 
+ 
+                                            <!---<apex:commandLink id="likeid" value="Like" title="Like this post" onclick="showStuff"/>-->
+                          </apex:outputPanel>
+                        <!--<apex:outputPanel rendered="{!IF(LastPostFI.feedItemObject.FeedLikes.size = 0,true,false)}" >
+                            <a id="like{!LastPostFI.feedItemObject.Id}" href="javascript:;" onclick="LikeUnlike(this)">Like</a>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!IF(LastPostFI.feedItemObject.FeedLikes.size != 0,true,false)}" >
+                            <a id="unlike{!LastPostFI.feedItemObject.Id}" href="javascript:;" onclick="LikeUnlike(this)">Unlike</a>
+                        </apex:outputPanel>-->
+                        </li>
+                      </ul>
+                    <!-------START DIV FOR COMMENT----->
+                                         <div class="addComment" id="comBox_{!LastPostFI.feedItemObject.Id}" style="display:none">
+                                        <input type="text" class="form-control" id="text_{!LastPostFI.feedItemObject.Id}" placeholder="Write something you’ll like to comment here" />
+                                        
+                             <apex:commandButton value="comment" action="{!addCommentToFeedItem}" onclick="addCommentToFeedItem('{!LastPostFI.feedItemObject.Id}')" reRender="tabledetails"  ></apex:commandButton>
+                                         
+                                        </div> 
+                                        
+                                        <!----END DIV FOR COMMENT --->
+                                        </div> 
+                                        
+                                    <!----START DIV FOR DISPLAYING COMMENTS ON PAGE LOAD--->    
+                                         <!-- <apex:outputPanel rendered="{!IF(userFeed.feedItemObject.commentCount >0, true, false)}" >-->
+     
+                        <div class="commentBox">
+                        
+                            <apex:repeat value="{!display_feedCommentsList}" var="commentInfo"  id="commenttable" rendered="{!renderedAllTable='LastPost'}" >
+                                <div class="commentBox-inner">
+                                    <div style="vertical-align:top;padding-left:120px;">
+                                       <!--  <a href="javascript:;" ><apex:image url="{!URLFOR($Resource.Predix_files,'user-thumbnail.png')}" />
+          {!$User.FirstName} {!$User.LastName}</a>-->
+                                    </div>
+ 
+                                    <div  style="vertical-align:top;width:80%;padding-left:120px;">
+                                      <apex:outputPanel rendered="{!IF(LastPostFI.feedItemObject.Id ==commentInfo.feedCommentObject.FeedItemId, true, false)}" >
+                                      
+                                     
+                                        
+                                        <p>{!commentInfo.feedCommentObject.CommentBody}  </p>
+                                        
+ <span class="date"><apex:outputtext value="{!commentInfo.dateTimeFeed}"></apex:outputtext></span>  
+ 
+                                    
+                                        </apex:outputPanel>
+                                      <!--  <div class="createdDate">
+                                            <apex:outputText value="{!commentInfo.relativeCreatedDate}" />
+                                        </div>-->
+                                    </div>
+
+                                </div>
+                            </apex:repeat>
+                        </div>
+                   <!-- </apex:outputPanel>-->
+                    <!----END DIV FOR DISPLAYING COMMENTS ON PAGE LOAD--->
+                  </li>
+                 
+                   </apex:repeat>
+                   
+                   <!--DISPLAYING Last POst FeedItems END-->
+                   
+
+                   
+                   <!--DISPLAYING MOST RECENT FeedItems END-->
+                  <!--/ .media -->
+                  </apex:outputPanel>
+                  <!---END of outputpanel to rerender-->
+                       </ul>
+                          <!--/ .media-list -->
+                       </div>
+                      </div>
+                      <!--/ .panel-body -->
+                    </div>
+                  </div>
+                  <!--/ .feed-content -->
+                  
+                  <div class="info-content tab-content-area hide">
+                    <div class="info-title">
+                      <ul class="clearfix">
+                        <li class="li-people">PEOPLE</li>
+                        <li class="li-documents">DOCUMENTS</li>
+                      </ul>
+                    </div>
+                    <div class="content">
+                    <div class="people-content">
+                        <div class="scrollbar">
+                         <ul class="media-list">
+                            <li class="media">
+                           <!--<div class="media-left">
+                                <a href="javascript:;" class="thumbnails"><img src="i/user-thumbnail-grey.png" alt="User" /></a>
+                              </div>
+                              <div class="media-body">
+                                <div class="name"><a href="javascript:;">Buzz Inc.</a></div>
+                                <a href="javascript:;" class="site">www.buzz.com</a>
+                                <div class="address">Atlanta, Georgia</div>
+                              </div> -->
+                            </li>
+                            <!--/ .media -->
+                           <li class="media">
+                              <!--<div class="media-left">
+                                <a href="javascript:;" class="thumbnails"><img src="i/user-thumbnail-grey.png" alt="User" /></a>
+                              </div>
+                              <div class="media-body">
+                                <div class="name"><a href="javascript:;">Roger Gordon</a></div>
+                                <a href="javascript:;" class="site">roger.gordon@buzz.com</a>
+                                <div class="address">0988648965</div>
+                              </div> -->
+                            </li>
+                            <!--/ .media -->
+                            <li class="media">
+                              <!--<div class="media-left">
+                                <a href="javascript:;" class="thumbnails"><img src="i/user-thumbnail-grey.png" alt="User" /></a>
+                              </div>
+                              <div class="media-body">
+                                <div class="name"><a href="javascript:;">Rick Valmer</a></div>
+                                <a href="javascript:;" class="site">Rick Valmer</a>
+                                <div class="address">Customer services chief</div>
+                              </div> -->
+                            </li>
+                            <!--/ .media -->
+                          </ul>
+                        </div> 
+                        <h4>Followers</h4>
+                        <div class="scrollbar left-bottom">
+                          <ul class="media-list">
+                            <apex:repeat value="{!lstfollowerUser}" var="followeruser" id="table"  >
+                              <li class="media">
+                                <div class="media-left">
+                                  <a href="javascript:;" class="thumbnails"><img src="{!followeruser.FullPhotoUrl}" alt="User" /></a>
+                                </div>
+                                <div class="media-body">
+                                  <div class="name"><a href="javascript:;">{!followeruser.Name}</a></div>
+                                  <div class="roles">{!followeruser.UserRole.Name}</div>
+                                </div>
+                              </li>
+                       
+                       </apex:repeat> 
+                            <!--/ .media -->
+                            </ul>
+                        </div>
+                      </div>
+                      <div class="doc-content">
+                        <h4>Files</h4>
+                        <div class="scrollbar">
+                          <ul class="list-group files-group">
+                            <apex:repeat value="{!listAttachment}" var="attachment" id="attachmenttbl"  >
+                              <li style="Width: 400px">
+                                <a href="/servlet/servlet.FileDownload?file={!attachment.Id}" target="_blank" class="pull-right">Download</a>
+                                <!--<a href="javascript:;" class="pull-right">View</a> -->
+                                <p>{!attachment.Name}</p>
+                              </li>
+                            </apex:repeat>
+                           </ul>
+                          <!--/ .list-group -->
+                        </div>
+                        <h4>Articles</h4>
+                        <div class="scrollbar">
+                          <ul class="articles-list">
+                             <apex:repeat value="{!listKnowledgeArticleVersion}" var="article" id="articleId"  >
+                                <li>
+                                    <h5>{!article.Title}</h5>
+                                    <p>{!article.Summary}</p>
+                                <!--<a href="javascript:;" class="view-link">View</a>-->
+                                </li>
+                            </apex:repeat>
+                          </ul>
+                          <!--/ .articles-list -->
+                        </div>
+                      </div>
+                    </div>
+                    <div class="clearfix"></div>
+                  </div>
+                  <!--/ .info-content -->
+                  
+                </div>
+              </div>
+            </div>
+            <!--/ .panel-body -->
+          </div>
+        </div>
+            <div class="col-xs-4 is-widget hide" data-value="techSupport">
+            <div class="panel js-chat purple">
+                <div class="panel-heading">
+                <a href="javascript:;" class="pull-right icon icon-call js-flyout" data-target="#callFlyout"></a>
+                <h2 class="js-accordion">Tech support<span class="icon"></span></h2>
+              </div>
+              <!--/ .panel-heading -->
+              <div class="panel-body">
+                <div class="expand-areas">
+                    <div class="support-entry">
+                    <div class="context">
+                      <div class="list">
+                        <div class="item">
+                          <a href="javascript:;"><img src="i/user-thumbnail-grey.png" alt="User" /></a>
+                          <p class="icon">Hello! I have this question...<br />Please help me!</p>
+                        </div>
+                      </div>
+                      <!--/ .list -->
+                    </div>
+                  </div>
+                </div>
+                <!--/ .expand-status -->
+                <div class="submitter-entry">
+                    <div class="input-group">
+                      <input type="text" class="form-control is-textarea" placeholder="Ask anything!" />
+                    <a href="javascript:;" class="btn btn-submit input-group-addon is-submit">Live chat</a>
+                  </div>
+                </div>
+                <!--/ .submitter-entry -->
+              </div>
+            </div>
+          <!--/ .panel -->
+        </div>
+      </div>
+    </div>
+    <!--/ .section-case-details -->
+    <div class="section section-case-activity hide">
+      <h2>Case Activity &amp; Documents</h2>
+      <div class="container-fluid">
+        <div class="col-xs-8">
+          <div class="panel panel-case-feeds">
+            <div class="panel-heading">
+              <div class="pull-right filter">
+                <span class="label">Filter:</span>
+                <div class="dropdown is-dropdown js-dropdown-filter">
+                  <span class="icon">All updates</span>
+                </div>
+                <!--/ .dropdown -->
+                <span class="label">Filter by:</span>
+                <div class="dropdown is-dropdown js-dropdown-sort">
+                  <span class="icon">Most recent activity</span>
+                </div>
+                <!--/ .dropdown -->
+              </div>
+              <!--/ .filter -->
+              <h2 class="pull-left">Feeds</h2>
+              <ul class="user-list clearfix">
+              <li class="pull-left">
+                  <a href="javascript:;" class="js-tip" data-name="Randy West"><img src="i/small-user-thumbnail.jpg" alt="Randy West" /></a>
+                </li>   
+                <li class="pull-left">
+                  <a href="javascript:;" class="js-tip" data-name="Wood West"><img src="i/small-user-thumbnail.jpg" alt="Wood West" /></a>
+                </li>
+                <li class="pull-left">
+                  <a href="javascript:;" class="js-tip" data-name="Jhon West"><img src="i/small-user-thumbnail.jpg" alt="Jhon West" /></a>
+                </li>
+                <li class="pull-left">
+                  <a href="javascript:;" class="js-tip" data-name="Well West"><img src="i/small-user-thumbnail.jpg" alt="Well West" /></a>
+                </li> 
+               
+              </ul>
+            </div>
+            <!--/ .panel-heading -->
+            <div class="panel-body">
+              <div class="scrollbar">
+                <ul class="media-list js-feeds-context">
+                  <li class="media">
+                    <div class="media-left">
+                      <a href="javascript:;" class="thumbnails"><img src="i/user-thumbnail-grey.png" alt="User" /></a>
+                    </div>
+                    <div class="media-body">
+                      <a href="javascript:;" class="name">Seth Richards</a>
+                      <span class="date">2 hrs</span>
+                      <p>We are attending the event in downtown atlanta service. We should probably send a tecnician to the site.</p>
+                      <ul class="clearfix">
+                        <li class="pull-left icon"><a href="javascript:;">Comment</a></li>
+                        <li class="pull-left icon last"><a href="javascript:;">Like</a></li>
+                      </ul>
+                    </div>
+                  </li>
+                  <!--/ .media -->
+                  <li class="media">
+                    <div class="media-left">
+                      <a href="javascript:;" class="thumbnails"><img src="i/user-thumbnail-grey.png" alt="User" /></a>
+                    </div>
+                    <div class="media-body">
+                      <a href="javascript:;" class="name">Merien Path</a>
+                      <span class="date">Yesterday 11:25 am</span>
+                      <p>Change case owner from <a href="javascript:;">Sarah Villa.</a></p>
+                      <ul class="clearfix">
+                        <li class="pull-left icon"><a href="javascript:;">Comment</a></li>
+                        <li class="pull-left icon last"><a href="javascript:;">Like</a></li>
+                      </ul>
+                    </div>
+                  </li>
+                  <!--/ .media -->
+                  <li class="media">
+                    <div class="media-left">
+                      <a href="javascript:;" class="thumbnails"><img src="i/user-thumbnail-grey.png" alt="User" /></a>
+                    </div>
+                    <div class="media-body">
+                      <a href="javascript:;" class="name">Seth Richards</a>
+                      <span class="date">2 hrs</span>
+                      <p>We are attending the event in downtown atlanta service. We should probably send a tecnician to the site.</p>
+                      <ul class="clearfix">
+                        <li class="pull-left icon"><a href="javascript:;">Comment</a></li>
+                        <li class="pull-left icon last"><a href="javascript:;">Like</a></li>
+                      </ul>
+                    </div>
+                  </li>
+                  <!--/ .media -->
+                  <li class="media">
+                    <div class="media-left">
+                      <a href="javascript:;" class="thumbnails"><img src="i/user-thumbnail-grey.png" alt="User" /></a>
+                    </div>
+                    <div class="media-body">
+                      <a href="javascript:;" class="name">Merien Path</a>
+                      <span class="date">Yesterday 11:25 am</span>
+                      <p>Change case owner from <a href="javascript:;">Sarah Villa.</a></p>
+                      <ul class="clearfix">
+                        <li class="pull-left icon"><a href="javascript:;">Comment</a></li>
+                        <li class="pull-left icon last"><a href="javascript:;">Like</a></li>
+                      </ul>
+                    </div>
+                  </li>
+                  <!--/ .media -->
+                  <li class="media is-clone">
+                    <div class="media-left">
+                      <a href="javascript:;" class="thumbnails"><img src="i/user-thumbnail-grey.png" alt="User" /></a>
+                    </div>
+                    <div class="media-body">
+                      <a href="javascript:;" class="name">Merien Path</a>
+                      <span class="date">Yesterday 11:25 am</span>
+                      <p>Change case owner from <a href="javascript:;">Sarah Villa.</a></p>
+                      <ul class="clearfix">
+                        <li class="pull-left icon"><a href="javascript:;">Comment</a></li>
+                        <li class="pull-left icon last"><a href="javascript:;">Like</a></li>
+                      </ul>
+                    </div>
+                  </li>
+                  <!--/ .media -->
+                </ul>
+                <!--/ .media-list -->
+              </div>
+            </div>
+            <!--/ .panel-body -->
+          </div>
+        </div>
+        <div class="col-xs-4">
+          <div class="panel">
+            <div class="panel-heading">
+              <h2>Info</h2>
+            </div>
+            <!--/ .panel-heading -->
+            <div class="panel-body">
+              <div class="tabs js-tabs">
+                <div class="tabs-heading">
+                  <ul class="clearfix">
+                    <li class="pull-left"><a href="javascript:;" class="is-tab active" data-target="people">People</a></li>
+                    <li class="pull-left"><a href="javascript:;" class="is-tab" data-target="documents">Documents</a></li>
+                  </ul>
+                </div>
+                <div class="tabs-content" id="people">
+                  <div class="scrollbar">
+                    <ul class="media-list">
+                      <li class="media">
+                        <div class="media-left">
+                          <a href="javascript:;" class="thumbnails"><img src="i/user-thumbnail-grey.png" alt="User" /></a>
+                        </div>
+                        <div class="media-body">
+                          <div class="name"><a href="javascript:;">Buzz Inc.</a></div>
+                          <a href="javascript:;" class="site">www.buzz.com</a>
+                          <div class="address">Atlanta, Georgia</div>
+                        </div>
+                      </li>
+                      <!--/ .media -->
+                      <li class="media">
+                        <div class="media-left">
+                          <a href="javascript:;" class="thumbnails"><img src="i/user-thumbnail-grey.png" alt="User" /></a>
+                        </div>
+                        <div class="media-body">
+                          <div class="name"><a href="javascript:;">Roger Gordon</a></div>
+                          <a href="javascript:;" class="mail">roger.gordon@buzz.com</a>
+                          <div class="phone">0988648965</div>
+                        </div>
+                      </li>
+                      <!--/ .media -->
+                      <li class="media">
+                        <div class="media-left">
+                          <a href="javascript:;" class="thumbnails"><img src="i/user-thumbnail-grey.png" alt="User" /></a>
+                        </div>
+                        <div class="media-body">
+                          <div class="name"><a href="javascript:;">Rick Valmer</a></div>
+                          <a href="javascript:;" class="mail">Rick Valmer</a>
+                          <div class="role">Customer services chief</div>
+                        </div>
+                      </li>
+                      <!--/ .media -->
+                    </ul>
+                  </div>
+                  <h4>Followers</h4>
+                  <div class="scrollbar">
+                    <ul class="media-list">
+                      <li class="media">
+                        <div class="media-left">
+                          <a href="javascript:;" class="thumbnails"><img src="i/user-thumbnail-grey.png" alt="User" /></a>
+                        </div>
+                        <div class="media-body">
+                          <div class="name"><a href="javascript:;">Rick Tovar</a></div>
+                          <div class="roles">Sales manager</div>
+                        </div>
+                      </li>
+                      <!--/ .media -->
+                      <li class="media">
+                        <div class="media-left">
+                          <a href="javascript:;" class="thumbnails"><img src="i/user-thumbnail-grey.png" alt="User" /></a>
+                        </div>
+                        <div class="media-body">
+                          <div class="name"><a href="javascript:;">Gabriel Derekivit</a></div>
+                          <div class="roles">Customer supervisor</div>
+                        </div>
+                      </li>
+                      <!--/ .media -->
+                      <li class="media">
+                        <div class="media-left">
+                          <a href="javascript:;" class="thumbnails"><img src="i/user-thumbnail-grey.png" alt="User" /></a>
+                        </div>
+                        <div class="media-body">
+                          <div class="name"><a href="javascript:;">Burt Thomas</a></div>
+                          <div class="roles">Customer service operator</div>
+                        </div>
+                      </li>
+                      <!--/ .media -->
+                    </ul>
+                  </div>
+                </div>
+                <!--/ .tabs-content -->
+                <div class="tabs-content document-content" id="documents">
+                  <h4>Files</h4>
+                  <div class="scrollbar">
+                    <ul class="list-group">
+                    <!-- <apex:repeat value="{!listAttachment}" var="attachment" id="attachmenttbl"  >
+                      <li>
+                        <a href="/servlet/servlet.FileDownload?file={!attachment.Id}" target="_blank" class="pull-right">Download</a>
+                        <a href="javascript:;" class="pull-right">View</a>
+                        <p>{!attachment.Name}</p>
+                      </li>
+                      </apex:repeat> -->
+                    </ul>
+                    <!--/ .list-group -->
+                  </div>
+                  <h4>Articles</h4>
+                  <div class="scrollbar">
+                    <ul class="articles-list">
+                      <li>
+                        <h5>Name of the article</h5>
+                        <p>Lorem ipsum dolor et anim ulur solem et rutrum</p>
+                        <a href="javascript:;" class="view-link">View</a>
+                      </li>
+                      <li>
+                        <h5>Name of the article</h5>
+                        <p>Lorem ipsum dolor et anim ulur solem et rutrum</p>
+                        <a href="javascript:;" class="view-link">View</a>
+                      </li>
+                      <li>
+                        <h5>Name of the article</h5>
+                        <p>Lorem ipsum dolor et anim ulur solem et rutrum</p>
+                        <a href="javascript:;" class="view-link">View</a>
+                      </li>
+                    </ul>
+                    <!--/ .articles-list -->
+                  </div>
+                </div>
+                <!--/ .tabs-content -->
+              </div>
+              <!--/ .tabs -->
+            </div>
+          </div>
+          <!--/ .panel -->
+        </div>
+      </div>
+    </div>
+    <!--/ .section-case-activity -->
+  </div>
+  <!--/ .main-container -->
+</div>
+<!--/ .wrapper -->
+<div class="flyout flyout-call icon" id="callFlyout">
+  <p>
+    Call Us!
+    <a href="javascript:;">1-888-477-3349</a>
+  </p>
+</div>
+<!--/ .flyout -->
+<div class="flyout flyout-new-case new-case-pop" id="newCaseFlyout">
+<!--- START DIV FOR NEW CASE BUTTON RECORD TYPE------------------------->
+
+
+  <div class="form-new-case is-form icon" id='DetailPgRTId' style="display:none">
+    <h2><a href="javascript:;" class="icon icon-close"></a>Please Select Record Type</h2>
+    <div class="container-fluid">
+      <div class="col-xs-6">
+        <div class="form-group">
+          <label>Record Type</label>
+         <apex:selectList value="{!SelectedRecordType}" multiselect="false" size="1" styleClass="js-custom-select" >
+         <apex:selectOptions value="{!RecordTypes}"/>
+        <!-- <apex:actionsupport event="onclick" action="{!updateRecordType}" rerender="CaseNewtableOneId" />-->
+       </apex:selectList>
+         <!-- <input type="text" class="form-control default"  />-->
+        </div>
+      </div>
+      
+    
+    </div>
+    <!--/ .container -->
+    <div class="buttons-group">
+    <apex:commandButton styleclass="btn btn-success pull-right"  value="Submit"  action="{!updateRecordType}" reRender="NewCaseDetailtableId"  oncomplete="HideDetailCaseFormData()"/>
+    <apex:commandLink styleclass="pull-right link-cancel js-close" action="{!Cancel}" value="Cancel" immediate="true"/>
+     <!-- <a href="javascript:;" class="btn btn-success pull-right">Submit</a>-->
+    </div>
+    <!--/ .buttons-group -->
+  </div>
+  <!--/ .form-new-case -->
+
+
+<!--- END DIV FOR NEW CASE BUTTON RECORD TYPE -------------------------->
+  <apex:outputpanel id="NewCaseDetailtableId">
+  <div class="form-new-case is-form icon" id="DetailNewTbId" >
+    <h2><a href="javascript:;" class="icon icon-close"></a>new case</h2>
+    <div class="container-fluid">
+      <div class="col-xs-6">
+        <div class="form-group">
+          <label>Account name</label>
+          <apex:inputField value="{!CreateNewCase.AccountId}" />
+         <!-- <input type="text" class="form-control default"  />-->
+        </div>
+      </div>
+      <div class="col-xs-6">
+        <div class="form-group">
+          <label>Contact name</label>
+          <apex:inputfield value="{!CreateNewCase.ContactId}" />
+        <!--  <input type="text" class="form-control default" />-->
+        </div>
+      </div>
+      <div class="col-xs-12">
+        <div class="comments-group">
+          <div class="subject">
+<apex:inputField value="{!CreateNewCase.Subject}" styleclass="form-control default" html-placeholder="Subject"/>
+           <!-- <input type="text" class="form-control default" data-value="Subject" value="Subject" />-->
+          </div>
+          <!--/ .subject -->
+          <div class="desctiption">
+            <apex:inputField Value="{!CreateNewCase.Description}" Styleclass="form-control default" html-placeholder="Description" />
+           <!-- <textarea class="form-control default" data-value="Description">Description</textarea>-->
+          </div>
+          <!--/ .description -->
+        </div>
+        <!--/ .comments-group -->
+      </div>
+    </div>
+    <!--/ .container -->
+    <div class="buttons-group">
+      <apex:commandButton styleclass="btn btn-success pull-right" action="{!Submit}" value="Submit" onclick="return getValuesCaseDetail();"/>
+      <apex:commandLink styleclass="pull-right link-cancel js-close" action="{!Cancel}" value="Cancel" immediate="true"/>
+     <!-- <a href="javascript:;" class="btn btn-success pull-right">Submit</a>-->
+    </div>
+    <!--/ .buttons-group -->
+  </div>
+  </apex:outputpanel>
+  <!--/ .form-new-case -->
+</div>
+<!--/ .flyout -->
+<div class="flyout flyout-enhancements" id="enhancementsFlyout">
+  <div class="form-new-case is-form">
+    <h2>ENhancements</h2>
+    <div class="container-fluid">
+      <div class="col-xs-12">
+        <dl>
+          <dt class="pull-left">Account name:</dt>
+          <dd>AccountNameID</dd>
+          <dt class="pull-left">Contact name:</dt>
+          <dd>Emma Smith</dd>
+        </dl>
+      </div>
+      <div class="col-xs-12">
+        <div class="comments-group">
+          <div class="subject">
+            <input type="text" class="form-control default" data-value="Subject" value="Subject" />
+          </div>
+          <!--/ .subject -->
+          <div class="desctiption">
+            <textarea class="form-control default" data-value="Description">Description</textarea>
+          </div>
+          <!--/ .description -->
+          <div class="input-group js-file-upload">
+            <div class="drag-area">
+              <input type="text" class="form-control" readonly='' value="Attach file or drag & drop here" />
+              <input type="file" class="file-upload" />
+              <a href="javascript:;" class="icon icon-remove js-remove"></a>
+            </div>
+            <a href="javascript:;" class="input-group-addon icon icon-browser js-browser"></a>
+          </div>
+        </div>
+        <!--/ .comments-group -->
+      </div>
+      <div class="col-xs-6">
+        <div class="form-group">
+          <select class="js-custom-select">
+            <option>Case Type</option>
+            <option>Bug</option>
+            <option>Enhancement</option>
+            <option>Problem</option>
+            <option>Question</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-xs-6">
+        <div class="form-group">
+          <input type="text" class="form-control default" value="Product" data-value="Product" />
+        </div>
+      </div>
+    </div>
+    <!--/ .container -->
+    <div class="buttons-group">
+      <a href="javascript:;" class="btn btn-primary pull-right">Submit</a>
+      <a href="javascript:;" class="pull-right link-cancel js-close">Cancel</a>
+      <strong class="icon icon-rules">Assign using asign active rules</strong>
+    </div>
+    <!--/ .buttons-group -->
+  </div>
+  <!--/ .form-new-case -->
+</div>
+<!--/ .flyout -->
+<div class="flyout flyout-profile icon location" id="profileFlyout">
+  <ul>
+   <!-- <li><a href="javascript:;" class="icon icon-user">View My Profile</a></li>
+    <li><a href="javascript:;" class="icon icon-settings">Settings</a></li> -->
+    <!--<li><a href="javascript:;" class="icon icon-logout">Logout</a></li> -->
+    <li><apex:outputLink value="{!$Site.Prefix}/secur/logout.jsp" styleclass="icon icon-logout">Logout</apex:outputLink></li>
+  </ul>
+</div>
+<!--/ .flyout -->
+<div class="flyout flyout-config" id="configFlyout">
+  <div class="default">
+    <label class="custom-checkbox">
+      <input type="checkbox" name="defaultDashboard" />
+      <span class="icon"></span>
+      Default dashboard
+    </label>
+  </div>
+  <!--/ .default -->
+  <div class="custom">
+    <strong>Custom dashboard</strong>
+    <ul>
+      <li>
+        <label class="custom-radio">
+          <input type="checkbox" name="newsHighlights" />
+          <span class="icon"></span>News &amp; Highlights
+        </label>
+      </li>
+      <li>
+        <label class="custom-radio">
+          <input type="checkbox" name="whatnew" />
+          <span class="icon"></span>What’s new
+        </label>
+      </li>
+      <li>
+        <label class="custom-radio">
+          <input type="checkbox" name="cases" />
+          <span class="icon"></span>Cases 
+        </label>
+      </li>
+      <li>
+        <label class="custom-radio">
+          <input type="checkbox" name="feeds" />
+          <span class="icon"></span>Feeds
+        </label>
+      </li>
+      <li>
+        <label class="custom-radio">
+          <input type="checkbox" name="techSupport" />
+          <span class="icon"></span>Tech support
+        </label>
+      </li>
+      <li>
+        <label class="custom-radio">
+          <input type="checkbox" name="recentlyUpdateArticles" />
+          <span class="icon"></span>Recently updated articles
+        </label>
+      </li>
+      <li>
+        <label class="custom-radio">
+          <input type="checkbox" name="popularDocumentation" />
+          <span class="icon"></span>Popular documentation
+        </label>
+      </li>
+      <li>
+        <label class="custom-radio">
+          <input type="checkbox" name="faq" />
+          <span class="icon"></span>FAQ
+        </label>
+      </li>
+      <li>
+        <label class="custom-radio">
+          <input type="checkbox" name="helpUsImprove" />
+          <span class="icon"></span>Help us improve
+        </label>
+      </li>
+    </ul>
+  </div>
+  <!--/ .costom -->
+</div>
+<!--/ .flyout -->
+<div class="live-chat-support">
+  <!--<a href="javascript:;" class="icon">LIVE CHART SUPPORT</a>
+  <span class="chat-point"></span> -->
+<img id="liveagent_button_online_57312000000TNdX" style="display: none; border: 0px none; cursor: pointer" onclick="liveagent.startChat('57312000000TNdX')" src="https://geog.force.com/Predix/resource/1447979700000/LiveAgentOnlineImg" /><img id="liveagent_button_offline_57312000000TNdX" style="display: none; border: 0px none; " src="https://geog.force.com/Predix/resource/1447979700000/LiveAgentOfflineImg" />
+<script type="text/javascript">
+if (!window._laq) { window._laq = []; }
+window._laq.push(function(){liveagent.showWhenOnline('57312000000TNdX', document.getElementById('liveagent_button_online_57312000000TNdX'));
+liveagent.showWhenOffline('57312000000TNdX', document.getElementById('liveagent_button_offline_57312000000TNdX'));
+});</script>
+
+
+</div>
+<!--/ .live-chat-support -->
+<!--<div class="modal-fade-in hide"></div>
+<div class="live-chat-popover hide">
+  <div class="title">
+    <h3 class="icon">PERSONAL LIVE CHAT</h3>
+  </div>
+  <div class="chat-context">
+    <div class="save-chat">
+      <a href="javascript:;" class="btn-save">Save Chat</a>
+      <input type="text"/>
+      <a href="javascript:;" class="btn-end">End Chat</a>
+    </div>
+    <div class="chat-msgs">
+      <p>
+        <span class="user-name">Neha J :</span>Hello Mr. John, How can I help you?
+      </p>
+    </div>
+    <div class="chat-send">
+      <div class="chat-send-input">
+        <input type="text"/>
+      </div>
+      <a href="javascript:;" class="btn-send">Send</a>
+    </div>
+  </div>
+</div> -->
+<!--/ .live-chat-popover -->
+</apex:form>
+</body>
+</html>
+<script type='text/javascript' src='https://c.la3-c2-was.salesforceliveagent.com/content/g/js/35.0/deployment.js'></script>
+<script type='text/javascript'>
+liveagent.init('https://d.la3-c2-was.salesforceliveagent.com/chat', '57212000000TNVH', '00DA0000000QC05');
+</script>
+</apex:page>

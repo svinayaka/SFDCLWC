@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PHM5__c</fullName>
+    <externalId>false</externalId>
+    <label>Pump 5 HSG Metallurgy</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>CS</fullName>
+                <default>false</default>
+                <label>CS</label>
+            </value>
+            <value>
+                <fullName>CR</fullName>
+                <default>false</default>
+                <label>CR</label>
+            </value>
+            <value>
+                <fullName>13CH</fullName>
+                <default>false</default>
+                <label>13CH</label>
+            </value>
+            <value>
+                <fullName>3SS</fullName>
+                <default>false</default>
+                <label>3SS</label>
+            </value>
+            <value>
+                <fullName>4SS</fullName>
+                <default>false</default>
+                <label>4SS</label>
+            </value>
+            <value>
+                <fullName>DPX</fullName>
+                <default>false</default>
+                <label>DPX</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

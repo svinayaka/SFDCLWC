@@ -1,0 +1,32 @@
+<aura:component >
+    <aura:attribute name="userSearchArray" type="String[]"/>
+    <aura:attribute name="userSearchId" type="String" />
+    <aura:attribute name="isUser" type="boolean" />
+    <aura:attribute name="User_Role" type="String"/>
+
+    <aura:registerEvent name="search_Popup_table_event" type="c:Search_Popup_Table_Event"/>
+    
+    <tr class="slds-hint-parent">
+        <th scope="row" data-label="" width="70">
+            <div class="slds-truncate" title="">
+                <a data-record="{!v.userSearchArray.Id}" onclick="{!c.Select}">Select</a>
+            </div>
+        </th>
+        <th scope="row" data-label="Last Name">
+            <div class="slds-truncate" title="Last Name">{!v.userSearchArray.LastName__c}</div>
+        </th>
+        <th scope="row" data-label="First Name">
+            <div class="slds-truncate" title="First Name">{!v.userSearchArray.FirstName__c}</div>
+        </th>
+        <th scope="row" data-label="Title">
+            <div class="slds-truncate" title="Title">{!v.userSearchArray.Title__c}</div>
+        </th>
+        <th scope="row" data-label="Email">
+            <div class="slds-truncate" title="Email">{!v.userSearchArray.Email__c}</div>
+        </th>
+        <th scope="row" data-label="User Role">
+            <div class="slds-truncate" title="User Role">{!v.User_Role}</div>
+        </th>
+        
+    </tr>
+</aura:component>

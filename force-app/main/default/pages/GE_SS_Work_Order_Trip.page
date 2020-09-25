@@ -1,0 +1,42 @@
+<apex:page standardController="Case"  extensions="GE_SS_Work_Order_Trip"  >
+
+<div style="Width:100%;">
+   <apex:pageBlock title="Trip Work Order" >
+       <apex:pageBlockTable value="{!lstWorkOrder}" var="objWO" style="width:100%; table-layout: fixed; " width="100%"  >
+       
+           <apex:column style="  width: 12%;" >
+               <apex:facet name="header"  >Work Order Number </apex:facet>
+               <apex:outputlink target="_blank" value="/{!objWO.Id}" >{!objWO.Name}</apex:outputlink>
+           </apex:column>
+           
+           <apex:column style="  width: 8%;" >
+               <apex:facet name="header" >Record Type Name</apex:facet>
+               <apex:outputText value="{!objWO.GE_SM_HQ_Record_Type_Name__c}" ></apex:outputText>
+           </apex:column>
+           
+           <apex:column style="  width: 25%;" >
+               <apex:facet name="header" >Trip Description</apex:facet>
+               <apex:outputlink target="_blank" value="/{!objWO.GE_SS_Trip_Description__c}" >{!objWO.GE_SS_Trip_Description__r.Name}</apex:outputlink>
+           </apex:column>
+           
+          
+
+            <apex:column style="  width: 15%;" >
+               <apex:facet name="header" >Last Modified Date</apex:facet>
+               <apex:outputfield value="{!objWO.LastModifiedDate}" ></apex:outputfield>
+           </apex:column>
+
+            <apex:column style="  width: 15%;" >
+               <apex:facet name="header" >Last Modified By</apex:facet>
+               <apex:outputlink target="_blank" value="/{!objWO.LastModifiedById}" >{!objWO.LastModifiedBy.Name}</apex:outputlink>
+              
+           </apex:column>
+           <apex:column style="  width: 15%;" >
+               <apex:facet name="header" >Created Date</apex:facet>
+               <apex:outputfield value="{!objWO.CreatedDate}" ></apex:outputfield>
+           </apex:column>
+       </apex:pageBlockTable>
+   </apex:pageBlock>
+   </div>
+
+</apex:page>

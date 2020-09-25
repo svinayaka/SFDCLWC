@@ -1,0 +1,157 @@
+<apex:page controller="GE_SS_Work_Detail_Line_on_IP"  >
+    <div style="Width:200%;" id="outpanel" >
+    <apex:pageBlock title="Work Detail (Tools)" rendered="{!isTool}"  >
+        <apex:pageBlockTable value="{!lstWorkDetails}" var="objWDTool" style="width:100%; table-layout: fixed;  text-align: center;"  >
+        
+            <apex:column style="  width: 18%;" >
+                <apex:facet name="header" >Work Detail</apex:facet>
+                <apex:outputlink value="/{!objWDTool.Id}" >{!objWDTool.Name}</apex:outputlink>
+            </apex:column>
+            
+            <apex:column style="  width: 18%;" >
+                <apex:facet name="header" >Serial Number</apex:facet>
+                <apex:outputlink value="/{!objWDTool.SVMXC__Serial_Number__c}" >{!objWDTool.SVMXC__Serial_Number__r.Name}</apex:outputlink>
+            </apex:column>
+            
+            <apex:column style="  width: 15%;" >
+                <apex:facet name="header" >Product Name</apex:facet>
+                <apex:outputText value="{!objWDTool.GE_SS_Product_Name__c}" ></apex:outputText>
+            </apex:column>
+            
+            <apex:column style="  width: 25%;" >
+                <apex:facet name="header" >Product Description</apex:facet>
+                <apex:outputText value="{!objWDTool.GE_SS_Product_Description__c}" ></apex:outputText>
+            </apex:column>
+            
+            <apex:column style="  width: 10%;" >
+                <apex:facet name="header" >Delivered</apex:facet>
+                <apex:outputText value="{!objWDTool.GE_SS_Delivered__c}" ></apex:outputText>
+            </apex:column>
+            
+            <apex:column style="  width: 15%;" >
+                <apex:facet name="header" >Condition Before Use</apex:facet>
+                <apex:outputText value="{!objWDTool.GE_SS_Condition_Before_Use__c}" ></apex:outputText>
+            </apex:column>
+            
+            <apex:column style="  width: 15%;" >
+                <apex:facet name="header" >Condition After Use</apex:facet>
+                <apex:outputText value="{!objWDTool.GE_SS_New_Condition__c}" ></apex:outputText>
+            </apex:column>
+            
+            <apex:column style="  width: 5%;" >
+                <apex:facet name="header" >Number of Runs</apex:facet>
+                <apex:outputText value="{!objWDTool.GE_SS_Number_of_Runs__c}" ></apex:outputText>
+            </apex:column>
+            
+            <apex:column style="  width: 5%;" >
+                <apex:facet name="header" >Hours Used</apex:facet>
+                <apex:outputText value="{!objWDTool.GE_SS_Hours_Used__c}" ></apex:outputText>
+            </apex:column>
+            
+            <apex:column style="  width: 25%;" >
+                <apex:facet name="header" >Issues During Operation</apex:facet>
+                <apex:outputText value="{!objWDTool.GE_SS_Issues_During_Operation__c}" ></apex:outputText>
+            </apex:column>
+           <!--Commenting below as part of  R-26631  
+            <apex:column style="  width: 24%;" >
+                <apex:facet name="header" >Additional Comments</apex:facet>
+                <apex:outputText value="{!objWDTool.GE_SS_Additional_Comments__c}" ></apex:outputText>
+            </apex:column>-->
+            
+        </apex:pageBlockTable>
+    </apex:pageBlock>
+    </div>
+    <div style="Width:150%;">
+    <apex:pageBlock title="Work Detail (Equipments)" rendered="{!isEquipment}" >
+        <apex:pageBlockTable value="{!lstWorkDetails}" var="objWDTool" style="width:100%; table-layout: fixed;  text-align: center;" width="100%"  >
+        
+            <apex:column style="  width: 18%;" >
+                <apex:facet name="header" >Work Detail</apex:facet>
+                <apex:outputlink value="/{!objWDTool.Id}" >{!objWDTool.Name}</apex:outputlink>
+            </apex:column>
+            
+            <apex:column style="  width: 18%;" >
+                <apex:facet name="header" >Serial Number</apex:facet>
+                <apex:outputlink value="/{!objWDTool.SVMXC__Serial_Number__c}" >{!objWDTool.SVMXC__Serial_Number__r.Name}</apex:outputlink>
+            </apex:column>
+            
+            <apex:column style="  width: 15%;" >
+                <apex:facet name="header" >Product Name</apex:facet>
+                <apex:outputText value="{!objWDTool.GE_SS_Product_Name__c}" ></apex:outputText>
+            </apex:column>
+            
+            <apex:column style="  width: 29%;" >
+                <apex:facet name="header"  >Product Description</apex:facet>
+                <apex:outputText value="{!objWDTool.GE_SS_Product_Description__c}" ></apex:outputText>
+            </apex:column>
+            
+            <apex:column style="  width: 10%;" >
+                <apex:facet name="header" >Delivered</apex:facet>
+                <apex:outputText value="{!objWDTool.GE_SS_Delivered__c}" ></apex:outputText>
+            </apex:column>
+            
+            <apex:column style="  width: 10%;" >
+                <apex:facet name="header" >Status</apex:facet>
+                <apex:outputText value="{!objWDTool.GE_SS_IP_Status__c}" ></apex:outputText>
+            </apex:column>
+            
+            <apex:column style="  width: 25%;" >
+                <apex:facet name="header" >Condition Before Use</apex:facet>
+                <apex:outputText value="{!objWDTool.GE_SS_Condition_Before_Use__c}" ></apex:outputText>
+            </apex:column>
+            
+            <apex:column style="  width: 25%;" >
+                <apex:facet name="header" >Condition After Use</apex:facet>
+                <apex:outputText value="{!objWDTool.GE_SS_New_Condition__c}" ></apex:outputText>
+            </apex:column>
+           <!--Commenting below as part of  R-26631 
+            <apex:column style="  width: 25%;" >
+                <apex:facet name="header" >Additional Comments</apex:facet>
+                <apex:outputText value="{!objWDTool.GE_SS_Additional_Comments__c}" ></apex:outputText>
+            </apex:column>-->
+            
+        </apex:pageBlockTable>
+    </apex:pageBlock>
+    </div>
+    <apex:pageBlock title="Work Detail (Spares)" rendered="{!isSpares}" >
+        <apex:pageBlockTable value="{!lstWorkDetails}" var="objWDTool" style="width:100%; table-layout: fixed;  text-align: center;"  >
+        
+            <apex:column style="  width: 18%;" >
+                <apex:facet name="header" >Work Detail</apex:facet>
+                <apex:outputlink value="/{!objWDTool.Id}" >{!objWDTool.Name}</apex:outputlink>
+            </apex:column>
+            
+            <apex:column style="  width: 18%;" >
+                <apex:facet name="header" >Serial Number</apex:facet>
+                <apex:outputlink value="/{!objWDTool.SVMXC__Serial_Number__c}" >{!objWDTool.SVMXC__Serial_Number__r.Name}</apex:outputlink>
+            </apex:column>
+            
+            <apex:column style="  width: 15%;" >
+                <apex:facet name="header" >Product Name</apex:facet>
+                <apex:outputText value="{!objWDTool.GE_SS_Product_Name__c}" ></apex:outputText>
+            </apex:column>
+            
+            <apex:column style="  width: 25%;" >
+                <apex:facet name="header"  >Product Description</apex:facet>
+                <apex:outputText value="{!objWDTool.GE_SS_Product_Description__c}" ></apex:outputText>
+            </apex:column>
+            
+            <apex:column style="  width: 8%;" >
+                <apex:facet name="header"  >Delivered</apex:facet>
+                <apex:outputText value="{!objWDTool.GE_SS_Delivered__c}" ></apex:outputText>
+            </apex:column>
+            
+            <apex:column style="  width: 8%;" >
+                <apex:facet name="header"  >Quantity</apex:facet>
+                <apex:outputText value="{!objWDTool.GE_SS_Quantity__c}" ></apex:outputText>
+            </apex:column>
+            
+            <apex:column style="  width: 8%;" >
+                <apex:facet name="header"  >Qty Consumed</apex:facet>
+                <apex:outputText value="{!objWDTool.GE_SS_Qty_Consumed__c}" ></apex:outputText>
+            </apex:column>
+            
+        </apex:pageBlockTable>
+    </apex:pageBlock>
+    
+</apex:page>

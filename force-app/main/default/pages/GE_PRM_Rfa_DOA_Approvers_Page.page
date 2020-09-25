@@ -1,0 +1,870 @@
+<apex:page standardcontroller="GE_PRM_Recommendation__c"  sidebar="false" showHeader="true" standardstylesheets="false">
+<!-- extensions="GE_PRM_Recommendation_Class" 
+    <div class="row" style="border-bottom: none; border-bottom: none;font-size: 14px;">                                                                                                 
+    <chatter:feedwithFollowers entityId="{!GE_PRM_Recommendation__c.id}"  />
+    </div>
+    
+    <apex:stylesheet value="{!URLFOR($Resource.PRM_UX_CSS,'PRM_UX_CSS/PRM_UX.css')}"/>
+    <style>
+        .buttonSpace 
+            {
+            float:right;
+            }
+            
+        .button 
+            {
+            background: #228ccd;
+            padding: 5px 10px;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            font-size: 10px;
+            color:#FFFFFF;
+            font-family: Verdana, Geneva, sans-serif;
+            font-weight:bold;
+            text-decoration: none;
+            vertical-align: middle;
+            }
+            
+        .button:hover 
+            {
+            background: #fff;
+            color: #333;
+            text-decoration: none;
+            }
+            
+        .button:active 
+            {
+            background: #228ccd;
+            }  
+
+        .helpOrb 
+            {
+            background-image: url("{!$Resource.HelpIcon}");
+            background-position: 0px 0px;width:20px;
+            height:15px;
+            }
+         .errorTest
+            {
+            background-color: #F6272C;
+            list-style: none;
+            margin: 5px;
+            padding: 10px;
+            color: #ffffff;
+            padding:5px 0 5px 0;
+            text-shadow: 0 1px 0 #811316;
+            -webkit-border-radius: 4px;
+            width:400px;
+            margin-top:5px;    
+            }
+            span.ctr 
+            {
+            display: inline-block;
+            width:100px;
+            height:5px;
+            margin:0 auto;
+            font-size:17px;
+            font-weight:bold;
+            }
+    </style>
+    
+    <script>
+        var ids = '';
+        function getDeleteAttach(input,delId,hid)
+            {   
+            if(input.checked)
+                {
+                ids = ids + document.getElementById(delId).value + ';';
+                document.getElementById(hid).value = ids;
+                }
+            if (!(input.checked))
+                {
+                ids=ids.substring(0,ids.indexOf(document.getElementById(delId).value)) + ids.substring(ids.indexOf(document.getElementById(delId).value) + (document.getElementById(delId).value.length+1),ids.length);
+                document.getElementById(hid).value = ids;
+                }
+            }
+    </script>    
+    
+    <apex:form id="frm">
+        <body style="background:white;">
+            <table width="980px" border="0px" class="list fixed">
+                <colgroup>
+                     <col width="20px"></col>
+                     <col width="200px"></col>
+                     <col width="2px"></col>
+                     <col width="720px"></col>
+                     <col width="20px"></col>
+                </colgroup> 
+                 <tr style="background: #d5dbe2;">
+                    <td></td>
+                    <td colspan="3">
+                    <center style="width:100%">
+                        <span class="bold" style="float: left;">Home / Recommendation Approvals / DOA Approvers </span>
+                        <span class="bold">
+                            <apex:outputLabel value="{!GE_PRM_Recommendation__c.Name}"></apex:outputLabel>
+                        </span>
+                        <span class="bold">
+                                <apex:outputLabel value="{!GE_PRM_Recommendation__c.GE_PRM_Full_Name_of_Channel_Rep__c}"></apex:outputLabel>
+                        </span>
+                        <span class="headerimages">
+                            <ul class="menu">
+                            <!--<apex:outputPanel rendered="{! AND(OR(bsystemAdmin,bChannelManagerUser),GE_PRM_Recommendation__c.GE_PRM_DOA_Approvers_Page__c != 'Completed')}">
+                                <li class="rollover" id="saveBtn" title="save"><apex:commandLink action="{!saveDOAPage}"/></li>
+                            </apex:outputPanel> block comment end   
+                               <li class="rollover" id="previewBtn"><a href="{!sReview}" style="text-decoration: none;" target="_blank"></a></li>
+                                <li class="rollover" id="pdfBtn"><a href="{!sPdf}" style="text-decoration: none;" target="_blank"></a></li>
+                            </ul>
+                        </span>
+                    </center>
+                    </td>
+                    <td></td>
+                </tr>
+                
+                <tr>
+                    <td></td>
+                    <td style="vertical-align:top;">
+                        <table class="list fixed">
+                            <tr class="breadCrumbHeading">
+                            <td style="border-bottom: none;">
+                                <apex:commandLink action="{!DOA}" style="text-decoration: none">Introduction
+                                        <apex:param name="pageName" value="sIntro"/>
+                                </apex:commandLink>     
+                                </td>       
+                            </tr>                      
+                            
+                            <tr class="breadCrumbHeading">
+                                <td style="border-bottom: none;">Channel Partner Information</td>
+                            </tr>
+                            
+                            <tr class="breadCrumbsubHeading">
+                                <td style="border-bottom: none; padding-left: 15px;">   
+                                <span class="navigationimages">
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/emptycheckbox.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRM_Basic_Information_Page__c=='Not Started'}"/>
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/icon-incomplete-sml.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRM_Basic_Information_Page__c=='Partially Completed'}"/>
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/icon-complete-sml.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRM_Basic_Information_Page__c=='Completed'}"/>
+                                    </span>                                 
+                                    <apex:commandLink action="{!DOA}" style="text-decoration: none;">Basic Information
+                                        <apex:param name="pageName" value="sBasicInfo"/>
+                                    </apex:commandLink>                                          
+                                </td>
+                            </tr>
+                            
+                            <apex:outputpanel rendered="{!AND(GE_PRM_Recommendation__c.GE_PRM_Agreement_Category__c != 'Termination', GE_PRM_Recommendation__c.GE_PRM_Agreement_Category__c != 'Non-Renewal', GE_PRM_Recommendation__c.GE_PRM_Agreement_Category__c != 'New Product Line/Service')}">                                                        
+                            <tr class="breadCrumbsubHeading">
+                                <td style="border-bottom: none; padding-left: 15px;">
+                                    <span class="navigationimages">
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/emptycheckbox.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRM_Channel_Partner_Overview_Page__c=='Not Started'}"/>
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/icon-incomplete-sml.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRM_Channel_Partner_Overview_Page__c=='Partially Completed'}"/>
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/icon-complete-sml.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRM_Channel_Partner_Overview_Page__c=='Completed'}"/>
+                                    </span>
+                                    <apex:commandLink action="{!DOA}" style="text-decoration: none;">Channel Partner Overview
+                                        <apex:param name="pageName" value="sChannelPartnerOverview"/>
+                                    </apex:commandLink>                                          
+                                </td>
+                            </tr>
+                            </apex:outputpanel>
+                            
+                            <apex:outputpanel rendered="{!GE_PRM_Recommendation__c.GE_PRM_Agreement_Category__c != 'New Product Line/Service'}">                                                        
+                             <tr class="breadCrumbsubHeading">
+                                <td style="border-bottom: none; padding-left: 15px;">
+                                    <span class="navigationimages">
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/emptycheckbox.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRM_Affiliations_Page__c=='Not Started'}"/>
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/icon-incomplete-sml.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRM_Affiliations_Page__c=='Partially Completed'}"/>
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/icon-complete-sml.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRM_Affiliations_Page__c=='Completed'}"/>
+                                    </span>
+                                    <apex:commandLink action="{!DOA}" style="text-decoration: none;">Channel Partner Affiliations
+                                        <apex:param name="pageName" value="sAffiliation"/>
+                                    </apex:commandLink>                                            
+                                </td>
+                            </tr>
+                            </apex:outputpanel>
+                            
+                            <tr class="breadCrumbHeading">
+                                <td style="border-bottom: none;">Recommendation Information</td>
+                            </tr>
+                            
+                            <apex:outputpanel rendered="{!GE_PRM_Recommendation__c.GE_PRM_Agreement_Category__c != 'New Product Line/Service'}">
+                            <tr class="breadCrumbsubHeading">
+                                <td style="border-bottom: none; padding-left: 15px;">
+                                    <span class="navigationimages">
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/emptycheckbox.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRMMarketing_Strategy_Page__c=='Not Started'}"/>
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/icon-incomplete-sml.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRMMarketing_Strategy_Page__c=='Partially Completed'}"/>
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/icon-complete-sml.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRMMarketing_Strategy_Page__c=='Completed'}"/>
+                                    </span>
+                                    <apex:commandLink action="{!DOA}" style="text-decoration: none;">Marketing Coverage
+                                        <apex:param name="pageName" value="sMarketing"/>
+                                    </apex:commandLink>                                            
+                                </td>
+                            </tr>
+                            </apex:outputpanel>
+                            
+                            <tr class="breadCrumbsubHeading">
+                                <td style="border-bottom: none; padding-left: 15px;">
+                                    <span class="navigationimages">
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/emptycheckbox.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRM_Agreement_Page__c=='Not Started'}"/>
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/icon-incomplete-sml.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRM_Agreement_Page__c=='Partially Completed'}"/>
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/icon-complete-sml.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRM_Agreement_Page__c=='Completed'}"/>
+                                    </span>
+                                    <apex:commandLink action="{!DOA}" style="text-decoration: none;">Agreement
+                                        <apex:param name="pageName" value="sAgreement"/>
+                                    </apex:commandLink>                                           
+                                </td>
+                            </tr>
+                            
+                            <tr class="breadCrumbsubHeading">
+                                <td style="border-bottom: none; padding-left: 15px;">
+                                    <span class="navigationimages">
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/emptycheckbox.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRM_Product_Lines_Page__c=='Not Started'}"/>
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/icon-incomplete-sml.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRM_Product_Lines_Page__c=='Partially Completed'}"/>
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/icon-complete-sml.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRM_Product_Lines_Page__c=='Completed'}"/>
+                                    </span>
+                                    <apex:commandLink action="{!DOA}" style="text-decoration: none;">Orders and Pipeline
+                                        <apex:param name="pageName" value="sProductLine"/>
+                                    </apex:commandLink>                                           
+                                </td>
+                            </tr>
+                            
+                            <apex:outputpanel rendered="{!AND(GE_PRM_Recommendation__c.GE_PRM_Agreement_Category__c != 'Termination', GE_PRM_Recommendation__c.GE_PRM_Agreement_Category__c != 'Non-Renewal')}">                                                        
+                            <tr class="breadCrumbsubHeading">
+                                <td style="border-bottom: none; padding-left: 15px;">
+                                    <span class="navigationimages">
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/emptycheckbox.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRM_Compensation_And_Discount_Page__c=='Not Started'}"/>
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/icon-incomplete-sml.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRM_Compensation_And_Discount_Page__c=='Partially Completed'}"/>
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/icon-complete-sml.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRM_Compensation_And_Discount_Page__c=='Completed'}"/>
+                                    </span>
+                                    <apex:commandLink action="{!DOA}" style="text-decoration: none;">Commission and Discount
+                                        <apex:param name="pageName" value="sCompensation"/>
+                                    </apex:commandLink>                                           
+                                </td>
+                            </tr>
+                            </apex:outputpanel>
+                            
+                            <apex:outputpanel rendered="{!GE_PRM_Recommendation__c.GE_PRM_Agreement_Category__c != 'New Product Line/Service'}">
+                            <tr class="breadCrumbsubHeading">
+                                <td style="border-bottom: none; padding-left: 15px;">
+                                    <span class="navigationimages">
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/emptycheckbox.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRM_Finance_Page__c=='Not Started'}"/>
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/icon-incomplete-sml.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRM_Finance_Page__c=='Partially Completed'}"/>
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/icon-complete-sml.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRM_Finance_Page__c=='Completed'}"/>
+                                    </span>
+                                    <apex:commandLink action="{!DOA}" style="text-decoration: none;">Finance
+                                        <apex:param name="pageName" value="sFinance"/>
+                                    </apex:commandLink>                                           
+                                </td>
+                            </tr>
+                            </apex:outputpanel>
+                            
+                            <apex:outputpanel rendered="{!GE_PRM_Recommendation__c.GE_PRM_Agreement_Category__c != 'New Product Line/Service'}">
+                            <tr class="breadCrumbsubHeading">
+                                <td style="border-bottom: none; padding-left: 15px;">
+                                    <span class="navigationimages">
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/emptycheckbox.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRM_Compliance_Page__c=='Not Started'}"/>
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/icon-incomplete-sml.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRM_Compliance_Page__c=='Partially Completed'}"/>
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/icon-complete-sml.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRM_Compliance_Page__c=='Completed'}"/>
+                                    </span>
+                                    <apex:commandLink action="{!DOA}" style="text-decoration: none;">Compliance
+                                        <apex:param name="pageName" value="sCompliance"/>
+                                    </apex:commandLink>                                           
+                                </td>
+                            </tr>
+                            </apex:outputpanel>
+                            
+                            <tr class="breadCrumbHeading">
+                                <td style="border-bottom: none;">Attachments and Notes</td>
+                            </tr>
+                            
+                            <tr class="breadCrumbsubHeading">
+                                <td style="border-bottom: none; padding-left: 15px;">
+                                    <span class="navigationimages">
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/emptycheckbox.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRM_Attachments_Page__c=='Not Started'}"/>
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/icon-incomplete-sml.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRM_Attachments_Page__c=='Partially Completed'}"/>
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/icon-complete-sml.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRM_Attachments_Page__c=='Completed'}"/>
+                                    </span>
+                                    <apex:commandLink action="{!DOA}" style="text-decoration: none;">Attachments
+                                        <apex:param name="pageName" value="sAttachments"/>
+                                    </apex:commandLink>                                            
+                                </td>
+                            </tr>
+                            
+                            <tr class="breadCrumbsubHeading">
+                                <td style="border-bottom: none; padding-left: 15px;">
+                                    <span class="navigationimages">
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/emptycheckbox.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRM_Notes_Page__c=='Not Started'}"/>
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/icon-incomplete-sml.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRM_Notes_Page__c=='Partially Completed'}"/>
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/icon-complete-sml.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRM_Notes_Page__c=='Completed'}"/>
+                                    </span>
+                                    <apex:commandLink action="{!DOA}" style="text-decoration: none;">Notes
+                                        <apex:param name="pageName" value="sNotes"/>
+                                    </apex:commandLink>                                            
+                                </td>
+                            </tr>
+                                     
+                            <tr class="breadCrumbHeading">
+                                <td style="border-bottom: none;">Certification</td>
+                            </tr>         
+                                                        
+                            
+                            <tr class="breadCrumbsubHeading">
+                                <td style="border-bottom: none; padding-left: 15px;">
+                                    <span class="navigationimages">
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/emptycheckbox.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRM_Signature_Page__c=='Not Started'}"/>
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/icon-incomplete-sml.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRM_Signature_Page__c=='Partially Completed'}"/>
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/icon-complete-sml.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRM_Signature_Page__c=='Completed'}"/>
+                                    </span>
+                                    <apex:commandLink action="{!DOA}" style="text-decoration: none;">Signature
+                                        <apex:param name="pageName" value="sSignature"/>
+                                    </apex:commandLink>                                            
+                                </td>
+                            </tr>
+                            
+                            <!--<apex:outputpanel rendered="{!AND(GE_PRM_Recommendation__c.GE_PRM_Agreement_Category__c != 'Non-Renewal', GE_PRM_Recommendation__c.GE_PRM_Agreement_Category__c != 'Termination')}">
+                            </apex:outputpanel>block comment end
+                            
+                            <tr class="breadCrumbHeading">
+                                <td style="border-bottom: none;">Recommendation Approvals</td>
+                            </tr>
+                            
+                            <apex:outputpanel rendered="{!OR(GE_PRM_Recommendation__c.GE_PRM_Agreement_Category__c == 'New', GE_PRM_Recommendation__c.GE_PRM_Agreement_Category__c == 'Renewal')}">
+                            <tr class="breadCrumbsubHeading">
+                                <td style="border-bottom: none; padding-left: 15px;">
+                                    <span class="navigationimages">
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/emptycheckbox.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRM_KYC_Page__c=='Not Started'}"/>
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/icon-incomplete-sml.png')}" rendered="{!OR(GE_PRM_Recommendation__c.GE_PRM_KYC_Page__c=='Partially Completed', AND(GE_PRM_Recommendation__c.GE_PRM_KYC_Page__c=='Completed', kycRecords.GE_PRM_Status__c=='KYC In Progress'))}"/>
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/icon-complete-sml.png')}" rendered="{!AND(GE_PRM_Recommendation__c.GE_PRM_KYC_Page__c=='Completed', OR(kycRecords.GE_PRM_Status__c=='KYC Passed', kycRecords.GE_PRM_Status__c=='KYC Failed' ))}"/>
+                                    </span>
+                                    <apex:commandLink action="{!DOA}" style="text-decoration: none;">KYC
+                                        <apex:param name="pageName" value="sKYC"/>
+                                    </apex:commandLink>                                            
+                                </td>
+                            </tr>
+                            </apex:outputpanel>
+                            
+                            
+                            <apex:outputpanel rendered="{!GE_PRM_Recommendation__c.GE_PRM_Agreement_Category__c != 'New Product Line/Service'}">
+                            <tr class="breadCrumbsubHeading">
+                                <td style="border-bottom: none; padding-left: 15px;">
+                                    <span class="navigationimages">
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/emptycheckbox.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRM_Compliance_Validation_Page__c=='Not Started'}"/>
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/icon-incomplete-sml.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRM_Compliance_Validation_Page__c=='Partially Completed'}"/>
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/icon-complete-sml.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRM_Compliance_Validation_Page__c=='Completed'}"/>
+                                    </span>
+                                    <apex:commandLink action="{!DOA}" style="text-decoration: none;">Compliance Manager Validation
+                                        <apex:param name="pageName" value="sCompVal"/>
+                                    </apex:commandLink>                                            
+                                </td>
+                            </tr>
+                            </apex:outputpanel>
+                            
+                            <tr class="breadCrumbsubHeading">
+                                <td style="border-bottom: none; padding-left: 15px;">
+                                    <span class="navigationimages">
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/emptycheckbox.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRM_Region_Finance_Page__c=='Not Started'}"/>
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/icon-incomplete-sml.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRM_Region_Finance_Page__c=='Partially Completed'}"/>
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/icon-complete-sml.png')}" rendered="{!GE_PRM_Recommendation__c.GE_PRM_Region_Finance_Page__c=='Completed'}"/>
+                                    </span>
+                                    <apex:commandLink action="{!DOA}" style="text-decoration: none;">Commercial Finance Validation
+                                        <apex:param name="pageName" value="sRegionFinance"/>
+                                    </apex:commandLink>                                            
+                                </td>
+                            </tr>
+                            
+                            <tr class="breadCrumbHeadingSelected">
+                                <td style="border-bottom: none; padding-left: 15px;"> 
+                                    <span class="navigationimages">
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/emptycheckbox.png')}" rendered="{!(GE_PRM_Recommendation__c.GE_PRM_Generate_DOA__c == false)}"/>
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/icon-incomplete-sml.png')}" rendered="{!AND(GE_PRM_Recommendation__c.GE_PRM_Generate_DOA__c == true, GE_PRM_Recommendation__c.GE_PRM_Status__c=='Completed')}"/>
+                                        <apex:image url="{!URLFOR($Resource.PRM_UX_CSS, 'PRM_UX_CSS/icon-complete-sml.png')}" rendered="{!AND(GE_PRM_Recommendation__c.GE_PRM_Generate_DOA__c == true, OR(GE_PRM_Recommendation__c.GE_PRM_Status__c=='Approved', GE_PRM_Recommendation__c.GE_PRM_Status__c=='Rejected'))}"/>
+                                    </span>                           
+                                    <apex:commandLink action="{!DOA}" style="text-decoration: none;">DOA Approvers
+                                        <apex:param name="pageName" value="sDOA"/>
+                                    </apex:commandLink>                                           
+                                </td>
+                            </tr>
+                            
+                            <tr class="breadCrumbHeading">
+                                <td style="border-bottom: none;">Risk Score and Status Summary </td>
+                            </tr>  
+                            
+                            <apex:outputpanel rendered="{!OR(GE_PRM_Recommendation__c.GE_PRM_Agreement_Category__c == 'New', GE_PRM_Recommendation__c.GE_PRM_Agreement_Category__c == 'Renewal')}">
+                            <tr class="breadCrumbsubHeading">
+                                <td style="border-bottom: none; padding-left: 15px;">
+                                    <span class="navigationimages">
+                                    </span>
+                                    <apex:commandLink action="{!DOA}" style="text-decoration: none;">Risk Score
+                                        <apex:param name="pageName" value="sRiskScore"/>
+                                    </apex:commandLink>                                            
+                                </td>
+                            </tr>
+                            </apex:outputpanel>
+                                                                                    
+                            <tr class="breadCrumbsubHeading">
+                                <td style="border-bottom: none; padding-left: 15px;">
+                                    <span class="navigationimages">
+                                    </span>
+                                    <apex:commandLink action="{!DOA}" style="text-decoration: none;">Status Summary
+                                        <apex:param name="pageName" value="sStatusSummary"/>
+                                    </apex:commandLink>                                            
+                                </td>
+                            </tr>
+                            
+                           <!--<apex:outputpanel id="submitted" rendered="{!AND(OR(isContractualUser,bsystemAdmin), GE_PRM_Recommendation__c.GE_PRM_Risk_Score_Generated__c != 'false')}">block comment end
+                           <apex:outputpanel rendered="{! AND(OR(bsystemAdmin,isContractualUser),GE_PRM_Recommendation__c.GE_PRM_Status__c =='Approved')}">        
+                                <tr class="breadCrumbHeading">
+                                    <td style="border-bottom: none;">
+                                        <apex:commandLink action="{!DOA}" style="text-decoration: none;">Contractual User Actions
+                                            <apex:param name="pageName" value="sContractualUserAction"/>
+                                        </apex:commandLink>                                            
+                                    </td>
+                                </tr>
+                            </apex:outputpanel> 
+                            
+                            <apex:outputpanel id="submitted1" rendered="{! AND(OR(bsystemAdmin,bChannelManagerUser), GE_PRM_Recommendation__c.GE_PRM_Sub_Status__c == null,GE_PRM_Recommendation__c.GE_PRM_Risk_Score_Generated__c != 'false', OR(GE_PRM_Recommendation__c.GE_PRM_KYC_Compliance_Evaluated__c > 0, GE_PRM_Recommendation__c.GE_PRM_Compliance_Status__c == 'Need More Information',GE_PRM_Recommendation__c.GE_PRM_Soft_Rejected_Count__c > 0))}">
+                                <tr class="breadCrumbHeading">
+                                    <td style="border-bottom: none;">
+                                        <apex:commandLink action="{!DOA}" style="text-decoration: none;">Channel Manager Actions
+                                            <apex:param name="pageName" value="sChannelManagerAction"/>
+                                        </apex:commandLink>                                            
+                                    </td>
+                                </tr>
+                            </apex:outputpanel>
+                            
+                        </table>
+                    </td>
+                    <td style="background:lightgray;"></td>
+                    <td style="vertical-align:top;">
+                    <apex:outputpanel id="mainPanel">
+                        <table class="list fixed" border="0px">
+    <!-- Input View Startsblock comment end
+                        <apex:outputPanel >
+                            <tr>
+                                <td style="border-bottom: none;">                    
+                                <span class="pageTitle">DOA Approvers</span>
+                                <span class="headerimages">
+                                    <span class="headerimages">
+                                        <ul class="menu">
+                                            <li class="rollover" id="leftBtn"><apex:commandLink action="{!DOAPrev}"/></li>
+                                            <li class="rollover" id="rightBtn"><apex:commandLink action="{!DOANext}"/></li>
+                                        </ul>                                
+                                    </span>
+                                </span>
+                                </td>
+                            </tr>
+                            
+                            <apex:outputPanel >
+                                <tr>
+                                    <td><span style="color: red;padding-left: 10px; padding-right: 5px;">*</span>Required Fields</td>
+                                </tr>
+                            </apex:outputPanel>
+                            
+                            <tr style="background: #d5dbe2;">
+                                <td style="padding-left: 10px; font-weight:bold;">DOA Approval</td>
+                            </tr>   
+                            <tr>    
+                                <td style="border-bottom: none;">
+                                    <div class="fields"> 
+                                        <div class="row" style="border-bottom: none; border-bottom: none;font-size: 14px;font-weight: bold; color: #666;">
+                                            <div class="label">{!$ObjectType.GE_PRM_Recommendation__c.Fields.Name.label}
+                                                <span style="color: red;padding-left: 2px;">*</span>
+                                            </div>
+                                            <div class="field"><apex:outputField value="{!GE_PRM_Recommendation__c.Name}"/></div>
+                                        </div>
+                                        <div class="row" style="border-bottom: none; border-bottom: none;font-size: 14px;font-weight: bold; color: #666;">
+                                            <div class="label">{!$ObjectType.GE_PRM_Recommendation__c.Fields.GE_PRM_Appointment_Number__c.label}
+                                                <span style="color: red;padding-left: 2px;">*</span>
+                                            </div>
+                                            <div class="field"><apex:outputField value="{!GE_PRM_Recommendation__c.GE_PRM_Appointment_Number__c}"/></div>
+                                        </div>
+                                        <div class="row" style="border-bottom: none; border-bottom: none;font-size: 14px;font-weight: bold; color: #666;">
+                                            <div class="label">{!$ObjectType.GE_PRM_Recommendation__c.Fields.GE_PRM_Status__c.label}
+                                            </div>
+                                            <div class="field"><apex:outputField value="{!GE_PRM_Recommendation__c.GE_PRM_Status__c}"/></div>
+                                        </div>
+                                        <!--<div class="row" style="border-bottom: none; border-bottom: none;font-size: 14px;font-weight: bold; color: #666;">
+                                            <div class="label">{!$ObjectType.GE_PRM_Recommendation__c.Fields.GE_PRM_Compliance_Status__c.label}
+                                                <span style="color: red;padding-left: 2px;">*</span>
+                                            </div>
+                                            <div class="field"><apex:inputField value="{!GE_PRM_Recommendation__c.GE_PRM_Compliance_Status__c}"/></div>
+                                        </div>block comment end
+                                        <apex:outputPanel rendered="{!(GE_PRM_Recommendation__c.GE_PRM_Soft_Rejected_Count__c > 0)}">
+                                        <div class="row" style="border-bottom: none; border-bottom: none;font-size: 14px;font-weight: bold; color: #666;">
+                                            <div class="label">{!$ObjectType.GE_PRM_Recommendation__c.Fields.GE_PRM_Sub_Status__c.label}
+                                                <span style="color: red;padding-left: 2px;">*</span>
+                                            </div>
+                                            <div class="field"><apex:outputField value="{!GE_PRM_Recommendation__c.GE_PRM_Sub_Status__c}" styleclass="textbox"/></div>
+                                        </div>
+                                        </apex:outputPanel>
+                                  </div>
+                            </td>
+                        </tr>                                             
+                         <apex:outputPanel >
+                                <tr style="background: none;">
+                                    <td style="padding-right: 10px; font-weight:bold;">
+                                                                       
+                                           <apex:commandButton value="Recommendation History" action="/{!$Label.GE_PRM_Rec_Hist_Rpt}?pv0={!Left(GE_PRM_Recommendation__c.id,15)}"/>                                     
+                                                                        
+                                    </td>
+                                </tr> 
+                         </apex:outputPanel>
+                        <tr style="background: #d5dbe2;">
+                                <td style="padding-left: 10px; font-weight:bold;">Recommendation Approvals</td>
+                        </tr> 
+                           
+                        <tr>    
+                            <td style="border-bottom: none;">
+                                <div class="fields">
+                                    
+                                    <apex:outputPanel id="KYCDocread1">     
+                                        <table class="list fixed" border="0px">
+                                            <colgroup>
+                                                <col width="40px"></col>
+                                                <col width="130px"></col>
+                                                <col width="130px"></col>
+                                                <col width="80px"></col>
+                                                <col width="90px"></col>
+                                                <col width="80px"></col>
+                                                <col width="70px"></col>
+                                                <col width="100px"></col>
+                                            </colgroup>
+                                            
+                                            <thead>
+                                                <tr style="line-height: 20px;">
+                                                    <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700"></th>
+                                                    <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700">Recommendation Approvals Number</th>
+                                                    <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700">Approvers</th>                                                
+                                                    <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700;">Delegated User</th>
+                                                    <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700;">Role</th>
+                                                    <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700;">Country</th>
+                                                    <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700;">Status</th> 
+                                                    <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700">Comments</th>  
+                                                    
+                                                </tr>
+                                            </thead>
+                                            
+                                            <tbody>
+                                                
+                                                <apex:repeat value="{!DOAlist}" var="item">
+                                                    <tr>
+                                                        <apex:outputPanel rendered="{!AND(OR(item.GE_PRM_Approvers__r.Id == currentUserId,item.GE_PRM_Delegated_User__r.Id == currentUserId,$Profile.Name =='GE_ES System Administrator',$Profile.Name == 'System Administrator'),GE_PRM_Recommendation__c.GE_PRM_Status__c != 'Approved',GE_PRM_Recommendation__c.GE_PRM_Status__c != 'Rejected')}">
+                                                        <td style="width:40px; padding-left: 5px;"><apex:commandLink value="Edit" action="{!editRfaApproval}">
+                                                                <apex:param name="edit" value="true" assignTo="{!bIsEdit}"/>
+                                                                <apex:param name="rfaid" value="{!item.Id}" assignTo="{!bRecomApprovalId}"/>
+                                                            </apex:commandLink>
+                                                        </td>
+                                                        </apex:outputPanel>
+                                                        <apex:outputPanel rendered="{!OR(AND(NOT(OR($Profile.Name =='GE_ES System Administrator',$Profile.Name == 'System Administrator')),item.GE_PRM_Approvers__r.Id != currentUserId,item.GE_PRM_Delegated_User__r.Id != currentUserId),GE_PRM_Recommendation__c.GE_PRM_Status__c == 'Approved',GE_PRM_Recommendation__c.GE_PRM_Status__c == 'Rejected')}">
+                                                        <td style="width:40px; padding-left: 5px;">
+                                                        </td>
+                                                        </apex:outputPanel>                                                    
+                                                        <td style="width:40px; padding-left: 5px;"><apex:outputField value="{!item.Name}"/></td>
+                                                        <td style="width:170px; padding-left: 5px;"><apex:outputField value="{!item.GE_PRM_Approvers__c}"/></td>                                                                
+                                                        <td style="width:170px; padding-left: 5px;"><apex:outputField value="{!item.GE_PRM_Delegated_User__c}"/></td>
+                                                        <td style="width:170px; padding-left: 5px;"><apex:outputField value="{!item.GE_PRM_Role__c}"/></td>
+                                                        <td style="width:170px; padding-left: 5px;"><apex:outputField value="{!GE_PRM_Recommendation__c.GE_PRM_Country__c}"/></td>
+                                                        <td style="width:170px; padding-left: 5px;"><apex:outputField value="{!item.GE_PRM_Status__c}"/></td> 
+                                                        <td style="width:170px; padding-left: 5px;"><apex:outputField value="{!item.GE_PRM_Comments__c}"/></td> 
+                                                        
+                                                    </tr>
+                                                </apex:repeat>
+                                            </tbody>
+                                        </table>
+                                    </apex:outputPanel>
+                                </div>
+                            </td>           
+                        </tr>
+                        
+                        <apex:outputPanel rendered="{!(bIsEdit == 'true')}">
+                        <tr style="background: #d5dbe2;">
+                            <td style="padding-left: 10px; font-weight:bold;">
+                                Recommendation Approvals Edit
+                                <span class="buttonSpace">
+                                    <apex:commandButton action="{!saveRfaApproval}" styleClass="button" value="Save"></apex:commandButton>
+                                    <apex:commandButton action="{!cancelRfaApproval}" styleClass="button" value="Cancel"></apex:commandButton>
+                                </span>
+                            </td>
+                        </tr>
+                        
+                        <apex:outputPanel rendered="{!LEN(errorMessage)>0}">
+                        <tr>
+                        <td>
+                            <div class="errorMessagesWrapper">
+                                    <apex:outputText value="{!errorMessage}" styleClass="errorTest" rendered="{!LEN(errorMessage)>10}" id ="CompletionError"/>
+                            </div>
+                        </td>
+                        </tr>
+                        </apex:outputPanel>
+                        
+                        <tr>    
+                                <td style="border-bottom: none;">
+                                    <div class="fields"> 
+                                        <div class="row" style="border-bottom: none; border-bottom: none;font-size: 14px;font-weight: bold; color: #666;">
+                                            <div class="label">{!$ObjectType.GE_PRM_Recommendation_Approvals__c.Fields.Name.label}
+                                                <span style="color: red;padding-left: 2px;">*</span>
+                                            </div>
+                                            <div class="field"><apex:outputField value="{!doaRecord.Name}"/></div>
+                                        </div>
+                                        <div class="row" style="border-bottom: none; border-bottom: none;font-size: 14px;font-weight: bold; color: #666;">
+                                            <div class="label">{!$ObjectType.GE_PRM_Recommendation_Approvals__c.Fields.GE_PRM_Status__c.label}
+                                                <span style="color: red;padding-left: 2px;">*</span>
+                                            </div>
+                                            <div class="field"><apex:inputField value="{!doaRecord.GE_PRM_Status__c}"/></div>
+                                        </div>
+                                        <div class="row" style="border-bottom: none; border-bottom: none;font-size: 14px;font-weight: bold; color: #666;">
+                                            <div class="label">{!$ObjectType.GE_PRM_Recommendation_Approvals__c.Fields.GE_PRM_Approvers__c.label}
+                                                
+                                            </div>
+                                            <div class="field"><apex:outputField value="{!doaRecord.GE_PRM_Approvers__c}"/></div>
+                                        </div>
+                                        <apex:outputPanel rendered="{!bsystemAdmin}">
+                                         <div class="row" style="border-bottom: none; border-bottom: none;font-size: 14px;font-weight: bold; color: #666;">
+                                            <div class="label">{!$ObjectType.GE_PRM_Recommendation_Approvals__c.Fields.GE_PRM_Delegated_User__c.label}
+                                                
+                                            </div>
+                                            <div class="field"><apex:inputField value="{!doaRecord.GE_PRM_Delegated_User__c}"/></div>
+                                        </div>
+                                        </apex:outputPanel>
+                                        <apex:outputPanel rendered="{!!bsystemAdmin}">
+                                        <div class="row" style="border-bottom: none; border-bottom: none;font-size: 14px;font-weight: bold; color: #666;">
+                                            <div class="label">{!$ObjectType.GE_PRM_Recommendation_Approvals__c.Fields.GE_PRM_Delegated_User__c.label}
+                                                
+                                            </div>
+                                            <div class="field"><apex:outputField value="{!doaRecord.GE_PRM_Delegated_User__c}"/></div>
+                                        </div>
+                                        </apex:outputPanel>
+                                        <div class="row" style="border-bottom: none; border-bottom: none;font-size: 14px;font-weight: bold; color: #666;">
+                                            <div class="label">{!$ObjectType.GE_PRM_Recommendation_Approvals__c.Fields.GE_PRM_Comments__c.label}
+                                                <span style="color: red;padding-left: 2px;">*</span>
+                                            </div>
+                                            <div class="field"><apex:inputField value="{!doaRecord.GE_PRM_Comments__c}" styleclass="textArea"/></div>
+                                        </div>
+                                       <div class="row" style="border-bottom: none; border-bottom: none;font-size: 14px;font-weight: bold; color: #666;">
+                                                <div class="label">{!$ObjectType.GE_PRM_Recommendation__c.Fields.GE_PRM_Sub_Status__c.label}
+                                                    
+                                                </div>
+                                                <div class="field"><apex:inputField value="{!GE_PRM_Recommendation__c.GE_PRM_Sub_Status__c}" styleclass="textbox"/></div>
+                                       </div> 
+                                  </div>
+                            </td>
+                        </tr> 
+                        <tr style="background: #d5dbe2;">
+                                <td style="padding-left: 10px; font-weight:bold;">Rejection Warning</td>
+                        </tr>
+                        <tr>    
+                            <td style="border-bottom: none;">
+                                <div class="fields"> 
+                                
+                                <span style="color: red;padding-left: 10px; padding-right: 5px;">
+                                        Please remove the rejection warning flag if you approve or need more info
+                                </span>
+                                
+                                    <div class="row" style="border-bottom: none; border-bottom: none;font-size: 14px;font-weight: bold; color: #666;">
+                                        <div class="label">{!$ObjectType.GE_PRM_Recommendation_Approvals__c.Fields.GE_PRM_I_Understand__c.label}
+                                            <span style="color: red;padding-left: 2px;">*</span>
+                                        </div>
+                                        <div class="field"><apex:inputField value="{!doaRecord.GE_PRM_I_Understand__c}"/></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>     
+                        </apex:outputPanel> 
+                                       
+                        
+                                
+                        <tr style="height: 44px;">
+                                <td style="border-bottom: none;">
+                                <span class="headerimages">
+                                    <span class="headerimages">
+                                        <ul class="menu">
+                                            <li class="rollover" id="leftBtn"><apex:commandLink action="{!DOAPrev}"/></li>
+                                            <li class="rollover" id="rightBtn"><apex:commandLink action="{!DOANext}"/></li>
+                                        </ul>                                
+                                    </span>
+                                </span>
+                                </td>
+                            </tr>
+                        </apex:outputPanel>
+        <!-- Input View Ends block comment end
+        <!-- Output View Starts block comment end
+                            <apex:outputPanel rendered="{! AND(bKYCUser,AND(OR(bsystemAdmin,bChannelManagerUser),GE_PRM_Recommendation__c.GE_PRM_DOA_Approvers_Page__c == 'Completed'))}">
+                            <tr>
+                                <td style="border-bottom: none;">                    
+                                <span class="pageTitle"></span>
+                                <span class="headerimages">
+                                    <span class="headerimages">
+                                        <ul class="menu">
+                                            <apex:outputpanel rendered="{!AND(OR(bsystemAdmin,bChannelManagerUser),GE_PRM_Recommendation__c.GE_PRM_DOA_Approvers_Page__c != 'Completed')}">
+                                                <li class="rollover" id="completelrgBtn">
+                                                    <apex:commandLink action="{!saveDOAPage}">
+                                                        <apex:param name="bCompleted" value="true" assignTo="{!bCompleted}"/>
+                                                    </apex:commandLink>                                                        
+                                                </li>
+                                                <li><base><b>Mark Page as Complete</b></base></li>
+                                            </apex:outputpanel>
+                                            <apex:outputpanel rendered="{!AND(OR(bsystemAdmin,bChannelManagerUser),GE_PRM_Recommendation__c.GE_PRM_DOA_Approvers_Page__c == 'Completed')}">
+                                                <li class="rollover" id="incompletelrgBtn">
+                                                    <apex:commandLink action="{!saveDOAPage}">
+                                                        <apex:param name="bPartiallyCompleted" value="true" assignTo="{!bPartiallyCompleted}"/>
+                                                    </apex:commandLink>
+                                                </li>
+                                                <li><base><b>Mark Page as Incomplete</b></base></li>
+                                            </apex:outputpanel>
+                                            <li class="rollover" id="leftBtn"><apex:commandLink action="{!DOAPrev}"/></li>
+                                            <li class="rollover" id="rightBtn"><apex:commandLink action="{!DOANext}"/></li>
+                                        </ul>                                
+                                    </span>
+                                </span>
+                                </td>
+                            </tr>
+                            
+                            <tr style="background: #d5dbe2;">
+                                <td style="padding-left: 10px; font-weight:bold;">DOA Approval</td>
+                            </tr>   
+                            <tr>    
+                                <td style="border-bottom: none;">
+                                    <div class="fields"> 
+                                        <div class="row" style="border-bottom: none; border-bottom: none;font-size: 14px;font-weight: bold; color: #666;">
+                                            <div class="label">{!$ObjectType.GE_PRM_Recommendation__c.Fields.Name.label}
+                                                <span style="color: red;padding-left: 2px;">*</span>
+                                            </div>
+                                            <div class="field"><apex:outputField value="{!GE_PRM_Recommendation__c.Name}"/></div>
+                                        </div>
+                                        <div class="row" style="border-bottom: none; border-bottom: none;font-size: 14px;font-weight: bold; color: #666;">
+                                            <div class="label">{!$ObjectType.GE_PRM_Recommendation__c.Fields.GE_PRM_Appointment_Number__c.label}
+                                                <span style="color: red;padding-left: 2px;">*</span>
+                                            </div>
+                                            <div class="field"><apex:outputField value="{!GE_PRM_Recommendation__c.GE_PRM_Appointment_Number__c}"/></div>
+                                        </div>
+                                        <div class="row" style="border-bottom: none; border-bottom: none;font-size: 14px;font-weight: bold; color: #666;">
+                                            <div class="label">{!$ObjectType.GE_PRM_Recommendation__c.Fields.GE_PRM_Compliance_Status__c.label}
+                                                <span style="color: red;padding-left: 2px;">*</span>
+                                            </div>
+                                            <div class="field"><apex:outputField value="{!GE_PRM_Recommendation__c.GE_PRM_Compliance_Status__c}"/></div>
+                                        </div>
+                                  </div>
+                            </td>
+                        </tr>                                
+                         <apex:outputPanel >
+                                <tr style="background: none;">
+                                    <td style="padding-right: 10px; font-weight:bold;">
+                                                                       
+                                           <apex:commandButton value="Recommendation History" action="/{!$Label.GE_PRM_Rec_Hist_Rpt}?pv0={!Left(GE_PRM_Recommendation__c.id,15)}"/>                                     
+                                                                        
+                                    </td>
+                                </tr> 
+                            </apex:outputPanel>    
+                        <tr style="background: #d5dbe2;">
+                                <td style="padding-left: 10px; font-weight:bold;">Recommendation Approvals</td>
+                        </tr>   
+                               
+                          
+                        <tr>    
+                            <td style="border-bottom: none;">
+                                <div class="fields">
+                                
+                                  
+                                    <apex:outputPanel >     
+                                        <table class="list fixed" border="0px">
+                                            <colgroup>
+                                                <col width="150px"></col>
+                                                <col width="110px"></col>
+                                                <col width="200px"></col>
+                                                <col width="150px"></col>
+                                                <col width="150px"></col>
+                                                <col width="150px"></col>
+                                                <col width="140px"></col>
+                                            </colgroup>
+                                            
+                                            <thead>
+                                                <tr style="line-height: 20px;">
+                                                
+                                                    <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700">Recommendation Approvals Number</th>
+                                                    <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700">Approvers</th>                                                
+                                                    <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700;">Delegated User</th>
+                                                    <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700;">Role</th>
+                                                    <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700;">Country</th>
+                                                    <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700;">Status</th> 
+                                                    <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700">Status Date</th>  
+                                                    
+                                                </tr>
+                                            </thead>
+                                            
+                                            <tbody>
+                                                
+                                                <apex:repeat value="{!DOAlist}" var="item">
+                                                    <tr>
+                                                        
+                                                        <td style="width:40px; padding-left: 5px;"><apex:outputField value="{!item.Name}"/></td>
+                                                        <td style="width:170px; padding-left: 5px;"><apex:outputField value="{!item.GE_PRM_Approvers__c}"/></td>                                                                
+                                                        <td style="width:170px; padding-left: 5px;"><apex:outputField value="{!item.GE_PRM_Delegated_User__c}"/></td>
+                                                        <td style="width:170px; padding-left: 5px;"><apex:outputField value="{!item.GE_PRM_Role__c}"/></td>
+                                                        <td style="width:170px; padding-left: 5px;"><apex:outputField value="{!item.GE_PRM_Country__c}"/></td>
+                                                        <td style="width:170px; padding-left: 5px;"><apex:outputField value="{!item.GE_PRM_Status__c}"/></td> 
+                                                        <td style="width:170px; padding-left: 5px;"><apex:outputField value="{!item.GE_PRM_Status_Date__c}"/></td> 
+                                                        
+                                                    </tr>
+                                                </apex:repeat>
+                                            </tbody>
+                                        </table>
+                                    </apex:outputPanel>
+                                </div>
+                            </td>           
+                        </tr>
+                                                          
+                            
+                            <tr style="height: 44px;">
+                                <td style="border-bottom: none;">
+                                <span class="headerimages">
+                                    <span class="headerimages">
+                                        <ul class="menu">
+                                            <apex:outputpanel rendered="{!AND(OR(bsystemAdmin,bChannelManagerUser),GE_PRM_Recommendation__c.GE_PRM_DOA_Approvers_Page__c != 'Completed')}">
+                                                <li class="rollover" id="completelrgBtn">
+                                                    <apex:commandLink action="{!saveDOAPage}">
+                                                        <apex:param name="bCompleted" value="true" assignTo="{!bCompleted}"/>
+                                                    </apex:commandLink>                                                        
+                                                </li>
+                                                <li><base><b>Mark Page as Complete</b></base></li>
+                                            </apex:outputpanel>
+                                            <apex:outputpanel rendered="{!AND(OR(bsystemAdmin,bChannelManagerUser),GE_PRM_Recommendation__c.GE_PRM_DOA_Approvers_Page__c == 'Completed')}">
+                                                <li class="rollover" id="incompletelrgBtn">
+                                                    <apex:commandLink action="{!saveDOAPage}">
+                                                        <apex:param name="bPartiallyCompleted" value="true" assignTo="{!bPartiallyCompleted}"/>
+                                                    </apex:commandLink>
+                                                </li>
+                                                <li><base><b>Mark Page as Incomplete</b></base></li>
+                                            </apex:outputpanel>
+                                            <li class="rollover" id="leftBtn"><apex:commandLink action="{!DOAPrev}"/></li>
+                                            <li class="rollover" id="rightBtn"><apex:commandLink action="{!DOANext}"/></li>
+                                        </ul>                                
+                                    </span>
+                                </span>
+                                </td>
+                            </tr>
+                        </apex:outputPanel>
+                        
+
+        <!-- Output View Ends block comment end
+                        </table>
+                        </apex:outputpanel>                            
+                    </td>
+                    <td></td>
+                </tr>
+                <tr style="background: #d5dbe2;">
+                    <td></td>
+                    <td colspan="3">
+                        <span class="headerimages">
+                            <ul class="menu">
+                            <!--<apex:outputPanel rendered="{! AND(OR(bsystemAdmin,bKYCUser),GE_PRM_Recommendation__c.GE_PRM_KYC_Page__c != 'Completed')}">
+                                <li class="rollover" id="saveBtn" title="save"><apex:commandLink action="{!saveDOAPage}" /></li>
+                            </apex:outputPanel>block comment end   
+                                <li class="rollover" id="previewBtn"><a href="{!sReview}" style="text-decoration: none;" target="_blank"></a></li>
+                                <li class="rollover" id="pdfBtn"><a href="{!sPdf}" style="text-decoration: none;" target="_blank"></a></li>
+                            </ul>
+                        </span>
+                    </td>
+                    <td></td>
+                </tr>
+                
+                             
+            </table>
+        </body>
+    </apex:form> -->
+</apex:page>

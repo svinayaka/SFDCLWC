@@ -1,0 +1,218 @@
+<apex:page tabStyle="Opportunity" ><!-- controller="GEESWaterFallChartReport" -->
+    <!--div class="bPageTitle">
+            <div class="ptBody secondaryPalette">
+                <div class="content">
+                    <img src="/s.gif" alt="ES Progress to Opp Plan"  class="pageTitleIcon" title="ES Progress to Op Plan"/>
+                    <h1 class="pageType">Waterfall chart<span  class="titleSeparatingColon">:</span></h1>
+                    <h2 class="pageDescription">Report - Waterfall chart</h2>
+                    <div class="blank">&nbsp;</div>
+                </div>
+            </div>
+            <div class="ptBreadcrumb"></div>
+    </div>
+    <apex:pageBlock >
+        <apex:pageMessages />
+        <apex:form id="theForm">
+            <apex:actionStatus id="chartStatus" style="align:center">        
+               <apex:facet name="start"><apex:image value="/img/loading.gif" title="ImageLoading..."/></apex:facet>
+               <apex:facet name="stop"></apex:facet>
+            </apex:actionStatus>
+            
+            <apex:panelGrid columns="7">
+                <apex:outputLabel value="Region:"/>
+                <apex:selectList value="{!strViewBy}" size="1">
+                    <apex:actionSupport event="onchange" 
+                                action="{!setSubRegions}" 
+                                rerender="subregion" status="chartStatus"/>
+
+                    <apex:selectOptions value="{!viewBy}"/>
+                </apex:selectList>
+                <apex:outputLabel value="Sub Region:"/>
+                <apex:selectList id="subregion" value="{!strSubRegion}" size="1">
+                    <apex:selectOptions value="{!subRegions}"/>
+                </apex:selectList>                    
+                <apex:outputLabel value="Timeframe:"/>
+                <apex:selectList value="{!strTimeFrame}" size="1">
+                    <apex:selectOptions value="{!timeFrame}"/>
+                </apex:selectList>
+                <apex:commandButton action="{!create}" value="Go!" id="goButton" rerender="ChartData,imagePanel,searchTable, searchTableWon,searchTableCommit,searchTableCurrent,searchTableNext" status="chartStatus"/>
+            </apex:panelGrid>
+            
+        </apex:form>
+        <apex:outputPanel id="imagePanel">
+        </apex:outputPanel>
+    </apex:pageBlock>
+    <br/>
+     <apex:pageBlock title="Chart Data" id="ChartData">
+        <apex:pageBlockSection columns="4">
+                <apex:outputText value="Flow :"/>
+                <apex:outputText value="{!flowAmt}"/>
+                <apex:outputText value="Won :"/>
+                <apex:outputText value="{!wonAmt}"/>
+                <apex:outputText value="Commit :"/>
+                <apex:outputText value="{!commitAmt}"/>
+                <apex:outputText value="CQ :"/>
+                <apex:outputText value="{!cQAmt}"/>
+                <apex:outputText value="NQ :"/>
+                <apex:outputText value="{!nQAmt}"/>
+                <apex:outputText value="Op Plan :"/>
+                <apex:outputText value="{!oppPlanAmt}"/>
+                
+                
+                
+          </apex:pageBlockSection>
+
+    </apex:pageBlock>
+    <br/>
+    <apex:pageBlock title="Flow Opportunity" id="searchTable">
+        <apex:pageBlockTable value="{!flowOpportunityList}" var="chartData">
+            <apex:column headervalue="Region">
+                <apex:outputText value="{!chartData.region}"/>
+            </apex:column>
+            <apex:column headervalue="Record Type">
+                <apex:outputText value="{!chartData.recordTypeName}"/>
+            </apex:column>
+            <apex:column headervalue="Customer">
+                <apex:outputLink value="/{!chartData.accountId}"><apex:outputText value="{!chartData.customer}"/></apex:outputLink>
+            </apex:column>
+            <apex:column headervalue="Opportunity Name">
+                <apex:outputLink value="/{!chartData.opportunityId}"><apex:outputText value="{!chartData.opportunityName}"/></apex:outputLink>
+            </apex:column>
+            <apex:column headervalue="Amount ($)">
+                <apex:outputText value="{0, number, 000,000.00}">
+                   <apex:param value="{!chartData.amount}" />
+                 </apex:outputText>
+            </apex:column>
+            <apex:column headervalue="Stage">
+                <apex:outputText value="{!chartData.stage}"/>
+            </apex:column>
+            <apex:column headervalue="Close Date">
+                <apex:outputText value="{!chartData.closeDateDisplay}"/>
+            </apex:column>
+            <apex:column headervalue="Description">
+                <apex:outputText value="{!chartData.opportunityDescription}"/>
+            </apex:column>
+        </apex:pageBlockTable> 
+    </apex:pageBlock>
+    <apex:pageBlock title="Won Opportunity" id="searchTableWon">
+        <apex:pageBlockTable value="{!wonOpportunityList}" var="chartData">
+            <apex:column headervalue="Region">
+                <apex:outputText value="{!chartData.region}"/>
+            </apex:column>
+            <apex:column headervalue="Record Type">
+                <apex:outputText value="{!chartData.recordTypeName}"/>
+            </apex:column>
+            <apex:column headervalue="Customer">
+                <apex:outputLink value="/{!chartData.accountId}"><apex:outputText value="{!chartData.customer}"/></apex:outputLink>
+            </apex:column>
+            <apex:column headervalue="Opportunity Name">
+                <apex:outputLink value="/{!chartData.opportunityId}"><apex:outputText value="{!chartData.opportunityName}"/></apex:outputLink>
+            </apex:column>
+            <apex:column headervalue="Amount ($)">
+                <apex:outputText value="{0, number, 000,000.00}">
+                   <apex:param value="{!chartData.amount}" />
+                 </apex:outputText>
+            </apex:column>
+            <apex:column headervalue="Stage">
+                <apex:outputText value="{!chartData.stage}"/>
+            </apex:column>
+            <apex:column headervalue="Close Date">
+                <apex:outputText value="{!chartData.closeDateDisplay}"/>
+            </apex:column>
+            <apex:column headervalue="Description">
+                <apex:outputText value="{!chartData.opportunityDescription}"/>
+            </apex:column>
+        </apex:pageBlockTable> 
+    </apex:pageBlock>
+    <apex:pageBlock title="Commit Opportunity" id="searchTableCommit">
+        <apex:pageBlockTable value="{!commitOpportunityList}" var="chartData">
+            <apex:column headervalue="Region">
+                <apex:outputText value="{!chartData.region}"/>
+            </apex:column>
+            <apex:column headervalue="Record Type">
+                <apex:outputText value="{!chartData.recordTypeName}"/>
+            </apex:column>
+            <apex:column headervalue="Customer">
+                <apex:outputLink value="/{!chartData.accountId}"><apex:outputText value="{!chartData.customer}"/></apex:outputLink>
+            </apex:column>
+            <apex:column headervalue="Opportunity Name">
+                <apex:outputLink value="/{!chartData.opportunityId}"><apex:outputText value="{!chartData.opportunityName}"/></apex:outputLink>
+            </apex:column>
+            <apex:column headervalue="Amount ($)">
+                <apex:outputText value="{0, number, 000,000.00}">
+                   <apex:param value="{!chartData.amount}" />
+                 </apex:outputText>
+            </apex:column>
+            <apex:column headervalue="Stage">
+                <apex:outputText value="{!chartData.stage}"/>
+            </apex:column>
+            <apex:column headervalue="Close Date">
+                <apex:outputText value="{!chartData.closeDateDisplay}"/>
+            </apex:column>
+            <apex:column headervalue="Description">
+                <apex:outputText value="{!chartData.opportunityDescription}"/>
+            </apex:column>
+        </apex:pageBlockTable> 
+    </apex:pageBlock>
+    <apex:pageBlock title="Current Quarter Opportunity" id="searchTableCurrent">
+        <apex:pageBlockTable value="{!cQList}" var="chartData">
+            <apex:column headervalue="Region">
+                <apex:outputText value="{!chartData.region}"/>
+            </apex:column>
+            <apex:column headervalue="Record Type">
+                <apex:outputText value="{!chartData.recordTypeName}"/>
+            </apex:column>
+            <apex:column headervalue="Customer">
+                <apex:outputLink value="/{!chartData.accountId}"><apex:outputText value="{!chartData.customer}"/></apex:outputLink>
+            </apex:column>
+            <apex:column headervalue="Opportunity Name">
+                <apex:outputLink value="/{!chartData.opportunityId}"><apex:outputText value="{!chartData.opportunityName}"/></apex:outputLink>
+            </apex:column>
+            <apex:column headervalue="Amount ($)">
+                <apex:outputText value="{0, number, 000,000.00}">
+                   <apex:param value="{!chartData.amount}" />
+                 </apex:outputText>
+            </apex:column>
+            <apex:column headervalue="Stage">
+                <apex:outputText value="{!chartData.stage}"/>
+            </apex:column>
+            <apex:column headervalue="Close Date">
+                <apex:outputText value="{!chartData.closeDateDisplay}"/>
+            </apex:column>
+            <apex:column headervalue="Description">
+                <apex:outputText value="{!chartData.opportunityDescription}"/>
+            </apex:column>
+        </apex:pageBlockTable> 
+    </apex:pageBlock>
+    
+     <apex:pageBlock title="Next Quarter Opportunity" id="searchTableNext">
+        <apex:pageBlockTable value="{!nQList}" var="chartData">
+            <apex:column headervalue="Region">
+                <apex:outputText value="{!chartData.region}"/>
+            </apex:column>
+            <apex:column headervalue="Record Type">
+                <apex:outputText value="{!chartData.recordTypeName}"/>
+            </apex:column>
+            <apex:column headervalue="Customer">
+                <apex:outputLink value="/{!chartData.accountId}"><apex:outputText value="{!chartData.customer}"/></apex:outputLink>
+            </apex:column>
+            <apex:column headervalue="Opportunity Name">
+                <apex:outputLink value="/{!chartData.opportunityId}"><apex:outputText value="{!chartData.opportunityName}"/></apex:outputLink>
+            </apex:column>
+            <apex:column headervalue="Amount ($)">
+                <apex:outputText value="{0, number, 000,000.00}">
+                   <apex:param value="{!chartData.amount}" />
+                 </apex:outputText>
+            </apex:column>
+            <apex:column headervalue="Stage">
+                <apex:outputText value="{!chartData.stage}"/>
+            </apex:column>
+            <apex:column headervalue="Close Date">
+                <apex:outputText value="{!chartData.closeDateDisplay}"/>
+            </apex:column>
+            <apex:column headervalue="Description">
+                <apex:outputText value="{!chartData.opportunityDescription}"/>
+            </apex:column>
+        </apex:pageBlockTable> 
+    </apex:pageBlock-->
+</apex:page>

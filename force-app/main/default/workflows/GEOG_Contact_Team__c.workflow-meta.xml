@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>Contact_Key_People_Update_DUP_USER</fullName>
+        <field>Contact_User_Entry__c</field>
+        <formula>CASESAFEID( Contact__c ) + CASESAFEID( Contact_Team_Member__c )</formula>
+        <name>Contact Key People - Update DUP_USER</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <rules>
+        <fullName>Contact Key People - Check Duplicate User</fullName>
+        <actions>
+            <name>Contact_Key_People_Update_DUP_USER</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>TRUE</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

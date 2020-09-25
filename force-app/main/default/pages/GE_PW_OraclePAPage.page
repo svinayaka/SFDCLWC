@@ -1,0 +1,14 @@
+<apex:page standardController="Opportunity" extensions="GE_PW_OraclePAWrapper" action="{!validate}" sidebar="true">
+<apex:form >
+    <apex:pageBlock >
+        <apex:pageMessages ></apex:pageMessages>
+         <!-- repeater to display array of messages -->
+        <apex:repeat value="{!messages}" var="string" id="theRepeat">
+            <span style="padding-left:30px"> <apex:outputText value="{!string}" id="theValue"/></span><br/>
+
+        </apex:repeat>
+        <br/>
+        <apex:commandButton value="Go to Opportunity" action="{!OrigOppPage}" />
+    </apex:pageBlock>
+</apex:form>   
+</apex:page>

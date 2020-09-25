@@ -1,0 +1,75 @@
+<apex:page standardController="Case" extensions="ManageCaseTags">
+    <style type="text/css">
+        .linkText {text-decoration:none;margin-left:0;margin-right:0;font-weight:normal;vertical-align:top;} 
+        .linkText:hover {text-decoration:underline;cursor:pointer;}
+        .areaText {margin-top: .2em;margin-bottom: .2em;padding: 1px 0 0 2px;overflow-y: hidden;overflow-x: auto;width:100%;height: 1.3em;}
+        .tagLabel {color: #222;font-weight: bold;vertical-align: top;}
+        .deleteTag {color: rgb(204,0,0);font-weight: bold;text-decoration:none;font-size: 91%;}
+        .deleteTag:hover {text-decoration:underline;cursor:pointer;}
+    </style> 
+    <apex:form >
+    <apex:outputPanel id="TopBlock">
+        <apex:outputPanel style="border-left: 1px solid #d1d1d1;padding-left:10px;margin-top:10px;" layout="block">
+            <apex:image value="/img/icon/tagEdit16.gif" width="16" height="16" style="vertical-align:top;margin-right:8px;"/>
+            <apex:outputPanel >
+                <apex:actionSupport event="onclick" action="{!DisplayTagBlock}" rerender="TagBlock"/>
+                <apex:outputText value="{!IF(isEdit,'Edit Tags','Add Tags')}" styleClass="linkText"/>
+            </apex:outputPanel>
+        </apex:outputPanel>
+        <apex:outputPanel id="TagBlock">
+            <apex:outputPanel style="background-color:#ececec;" rendered="{!manageTags}">
+                <apex:panelGrid columns="2" cellpadding="6" style="background-color:#ececec;line-height:10px;padding:5px 8px 5px 8px;" width="520">
+                    <apex:panelGroup layout="block">
+                        <apex:outputText value="Personal Tags: " styleClass="tagLabel"/><br/>
+                        <apex:inputTextarea value="{!privateInput}" rows="3" styleClass="areaText"/><br/>
+                        <apex:outputText value="Separate tags with commas." style="width:auto;text-align:left;color: #666;font-size: .9em;"/>
+                    </apex:panelGroup>
+                    <apex:panelGroup layout="block">
+                        <apex:outputText value="Public Tags: " styleClass="tagLabel"/><br/>
+                        <apex:inputTextarea value="{!publicInput}" rows="3" styleClass="areaText"/><br/>
+                        <apex:outputText value="Separate tags with commas." style="width:auto;text-align:left;color: #ececec;font-size: .9em;"></apex:outputText>
+                    </apex:panelGroup>
+                </apex:panelGrid>
+                <apex:panelGrid style="align:center;background-color:#ececec;text-align:center;padding:0px 8px 5px 8px;" width="520">
+                    <apex:panelGroup >
+                        <apex:commandButton value="Save" action="{!SaveTags}" reRender="TopBlock"/>
+                        <apex:commandButton value="Cancel" action="{!DisplayTagBlock}" reRender="TopBlock"/>
+                    </apex:panelGroup>
+                </apex:panelGrid>
+            </apex:outputPanel>
+        </apex:outputPanel><BR/><BR/>
+        <apex:outputPanel style="border-left:1px solid #d1d1d1;padding-left:10px" rendered="{!isEdit}">
+            <apex:outputText value="Personal: " style="font-weight:bold"/>
+            <apex:variable var="vCount" value="{!0}"/>
+            <apex:repeat value="{!tagList}" var="pv">
+                <apex:outputPanel rendered="{!pv.tagType == 'Personal'}">
+                    <apex:outputText value="{!IF(vCount > 0, ', ', '')}"/>
+                    <apex:outputText value="{!pv.tagName} "/>
+                    <apex:outputText value=" [ "/>
+                    <apex:commandLink action="{!DeleteTag}" value="X" reRender="TopBlock" styleClass="deleteTag"> 
+                        <apex:param name="tagId" assignTo="{!tagId}" value="{!pv.tagId}"/> 
+                    </apex:commandLink>
+                    <apex:outputText value=" ]"/>
+                    <apex:variable var="vCount" value="{!vCount + 1}"/>
+                </apex:outputPanel>
+            </apex:repeat>
+        </apex:outputPanel><BR/><BR/>
+        <apex:outputPanel style="border-left:1px solid #d1d1d1;padding-left:10px" rendered="{!isEdit}">
+            <apex:outputText value="Public: " style="font-weight:bold"/>
+            <apex:variable var="bCount" value="{!0}"/>
+            <apex:repeat value="{!tagList}" var="pb">
+                <apex:outputPanel rendered="{!pb.tagType == 'Public'}">
+                    <apex:outputText value="{!IF(bCount > 0, ', ', '')}"/>
+                    <apex:outputText value="{!pb.tagName} "/>
+                    <apex:outputText value=" [ "/>
+                    <apex:commandLink action="{!DeleteTag}" value="X" reRender="TopBlock" styleClass="deleteTag"> 
+                        <apex:param name="tagId" assignTo="{!tagId}" value="{!pb.tagId}"/> 
+                    </apex:commandLink>
+                    <apex:outputText value=" ]"/>
+                    <apex:variable var="bCount" value="{!bCount + 1}"/>
+                </apex:outputPanel>
+            </apex:repeat>
+        </apex:outputPanel>
+    </apex:outputPanel>
+    </apex:form>
+</apex:page>

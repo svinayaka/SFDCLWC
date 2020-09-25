@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>GE_PRM_Notify_Channel_Manager_on_Accout_Plan_Completion</fullName>
+        <ccEmails>compass.tester@ge.com</ccEmails>
+        <description>Notify Channel Manager on Accout Plan Completion</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PRM_Notify_Channel_Manager_on_Account_Plan_Completion</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PRM_Notify_Partner_on_Accout_Plan_Approved</fullName>
+        <ccEmails>compass.tester@ge.com</ccEmails>
+        <description>Notify Partner on Accout Plan Approved</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_PRM_Related_Partner_User__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PRM_Notify_Partner_on_Account_Plan_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PRM_Notify_Partner_on_Accout_Plan_creation</fullName>
+        <ccEmails>compass.tester@ge.com</ccEmails>
+        <description>Notify Partner on Accout Plan creation</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_PRM_Related_Partner_User__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PRM_Notify_Partner_on_Account_Plan_Creation</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>GE_PRM_Update_AccountPlan_Approved_Date</fullName>
+        <field>GE_PRM_AP_AppDate__c</field>
+        <formula>NOW()</formula>
+        <name>GE_PRM_Update_AccountPlan_Approved_Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Update_AccountPlan_Submitted_Date</fullName>
+        <field>GE_PRM_AP_SubDate__c</field>
+        <formula>NOW()</formula>
+        <name>GE_PRM_Update_AccountPlan_Submitted_Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Account_Plan_Record_Type_Name</fullName>
+        <field>GE_PRM_Act_Plan__c</field>
+        <formula>$RecordType.Name</formula>
+        <name>Update Account Plan Record Type Name</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <rules>
+        <fullName>GE_PRM_Notify Channel Manager on Account Plan Completion</fullName>
+        <actions>
+            <name>GE_PRM_Notify_Channel_Manager_on_Accout_Plan_Completion</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <description>This workflow rule will trigger when partner user completes a account plan for PRM and assign it to channel manager</description>
+        <formula>AND( ISCHANGED( GE_PRM_Status__c),  ISPICKVAL(GE_PRM_Status__c , &apos;Sales/Channel Manager in Progress&apos;),  $RecordType.DeveloperName = &apos;GE_PRM_Business_Plan&apos;)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_PRM_Notify Partner on Account Plan Approved</fullName>
+        <actions>
+            <name>GE_PRM_Notify_Partner_on_Accout_Plan_Approved</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <description>This workflow rule will trigger when channel manager approves a account plan for PRM it will send a email to the partner user</description>
+        <formula>AND( ISPICKVAL( GE_PRM_Status__c , &apos;Approved&apos;),  $RecordType.DeveloperName = &apos;GE_PRM_Business_Plan&apos;)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_PRM_Notify Partner on Account Plan Creation</fullName>
+        <actions>
+            <name>GE_PRM_Notify_Partner_on_Accout_Plan_creation</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <description>This workflow rule will trigger when channel manager creates a account plan for PRM and assign it to partner user</description>
+        <formula>AND( OR(ISCHANGED( GE_PRM_Status__c),  ISNEW()),  ISPICKVAL(GE_PRM_Status__c , &apos;Channel Partner in Progress&apos;),  $RecordType.DeveloperName = &apos;GE_PRM_Business_Plan&apos;)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_PRM_Update_AccountPlan_Approved_Date</fullName>
+        <actions>
+            <name>GE_PRM_Update_AccountPlan_Approved_Date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>GE_HQ_Account_Plan__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Channel PRM business plan</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>GE_HQ_Account_Plan__c.GE_PRM_Status__c</field>
+            <operation>equals</operation>
+            <value>Approved</value>
+        </criteriaItems>
+        <description>Updates &quot;Account Plan Approved Date&quot; field with current date/time.</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_PRM_Update_AccountPlan_Submitted_Date</fullName>
+        <actions>
+            <name>GE_PRM_Update_AccountPlan_Submitted_Date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Updates &quot;Account Plan Submitted Date&quot; field with current date/time.</description>
+        <formula>AND( ISPICKVAL($User.UserType, &apos;PowerPartner&apos;), ISBLANK( GE_PRM_AP_SubDate__c), $RecordType.DeveloperName = &apos;GE_PRM_Business_Plan&apos;,   ISPICKVAL(GE_PRM_Status__c, &apos;Sales/Channel Manager in Progress&apos; ))</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Account Plan Record Type Name</fullName>
+        <actions>
+            <name>Update_Account_Plan_Record_Type_Name</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>GE_HQ_Account_Plan__c.RecordTypeId</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <description>Update Account Plan Record Type Name</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

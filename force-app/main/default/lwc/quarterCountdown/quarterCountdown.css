@@ -1,36 +1,18 @@
-/* animation css */
-.meter { 
-    height: 5px;
-    position: relative;
-    background: #f3efe6;
-    overflow: hidden;
+.smalltext{
+  font-size: 15px
 }
-.meter span {
-    display: block;
-    height: 100%;
+.bigtext{
+  font-size: 32px
 }
 
-.progress {
-    background-color: #e4c465;
-    animation: progressBar 3s ease-in-out;
-    animation-fill-mode:both; 
-    -webkit-animation: progressBar 3s ease-in-out;
-    -webkit-animation-fill-mode:both; 
-    -moz-animation: progressBar 3s ease-in-out;
-    -moz-animation-fill-mode:both; 
+.blue {
+stroke-dasharray: 490;
+stroke-dashoffset: 490;
+animation: draw 2s linear forwards;
 }
-
-@keyframes progressBar {
-  0% { width: 0; }
-  100% { width: 100%; }
+  
+@keyframes draw {
+to {
+  stroke-dashoffset: 450;
 }
-@-webkit-keyframes progressBar {
-  0% { width: 0; }
-  100% { width: 100%; }
 }
-
-@-moz-keyframes progressBar {
-  0% { width: 0; }
-  100% { width: 100%; }
-}
-/* animation css */

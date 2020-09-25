@@ -1,0 +1,104 @@
+<apex:page standardController="ITO_Commercial__c" extensions="ITOExtensionController1">
+<apex:form >
+<apex:inputhidden value="{!ITO_Commercial__c.GE_ES_Consortium__c}"/>
+<apex:inputhidden value="{!ITO_Commercial__c.GE_Consortium2__c}"/>
+<apex:inputhidden value="{!ITO_Commercial__c.GE_Consortium3__c}"/>
+<apex:pageblock >
+<apex:pageblockButtons >
+<apex:commandButton action="{!done}" value="Done" />
+<apex:commandButton action="{!submit}" value="Submit" />
+
+</apex:pageblockButtons>
+<apex:pageblocksection >
+<apex:pageblocksectionitem >
+<apex:outputLabel value="Filename"/>
+<apex:outputtext value="{!document1.name}"/>
+</apex:pageblocksectionitem>
+<apex:pageblockSectionItem >
+<apex:outputLabel value="Upload Fle"/>
+<apex:inputfile value="{!document1.body}">
+</apex:inputfile>
+</apex:pageblockSectionItem>
+<apex:pageblocksectionitem >
+<apex:outputLabel value="Filename"/>
+<apex:outputtext value="{!document5.name}"/>
+</apex:pageblocksectionitem>
+<apex:pageblockSectionItem >
+<apex:outputLabel value="Upload Fle"/>
+<apex:inputfile value="{!document5.body}">
+</apex:inputfile>
+</apex:pageblockSectionItem>
+
+<apex:pageblocksectionitem rendered="{!ITO_Commercial__c.GE_ES_Is_there_a_2nd_source_of_Fin_Secur__c == 'YES'}">
+<apex:outputLabel value="Filename"/>
+<apex:outputtext value="{!document6.name}"/>
+</apex:pageblocksectionitem>
+<apex:pageblockSectionItem rendered="{!ITO_Commercial__c.GE_ES_Is_there_a_2nd_source_of_Fin_Secur__c == 'YES'}">
+<apex:outputLabel value="Upload Fle"/>
+<apex:inputfile value="{!document6.body}">
+</apex:inputfile>
+</apex:pageblockSectionItem>
+
+<apex:pageblocksectionitem rendered="{!ITO_Commercial__c.GE_ES_Is_there_a_3rd_source_of_Fin_Secur__c == 'YES'}">
+<apex:outputLabel value="Filename"/>
+<apex:outputtext value="{!document7.name}"/>
+</apex:pageblocksectionitem>
+<apex:pageblockSectionItem rendered="{!ITO_Commercial__c.GE_ES_Is_there_a_3rd_source_of_Fin_Secur__c == 'YES'}">
+<apex:outputLabel value="Upload Fle"/>
+<apex:inputfile value="{!document7.body}">
+</apex:inputfile>
+</apex:pageblockSectionItem>
+
+<apex:pageblocksectionitem rendered="{!ITO_Commercial__c.GE_ES_Is_there_a_4th_source_of_Fin_Secur__c == 'YES'}">
+<apex:outputLabel value="Filename"/>
+<apex:outputtext value="{!document8.name}"/>
+</apex:pageblocksectionitem>
+<apex:pageblockSectionItem rendered="{!ITO_Commercial__c.GE_ES_Is_there_a_4th_source_of_Fin_Secur__c == 'YES'}">
+<apex:outputLabel value="Upload Fle"/>
+<apex:inputfile value="{!document8.body}">
+</apex:inputfile>
+</apex:pageblockSectionItem>
+
+<apex:pageblocksectionitem >
+<apex:outputLabel value="Filename"/>
+<apex:outputtext value="{!document2.name}"/>
+</apex:pageblocksectionitem>
+<apex:pageblockSectionItem >
+<apex:outputLabel value="Upload Fle"/>
+<apex:inputfile value="{!document2.body}">
+</apex:inputfile>
+</apex:pageblockSectionItem>
+
+<apex:pageblocksectionitem >
+<apex:outputLabel value="Filename"/>
+<apex:outputtext value="{!document3.name}"/>
+</apex:pageblocksectionitem>
+<apex:pageblockSectionItem >
+<apex:outputLabel value="Upload Fle"/>
+<apex:inputfile value="{!document3.body}">
+</apex:inputfile>
+</apex:pageblockSectionItem>
+
+<apex:pageblocksectionitem >
+<apex:outputLabel value="Filename"/>
+<apex:outputtext value="{!document4.name}"/>
+</apex:pageblocksectionitem>
+<apex:pageblockSectionItem >
+<apex:outputLabel value="Upload Fle"/>
+<apex:inputfile value="{!document4.body}">
+</apex:inputfile>
+</apex:pageblockSectionItem>
+
+<apex:pageblocksectionitem >
+<apex:outputLabel value="Filename"/>
+<apex:outputtext value="{!document9.name}"/>
+</apex:pageblocksectionitem>
+<apex:pageblockSectionItem >
+<apex:outputLabel value="Upload Fle"/>
+<apex:inputfile value="{!document9.body}">
+</apex:inputfile>
+</apex:pageblockSectionItem>
+</apex:pageblocksection>
+</apex:pageblock>
+</apex:form>
+ </apex:page>

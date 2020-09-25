@@ -1,0 +1,283 @@
+<apex:page id="myPage" controller="GE_OG_PC_Timesheet" sidebar="False">
+<apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"/>
+
+<input id="hiddenElementId" type="hidden" />
+<script type="text/javascript">
+window.onload = setFocus
+function setFocus()
+{
+         document.getElementById("hiddenElementId").focus();
+}
+</script>
+
+     <script type="text/javascript">
+        function checkAll(cb) {        
+            var inputElem = document.getElementsByTagName("input");
+            for(var i=0; i<inputElem.length; i++) {
+                if(inputElem[i].id.indexOf("checkedone")!=-1){
+                    inputElem[i].checked = cb.checked;
+                }                
+            }
+        }  
+        
+    function CheckSelection(){
+            alert('Please Select Time sheet to approve');
+         } 
+         
+   }
+        </script>
+        
+    <apex:outputPanel id="javaScriptPanel">     
+        <script language="javascript">
+
+        function addLoadEvent(func) {
+            var oldonload = window.onload;
+            
+            if (typeof window.onload != 'function') {
+            window.onload = func;
+            } else {
+                window.onload = function() {
+                    if (oldonload) {
+                        oldonload();
+                    }
+                    func();
+                }
+            }
+        }
+        
+        function dotest() {
+        
+            //var id = document.getElementById('myPage:frm:pb1:pbs1:pbTable');
+            var obj = '{!wrprList.size}';
+            
+            for(var i=0;i<obj;i++){
+                var myId = 'myPage:frm:pb1:pbs1:pbTable:'+i+':collapseSubSection';
+                console.log(myId);
+                twistSection(document.getElementById(myId).childNodes[0].childNodes[0]);
+            }
+        }
+        
+        addLoadEvent(dotest);
+
+
+      </script>
+    </apex:outputPanel>
+         
+
+<apex:form id="frm">
+<apex:outputPanel id="idop1">
+<apex:pageMessages id="msg1"/>
+</apex:outputPanel>
+
+<apex:actionStatus id="myStatus" startText="Processing..." stopText="" />
+<apex:pageBlock id="msg">
+<script>function setFocusOnLoad() {}</script>
+<apex:outputLabel >Start Date : </apex:outputLabel>&nbsp;&nbsp;
+<apex:inputField value="{!timesheet.Start_Date__c}"/>&nbsp;&nbsp;&nbsp;&nbsp;
+<apex:outputLabel >End Date :  </apex:outputLabel>&nbsp;&nbsp;
+<apex:inputField value="{!timesheet.End_Date__c}"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<apex:outputLabel rendered="{!$Profile.Name == 'GE_PC_Titanium Service Manager'}">Technician : </apex:outputLabel>&nbsp;&nbsp;
+<apex:inputField Id="TTid" value="{!timesheet.Technician__c}" rendered="{!$Profile.Name == 'GE_PC_Titanium Service Manager'}"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<apex:commandButton value="Go" action="{!Go}" reRender="idpan,javaScriptPanel,msg,msg1,idop1" oncomplete="dotest();" status="GoStatusId"/>
+            <apex:actionStatus id="GoStatusId">
+                <apex:facet name="start" >
+                  <img src="/img/loading.gif" /> <b>Searching.... </b>          
+                </apex:facet>
+            </apex:actionStatus>
+<br/><br/>
+</apex:pageBlock>
+<apex:outputPanel id="idpan">
+
+<apex:pageBlock id="pb1">
+<div align="center">  
+<apex:commandButton value="ApproveTimeSheet" action="{!saveit}" status="myStatus" reRender="idpan,pb1,msg1,msg,idop1" rendered="{!$Profile.Name == 'GE_PC_Titanium Service Manager'}" oncomplete="dotest();"/><br/>
+</div>
+<apex:pageBlockSection id="pbs1" title="TimeSheet" showheader="true" collapsible="True" columns="1">
+<apex:pageBlocktable id="pbTable" value="{!wrprList}" var="a" columnswidth="50px,50px" cellpadding="4" border="3">
+
+                <Apex:column rendered="{!$Profile.Name == 'GE_PC_Titanium Service Manager'}"><br/>
+                <apex:facet name="header"><apex:inputCheckbox onClick="checkAll(this);"/></apex:facet>
+                <Apex:inputCheckbox Value="{!a.isSelect}" id="checkedone" />
+                </Apex:column>
+                <apex:column style="width:250px" rendered="{!$Profile.Name == 'GE_PC_Titanium Service Manager'}">
+                <apex:facet name="header">TimeSheet Name</apex:facet>
+                <!--apex:commandLink action="{!URLFOR($Action.SVMXC_Timesheet__c.View,a.objTimeSheet.id)}" value="{!a.objTimeSheet.Name}"-->
+                <!--/apex:commandLink--> &nbsp;
+                <apex:outputLink value="/{!a.objTimeSheet.id}" target="_blank">{!a.objTimeSheet.Name}</apex:outputLink>
+                </apex:column>
+                
+                <apex:column rendered="{!$Profile.Name == 'GE_PC_Super Technician'}">
+                <apex:facet name="header">TimeSheet Name</apex:facet>
+                &nbsp;
+                {!a.objTimeSheet.Name}
+                </apex:column>
+
+
+              <!--  <Apex:column style="width:500px">
+                
+                 <apex:facet name="header">   
+                 <apex:commandLink action="{!init}" value="Technician{!IF(sortExpression=='name',IF(sortDirection='ASC','*','*'),'')}" >
+                 <apex:param value="Technician__c" name="Technician__c" assignTo="{!sortExpression}" ></apex:param>
+                 </apex:commandLink>
+                 </apex:facet>
+                 
+                 {!a.objTimeSheet.Technician__r.Name}
+                 
+                 </Apex:column> -->
+                 <apex:column >
+                 <apex:facet name="header">Technician Name</apex:facet>
+                 {!a.objTimeSheet.Technician__r.Name}
+                 </apex:column>
+                 <apex:column rendered="{!$Profile.Name == 'GE_PC_Super Technician'}">
+                 <apex:facet name="header">Status</apex:facet>
+                 {!a.objTimeSheet.GE_OG_DS_Status__c}
+                 </apex:column>
+                 <apex:column >
+                 <apex:facet name="header">Total Hours</apex:facet>
+                 {!a.objTimeSheet.Total_Hours__c}
+                 </apex:column>
+                 <apex:column >
+                 <apex:facet name="header">Total Billable Hours</apex:facet>
+                 {!a.objTimeSheet.Total_Billable_Hours__c}
+                 </apex:column>
+                 <apex:column >
+                 <apex:facet name="header">Total Non Billable Hours</apex:facet>
+                 {!a.objTimeSheet.Total_Nonbillable_Hours__c}
+                 </apex:column>
+                 <!--<Apex:column style="width:500px" Value="{!a.objTimeSheet.Technician__r.Name}"/>  
+                <Apex:column style="width:500px" Value="{!a.objTimeSheet.Total_Hours__c}"/ >
+                <Apex:column style="width:500px" Value="{!a.objTimeSheet.Total_Billable_Hours__c}"/>
+                <Apex:column style="width:500px" Value="{!a.objTimeSheet.Total_Nonbillable_Hours__c}"/> -->
+                
+                <Apex:column style="width:500px">
+                     <apex:facet name="header">   
+                     <apex:commandLink action="{!go}" value="Start_Date{!IF(sortExpression=='Start_Date__c',IF(sortDirection='ASC','*','*'),'')}" >
+                     <apex:param value="Start_Date__c" name="Start_Date__c" assignTo="{!sortExpression}" ></apex:param>
+                     </apex:commandLink>
+                     </apex:facet>
+                     <apex:outputText value="{0,date,MM/dd/yyyy}">
+                     <apex:param value="{!a.objTimeSheet.Start_Date__c}" />
+                     </apex:outputText>
+                </Apex:column>
+              <!--  <Apex:column style="width:500px" Value="{!a.objTimeSheet.Start_Date__c}"/> -->
+              
+                    <Apex:column style="width:500px">
+                     <apex:facet name="header">   
+                     <apex:commandLink action="{!go}" value="End_Date{!IF(sortExpression=='End_Date__c',IF(sortDirection='ASC','*','*'),'')}" >
+                     <apex:param value="End_Date__c" name="End_Date__c" assignTo="{!sortExpression}" ></apex:param>
+                     </apex:commandLink>
+                     </apex:facet>
+                     <apex:outputText value="{0,date,MM/dd/yyyy}">
+                     <apex:param value="{!a.objTimeSheet.End_Date__c}" />
+                     </apex:outputText>
+                </Apex:column>
+                
+                <!--<Apex:column style="width:500px" Value="{!a.objTimeSheet.End_Date__c}"/> -->
+                <apex:column headerValue="Created by" style="width:500px" Value="{!a.objTimeSheet.CreatedBy.Name}"/>
+                <Apex:column headerValue="Owner" style="width:500px" Value="{!a.objTimeSheet.Owner.name}"/> 
+                <apex:column > <apex:facet name="header">Kronos_Billable_Hours</apex:facet>{!a.objTimeSheet.Kronos_Billable_Hours__c}</apex:column>
+                <apex:column > <apex:facet name="header">Kronos_OverTime_Hours</apex:facet>{!a.objTimeSheet.Kronos_OverTime_Hours__c}</apex:column>
+                
+                <!--<Apex:column style="width:500px" Value="{!a.objTimeSheet.CreatedById}"/>
+                <Apex:column style="width:500px" Value="{!a.objTimeSheet.OwnerId}"/>
+                <Apex:column style="width:500px" Value="{!a.objTimeSheet.Kronos_Billable_Hours__c}"/>
+                <Apex:column style="width:500px" Value="{!a.objTimeSheet.Kronos_OverTime_Hours__c}"/> -->
+               <!-- <Apex:column Value="{!a.objTimeSheet.GE_OG_DS_Status__c}"/> -->
+             
+                <apex:column breakBefore="true" colspan="12">
+                <apex:pageblocksection columns="1" title="TimeEntries" showheader="True" collapsible="true" id="collapseSubSection" >
+                <apex:actionStatus id="actStatusId" startText="Deleting....">
+                    <apex:facet name="start" >
+                      <img src="/img/loading.gif" /> <b>Deleting.... </b>          
+                    </apex:facet>
+                </apex:actionStatus>
+                <apex:pageBlocktable value="{!a.objTimeSheet.Time_Entries__r}" var="c" id="ertr">
+                <apex:column style="width:1000px" rendered="{!$Profile.Name == 'GE_PC_Titanium Service Manager'}">
+                <apex:facet name="header">Action</apex:facet>
+                <!--apex:commandLink action="{!URLFOR($Action.SVMXC_Time_Entry__c.edit,c.id)}" value="Edit"-->
+                <!--/apex:commandLink-->
+                <apex:outputLink value="/{!c.id}/e?retURL={!c.Id}" target="_blank" >Edit</apex:outputLink>
+                 &nbsp; | &nbsp; 
+                
+               <!--<apex:commandLink action="{!URLFOR($Action.SVMXC_Time_Entry__c.delete,c.id)}" onclick="if(!confirm('Are you sure?')) return false;" value="Del" rerender="collapseSubSection" status="actStatusId"> -->
+               <apex:commandLink action="{!deleteRecords}" onclick="if(!confirm('Are you sure?')) return false;" value="Del" rerender="collapseSubSection" status="actStatusId"> 
+               <apex:param value="{!c.Id}" name="idToDel" assignTo="{!TimeEntryId}"/> 
+
+                </apex:commandLink> &nbsp;
+                
+                </apex:column>
+                
+                <apex:column style="width:500px" rendered="{!$Profile.Name == 'GE_PC_Titanium Service Manager'}">
+                <apex:facet name="header">TimeEntry Name</apex:facet>
+                <!--apex:commandLink action="{!URLFOR($Action.SVMXC_Time_Entry__c.View,c.id)}" value="{!c.Name}"-->
+                <!--/apex:commandLink--> &nbsp;
+                <apex:outputLink value="/{!c.id}" target="_blank">{!c.Name}</apex:outputLink>
+                </apex:column>
+                
+                <apex:column style="width:500px" rendered="{!$Profile.Name == 'GE_PC_Super Technician'}">
+                <apex:facet name="header">TimeEntry Name</apex:facet>
+                &nbsp;
+                {!c.Name}
+                </apex:column>
+
+                
+               <apex:column style="width:1000px">
+                    
+                 <apex:facet name="header">   
+                 <apex:commandLink action="{!go}" value="Account*{!IF(sortExpression=='GE_PC_Account__c',IF(sortDirection='ASC','*','*'),'')}"  Rerender="pbTable" >
+                 <apex:param value="GE_PC_Account__c" name="GE_PC_Account__c" assignTo="{!sortExpression}" ></apex:param>
+                 <!--<apex:param value="{!a.objTimeSheet.Start_Date__c}" name="startdate" assignTo="{!startdate}" ></apex:param>
+                 <apex:param value="{!a.objTimeSheet.End_Date__c}" name="endtdate" assignTo="{!enddate}" ></apex:param>-->
+                 </apex:commandLink>
+                 </apex:facet>
+                 
+                 {!c.GE_PC_Account__c}
+                 
+                  </apex:column>
+                  <!--  <apex:column style="width:500px" value="{!c.GE_PC_Account__c}"/> -->
+                    <apex:column headerValue="Site" style="width:1000px" value="{!c.GE_PC_Site__c}"/>
+                    <apex:column headerValue="Job Code" style="width:1000px" value="{!c.GE_PC_Job_Code__c}"/>
+                    <apex:column headerValue="Earnings_Code" style="width:500px" value="{!c.GE_PC_Earnings_Code__c}"/>
+                    <apex:column headerValue="Activity" style="width:500px" value="{!c.Activity__c}"/>
+                  
+                  <apex:column style="width:1000px">  
+                  <apex:facet name="header">   
+                  <apex:commandLink action="{!go}" value="Start_Date_Time*{!IF(sortExpression=='Start_Date_Time__c',IF(sortDirection='ASC','*','*'),'')}"  Rerender="pbTable" >
+                  <apex:param value="Start_Date_Time__c" name="Start_Date_Time__c" assignTo="{!sortExpression}" ></apex:param>
+                  </apex:commandLink>
+                  </apex:facet>
+                  
+                  <apex:outputField value="{!c.Start_Date_Time__c}" />
+                  
+                 
+                  </apex:column>
+                    <!--apex:column style="width:500px" value="{!c.Start_Date_Time__c}"/-->
+                    
+                   <apex:column style="width:1000px">  
+                   <apex:facet name="header">   
+                   <apex:commandLink action="{!go}" value="End_Date_Time*{!IF(sortExpression=='c.End_Date_Time__c',IF(sortDirection='ASC','*','*'),'')}"  Rerender="pbTable" >
+                   <apex:param value="End_Date_Time__c" name="End_Date_Time__c" assignTo="{!sortExpression}" ></apex:param>
+                   </apex:commandLink>
+                   </apex:facet>
+                   
+                   <apex:outputField value="{!c.End_Date_Time__c}" />
+                   
+                   </apex:column>
+                   <!-- <apex:column style="width:500px" value="{!c.End_Date_Time__c}"/> -->
+                    <apex:column headerValue="Total Time" style="width:500px" value="{!c.Total_Time__c}"/>
+                    <apex:column headerValue="Billable" style="width:300px" value="{!c.Is_Billable__c}"/>
+                   
+                    <apex:column style="width:500px">
+                    <apex:facet name="header">WorkOrderNumber</apex:facet>
+                    <apex:outputLink value="/{!c.GE_DS_Work_Order__r.id}" target="_blank">{!c.GE_DS_Work_Order__r.name}</apex:outputLink>
+                    </apex:column>
+                    <apex:column headerValue="Created By" style="width:500px" value="{!c.CreatedBy.Name}"/>
+                </apex:pageBlocktable>
+                </apex:pageblockSection>  
+                </apex:column>
+</apex:pageBlocktable>
+</apex:pageBlockSection>
+</apex:pageBlock>
+</apex:outputPanel>
+</Apex:form>
+</apex:page>

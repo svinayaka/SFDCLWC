@@ -1,0 +1,642 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>GE_HQ_KYC_Approved_by_Team</fullName>
+        <description>GE_HQ_KYC_Approved_by_Team</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderAddress>dlenergy.esitoops1@ge.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>GE_OG_Templates/KYC_Process_Approved_by_Team</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_HQ_KYC_Initiation_Mail</fullName>
+        <description>GE_HQ_KYC_Initiation_Mail</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>GE_ES_KYC_Users</recipient>
+            <type>group</type>
+        </recipients>
+        <senderAddress>dlenergy.esitoops1@ge.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>GE_OG_Templates/GE_HQ_KYC_Process_Initiation</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_HQ_KYC_Notify_CMF_Team</fullName>
+        <description>GE_HQ_KYC_Notify_CMF_Team</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>GE_HQ_CMF_Users</recipient>
+            <type>group</type>
+        </recipients>
+        <senderAddress>dlenergy.esitoops1@ge.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>GE_OG_Templates/GE_HQ_CMF_Team_Notification_After_KYC_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_HQ_KYC_Rejected_by_Team</fullName>
+        <description>GE_HQ_KYC_Rejected_by_Team</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderAddress>dlenergy.esitoops1@ge.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>GE_OG_Templates/KYC_Process_Rejected_by_Team</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_HQ_KYC_Reviwed_by_Team</fullName>
+        <description>GE_HQ_KYC_Reviwed_by_Team</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderAddress>dlenergy.esitoops1@ge.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>GE_OG_Templates/GE_HQ_KYC_Process_Reviewed_by_Team</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_HQ_KYC_SentBack_by_Team</fullName>
+        <description>GE_HQ_KYC_SentBack_by_Team</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderAddress>dlenergy.esitoops1@ge.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>GE_OG_Templates/KYC_Process_Sent_Back_by_Team</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_HQ_KYC_Submitted</fullName>
+        <description>GE_HQ_KYC_Submitted</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>GE_ES_KYC_Users</recipient>
+            <type>group</type>
+        </recipients>
+        <senderAddress>dlenergy.esitoops1@ge.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>GE_OG_Templates/GE_HQ_KYC_Process_Submitted</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PRM_KYC_Complete_To_Channel_Manager</fullName>
+        <description>GE PRM KYC Complete To Channel Manager</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PRM_KYC_Complete</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PRM_Notify_Channel_Manager_On_KYC_Failed</fullName>
+        <description>GE_PRM_Notify_Channel_Manager_On_KYC_Failed</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PRM_Notify_Channel_Manager_On_KYC_Failed</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PRM_Notify_Channel_Manager_on_NeedMoreInfo</fullName>
+        <description>GE_PRM_Notify_Channel_Manager_on_NeedMoreInfo</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PRM_KYC_Need_More_Info</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PRM_Notify_Compliance_Manager_On_KYC_Failed</fullName>
+        <description>GE_PRM_Notify_Compliance_Manager_On_KYC_Failed</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_PRM_Regional_Compliance_Manager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PRM_Notify_Channel_Manager_On_KYC_Failed</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PRM_Notify_Katalin_PW_KYC_Failed</fullName>
+        <ccEmails>katalin.vasarhelyi@ge.com</ccEmails>
+        <description>GE_PRM_Notify_Katalin_P&amp;W_KYC_Failed</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PRM_Notify_Compliance_Manager_On_KYC_Failed</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PW_KYC_Approved_byTeam</fullName>
+        <description>GE_PW_KYC_Approved_byTeam</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>All/GE_PW_KYC_Process_Approved_byTeam</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PW_KYC_Rejected_by_Team</fullName>
+        <description>GE_PW_KYC_Rejected_by_Team</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PW_KYC_Process_Rejected_by_KYCTeam</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PW_KYC_SentBack_ByTeam</fullName>
+        <description>GE_PW_KYC_SentBack_ByTeam</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/GE_PW_KYC_Process_Sent_Back_byTeam</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>GE_HQ_KYC_RecType_SF_Appr</fullName>
+        <description>Update the KYC Record type to Short Form - Approved</description>
+        <field>RecordTypeId</field>
+        <lookupValue>GE_HQ_KYC_Short_Form_Approved</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>GE_HQ_KYC_RecType_SF_Appr</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_OG_Update_Fin_Status_NotStarted</fullName>
+        <field>GE_OG_Fin_Status__c</field>
+        <literalValue>Not Started</literalValue>
+        <name>GE_OG_Update_Fin_Status_NotStarted</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_OG_Update_Final_KYC_Sent_Back</fullName>
+        <field>GE_OG_Final_KYC_Sent_Back_TimeStamp__c</field>
+        <formula>IF(AND(GE_OG_KYC_Old_value__c = &apos;Manual Due Diligence Submitted&apos;,
+GE_OG_KYC_New_Value__c =&apos;Manual Due Diligence Sent back&apos;,
+GE_OG_KYC_SentBckCount__c &gt;=1)
+,NOW(), PRIORVALUE(GE_OG_Final_KYC_Sent_Back_TimeStamp__c) )</formula>
+        <name>Update Final KYC Sent Back TimeStamp</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>KYC_Inbound_Response_Update</fullName>
+        <field>KYC_Inbound_Response__c</field>
+        <formula>NOW()</formula>
+        <name>KYC Inbound Response Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>KYC_Outbound_Response_Update</fullName>
+        <field>KYC_Outbound_Response__c</field>
+        <formula>NOW()</formula>
+        <name>KYC Outbound Response Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>KYC_Sent_Back_Interim_Time_Update</fullName>
+        <field>GE_OG_KYC_SentBack_Interim_Time__c</field>
+        <formula>IF(TEXT(GE_HQ_Status__c)=&apos;Manual Due Diligence Sent back&apos;,
+NOW(), PRIORVALUE( GE_OG_KYC_SentBack_Interim_Time__c ) )</formula>
+        <name>KYC Sent Back Interim Time Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>KYC_Sent_Back_Time_Update</fullName>
+        <field>GE_OG_KYC_Sent_Back_Time__c</field>
+        <formula>IF(AND(TEXT(PRIORVALUE(GE_HQ_Status__c))= &apos;Manual Due Diligence Sent back&apos;,
+TEXT(GE_HQ_Status__c)=&apos;Manual Due Diligence Submitted&apos;,
+GE_OG_KYC_SentBckCount__c &gt;=1), GE_OG_KYC_Sent_Back_Time__c + 
+(( GE_OG_Final_KYC_Sent_Back_TimeStamp__c -  GE_OG_KYC_SentBack_Interim_Time__c )*24),
+PRIORVALUE( GE_OG_KYC_Sent_Back_Time__c ) )</formula>
+        <name>KYC Sent Back Time Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>KYC_Submitted_Interim_Time_Update</fullName>
+        <field>GE_OG_KYC_Submitted_Interim_Time__c</field>
+        <formula>IF(TEXT(GE_HQ_Status__c)=&apos;Manual Due Diligence Submitted&apos;,
+NOW(), PRIORVALUE( GE_OG_KYC_Submitted_Interim_Time__c ) )</formula>
+        <name>KYC Submitted Interim Time Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>KYC_Submitted_Time_Update</fullName>
+        <field>GE_OG_KYC_SubmittedTime__c</field>
+        <formula>IF(AND(TEXT(PRIORVALUE(GE_HQ_Status__c)) = &apos;Manual Due Diligence Submitted&apos;,OR(TEXT(GE_HQ_Status__c)=&apos;Manual Due Diligence Sent back&apos;,TEXT(GE_HQ_Status__c)=&apos;Manual Due Diligence Approved&apos;,TEXT(GE_HQ_Status__c)=&apos;Manual Due Diligence Rejected&apos;),
+ GE_OG_KYC_Sub_Counter__c &gt;=1), GE_OG_KYC_SubmittedTime__c + (( GE_OG_Final_KYC_Sub_Timestamp__c -  GE_OG_KYC_Submitted_Interim_Time__c )*24),
+PRIORVALUE(  GE_OG_KYC_SubmittedTime__c  ) )</formula>
+        <name>KYC Submitted Time Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Final_KYC_Submitted_Timestamp</fullName>
+        <field>GE_OG_Final_KYC_Sub_Timestamp__c</field>
+        <formula>IF(AND(OR(GE_OG_KYC_Old_value__c=&quot;Manual Due Diligence Rejected&quot;,GE_OG_KYC_Old_value__c=&quot;Manual Due Diligence Sent back&quot;,GE_OG_KYC_Old_value__c=&quot;Manual Due Diligence Reviewed&quot;),OR(GE_OG_KYC_New_Value__c = &quot;Manual Due Diligence Submitted&quot;,GE_OG_KYC_New_Value__c = &quot;Manual Due Diligence Approved&quot;,GE_OG_KYC_New_Value__c = &quot;Manual Due Diligence Rejected&quot;),GE_OG_KYC_Sub_Counter__c &gt;=1),NOW(), PRIORVALUE(GE_OG_Final_KYC_Sub_Timestamp__c ))</formula>
+        <name>Update Final KYC Submitted Timestamp</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Initial_KYC_Submitted_Timestamp</fullName>
+        <field>GE_OG_Initial_KYC_Sub_Timestamp__c</field>
+        <formula>IF(AND( GE_OG_KYC_Old_value__c = &apos;Pending User Submission&apos;, GE_OG_KYC_New_Value__c = &apos;Manual Due Diligence Submitted&apos;),NOW(),PRIORVALUE( GE_OG_Initial_KYC_Sub_Timestamp__c))</formula>
+        <name>Update Initial KYC Submitted Timestamp</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_the_KYC_Age_in_hrs</fullName>
+        <description>Update the KYC Cycle time for Each Status changed and also the KYC age in hours</description>
+        <field>GE_OG_KYC_Age_in_hrs__c</field>
+        <formula>IF( ISNULL( GE_OG_KYC_Age_in_hrs__c ) ,((Now()- PRIORVALUE( LastModifiedDate ) )*24),(((Now()- PRIORVALUE( LastModifiedDate ) )*24)+ PRIORVALUE(GE_OG_KYC_Age_in_hrs__c) ))</formula>
+        <name>Update the KYC Age (in hrs)</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_the_KYC_Sent_Back_TimeStamp</fullName>
+        <field>GE_OG_KYC_Sent_Back_TimStamp__c</field>
+        <formula>IF(AND(GE_OG_KYC_Old_value__c = &apos;Manual Due Diligence Submitted&apos;,
+GE_OG_KYC_New_Value__c =&apos;Manual Due Diligence Sent back&apos;,
+ GE_OG_KYC_Sub_Counter__c = 1)
+,NOW(), PRIORVALUE(GE_OG_KYC_Sent_Back_TimStamp__c))</formula>
+        <name>Update Initial KYC Sent Back TimeStamp</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <rules>
+        <fullName>GE_HQ_KYC_RecType_Update_LF_Approved</fullName>
+        <actions>
+            <name>GE_HQ_KYC_Approved_by_Team</name>
+            <type>Alert</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>GE_PRM_KYC_Termination_Checklist__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>KYC Long Form - Submitted</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>GE_PRM_KYC_Termination_Checklist__c.GE_HQ_Status__c</field>
+            <operation>equals</operation>
+            <value>Manual Due Diligence Approved</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>GE_PRM_KYC_Termination_Checklist__c.GE_HQ_Form_Type__c</field>
+            <operation>equals</operation>
+            <value>Long Form</value>
+        </criteriaItems>
+        <description>When The KYC Team selects the Status =&apos;KYC Approved&apos; and Form type=&apos;Long Form&apos;, the record type should be updated to &apos;Long form - Approved&apos;</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_HQ_KYC_RecType_Update_LF_Editable</fullName>
+        <actions>
+            <name>GE_HQ_KYC_Reviwed_by_Team</name>
+            <type>Alert</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>GE_PRM_KYC_Termination_Checklist__c.GE_HQ_Status__c</field>
+            <operation>equals</operation>
+            <value>Manual Due Diligence Reviewed</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>GE_PRM_KYC_Termination_Checklist__c.GE_HQ_Form_Type__c</field>
+            <operation>equals</operation>
+            <value>Long Form</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>GE_PRM_KYC_Termination_Checklist__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>KYC Review</value>
+        </criteriaItems>
+        <description>When The KYC Team selects the Status =&apos;KYC Reviewed&apos; and Form type=&apos;Long Form&apos;, the record type should be updated to &apos;Long form editable&apos;</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_HQ_KYC_RecType_Update_LF_Rejected</fullName>
+        <actions>
+            <name>GE_HQ_KYC_Rejected_by_Team</name>
+            <type>Alert</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>GE_PRM_KYC_Termination_Checklist__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>KYC Long Form - Submitted</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>GE_PRM_KYC_Termination_Checklist__c.GE_HQ_Status__c</field>
+            <operation>equals</operation>
+            <value>Manual Due Diligence Rejected</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>GE_PRM_KYC_Termination_Checklist__c.GE_HQ_Form_Type__c</field>
+            <operation>equals</operation>
+            <value>Long Form</value>
+        </criteriaItems>
+        <description>When The KYC Team selects the Status =&apos;KYC Rejected&apos; and Form type=&apos;Long Form&apos;, the record type should be updated to &apos;Long form - Rejected&apos;</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_HQ_KYC_RecType_Update_LF_SentBack</fullName>
+        <actions>
+            <name>GE_HQ_KYC_SentBack_by_Team</name>
+            <type>Alert</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>GE_PRM_KYC_Termination_Checklist__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>KYC Long Form - Submitted</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>GE_PRM_KYC_Termination_Checklist__c.GE_HQ_Form_Type__c</field>
+            <operation>equals</operation>
+            <value>Long Form</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>GE_PRM_KYC_Termination_Checklist__c.GE_HQ_Status__c</field>
+            <operation>equals</operation>
+            <value>Manual Due Diligence Sent back</value>
+        </criteriaItems>
+        <description>When The KYC Team selects the Status =&apos;KYC Sent Back&apos; and Form type=&apos;Long Form&apos;, the record type should be updated to &apos;Long form - Editable&apos;</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_HQ_KYC_RecType_Update_LF_Submitted</fullName>
+        <actions>
+            <name>GE_HQ_KYC_Submitted</name>
+            <type>Alert</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>GE_PRM_KYC_Termination_Checklist__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>KYC Long Form - Editable</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>GE_PRM_KYC_Termination_Checklist__c.GE_HQ_Status__c</field>
+            <operation>equals</operation>
+            <value>Manual Due Diligence Submitted</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>GE_PRM_KYC_Termination_Checklist__c.GE_HQ_Form_Type__c</field>
+            <operation>equals</operation>
+            <value>Long Form</value>
+        </criteriaItems>
+        <description>When the user submits the form to KYC team, Update the record type to &apos;KYC Long Form - Submitted&apos; and send notification mail to KYC team</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_HQ_KYC_RecType_Update_SF_Approved</fullName>
+        <actions>
+            <name>GE_HQ_KYC_Approved_by_Team</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>GE_HQ_KYC_RecType_SF_Appr</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>GE_PRM_KYC_Termination_Checklist__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>KYC Short Form - Submitted</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>GE_PRM_KYC_Termination_Checklist__c.GE_HQ_Status__c</field>
+            <operation>equals</operation>
+            <value>Manual Due Diligence Approved</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>GE_PRM_KYC_Termination_Checklist__c.GE_HQ_Form_Type__c</field>
+            <operation>equals</operation>
+            <value>Short Form</value>
+        </criteriaItems>
+        <description>When The KYC Team selects the Status =&apos;KYC Approved&apos; and Form type=&apos;Short Form&apos;, the record type should be updated to &apos;Short form - Approved&apos;</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_HQ_KYC_RecType_Update_SF_Editable</fullName>
+        <actions>
+            <name>GE_HQ_KYC_Reviwed_by_Team</name>
+            <type>Alert</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>GE_PRM_KYC_Termination_Checklist__c.GE_HQ_Status__c</field>
+            <operation>equals</operation>
+            <value>Manual Due Diligence Reviewed</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>GE_PRM_KYC_Termination_Checklist__c.GE_HQ_Form_Type__c</field>
+            <operation>equals</operation>
+            <value>Short Form</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>GE_PRM_KYC_Termination_Checklist__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>KYC Review</value>
+        </criteriaItems>
+        <description>When The KYC Team selects the Status =&apos;KYC Reviewed&apos; and Form type=&apos;Short Form&apos;, the record type should be updated to &apos;Short Form Editable&apos;</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_HQ_KYC_RecType_Update_SF_Rejected</fullName>
+        <actions>
+            <name>GE_HQ_KYC_Rejected_by_Team</name>
+            <type>Alert</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>GE_PRM_KYC_Termination_Checklist__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>KYC Short Form - Submitted</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>GE_PRM_KYC_Termination_Checklist__c.GE_HQ_Status__c</field>
+            <operation>equals</operation>
+            <value>Manual Due Diligence Rejected</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>GE_PRM_KYC_Termination_Checklist__c.GE_HQ_Form_Type__c</field>
+            <operation>equals</operation>
+            <value>Short Form</value>
+        </criteriaItems>
+        <description>When The KYC Team selects the Status =&apos;KYC Rejected&apos; and Form type=&apos;Short Form&apos;, the record type should be updated to &apos;Short form - Rejected&apos;</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_HQ_KYC_RecType_Update_SF_SentBack</fullName>
+        <actions>
+            <name>GE_HQ_KYC_SentBack_by_Team</name>
+            <type>Alert</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>GE_PRM_KYC_Termination_Checklist__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>KYC Short Form - Submitted</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>GE_PRM_KYC_Termination_Checklist__c.GE_HQ_Form_Type__c</field>
+            <operation>equals</operation>
+            <value>Short Form</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>GE_PRM_KYC_Termination_Checklist__c.GE_HQ_Status__c</field>
+            <operation>equals</operation>
+            <value>Manual Due Diligence Sent back</value>
+        </criteriaItems>
+        <description>When The KYC Team selects the Status =&apos;KYC Sent Back&apos; and Form type=&apos;Short Form&apos;, the record type should be updated to &apos;Short form - Editable&apos;</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_HQ_KYC_RecType_Update_SF_Submitted</fullName>
+        <actions>
+            <name>GE_HQ_KYC_Submitted</name>
+            <type>Alert</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>GE_PRM_KYC_Termination_Checklist__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>KYC Short Form - Editable</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>GE_PRM_KYC_Termination_Checklist__c.GE_HQ_Status__c</field>
+            <operation>equals</operation>
+            <value>Manual Due Diligence Submitted</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>GE_PRM_KYC_Termination_Checklist__c.GE_HQ_Form_Type__c</field>
+            <operation>equals</operation>
+            <value>Short Form</value>
+        </criteriaItems>
+        <description>When the user submits the form to KYC team, Update the record type to &apos;KYC Short Form - Submitted&apos; and send notification mail to KYC team</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_PRM_KYC_Complete_Rule</fullName>
+        <actions>
+            <name>GE_PRM_KYC_Complete_To_Channel_Manager</name>
+            <type>Alert</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>GE_PRM_KYC_Termination_Checklist__c.GE_PRM_Status__c</field>
+            <operation>equals</operation>
+            <value>KYC Complete</value>
+        </criteriaItems>
+        <description>A notification from the KYC object when it reaches &quot;KYC Complete&quot;</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_PRM_Notify_Channel_Manager_On_NeedMoreInfo</fullName>
+        <actions>
+            <name>GE_PRM_Notify_Channel_Manager_on_NeedMoreInfo</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>GE_PRM_KYC_Termination_Checklist__c.GE_PRM_Status__c</field>
+            <operation>equals</operation>
+            <value>KYC Need More Information</value>
+        </criteriaItems>
+        <description>This workflow rule will send an email to the Channel Manager when KYC needs Additional Info.</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>KYC Inbound Response Time Calculation</fullName>
+        <actions>
+            <name>KYC_Inbound_Response_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(ISCHANGED(GE_HQ_Status__c), OR(ISPICKVAL(GE_HQ_Status__c,&apos;Manual Due Diligence Approved&apos;),ISPICKVAL(GE_HQ_Status__c,&apos;Manual Due Diligence Rejected&apos;)) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>KYC Outbound Response Time Calculation</fullName>
+        <actions>
+            <name>KYC_Outbound_Response_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>OR(AND(ISCHANGED(GE_HQ_Status__c), ISPICKVAL(PRIORVALUE(GE_HQ_Status__c),&apos;Pending User Submission&apos;),ISPICKVAL(GE_HQ_Status__c,&apos;Manual Due Diligence Submitted&apos;)), AND(ISCHANGED(GE_HQ_Status__c), ISPICKVAL(PRIORVALUE(GE_HQ_Status__c),&apos;Pending User Submission&apos;),ISPICKVAL(GE_HQ_Status__c,&apos;Manual Due Diligence Approved&apos;)))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>KYC SentBack%2FSubmitted Cycle Time</fullName>
+        <actions>
+            <name>GE_OG_Update_Final_KYC_Sent_Back</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>KYC_Sent_Back_Interim_Time_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>KYC_Sent_Back_Time_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>KYC_Submitted_Interim_Time_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>KYC_Submitted_Time_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Final_KYC_Submitted_Timestamp</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Initial_KYC_Submitted_Timestamp</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_the_KYC_Sent_Back_TimeStamp</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>This workflow is used to update the total sent back and submitted time.</description>
+        <formula>ISCHANGED(GE_HQ_Status__c)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

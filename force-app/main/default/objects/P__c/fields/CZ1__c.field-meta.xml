@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CZ1__c</fullName>
+    <externalId>false</externalId>
+    <label>Cable 1 Size</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>#6</fullName>
+                <default>false</default>
+                <label>#6</label>
+            </value>
+            <value>
+                <fullName>#4</fullName>
+                <default>false</default>
+                <label>#4</label>
+            </value>
+            <value>
+                <fullName>#2</fullName>
+                <default>false</default>
+                <label>#2</label>
+            </value>
+            <value>
+                <fullName>#1</fullName>
+                <default>false</default>
+                <label>#1</label>
+            </value>
+            <value>
+                <fullName>1/O</fullName>
+                <default>false</default>
+                <label>1/O</label>
+            </value>
+            <value>
+                <fullName>2/O</fullName>
+                <default>false</default>
+                <label>2/O</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

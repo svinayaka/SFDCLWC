@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>GE_ES_DE_Quote_Email_Alert_after_Approval</fullName>
+        <ccEmails>gede.approvers@ge.com</ccEmails>
+        <description>Quote Email Alert after Approval</description>
+        <protected>false</protected>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/GE_ES_DE_Quote_Approval</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_ES_DE_Quote_Email_Alert_after_Reject</fullName>
+        <ccEmails>gede.approvers@ge.com</ccEmails>
+        <description>Quote Email Alert after Reject</description>
+        <protected>false</protected>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/GE_ES_DE_Quote_Reject</template>
+    </alerts>
+    <alerts>
+        <fullName>TRS_Compliant_Email_Alert</fullName>
+        <ccEmails>trs.approvers@ge.com</ccEmails>
+        <description>TRS Compliant Email Alert</description>
+        <protected>false</protected>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/TRS_Compliant_Email_Template</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>CreatePDF</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>GE_ES_DE_Quote</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>CreatePDF</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_DE_WithoutCreatePDF</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>GE_DE_Without_Create_PDF</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>GE DE WithoutCreatePDF</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_EMDE_AppStatusToApproved</fullName>
+        <field>GE_EMDE_Approval_Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>GE_EMDE_AppStatusToApproved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_EMDE_AppStatusToNotStarted</fullName>
+        <field>GE_EMDE_Approval_Status__c</field>
+        <literalValue>Not Started</literalValue>
+        <name>GE_EMDE_AppStatusToNotStarted</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_EMDE_AppStatusToPending</fullName>
+        <field>GE_EMDE_Approval_Status__c</field>
+        <literalValue>Pending for Approval</literalValue>
+        <name>GE_EMDE_AppStatusToPending</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_EMDE_AppStatusToRejected</fullName>
+        <field>GE_EMDE_Approval_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>GE_EMDE_AppStatusToRejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_EMDE_Auto_Approval_Revert</fullName>
+        <field>GE_EMDE_Approval_Status__c</field>
+        <literalValue>Not Started</literalValue>
+        <name>Auto Approval Revert</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_EMDE_Auto_Approve_Level_0</fullName>
+        <description>Update Quote Approval status to &quot;Auto Approved&quot; if the DOA Level is &apos;0&apos;</description>
+        <field>GE_EMDE_Approval_Status__c</field>
+        <literalValue>Auto Approved</literalValue>
+        <name>Auto Approve Level 0</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_ES_DE_Quote_Checkbox_update</fullName>
+        <field>GE_ES_DE_Quote_Discount_Check__c</field>
+        <literalValue>0</literalValue>
+        <name>Quote Checkbox update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_ES_Set_Expiration_Date</fullName>
+        <description>Set the Expiration Date based on the Quote Validity (Days)</description>
+        <field>ExpirationDate</field>
+        <formula>DATEVALUE (CreatedDate) +  VALUE( TEXT(GE_ES_Quote_Validity_Days__c ))</formula>
+        <name>Set Expiration Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_ES_Set_Lead_Time_for_DE</fullName>
+        <description>Set the Lead Time text field with the Lead Time picklist value for DE (so that Lead Time text field can be used in reports/templates)</description>
+        <field>GE_ES_Lead_Time_Text__c</field>
+        <formula>TEXT( GE_ES_Lead_Time_ARO__c )</formula>
+        <name>Set Lead Time for DE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_ES_Special_Agreements_Update</fullName>
+        <field>GE_ES_Special_Agreements__c</field>
+        <formula>Opportunity.Account.GE_ES_Special_Agreements__c</formula>
+        <name>Special Agreements Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Populate_Account_Id</fullName>
+        <field>GE_ES_Account_Id1__c</field>
+        <formula>Opportunity.Account.Id</formula>
+        <name>Populate Account Id</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Populate_Account_Name</fullName>
+        <field>GE_ES_Account_Name__c</field>
+        <formula>Opportunity.Account.Name</formula>
+        <name>Populate Account Name</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Populate_Oppty_Id</fullName>
+        <field>GE_ES_Opportunity_Id__c</field>
+        <formula>Opportunity.Id</formula>
+        <name>Populate Oppty Id</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>TRS_Compliant_field_update</fullName>
+        <field>GE_ES_TRS_Compliant__c</field>
+        <literalValue>0</literalValue>
+        <name>TRS Compliant field update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Account_Name</fullName>
+        <field>GE_Search_AccountName__c</field>
+        <formula>Contact.Account.Name</formula>
+        <name>Update Account Name</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Contact_Email</fullName>
+        <field>Email</field>
+        <formula>Contact.Email</formula>
+        <name>Update Contact Email</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Search_Contact_Name</fullName>
+        <field>GE_Search_ContactName__c</field>
+        <formula>Contact.FirstName+&apos; &apos;+Contact.LastName</formula>
+        <name>Update Search Contact Name</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+</Workflow>

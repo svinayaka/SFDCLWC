@@ -1,0 +1,95 @@
+<apex:page controller="GE_OG_PRM_Renewal_Contract_Selection" action="{!getcontracts}">
+  <apex:sectionHeader title="Channel Appointment" subtitle="Select Contracts to Renew"/>
+     <Apex:form >
+     <apex:pageMessages />
+         <Apex:pageBlock >
+             <body style="background:white;">
+                 <table width="900px" border="0px" class="list fixed">
+                    <colgroup>
+                        <col width="900px"/>
+                    </colgroup>
+                <!-- Save -->
+                    <tr id="Button">
+                        <td style="border: 0px;text-align: center;">
+                            <apex:commandButton value="Renew" action="{!renewContracts}" />
+                            <apex:commandButton value="Cancel" action="{!backtoAccount}"/>
+                        </td>
+                    </tr>
+                 </table>
+                </body> 
+                   <!--  <Apex:pageblockSection >
+                         <apex:pageBlockTable value="{!lstExecutedAddendumContracts}" var="con" width="200%" >
+                          <apex:column headerValue="Select"  >
+                          <apex:inputCheckbox value="{!con.isSelected }"/>
+                          </apex:column>
+                          <apex:column headerValue=" System ID " value="{!con.ContractNumber}" />
+                          <apex:column headerValue="Name" value="{!con.ContractName}"/>
+                         <apex:column headerValue="Contract Start Date" value="{!con.StartDate}" />
+                          <apex:column headerValue="Contract End Date" value="{!con.EndDate }" />
+                          <apex:column headerValue="Status"  value="{!con.Status  }"/>
+                          <apex:column headerValue="Tier 2 P&L"  value="{!con.GE_PRM_Tier_2 }"/>
+                          <apex:column headerValue="Tier 3 P&L"  value="{!con.GE_PRM_Tier_3 }"/>
+                          <apex:column headerValue="Tier 4 Product"  value="{!con.GE_PRM_Tier_4 }"/>
+                          <apex:column headerValue="Tier 5 Product"  value="{!con.GE_PRM_Tier_5 }"/>
+                          
+                         </apex:pageBlockTable>
+                    </Apex:pageblockSection> -->
+                    <body style="background:white;">
+                    <table width="900px" border="0px" class="list fixed">
+                    <thead>
+                        <tr style="line-height: 20px;">
+                            <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700;">Select</th>
+                              <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700;">System ID</th>
+                              <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700;">Name</th>
+                              <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700;">Relationship Type</th>
+                             <!-- <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700;">Contract Start Date</th>-->
+                              <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700;">Contract End Date</th>
+                              <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700;">Status</th>
+                             
+                              <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700;">Tier 2 PL</th>
+                              <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700;">Tier 3 PL</th>
+                              <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700;">Tier 4 Product</th>
+                              <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700;">Tier 5 Product</th>
+                         </tr>
+                    </thead>
+                     <tbody>
+                         <apex:repeat value="{!lstExecutedAddendumContracts}" var="con" id="rep">
+                             <tr>
+                                  <td><div class="field"><apex:inputCheckbox value="{!con.isSelected }"/> </div></td>
+                                  <td><div class="field"><apex:outputLabel value="{!con.ContractNumber}"></apex:outputLabel></div></td>
+                                  <td><div class="field"><apex:outputLabel value="{!con.ContractName}"></apex:outputLabel></div></td>
+                                  <td><div class="field"><apex:outputLabel value="{!con.GE_PRM_Relationship_Type}"></apex:outputLabel></div></td>
+<!--                                  <td><div class="field"><apex:outputLabel value="{!con.StartDate}"></apex:outputLabel></div></td>-->
+                                  <td><div class="field"><apex:outputLabel value="{!con.EndDate}"></apex:outputLabel></div></td>
+                                  <td><div class="field"><apex:outputLabel value="{!con.Status}"></apex:outputLabel></div></td>
+                                  <td><div class="field"><apex:outputLabel value="{!con.GE_PRM_Tier_2 }"></apex:outputLabel></div></td>
+                                  <td><div class="field"><apex:outputLabel value="{!con.GE_PRM_Tier_3 }"></apex:outputLabel></div></td>
+                                  <td><div class="field"><apex:outputLabel value="{!con.GE_PRM_Tier_4 }"></apex:outputLabel></div></td>
+                                  <td><div class="field"><apex:outputLabel value="{!con.GE_PRM_Tier_5 }"></apex:outputLabel></div></td>
+                              </tr>
+                         </apex:repeat>
+                     </tbody>
+                    
+                    
+                    
+                    
+                    
+                <!--    <body style="background:white;">
+                 <table width="900px" border="0px" class="list fixed">
+                    <colgroup>
+                        <col width="900px"/>
+                    </colgroup>
+                    <tr id="Button1">
+                        <td style="border: 0px;text-align: center;">
+                            <apex:commandButton value="Renew" action="{!renewContracts}" />
+                            <apex:commandButton value="Cancel" action="{!backtoAccount}"/>
+                        </td>
+                    </tr>-->
+                 </table>
+                </body>           
+             </Apex:pageBlock>     
+     </Apex:form>
+ 
+ 
+ 
+</apex:page>

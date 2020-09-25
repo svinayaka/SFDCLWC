@@ -1,0 +1,2 @@
+<apex:page action="{!redirect}&objecttype=Contract_Term_GEOG__c&actiontype=View" extensions="skuid.Redirects" standardcontroller="Contract_Term_GEOG__c">
+</apex:page>

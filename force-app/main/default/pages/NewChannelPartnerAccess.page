@@ -1,0 +1,192 @@
+<apex:page standardController="Account" extensions="NewChannelPartnerAccess" sidebar="false">
+    <style>
+    .center{margin-left:auto;margin-right:auto;}
+    .right{float:right;}
+    </style>
+    <link rel="stylesheet" href="{!URLFOR($Resource.jqueryUI, 'jqueryUI/jquery-ui.css')}" />
+    <script>
+    var oldEmail;
+    j$ = jQuery.noConflict();
+    j$(function() {
+    var email = j$( "#email" ),
+      id = j$( "#id" ),
+      allFields = j$( [] ).add( email ),
+      tips = j$( ".validateTips" );
+ 
+    function updateTips( t ) {
+      tips
+        .text( t )
+        .addClass( "ui-state-highlight" );
+      setTimeout(function() {
+        tips.removeClass( "ui-state-highlight", 1500 );
+      }, 500 );
+    }
+ 
+    function checkOld( o ) {
+      if ( oldEmail == o.val() ) {
+        o.addClass( "ui-state-error" );
+        updateTips( "Enter new email address." );
+        return false;
+      } else {
+        return true;
+      }
+    }
+    
+    function checkLength( o, n, min, max ) {
+      if ( o.val().length > max || o.val().length < min ) {
+        o.addClass( "ui-state-error" );
+        updateTips( "Length of " + n + " must be between " +
+          min + " and " + max + "." );
+        return false;
+      } else {
+        return true;
+      }
+    }
+ 
+    function checkRegexp( o, regexp, n ) {
+      if ( !( regexp.test( o.val() ) ) ) {
+        o.addClass( "ui-state-error" );
+        updateTips( n );
+        return false;
+      } else {
+        return true;
+      }
+    }
+    j$( "#dialog-form" ).dialog({
+      autoOpen: false,
+      draggable: false,
+      height: 184,
+      width: 388,
+      resizable: false,
+      modal: true,
+      buttons: {
+        "Change Email": function() {
+          var bValid = true;
+          allFields.removeClass( "ui-state-error" );
+          
+          bValid = bValid && checkOld( email );
+          
+          bValid = bValid && checkLength( email, "email", 6, 80 );
+ 
+          bValid = bValid && checkRegexp( email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. abc@xyz.com" );
+          
+          if ( bValid ) {
+              commitEmail(id.val(), email.val());
+              j$( this ).dialog( "close" );
+          }
+        },
+        Cancel: function() {
+          j$( this ).dialog( "close" );
+        }
+      },
+      close: function() {
+        allFields.val( "" ).removeClass( "ui-state-error" );
+      }
+    });
+    j$( "#dialog-confirm" ).dialog({
+      autoOpen: false,
+      draggable: false,
+      resizable: false,
+      position: { my: "center", at: "center", of: window },
+      height: 164,
+      width: 388,
+      modal: true,
+      buttons: {
+        "Reset Passowrd": function() {
+          resetPassword(id.val());
+          j$( this ).dialog( "close" );
+        },
+        Cancel: function() {
+          j$( this ).dialog( "close" );
+        }
+      }
+    });
+    });
+    function pwReset(var1){
+        j$( "#id" ).val(var1);
+        j$( "#dialog-confirm" ).dialog( "open" );
+        j$('.ui-widget-overlay').css('background', 'black');
+    }
+    function changeEmail(var1, var2){
+        oldEmail = var2;
+        j$( "#email" ).val(var2);
+        j$( "#id" ).val(var1);
+        j$( "#dialog-form" ).dialog( "open" );
+        j$('.ui-widget-overlay').css('background', 'black');
+    }
+    </script>
+    <apex:includeScript value="{!URLFOR($Resource.jqueryUI, 'jqueryUI/jquery-1.10.2.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jqueryUI, 'jqueryUI/jquery-ui.js')}"/>
+    <br/>
+    <h3><b style="font-size:1.6em;">Manage Channel Partner Access</b></h3>
+    <p>This page helps you in creating and managing portal access for a new or an already existing channel partner users.</p>
+    <apex:pageBlock id="panel">
+    <apex:pageMessages escape="false" />
+    <apex:pageBlockSection title="Account Details" collapsible="false" >
+        <apex:outputField value="{!Account.Name}"/>
+        <apex:outputField value="{!Account.GE_HQ_DUNS_Number__c}"/>
+        <apex:outputField value="{!Account.GE_HQ_Request_Status__c}"/>
+        <apex:outputField value="{!Account.GE_HQ_Account_Request_ID__c}"/>
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Address" for="Address" /><apex:outputText value="{!address}" id="Address" escape="false"/>
+        </apex:pageBlockSectionItem>
+        <apex:outputField value="{!Account.IsPartner}"/>
+    </apex:pageBlockSection>
+    <div><b>Note:</b>
+    <div><span style="padding: 0 40px;color:blue">1. To enable/disable user please select/de-select checkbox under "Activate/Deactivate" and confirm.</span></div>
+    <div><span style="padding: 0 40px;color:blue">2. To update the user email address click update link next to existing email address.</span></div>
+    <div><span style="padding: 0 40px;color:blue">3. Password Reset -</span></div>
+            <div><span style="padding: 0 80px;color:blue">a. For Active users you should be able to reset password under Status/Action column.</span></div>
+            <div><span style="padding: 0 80px;color:blue">b. For In-active users, on activation password will be reset by default.</span></div>
+    </div>
+    <br/>
+    <apex:form >
+    <apex:actionfunction action="{!changeEmailCtrl}" name="commitEmail" rerender="panel">
+        <apex:param assignto="{!userId}" name="param1" value=""/>
+        <apex:param assignto="{!email}" name="param2" value=""/>
+    </apex:actionfunction>
+    <apex:actionfunction action="{!resetPwd}" name="resetPassword" rerender="panel">
+        <apex:param assignto="{!userId}" name="param1" value=""/>
+    </apex:actionfunction>
+    <apex:actionFunction action="{!runback}" name="runback" rerender="runback" />
+    <apex:pageBlock title="Contacts" id="runback" rendered="{!IF(contactList.size > 0 , true , false)}" >
+            <apex:pageBlockTable value="{!contactList}" var="c" style="width:100%;" >
+                <apex:column headerValue="Activate/Deactivate" style="width:120px;" >
+                    <apex:inputCheckbox value="{!c.selected}" onclick="runback()" />
+                </apex:column>
+                <apex:column headerValue="Status/Action" > 
+                    {!IF(OR(c.selected,NOT(c.created)),'','Disabled')}<apex:outputPanel rendered="{!AND(c.created,c.selected,c.enabled)}" ><u><a onclick="pwReset('{!c.userId}');">Password Reset</a></u></apex:outputPanel>
+                </apex:column>
+                <apex:column headerValue="Contact Name">
+                    {!c.conc.Name}
+                </apex:column>
+                <apex:column headerValue="Email">
+                    {!c.Email} <apex:outputPanel rendered="{!AND(c.created,c.selected)}" > (<u><a onclick="changeEmail('{!c.userId}','{!c.email}')">Update</a></u>)</apex:outputPanel>
+                </apex:column>
+                <apex:column headerValue="Title">
+                    {!c.conc.Title}
+                </apex:column>
+                <apex:column headerValue="Profile" style="align:right;" >
+                    <apex:selectList value="{!c.profile}" size="1" disabled="{!Not(c.selected)}" >
+                        <apex:selectOptions value="{!profileList}"/>
+                    </apex:selectList> 
+                </apex:column>
+            </apex:pageBlockTable>
+        <apex:pageBlockButtons location="bottom" styleClass="right" >
+            <apex:commandButton action="{!confirm}" value="Confirm" style="width:70px;" />
+            <apex:commandButton action="{!cancel}" value="Cancel" style="width:70px;" />
+        </apex:pageBlockButtons>
+    </apex:pageBlock>
+    </apex:form>
+    </apex:pageBlock>
+    <div id="dialog-form" title="New Email Address">
+      <form>
+        <input type="text" name="email" id="email" value="" class="text ui-widget-content ui-corner-all" style="width:350px" />
+        <input type="hidden" name="id" id="id" value="" />
+      </form>
+      <p class="validateTips"></p>
+    </div>
+    <div id="dialog-confirm" title="Reset password for user?">
+      <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Reset password for user. Are you sure?</p>
+    </div>
+</apex:page>

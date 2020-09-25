@@ -1,0 +1,10 @@
+<apex:page sidebar="false">
+<apex:outputLabel style="color:blue;font-size:150%">
+The US government has determined that equipment and services for the Yuhzno-Kirinskoye Field are subject to US-Russia sanction licensing requirements, and licenses are unlikely to be approved. Effective immediately, US persons must not work on projects in support of the Yuhzno-Kirinskoye Field. US persons include the following: US citizens, US permanent residents, anybody physically located in the US and employees of US legal entities (e.g., GE International Inc. (“GEII”)). Legal will to provide advice to any existing activities impacted by this determination. If you believe you are impacted, please contact your local counsel or Antonio Ciavatta immediately. Remember, GE may not contract for the export of any US-origin item for use in the Yuhzno-Kirinskoye Field without prior Legal review. 
+</apex:outputLabel>
+<br/><br/>
+
+<apex:outputLink style="font-size:150%;" target="_blank" title="Legal Review Link" value="http://supportcentral.ge.com/ProcessMaps/form_new_request.asp?prod_id=323834&form_id=552774&node_id=1823281&map_id=&reference_id=&reference_type= ">
+<center><b>Legal Review Link</b></center>  </apex:outputLink>
+
+</apex:page>

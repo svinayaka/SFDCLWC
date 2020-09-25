@@ -1,0 +1,9 @@
+<apex:page sidebar="false">
+    <table width="100%" align="Center">
+        <tr align="Center">
+            <td align="Center">
+                <apex:image value="{!$Resource.PRM_Application_Under_Construction}"/>
+            </td>
+        </tr>
+    </table>
+</apex:page>

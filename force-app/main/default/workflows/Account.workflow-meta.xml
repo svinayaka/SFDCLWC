@@ -1,0 +1,1680 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Account_Status_Activation_Request_Approved</fullName>
+        <description>DM Email Notifications - Accounts; Account Status Activation Request - Approved; Email sent to Account Status Change Requester</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Account_Status_Change_Requester__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Accounts_and_Contacts_Email_Templates/Notify_CE_team_and_requester_about_Activate_Account_Request_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>Account_Status_Activation_Request_Rejected</fullName>
+        <description>DM Email Notifications - Accounts; Account Status Activation Request - Rejected; Email sent to Account Status Change Requester</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Account_Status_Change_Requester__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Accounts_and_Contacts_Email_Templates/Notify_CE_team_and_requester_about_Activate_Account_Request_Rejected</template>
+    </alerts>
+    <alerts>
+        <fullName>Account_Status_Inactivation_Request_Approved</fullName>
+        <description>DM Email Notifications - Accounts; Account Status Inactivation Request - Approved; Email sent to Account Status Change Requester</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Account_Status_Change_Requester__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Accounts_and_Contacts_Email_Templates/Notify_CE_team_and_requester_about_Inactivate_Account_Request_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>Account_Status_Inactivation_Request_Rejected</fullName>
+        <description>DM Email Notifications - Accounts; Account Status Inactivation Request - Rejected; Email sent to Account Status Change Requester</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Account_Status_Change_Requester__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Accounts_and_Contacts_Email_Templates/Notify_CE_team_and_requester_about_Inactivate_Account_Request_Rejected</template>
+    </alerts>
+    <alerts>
+        <fullName>Account_Status_Request_Activate_Account</fullName>
+        <description>DM Email Notifications - Accounts; Account Status Request - Activate Account; Email sent to Account Request Approvers, Account Status Change Requester</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Commercial_Account_Request_Approvers</recipient>
+            <type>group</type>
+        </recipients>
+        <recipients>
+            <field>Account_Status_Change_Requester__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Accounts_and_Contacts_Email_Templates/Notify_CE_team_and_requester_about_Activating_Account_Request</template>
+    </alerts>
+    <alerts>
+        <fullName>Account_Status_Request_Inactivate_Account</fullName>
+        <description>DM Email Notifications - Accounts; Account Status Request - Inactivate Account; Email sent to Commercial Account Request Approvers, Accounts Status Change Requester</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Commercial_Account_Request_Approvers</recipient>
+            <type>group</type>
+        </recipients>
+        <recipients>
+            <field>Account_Status_Change_Requester__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Accounts_and_Contacts_Email_Templates/Notify_CE_team_and_requester_about_Inactivate_Account_Request</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_Alert_when_Status_is</fullName>
+        <description>NOT Used - DM Email Notifications - Accounts; Email Alert when Status is; Email Sent to Account Owner</description>
+        <protected>false</protected>
+        <recipients>
+            <type>accountOwner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/Account_Pending_User_Review</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_to_Account_Owner_when_Account_Not_Submitted_to_CMF</fullName>
+        <description>NOT Used - DM Email Notifications - Accounts; Email to Account Owner when Account Not Submitted to CMF; Email sent to Account Owner</description>
+        <protected>false</protected>
+        <recipients>
+            <type>accountOwner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/Account_Not_Submitted_to_CMF</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_OG_EmailAlert_StartKYC_Process</fullName>
+        <description>NOT Used - DM Email Notifications - Accounts; GE_OG_EmailAlert_StartKYC_Process; Email sent to Record Creator</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PW_EmailTemp_Start_KYC_Process</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_OG_KYC_Process_Submitted_Creator</fullName>
+        <description>NOT Used - DM Email Notifications; GE_OG_KYC Process Submitted_Creator; Email sent to Record Creator</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>All/GE_OG_KYC_Process_Submitted_Creator</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_OG_KYC_Submitted</fullName>
+        <description>NOT Used - DM Email Notifications - Accounts; GE_OG_KYC_Submitted; Email sent to GE_ES_KYC_Users</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>GE_ES_KYC_Users</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>All/GE_PW_KYC_Process_Submitted</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PW_CMFApproved_Email_AccountOwner</fullName>
+        <description>NOT Used - DM Email Notifications - Accounts; GE_PW_CMFApproved_Email_AccountOwner; Email sent to Record Creator</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/GE_PW_CMFApproved_Template</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PW_CMFApproved_Email_KYCAdmin</fullName>
+        <ccEmails>compass.tester@ge.com</ccEmails>
+        <description>NOT Used - DM Email Notifications - Accounts; GE_PW_CMFApproved_Email_KYCAdmin; Email sent to Account Owner</description>
+        <protected>false</protected>
+        <recipients>
+            <type>accountOwner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/GE_PW_Emailtemp_KYC_Admin</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PW_KYC_EmailNotification_SplitAccounts</fullName>
+        <description>NOT Used - DM Email Notifications; GE_PW_KYC_EmailNotification_SplitAccounts; Email sent to Record Creator</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PW_EmailNotification_SplitAccounts</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PW_SumitToCMF_Email_AccountOwner</fullName>
+        <description>NOT Used - DM Email Notifications; GE_PW_SumitToCMF_Email_AccountOwner; Email sent to Record Creator</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/GE_PW_SubmittoCMF</template>
+    </alerts>
+    <alerts>
+        <fullName>Generate_email_to_send_to_new_account_owner_when_account_owner_field_is_updated</fullName>
+        <description>DM Email notifications - Accounts; Generate email to send to new account owner when account owner field is updated; Email sent to Account Owner, Previous Owner</description>
+        <protected>false</protected>
+        <recipients>
+            <type>accountOwner</type>
+        </recipients>
+        <recipients>
+            <field>Previous_Owner__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Accounts_and_Contacts_Email_Templates/Send_Email_when_an_Account_Owner_is_Updated</template>
+    </alerts>
+    <alerts>
+        <fullName>Generate_email_to_send_to_the_Account_owner_when_an_Account_is_created</fullName>
+        <description>DM Email Notifications - Accounts; Generate email to send to the Account owner when an Account is created; Email sent to Account Owner</description>
+        <protected>false</protected>
+        <recipients>
+            <type>accountOwner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Accounts_and_Contacts_Email_Templates/Send_Email_to_Account_Owner_when_an_Commercial_Account_is_Created</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_Email_Alert_When_an_Account_is_CMF_Approved</fullName>
+        <description>DM Email Notifications - Legal Entity; Send Email Alert When an Account is CMF Approved; Email sent to Record Creator</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Accounts_and_Contacts_Email_Templates/Account_CMF_Approved_NEW</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_Email_Alert_to_user_when_a_New_Customer_Request_is_created</fullName>
+        <description>DM Email Notifications - Legal Entity; Send Email Alert to user when a New Customer Request is created; Email sent to Record Creator</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Accounts_and_Contacts_Email_Templates/New_Customer_Request_Account_Created_NEW</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_Email_alert_when_Request_status_becomes_Pending_CMF</fullName>
+        <description>DM Email Notifications - Legal Entity; Send Email alert when Request status becomes Pending CMF; Email sent to Record Creator</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Accounts_and_Contacts_Email_Templates/Account_is_Pending_CMF_NEW</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_Email_alert_when_Request_status_becomes_Pending_User_Review</fullName>
+        <description>DM Email Notifications -Legal Entity; Send Email alert when Request status becomes Pending User Review; Email sent to Record Creator</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/Account_is_Pending_User_Review</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_Email_alert_when_Request_status_becomes_Rejected</fullName>
+        <description>DM Email Notifications - Legal Entity; Send Email alert when Request status becomes Rejected; Email sent to Record Creator</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Accounts_and_Contacts_Email_Templates/Account_is_Pending_User_Review_NEW</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>AccRecordType_CMF_Approved</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>CMF_Approved</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>AccRecordType(CMF Approved)</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Account_Record_Type</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>New_Request_Read_Only</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Account Record Type</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Account_Record_TypeRejectedCMF</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>New_Request_Read_Only</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Account Record TypeRejectedCMF</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Account_Status_CC_Approved</fullName>
+        <field>Account_Status__c</field>
+        <literalValue>CC Approved</literalValue>
+        <name>Account Status(CC Approved)</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Account_Status_CC_Hold</fullName>
+        <field>Account_Status__c</field>
+        <literalValue>CC Hold</literalValue>
+        <name>Account Status(CC Hold)</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Account_Status_CC_Inactive</fullName>
+        <field>Account_Status__c</field>
+        <literalValue>CC Inactive</literalValue>
+        <name>Account Status(CC Inactive)</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Account_Status_CC_Rejected</fullName>
+        <field>Account_Status__c</field>
+        <literalValue>CC Rejected</literalValue>
+        <name>Account Status(CC Rejected)</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Account_Status_Submitted_to_CC</fullName>
+        <field>Account_Status__c</field>
+        <literalValue>Submitted to CC</literalValue>
+        <name>Account Status(Submitted to CC)</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Approval_Process_2</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>New_Request_Read_Only</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Approval Process 2</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Approval_Process_Field_Update</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>New_Request_Read_Only</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Approval Process Field Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>CMF_Age_Time</fullName>
+        <description>Updating the time status</description>
+        <field>GE_OG_CMF_Age_in_hrs__c</field>
+        <formula>(Now()- PRIORVALUE( LastModifiedDate ) )*24</formula>
+        <name>CMF Age Time</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>CMF_Inbound_Response_Update</fullName>
+        <field>CMF_Inbound_Response__c</field>
+        <formula>Now()</formula>
+        <name>CMF Inbound Response Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>CMF_New_Value_Update</fullName>
+        <description>Update CMF New value with Request Status value</description>
+        <field>GE_OG_CMF_New_Value__c</field>
+        <formula>TEXT(GE_HQ_Request_Status__c )</formula>
+        <name>CMF New Value Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>CMF_Old_Value_Update</fullName>
+        <description>Update CMF Old value with CMF New Value</description>
+        <field>GE_OG_CMF_Old_Value__c</field>
+        <formula>TEXT( PRIORVALUE( GE_HQ_Request_Status__c )  )</formula>
+        <name>CMF Old Value Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>CMF_Outbound_Response_Update</fullName>
+        <field>CMF_Outbound_Response__c</field>
+        <formula>NOW()</formula>
+        <name>CMF Outbound Response Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Field_update_Account_Status</fullName>
+        <field>Account_Status__c</field>
+        <literalValue>New</literalValue>
+        <name>Field update Account Status</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Field_update_Request_Status</fullName>
+        <field>GE_HQ_Request_Status__c</field>
+        <literalValue>New</literalValue>
+        <name>Field update Request Status</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_HQ_Phone_Update</fullName>
+        <field>Phone</field>
+        <formula>IF(NOT(ISBLANK(GE_PW_Phone_New_Request__c)),
+GE_PW_Phone_New_Request__c,
+PRIORVALUE( Phone ))</formula>
+        <name>GE_HQ_Phone_Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_HQ_Update_City</fullName>
+        <field>ShippingCity</field>
+        <formula>IF(NOT(ISBLANK(GE_HQ_New_Account_City__c)), LEFT(GE_HQ_New_Account_City__c, 40), 
+PRIORVALUE(ShippingCity))</formula>
+        <name>GE_HQ_Update_City</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_HQ_Update_Country</fullName>
+        <field>ShippingCountry</field>
+        <formula>IF(NOT(ISBLANK(TEXT(GE_HQ_New_Account_Country__c))),
+TEXT(GE_HQ_New_Account_Country__c),
+PRIORVALUE( ShippingCountry ))</formula>
+        <name>GE_HQ_Update Country</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_HQ_Update_Requested_DB_DUNS</fullName>
+        <description>To update Shipping Address with New Customer Request Address(From Custom Address)</description>
+        <field>GE_HQ_DB_DUNS__c</field>
+        <formula>IF(NOT(ISBLANK(GE_PW_DB_DUNS_New_Request__c)),
+GE_PW_DB_DUNS_New_Request__c,
+PRIORVALUE(GE_HQ_DB_DUNS__c ))</formula>
+        <name>GE_HQ_Update_Requested_DB_DUNS</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_HQ_Update_Street</fullName>
+        <field>ShippingStreet</field>
+        <formula>IF(NOT(ISBLANK(GE_HQ_New_Account_Street__c)), 
+GE_HQ_New_Account_Street__c, 
+PRIORVALUE( ShippingStreet ))</formula>
+        <name>GE_HQ_Update_Street</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_HQ_Update_Zip</fullName>
+        <field>ShippingPostalCode</field>
+        <formula>IF(NOT(ISBLANK(GE_HQ_New_Account_Zip_Postal_Code__c)), 
+GE_HQ_New_Account_Zip_Postal_Code__c, 
+PRIORVALUE( ShippingPostalCode ))</formula>
+        <name>GE_HQ_Update_Zip</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_HQ_Update_state</fullName>
+        <field>ShippingState</field>
+        <formula>IF(NOT(ISBLANK(GE_HQ_New_Account_State_Province__c)), 
+GE_HQ_New_Account_State_Province__c, 
+PRIORVALUE( ShippingState ))</formula>
+        <name>GE_HQ_Update_state</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_MDM_Account_Status_Active</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>CMF_Approved</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>GE MDM - Account Status Active</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_MDM_Account_Status_Inactive</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>Pending_Customer_Request</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>GE MDM - Account Status Inactive</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_MDM_CC_Status_Approved</fullName>
+        <field>GE_HQ_CMF_Request_Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>GE MDM - CC Status Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_OG_Comments_Update</fullName>
+        <description>Updating Comments Field  if it is blank</description>
+        <field>GE_HQ_Nts_Comments__c</field>
+        <formula>&quot;You Can Enter Comments Here&quot;</formula>
+        <name>GE_OG_Comments_Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_OG_Last_KYC_Completed</fullName>
+        <description>Created to capture Last KYC completed</description>
+        <field>GE_OG_Last_KYC_Compltd__c</field>
+        <formula>NOW()</formula>
+        <name>Last KYC Completed</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_OG_RecordType_ToReadOnly</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>New_Request_Read_Only</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>GE_OG_RecordType_ToReadOnly</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Last_Hierarchy_Build_By</fullName>
+        <field>Last_Hierarchy_Build_By__c</field>
+        <formula>LastModifiedBy.Full_Name__c</formula>
+        <name>Last Hierarchy Build By</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Last_Hierarchy_Build_Date</fullName>
+        <field>Last_Hierarchy_Build_Date__c</field>
+        <formula>LastModifiedDate</formula>
+        <name>Last Hierarchy Build Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Request_Status_CMF_Approved</fullName>
+        <field>GE_HQ_Request_Status__c</field>
+        <literalValue>CMF Approved</literalValue>
+        <name>Request Status(CMF Approved)</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Request_Status_Pending_CMF</fullName>
+        <field>GE_HQ_Request_Status__c</field>
+        <literalValue>Pending CMF</literalValue>
+        <name>Request Status(Pending CMF)</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Request_Status_Update</fullName>
+        <description>Update Request status as &quot;New&quot;</description>
+        <field>GE_HQ_Request_Status__c</field>
+        <literalValue>New</literalValue>
+        <name>Request Status Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Request_Type_Update</fullName>
+        <description>Update Request Type field as &quot;New Customer&quot;</description>
+        <field>GE_HQ_Request_Type__c</field>
+        <literalValue>New Customer</literalValue>
+        <name>Request Type Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>SFDC_Request_Status1</fullName>
+        <field>GE_HQ_Request_Status__c</field>
+        <literalValue>Pending User Review</literalValue>
+        <name>SFDC Request Status1</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>SFDC_Request_Status_2</fullName>
+        <field>GE_HQ_Request_Status__c</field>
+        <literalValue>CMF Approved</literalValue>
+        <name>SFDC Request Status 2</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>SFDC_Request_Status_Pending_KYC_CMF_K</fullName>
+        <description>To update the SFDC &quot;Request Status&quot; for CMF Request stastus of Pending-KYC CMF - K.</description>
+        <field>GE_HQ_Request_Status__c</field>
+        <literalValue>Pending KYC</literalValue>
+        <name>SFDC Request Status Pending-KYC CMF - K</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>SFDC_Request_Status_for_Rejected_KYC_CMF</fullName>
+        <description>Field update whenCMF Request Status of Rejected KYC-CMF(M)</description>
+        <field>GE_HQ_Request_Status__c</field>
+        <literalValue>Pending User Review</literalValue>
+        <name>SFDC Request Status for Rejected KYC-CMF</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>SFDC_Status</fullName>
+        <field>GE_HQ_Request_Status__c</field>
+        <literalValue>Pending CMF</literalValue>
+        <name>SFDC Request Status</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_Account_Owner</fullName>
+        <field>OwnerId</field>
+        <lookupValue>energy.integration.og@ge.com</lookupValue>
+        <lookupValueType>User</lookupValueType>
+        <name>Set Account Owner</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_Account_Status_as_approved</fullName>
+        <description>Set account status as CC Approved</description>
+        <field>Account_Status__c</field>
+        <literalValue>CC Approved</literalValue>
+        <name>Set Account Status as approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_Request_Status_to_Inactive</fullName>
+        <description>Set the Request Status to &apos;CMF Inactive&apos; when GE Status Flag is equals to &apos;I&apos; and CMF Request Status is &apos;D&apos;</description>
+        <field>GE_HQ_Request_Status__c</field>
+        <literalValue>CMF Inactive</literalValue>
+        <name>Set Request Status to CMF Inactive</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_the_Account_Record_Type</fullName>
+        <description>To update the Account Record Type to CMF Inactive when GE Status Flag is &apos;I&apos; and CMF Request Status is &apos;D&apos;</description>
+        <field>RecordTypeId</field>
+        <lookupValue>CMF_Inactive</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Set the Account Record Type</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update</fullName>
+        <description>This field update i used to update the Field pending CMf counter</description>
+        <field>GE_OG_Pending_CMF_Counter__c</field>
+        <formula>IF(ISPICKVAL( GE_HQ_CMF_Request_Status__c , &apos;N&apos;) , 
+if( ISNULL(GE_OG_Pending_CMF_Counter__c )  , 1,GE_OG_Pending_CMF_Counter__c+1) , PRIORVALUE(GE_OG_Pending_CMF_Counter__c))</formula>
+        <name>UpdatePending CMF Counter</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>UpdatePendingUserReview</fullName>
+        <description>Update the Pending User Counter</description>
+        <field>GE_OG_Pending_User_Review_Counter__c</field>
+        <formula>IF(OR(ISPICKVAL( GE_HQ_CMF_Request_Status__c ,&apos;Rejected-CMF&apos;),
+	  ISPICKVAL( GE_HQ_CMF_Request_Status__c ,&apos;Rejected&apos;),
+      ISPICKVAL( GE_HQ_CMF_Request_Status__c ,&apos;On Hold-CMF&apos;),
+	  ISPICKVAL( GE_HQ_CMF_Request_Status__c ,&apos;Hold&apos;)),
+if(ISNULL(GE_OG_Pending_User_Review_Counter__c) ,1, GE_OG_Pending_User_Review_Counter__c+1) , PRIORVALUE(GE_OG_Pending_User_Review_Counter__c))</formula>
+        <name>UpdatePendingUserReview</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Account_Record_Type</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>CMF_Approved</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Update Account Record Type</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Bill_zipcode_fromCustom_zipCode</fullName>
+        <description>Cut short the Custom billing Zip/Postal code till first 20 characters and copy cropped value in Std. billing postal code field</description>
+        <field>BillingPostalCode</field>
+        <formula>LEFT(Custom_billing_Zip_Postal_code__c , 20)</formula>
+        <name>Update Bill Zipcode fromCustom zipCode</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_BillingCity_fromCustomBillingCity</fullName>
+        <description>Cut short the Custom billing city till 40 character and copy cropped value in Std. billing city field</description>
+        <field>BillingCity</field>
+        <formula>LEFT( Custom_Billing_City__c , 40)</formula>
+        <name>Update BillingCity fromCustomBillingCity</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Owner</fullName>
+        <field>OwnerId</field>
+        <lookupValue>energy.integration.og@ge.com</lookupValue>
+        <lookupValueType>User</lookupValueType>
+        <name>Update Owner</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Request_Status_as_CMF_Approved</fullName>
+        <description>Set the Request Status to CMF Approved when CMF Request Status is &apos;D&apos; and GE Status Flag is &apos;A&apos;</description>
+        <field>GE_HQ_Request_Status__c</field>
+        <literalValue>CMF Approved</literalValue>
+        <name>Update Request Status as CMF Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Ship_Zip_codefromCustomZipCode</fullName>
+        <description>Cut short the Custom shipping zip code til first 40 characters and copy cropped value in Std. shipping zip code</description>
+        <field>ShippingPostalCode</field>
+        <formula>LEFT(Custom_shipping_Zip_Postal_code__c, 20)</formula>
+        <name>Update Ship_Zip_codefromCustomZipCode</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_ShippinCity_fromCustomShippinCity</fullName>
+        <description>Cut short the Custom shipping city till first 40 character and copy cropped value in Std. billing city field</description>
+        <field>ShippingCity</field>
+        <formula>LEFT( Custom_Shipping_City__c , 40)</formula>
+        <name>Update ShippinCity fromCustomShippinCity</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Webservice_Response_Status</fullName>
+        <field>GE_HQ_WebService_Response_Status__c</field>
+        <name>Webservice Response Status</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Webservice_Response_Status_E</fullName>
+        <description>To reset the Web Service Response Status field to None.</description>
+        <field>GE_HQ_WebService_Response_Status__c</field>
+        <name>Webservice Response Status E</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Webservice_Response_Status_GW</fullName>
+        <description>For CMF Request Status of In process -CMF</description>
+        <field>GE_HQ_WebService_Response_Status__c</field>
+        <name>Webservice Response Status GW</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Webservice_Response_Status_REJ_RE</fullName>
+        <description>For CMF Request Status of Rejected-CMF.</description>
+        <field>GE_HQ_WebService_Response_Status__c</field>
+        <name>Webservice Response Status REJ RE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>dunsparent</fullName>
+        <field>Parent_Duns__c</field>
+        <formula>IF(AND(GE_HQ_DUNS_Number__c=GE_HQ_HQ_Parent_Duns__c,GE_HQ_DUNS_Number__c=GE_HQ_Dom_Ult_Duns__c,GE_HQ_DUNS_Number__c=GE_HQ_Glo_Ult_Duns__c,NOT(ISBLANK(GE_HQ_GE_Global_Duns__c)),GE_HQ_DUNS_Number__c&lt;&gt;GE_HQ_GE_Global_Duns__c),GE_HQ_GE_Global_Duns__c,
+IF(AND(ISBLANK(GE_HQ_HQ_Parent_Duns__c),GE_HQ_DUNS_Number__c=GE_HQ_Dom_Ult_Duns__c,GE_HQ_DUNS_Number__c=GE_HQ_Glo_Ult_Duns__c,NOT(ISBLANK(GE_HQ_GE_Global_Duns__c)),GE_HQ_DUNS_Number__c&lt;&gt;GE_HQ_GE_Global_Duns__c),GE_HQ_GE_Global_Duns__c,
+IF(AND(ISBLANK(GE_HQ_HQ_Parent_Duns__c),ISBLANK(GE_HQ_Dom_Ult_Duns__c),GE_HQ_DUNS_Number__c=GE_HQ_Glo_Ult_Duns__c,NOT(ISBLANK(GE_HQ_GE_Global_Duns__c)),GE_HQ_DUNS_Number__c&lt;&gt;GE_HQ_GE_Global_Duns__c),GE_HQ_GE_Global_Duns__c,
+IF(AND(GE_HQ_DUNS_Number__c=GE_HQ_HQ_Parent_Duns__c,ISBLANK(GE_HQ_Dom_Ult_Duns__c),GE_HQ_DUNS_Number__c=GE_HQ_Glo_Ult_Duns__c,NOT(ISBLANK(GE_HQ_GE_Global_Duns__c)),GE_HQ_DUNS_Number__c&lt;&gt;GE_HQ_GE_Global_Duns__c),GE_HQ_GE_Global_Duns__c,
+IF(AND(ISBLANK(GE_HQ_HQ_Parent_Duns__c),ISBLANK(GE_HQ_Dom_Ult_Duns__c),GE_HQ_DUNS_Number__c=GE_HQ_Glo_Ult_Duns__c,NOT(ISBLANK(GE_HQ_GE_Global_Duns__c)),GE_HQ_DUNS_Number__c&lt;&gt;GE_HQ_GE_Global_Duns__c),GE_HQ_GE_Global_Duns__c,
+IF(AND(GE_HQ_DUNS_Number__c=GE_HQ_HQ_Parent_Duns__c,ISBLANK(GE_HQ_Dom_Ult_Duns__c),ISBLANK(GE_HQ_Glo_Ult_Duns__c),NOT(ISBLANK(GE_HQ_GE_Global_Duns__c)),GE_HQ_DUNS_Number__c&lt;&gt;GE_HQ_GE_Global_Duns__c),GE_HQ_GE_Global_Duns__c,
+IF(AND(ISBLANK(GE_HQ_HQ_Parent_Duns__c),ISBLANK(GE_HQ_Dom_Ult_Duns__c),ISBLANK(GE_HQ_Glo_Ult_Duns__c),NOT(ISBLANK(GE_HQ_GE_Global_Duns__c)),GE_HQ_DUNS_Number__c&lt;&gt;GE_HQ_GE_Global_Duns__c),GE_HQ_GE_Global_Duns__c,
+IF(AND(GE_HQ_DUNS_Number__c=GE_HQ_HQ_Parent_Duns__c,GE_HQ_DUNS_Number__c=GE_HQ_Dom_Ult_Duns__c,ISBLANK(GE_HQ_Glo_Ult_Duns__c),NOT(ISBLANK(GE_HQ_GE_Global_Duns__c)),GE_HQ_DUNS_Number__c&lt;&gt;GE_HQ_GE_Global_Duns__c),GE_HQ_GE_Global_Duns__c,
+IF(AND(GE_HQ_DUNS_Number__c=GE_HQ_HQ_Parent_Duns__c,GE_HQ_DUNS_Number__c=GE_HQ_Dom_Ult_Duns__c,GE_HQ_DUNS_Number__c&lt;&gt;GE_HQ_Glo_Ult_Duns__c,ISBLANK(GE_HQ_GE_Global_Duns__c),NOT(ISBLANK(GE_HQ_Glo_Ult_Duns__c))),GE_HQ_Glo_Ult_Duns__c,
+IF(AND(GE_HQ_DUNS_Number__c=GE_HQ_HQ_Parent_Duns__c,GE_HQ_DUNS_Number__c=GE_HQ_Dom_Ult_Duns__c,GE_HQ_DUNS_Number__c&lt;&gt;GE_HQ_Glo_Ult_Duns__c,NOT(ISBLANK(GE_HQ_Glo_Ult_Duns__c))),GE_HQ_Glo_Ult_Duns__c,
+IF(AND(ISBLANK(GE_HQ_HQ_Parent_Duns__c),ISBLANK(GE_HQ_Dom_Ult_Duns__c),GE_HQ_DUNS_Number__c&lt;&gt;GE_HQ_Glo_Ult_Duns__c,(ISBLANK(GE_HQ_GE_Global_Duns__c)),NOT(ISBLANK(GE_HQ_Glo_Ult_Duns__c))),GE_HQ_Glo_Ult_Duns__c,
+IF(AND(ISBLANK(GE_HQ_HQ_Parent_Duns__c),ISBLANK(GE_HQ_Dom_Ult_Duns__c),GE_HQ_DUNS_Number__c&lt;&gt;GE_HQ_Glo_Ult_Duns__c,NOT(ISBLANK(GE_HQ_Glo_Ult_Duns__c))),GE_HQ_Glo_Ult_Duns__c,
+IF(AND(GE_HQ_DUNS_Number__c=GE_HQ_HQ_Parent_Duns__c,ISBLANK(GE_HQ_Dom_Ult_Duns__c),GE_HQ_DUNS_Number__c&lt;&gt;GE_HQ_Glo_Ult_Duns__c,NOT(ISBLANK(GE_HQ_Glo_Ult_Duns__c))),GE_HQ_Glo_Ult_Duns__c,
+IF(AND(GE_HQ_DUNS_Number__c=GE_HQ_HQ_Parent_Duns__c,ISBLANK(GE_HQ_Dom_Ult_Duns__c),GE_HQ_DUNS_Number__c&lt;&gt;GE_HQ_HQ_Parent_Duns__c),GE_HQ_Glo_Ult_Duns__c,
+IF(AND(GE_HQ_DUNS_Number__c=GE_HQ_HQ_Parent_Duns__c,GE_HQ_DUNS_Number__c&lt;&gt;GE_HQ_Dom_Ult_Duns__c,NOT(ISBLANK(GE_HQ_Dom_Ult_Duns__c))),GE_HQ_Dom_Ult_Duns__c,
+IF(AND(ISBLANK(GE_HQ_HQ_Parent_Duns__c),GE_HQ_DUNS_Number__c&lt;&gt;GE_HQ_Dom_Ult_Duns__c,NOT(ISBLANK(GE_HQ_Dom_Ult_Duns__c))),GE_HQ_Dom_Ult_Duns__c,
+IF(AND(GE_HQ_DUNS_Number__c&lt;&gt;GE_HQ_HQ_Parent_Duns__c,NOT(ISBLANK(GE_HQ_HQ_Parent_Duns__c))),GE_HQ_HQ_Parent_Duns__c,
+&quot;No Parent&quot;)))))))))))))))))</formula>
+        <name>Duns Parent</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>sfdc_request_status_rejr</fullName>
+        <description>Field update for CMF Request Status of Rejected-CMF (R)</description>
+        <field>GE_HQ_Request_Status__c</field>
+        <literalValue>Pending User Review</literalValue>
+        <name>SFDC_Request_Status_REJ R</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>sfdcrequeststatusapprovedcmf</fullName>
+        <description>To Update the SFDC &quot; Request Status &quot; field For CMF Request Status of Approved CMF(A,L)</description>
+        <field>GE_HQ_Request_Status__c</field>
+        <literalValue>Pending CMF</literalValue>
+        <name>SFDC Request Status Approved CMF</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>sfdcrequeststatusd</fullName>
+        <description>Field update for CMF Request Status of D.</description>
+        <field>GE_HQ_Request_Status__c</field>
+        <literalValue>CMF Approved</literalValue>
+        <name>SFDC Request Status D</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>sfdcrequeststatusinprocesscmfgw</fullName>
+        <description>To Update the SFDC &quot; Request Status For CMF Request Status of In Process CMF.</description>
+        <field>GE_HQ_Request_Status__c</field>
+        <literalValue>Pending User Review</literalValue>
+        <name>SFDC Request Status In Process CMF GW</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>sfdcrequeststatusn</fullName>
+        <description>To Update SFDC Request Status Field for CMF Request Status of N.</description>
+        <field>GE_HQ_Request_Status__c</field>
+        <literalValue>Pending CMF</literalValue>
+        <name>SFDC Request Status N</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>sfdcrequeststatusrej</fullName>
+        <description>Field update for CMF Request Status of Rejected-CMF</description>
+        <field>GE_HQ_Request_Status__c</field>
+        <literalValue>Pending User Review</literalValue>
+        <name>SFDC Request Status REJ</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>sfdcrequeststatusreje</fullName>
+        <description>Field update for CMF Request Status of Rejected-CMF (E)</description>
+        <field>GE_HQ_Request_Status__c</field>
+        <literalValue>Pending CMF</literalValue>
+        <name>SFDC Request Status REJ E</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>webserviceresponsestatusrej</fullName>
+        <description>For CMF Request Status of Rejected-CMF</description>
+        <field>GE_HQ_WebService_Response_Status__c</field>
+        <name>Webservice Response Status REJ</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>webserviceresponsestatusreje</fullName>
+        <description>For CMF Request Status of Rejected-CMF (R)</description>
+        <field>GE_HQ_WebService_Response_Status__c</field>
+        <name>Webservice Response Status REJ E</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <rules>
+        <fullName>Account CMF COE Time Cycle</fullName>
+        <actions>
+            <name>CMF_Age_Time</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>CMF_New_Value_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>CMF_Old_Value_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>UpdatePendingUserReview</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Workflow rule to update CMF New value with request status value and CMF old value with CMF New value</description>
+        <formula>ISCHANGED(GE_HQ_CMF_Request_Status__c)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Account is CMF Approved</fullName>
+        <actions>
+            <name>Send_Email_Alert_When_an_Account_is_CMF_Approved</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>AccRecordType_CMF_Approved</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Account_Status_CC_Approved</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>CMF_New_Value_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>GE_OG_Last_KYC_Completed</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Request_Status_CMF_Approved</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(OR (ISCHANGED(GE_HQ_CMF_Request_Status__c),ISCHANGED(GE_HQ_GE_Status_Flag__c)),ISPICKVAL(GE_HQ_CMF_Request_Status__c, &apos;Approved&apos;),GE_HQ_GE_Status_Flag__c=&apos;A&apos;)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Account not Submitted to CMF</fullName>
+        <active>false</active>
+        <booleanFilter>1 AND 2</booleanFilter>
+        <criteriaItems>
+            <field>Account.GE_HQ_Request_Status__c</field>
+            <operation>equals</operation>
+            <value>New</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.GE_ES_Competitor__c</field>
+            <operation>notEqual</operation>
+            <value>Yes</value>
+        </criteriaItems>
+        <description>Workflow rule to send Email notification to Account owner for those account which are saved but not yet submitted to CMF</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Email_to_Account_Owner_when_Account_Not_Submitted_to_CMF</name>
+                <type>Alert</type>
+            </actions>
+            <timeLength>7</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>Approval Process 1</fullName>
+        <actions>
+            <name>Approval_Process_Field_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Account.GE_HQ_CMF_Request_Status__c</field>
+            <operation>equals</operation>
+            <value>N,Approved-CMF</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.RecordTypeId</field>
+            <operation>notEqual</operation>
+            <value>New Customer Request - Step 2,New Customer Request with KYC</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.RecordTypeId</field>
+            <operation>notEqual</operation>
+            <value>New Customer Request - Step 3,New Customer Request - Step 3 Read Only</value>
+        </criteriaItems>
+        <description>To Update the SFDC &quot; Record Type&quot;  field For CMF Request Status of Approved-CMF,N, Approved-CMF.</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Approval Process 2</fullName>
+        <actions>
+            <name>Approval_Process_2</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <booleanFilter>1 OR 2 OR 3</booleanFilter>
+        <criteriaItems>
+            <field>Account.GE_HQ_CMF_Request_Status__c</field>
+            <operation>equals</operation>
+            <value>Rejected-CMF</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.GE_HQ_CMF_Request_Status__c</field>
+            <operation>equals</operation>
+            <value>On Hold-CMF</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.GE_HQ_CMF_Request_Status__c</field>
+            <operation>equals</operation>
+            <value>Rejected KYC-CMF</value>
+        </criteriaItems>
+        <description>To Update the SFDC &quot; Record Type&quot;  field For CMF Request Status of Rejected-CMF or InProcess-CMF</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>CMF Account Request Status Approved-CMF-AL</fullName>
+        <actions>
+            <name>sfdcrequeststatusapprovedcmf</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Account.GE_HQ_CMF_Request_Status__c</field>
+            <operation>equals</operation>
+            <value>Approved-CMF</value>
+        </criteriaItems>
+        <description>To Update the SFDC &quot; Request Status &quot; field For CMF Request Status of Approved-CMF (A,L)</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>CMF Account Request Status D</fullName>
+        <actions>
+            <name>sfdcrequeststatusd</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Account.GE_HQ_CMF_Request_Status__c</field>
+            <operation>equals</operation>
+            <value>D</value>
+        </criteriaItems>
+        <description>To Update the SFDC &quot; Request Status &quot; field  for CMF Request Status of D.</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>CMF Account Request Status In Process-CMF-GW</fullName>
+        <actions>
+            <name>Account_Record_Type</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Account_Status_CC_Hold</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>CMF_New_Value_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Webservice_Response_Status_GW</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>sfdcrequeststatusinprocesscmfgw</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 OR 2</booleanFilter>
+        <criteriaItems>
+            <field>Account.GE_HQ_CMF_Request_Status__c</field>
+            <operation>equals</operation>
+            <value>On Hold-CMF</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.GE_HQ_CMF_Request_Status__c</field>
+            <operation>equals</operation>
+            <value>Hold</value>
+        </criteriaItems>
+        <description>To Update the SFDC &quot; Request Status &quot; field For CMF Request Status of In Process-CMF(G,W).</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>CMF Account Request Status N</fullName>
+        <actions>
+            <name>sfdcrequeststatusn</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Account.GE_HQ_CMF_Request_Status__c</field>
+            <operation>equals</operation>
+            <value>N</value>
+        </criteriaItems>
+        <description>To Update the SFDC &quot; Request Status &quot; field  for CMF Request Status of N.</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>CMF Account Request Status Rejected KYC-CMF - M</fullName>
+        <actions>
+            <name>SFDC_Request_Status_for_Rejected_KYC_CMF</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Account.GE_HQ_CMF_Request_Status__c</field>
+            <operation>equals</operation>
+            <value>Rejected KYC-CMF</value>
+        </criteriaItems>
+        <description>To update the SFDC &quot; Request Status &quot; field  for CMF Request Status of Rejected KYC-CMF (M).</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>CMF Account Request Status Rejected-CMF-RE</fullName>
+        <actions>
+            <name>Account_Record_TypeRejectedCMF</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Account_Status_CC_Rejected</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>sfdcrequeststatusrej</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>webserviceresponsestatusrej</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 OR 2</booleanFilter>
+        <criteriaItems>
+            <field>Account.GE_HQ_CMF_Request_Status__c</field>
+            <operation>equals</operation>
+            <value>Rejected-CMF</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.GE_HQ_CMF_Request_Status__c</field>
+            <operation>equals</operation>
+            <value>Rejected</value>
+        </criteriaItems>
+        <description>To Update the SFDC &quot; Request Status &quot; field  and  Reset the Web Service Response Status field For CMF Request Status of Rejected-CMF(R,E).</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>CMF Inbound Response Calculation</fullName>
+        <actions>
+            <name>CMF_Inbound_Response_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(ISCHANGED(GE_HQ_CMF_Request_Status__c),  	 	OR(ISPICKVAL(PRIORVALUE(GE_HQ_Request_Status__c),&apos;Submitted to CMF&apos;),ISPICKVAL(PRIORVALUE(GE_HQ_Request_Status__c),&apos;Submitted to CC&apos;), 	   ISPICKVAL(PRIORVALUE(GE_HQ_Request_Status__c),&apos;Pending CMF&apos;),ISPICKVAL(PRIORVALUE(GE_HQ_Request_Status__c),&apos;Submitted to CC&apos;)), 	     OR(ISPICKVAL(PRIORVALUE(GE_HQ_CMF_Request_Status__c),&apos;D&apos;),ISPICKVAL(PRIORVALUE(GE_HQ_CMF_Request_Status__c),&apos;Approved&apos;), 	   ISPICKVAL(PRIORVALUE(GE_HQ_CMF_Request_Status__c),&apos;Rejected-CMF&apos;),ISPICKVAL(PRIORVALUE(GE_HQ_CMF_Request_Status__c),&apos;Rejected&apos;)),	 	 	OR(GE_HQ_GE_Status_Flag__c = &apos;A&apos;,GE_HQ_GE_Status_Flag__c = &apos;&apos;))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>CMF Outbound Response Calculation</fullName>
+        <actions>
+            <name>CMF_Outbound_Response_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(ISCHANGED(GE_HQ_Request_Status__c),  ISPICKVAL(PRIORVALUE(GE_HQ_Request_Status__c),&apos;New&apos;),   OR(ISPICKVAL(PRIORVALUE(GE_HQ_Request_Status__c),&apos;CC Pending&apos;),  ISPICKVAL(PRIORVALUE(GE_HQ_Request_Status__c),&apos;Pending CMF&apos;), ISPICKVAL(PRIORVALUE(GE_HQ_Request_Status__c),&apos;Submitted to CC&apos;), ISPICKVAL(PRIORVALUE(GE_HQ_Request_Status__c),&apos;Submitted to CMF&apos;))  )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>CMF Request Status Pending-KYC CMF-K</fullName>
+        <actions>
+            <name>SFDC_Request_Status_Pending_KYC_CMF_K</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Account.GE_HQ_CMF_Request_Status__c</field>
+            <operation>equals</operation>
+            <value>Pending KYC-CMF</value>
+        </criteriaItems>
+        <description>To Update the SFDC &quot; Request Status &quot; field for CMF Request Status of &quot;Pending-KYC CMF&quot; - K</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Duns Hierarchy</fullName>
+        <actions>
+            <name>dunsparent</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Account.RecordTypeId</field>
+            <operation>notEqual</operation>
+            <value>CMF Account</value>
+        </criteriaItems>
+        <description>This is Using For Duns Hierarchy.</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Email alert for Hold</fullName>
+        <actions>
+            <name>Send_Email_alert_when_Request_status_becomes_Pending_User_Review</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(ISCHANGED(GE_HQ_CMF_Request_Status__c), OR(ISPICKVAL(GE_HQ_CMF_Request_Status__c, &apos;Hold&apos;),ISPICKVAL(GE_HQ_CMF_Request_Status__c, &apos;On Hold-CMF&apos;)))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Email alert for Pending CMF</fullName>
+        <actions>
+            <name>Send_Email_alert_when_Request_status_becomes_Pending_CMF</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>Account_Status_Submitted_to_CC</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Request_Status_Pending_CMF</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(ISCHANGED(GE_HQ_CMF_Request_Status__c),  OR(ISPICKVAL(GE_HQ_CMF_Request_Status__c, &apos;Approved-CMF&apos;),ISPICKVAL(GE_HQ_CMF_Request_Status__c, &apos;Pending&apos;), ISPICKVAL(GE_HQ_CMF_Request_Status__c, &apos;N&apos;)))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Email alert for Pending User Review</fullName>
+        <actions>
+            <name>Send_Email_alert_when_Request_status_becomes_Pending_User_Review</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(ISCHANGED(GE_HQ_CMF_Request_Status__c), OR(ISPICKVAL(GE_HQ_CMF_Request_Status__c, &apos;On Hold-CMF&apos;),ISPICKVAL(GE_HQ_CMF_Request_Status__c, &apos;Rejected-CMF&apos;)))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Email alert for Rejected</fullName>
+        <actions>
+            <name>Send_Email_alert_when_Request_status_becomes_Rejected</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(ISCHANGED(GE_HQ_CMF_Request_Status__c), OR(ISPICKVAL(GE_HQ_CMF_Request_Status__c, &apos;Rejected&apos;),ISPICKVAL(GE_HQ_CMF_Request_Status__c, &apos;Rejected-CMF&apos;)))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE MDM - Account Status Active</fullName>
+        <actions>
+            <name>GE_MDM_Account_Status_Active</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>GE_MDM_CC_Status_Approved</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>(1 OR 2) AND 3</booleanFilter>
+        <criteriaItems>
+            <field>Account.GE_HQ_GE_Status_Flag__c</field>
+            <operation>equals</operation>
+            <value>A</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.GE_HQ_GE_Status_Flag__c</field>
+            <operation>equals</operation>
+            <value>Approved</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.GE_HQ_CMF_Request_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Pending,Hold</value>
+        </criteriaItems>
+        <description>MDM Package OneKYC</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE MDM - Account Status Inactive</fullName>
+        <actions>
+            <name>GE_MDM_Account_Status_Inactive</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Account.GE_HQ_GE_Status_Flag__c</field>
+            <operation>equals</operation>
+            <value>I</value>
+        </criteriaItems>
+        <description>MDM Package</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_HQ_KYC_Record_Submitted</fullName>
+        <actions>
+            <name>GE_OG_KYC_Process_Submitted_Creator</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>GE_OG_KYC_Submitted</name>
+            <type>Alert</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Account.GE_PW_KYC_Status__c</field>
+            <operation>equals</operation>
+            <value>Manual Due Diligence Review In Progress</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.GE_HQ_Request_Status__c</field>
+            <operation>equals</operation>
+            <value>New</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>New Customer Request - Step 3</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_HQ_Shipping_Address_Update</fullName>
+        <actions>
+            <name>GE_HQ_Phone_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>GE_HQ_Update_City</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>GE_HQ_Update_Country</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>GE_HQ_Update_Requested_DB_DUNS</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>GE_HQ_Update_Street</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>GE_HQ_Update_Zip</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>GE_HQ_Update_state</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>To update Shipping Address with New Customer Request Address(From Custom Address)</description>
+        <formula>AND(OR($RecordType.DeveloperName=&apos;New_X3rd_Party_Consultant&apos;, $RecordType.DeveloperName=&apos;New_Request&apos;,  $RecordType.DeveloperName = &apos;GE_PW_New_Customer_Request_Step_2&apos;,  $RecordType.DeveloperName = &apos;New_Channel_PRM_Account_Request&apos;, $RecordType.DeveloperName = &apos;New_Competitor&apos;), OR(ISNEW(),(  OR ( ISCHANGED(GE_HQ_New_Account_Zip_Postal_Code__c), ISCHANGED(GE_HQ_New_Account_Street__c) , ISCHANGED(GE_HQ_New_Account_State_Province__c) , ISCHANGED(GE_HQ_New_Account_City__c) , ISCHANGED(GE_HQ_New_Account_Country__c),  ISCHANGED(GE_PW_Phone_New_Request__c), ISCHANGED( GE_PW_DB_DUNS_New_Request__c )  ) )))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_HQ_Watchlist_SanctionedCountry_Update</fullName>
+        <actions>
+            <name>Update_Owner</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 or 2 or 3 or 4</booleanFilter>
+        <criteriaItems>
+            <field>Account.GE_HQ_Watchlist_Flag__c</field>
+            <operation>equals</operation>
+            <value>Y</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.GE_HQ_Sanctioned_Country_Flag__c</field>
+            <operation>equals</operation>
+            <value>Y</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.GE_HQ_Sanctioned_Country_Flag2__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.GE_HQ_WatchList_Flag2__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <description>This workflow will trigger if the Watchlist or Sanctioned Country is Yes then the owner is changed to Data Administrator.</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_OG_Approval Process 1</fullName>
+        <actions>
+            <name>GE_OG_RecordType_ToReadOnly</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+        <criteriaItems>
+            <field>Account.GE_HQ_CMF_Request_Status__c</field>
+            <operation>equals</operation>
+            <value>N,Approved-CMF</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>,New Customer Request - Step 2,New Customer Request with KYC</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>New Customer Request - Step 3,New Customer Request - Step 3 Read Only</value>
+        </criteriaItems>
+        <description>To Update the SFDC &quot; Record Type&quot; field For CMF Request Status of Approved-CMF,N, Approved-CMF. Using this for New KYC Process</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_OG_Comments_Update</fullName>
+        <actions>
+            <name>GE_OG_Comments_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Account.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>New Competitor,New Consultant,New Account,New Customer Request,New Request - Read Only,New Customer Request - Step 2,New Customer Request - Step 3,New Customer Request with KYC,New Customer Request - Step 3 Read Only</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.GE_HQ_Nts_Comments__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <description>If Comments field is blank then to update with value - written this Work flow</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_OG_EmailNotification_StartKYCProcess</fullName>
+        <actions>
+            <name>GE_OG_EmailAlert_StartKYC_Process</name>
+            <type>Alert</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Account.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>New Customer Request with KYC</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Generate email to send to the Account owner when a commercial account is created</fullName>
+        <actions>
+            <name>Generate_email_to_send_to_the_Account_owner_when_an_Account_is_created</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Account.Account_Tier_GEOG__c</field>
+            <operation>equals</operation>
+            <value>Country</value>
+        </criteriaItems>
+        <description>Generate email to send to the Account owner when a commercial account is created</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Generate email to send to the new account owner when a Account Owner is changed</fullName>
+        <actions>
+            <name>Generate_email_to_send_to_new_account_owner_when_account_owner_field_is_updated</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <description>Generate email to send to the new account owner when a Account Owner is changed</description>
+        <formula>AND(OR(ISCHANGED(OwnerId),ISCHANGED( Previous_Owner__c )), RecordTypeId == &apos;01212000000Voo5&apos;)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Last Hierarchy Build By and date</fullName>
+        <actions>
+            <name>Last_Hierarchy_Build_By</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Last_Hierarchy_Build_Date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Account.Member_of_Id_GE_OG_c__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>New Customer Request Created</fullName>
+        <actions>
+            <name>Send_Email_Alert_to_user_when_a_New_Customer_Request_is_created</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>Field_update_Account_Status</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Field_update_Request_Status</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 AND (2 OR 3) AND 4</booleanFilter>
+        <criteriaItems>
+            <field>Account.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>New Customer Request,New Customer Request with KYC</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.GE_HQ_CMF_Request_Status__c</field>
+            <operation>notEqual</operation>
+            <value>D</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.GE_HQ_CMF_Request_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Approved</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.GE_HQ_GE_Status_Flag__c</field>
+            <operation>notEqual</operation>
+            <value>A</value>
+        </criteriaItems>
+        <description>Send email alert to user who creates a Account with Record type &quot;New Customer Request&quot;</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Populate billing_city%2FZip OR shipping_city%2FZip whenever any 4 of these changes</fullName>
+        <actions>
+            <name>Update_Bill_zipcode_fromCustom_zipCode</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_BillingCity_fromCustomBillingCity</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Ship_Zip_codefromCustomZipCode</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_ShippinCity_fromCustomShippinCity</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Populate billing city ,billing zipcode OR shipping city,shpping Zipcode when any four of these field changes. while consuming or pushing through MDM on the L.E</description>
+        <formula>(OR(ISCHANGED( Custom_Billing_City__c ) , ISNEW() ))  || (OR(ISCHANGED( Custom_Shipping_City__c) , ISNEW() ))  ||  (OR(ISCHANGED( Custom_billing_Zip_Postal_code__c ) , ISNEW() )) || (OR(ISCHANGED( Custom_shipping_Zip_Postal_code__c ) , ISNEW() ))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Set Account Owner</fullName>
+        <actions>
+            <name>Set_Account_Owner</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Account.OwnerId</field>
+            <operation>notEqual</operation>
+            <value>System Integration</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>CMF Approved</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Set SFDC Request Status to CMF Approved</fullName>
+        <actions>
+            <name>Set_Account_Status_as_approved</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Account_Record_Type</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Request_Status_as_CMF_Approved</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>To Update the Account Record Type to CMF Approved and Request Status to &apos;CMF Approved&apos; when CMF Request Status is &apos;Approved&apos;  and GE Status flag &apos;A&apos; for new Search and Subscribed account</description>
+        <formula>OR(ISPICKVAL(GE_HQ_CMF_Request_Status__c, &apos;Approved&apos;),GE_HQ_GE_Status_Flag__c=&apos;A&apos;)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Set SFDC Request Status to CMF Inactive</fullName>
+        <actions>
+            <name>Account_Status_CC_Inactive</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Set_Request_Status_to_Inactive</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Set_the_Account_Record_Type</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+        <criteriaItems>
+            <field>Account.GE_HQ_GE_Status_Flag__c</field>
+            <operation>equals</operation>
+            <value>I</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.GE_HQ_CMF_Request_Status__c</field>
+            <operation>equals</operation>
+            <value>D</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.GE_HQ_CMF_Request_Status__c</field>
+            <operation>equals</operation>
+            <value>Approved</value>
+        </criteriaItems>
+        <description>Set the SFDC Request Status to &apos;CMF Inactive&apos; when GE Status Flag is equal to &apos;I&apos; and CMF Request Status is &apos;D&apos;.</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update fields when record type is changed to New Customer Request with KYC from New Consultant%2FNew Competitor</fullName>
+        <actions>
+            <name>Request_Status_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Request_Type_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <formula>AND( OR(PRIORVALUE(RecordTypeId)=&quot;012A0000000k2Ii&quot;,PRIORVALUE(RecordTypeId)=&quot;012A0000000k2Ih&quot;),RecordTypeId=&quot;012A0000000np62&quot;)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

@@ -1,0 +1,88 @@
+<apex:page >
+<!--<apex:page standardController="Account"  extensions="GE_HQ_ManualMigration" >
+<apex:form >
+
+<style>
+.s1{
+font-family: GE Inspira Pitch, Verdana, Arial;
+font-size:16px;
+font-weight:Bold;
+color:Black}
+.s2{
+font-family: GE Inspira Pitch, Verdana, Arial;
+font-size:13px;
+font-weight:Bold;
+color:Black}
+</style>
+
+
+<apex:pageBlock title="Account Merge Tool">
+
+<apex:outputLabel styleClass="s1" title="Account Merge Tool">
+<br/>
+Please enter the original DUNS Number and the new DUNS Number to move all of the original  Account related list items to the new Account. 
+<br/>
+<br/>
+</apex:outputLabel>
+
+<apex:pageBlockSection columns="6" >
+<apex:pageBlockSectionItem >
+<apex:outputText styleClass="s2" value="Original DUNS Number"/>
+<apex:outputText styleClass="s2" id="txt" value="{!OrigDUNS}"/>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputText styleClass="s2" value="New DUNS Number"/>
+<apex:outputText styleClass="s2" id="txt1" value="{!NewDUNS}"/>
+</apex:pageBlockSectionItem>
+
+--OLD LOCATION
+
+</apex:pageBlockSection>
+
+
+<br/>
+<br/>
+
+<apex:pageBlockSection columns="6">
+<apex:pageBlockSectionItem >
+<h1>Original Account Detail</h1>
+</apex:pageBlockSectionItem>
+<br/>
+<apex:pageBlockSectionItem >
+<h1>New Account Detail</h1>
+</apex:pageBlockSectionItem>
+</apex:pageBlockSection>
+
+<apex:pageBlockSection columns="6" >
+<apex:pageBlockTable styleClass="s2" rendered="true" value="{!accMergeDuns}" var="MergDUNS" title="Original Account Detail">
+<apex:column value="{!MergDUNS.GE_HQ_DUNS_Number__c}"/>
+<apex:column value="{!MergDUNS.Name}"/>
+<apex:column value="{!MergDUNS.ShippingStreet}"/>
+<apex:column value="{!MergDUNS.ShippingCity}"/>
+<apex:column value="{!MergDUNS.ShippingState}"/>
+<apex:column value="{!MergDUNS.ShippingPostalCode}"/>
+<apex:column value="{!MergDUNS.ShippingCountry}"/>
+</apex:pageBlockTable>
+
+<apex:pageBlockTable styleClass="s2" Rendered="true" value="{!accMasterDuns}" var="MastDUNS" title="New Account Detail">
+<apex:column value="{!MastDUNS.GE_HQ_DUNS_Number__c}"/>
+<apex:column value="{!MastDUNS.Name}"/>
+<apex:column value="{!MastDUNS.ShippingStreet}"/>
+<apex:column value="{!MastDUNS.ShippingCity}"/>
+<apex:column value="{!MastDUNS.ShippingState}"/>
+<apex:column value="{!MastDUNS.ShippingPostalCode}"/>
+<apex:column value="{!MastDUNS.ShippingCountry}"/>
+</apex:pageBlockTable>
+
+
+
+</apex:pageBlockSection>
+
+<apex:commandButton value="Back" action="{!Back}"/>
+<apex:commandButton value="Merge" action="{!migrate}" onclick="return confirm('You have requested DUNS Number '+'{!OrigDUNS}'+' be merged into '+'{!NewDUNS}'+'.'+'\n\nThis action is permanent and cannot be undone. Do you want to proceed?')"/> 
+
+</apex:pageblock>                  
+</apex:form>
+-->
+</apex:page>

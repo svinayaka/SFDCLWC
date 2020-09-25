@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>GE_AL_Start_Date_Current_Install_Update</fullName>
+        <field>GE_AL_Well_Start_Date__c</field>
+        <formula>IF(
+AND(ISNULL(GE_AL_Pull_Date__c), NOT (ISNULL( GE_AL_Install_Date__c ))), 
+GE_AL_Install_Date__c , 
+IF(
+AND(NOT(ISNULL(GE_AL_Pull_Date__c)), NOT(ISNULL(GE_AL_Install_Date__c)),OR(ISCHANGED(GE_AL_Pull_Date__c),ISCHANGED(GE_AL_Install_Date__c))),null,GE_AL_Location__r.GE_AL_Well_Start_Date__c))</formula>
+        <name>Start Date of Current Install Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <targetObject>GE_AL_Location__c</targetObject>
+    </fieldUpdates>
+    <rules>
+        <fullName>GE_AL_Update_Well_Start_Date_on_Location</fullName>
+        <actions>
+            <name>GE_AL_Start_Date_Current_Install_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND (GE_AL_Location__r.GE_AL_Well__c = true ,  GE_AL_Location__r.RecordType.Name = &apos;Well&apos;)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

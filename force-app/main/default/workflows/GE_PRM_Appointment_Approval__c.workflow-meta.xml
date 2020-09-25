@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>GE_OG_PRM_Notify_Appointment_Approvers1</fullName>
+        <ccEmails>compass.tester@ge.com</ccEmails>
+        <description>GE OG PRM Notify Appointment Approvers1</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_PRM_Approvers__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>GE_PRM_Delegated_User__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PRM_Notification_for_Afa_Approvers</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_OG_PRM_Notify_Appointment_Approvers2</fullName>
+        <ccEmails>compass.tester@ge.com</ccEmails>
+        <description>GE OG PRM Notify Appointment Approvers2</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_PRM_Approvers__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>GE_PRM_Delegated_User__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PRM_Notification_for_Afa_Approvers</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_OG_PRM_Notify_Appointment_Approvers3</fullName>
+        <ccEmails>compass.tester@ge.com</ccEmails>
+        <description>GE OG PRM Notify Appointment Approvers3</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_PRM_Approvers__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>GE_PRM_Delegated_User__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PRM_Notification_for_Afa_Approvers</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_OG_PRM_Notify_Appointment_Approvers4</fullName>
+        <ccEmails>compass.tester@ge.com</ccEmails>
+        <description>GE OG PRM Notify Appointment Approvers4</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_PRM_Approvers__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>GE_PRM_Delegated_User__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PRM_Notification_for_Afa_Approvers</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_OG_PRM_Notify_Appointment_Approvers5</fullName>
+        <ccEmails>compass.tester@ge.com</ccEmails>
+        <description>GE OG PRM Notify Appointment Approvers5</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_PRM_Approvers__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>GE_PRM_Delegated_User__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PRM_Notification_for_Afa_Approvers</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_OG_PRM_Notify_Delegated_Users1</fullName>
+        <ccEmails>compass.tester@ge.com</ccEmails>
+        <description>GE OG PRM Notify Delegated Users1</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_PRM_Delegated_User__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PRM_Notification_for_Afa_Approvers</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_OG_PRM_Notify_Delegated_Users2</fullName>
+        <ccEmails>compass.tester@ge.com</ccEmails>
+        <description>GE OG PRM Notify Delegated Users2</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_PRM_Delegated_User__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PRM_Notification_for_Afa_Approvers</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_OG_PRM_Notify_Delegated_Users3</fullName>
+        <ccEmails>compass.tester@ge.com</ccEmails>
+        <description>GE OG PRM Notify Delegated Users3</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_PRM_Delegated_User__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PRM_Notification_for_Afa_Approvers</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PRM_Addtn_Info_Provided_AFA_NMI</fullName>
+        <ccEmails>compass.tester@ge.com</ccEmails>
+        <description>Additional Info Provided AFA NMI</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_PRM_Approvers__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>GE_PRM_Delegated_User__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PRM_AFA_DOA_Additional_Info_Provided</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PRM_Afa_Notify_Delegated_Users</fullName>
+        <ccEmails>compass.tester@ge.com</ccEmails>
+        <description>Notify Delegated Users</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_PRM_Delegated_User__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PRM_Notification_for_Afa_Approvers</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PRM_Notify_Approvers</fullName>
+        <ccEmails>compass.tester@ge.com</ccEmails>
+        <description>GE PRM Notify Appointment Approvers</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_PRM_Approvers__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PRM_Notification_for_Afa_Approvers</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>GE_PRM_Approver_Status_Info_Provided</fullName>
+        <field>GE_PRM_Sub_Status__c</field>
+        <name>Update Approver Status Info Provided</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_DOA_Addtn_Info_Provided</fullName>
+        <field>GE_PRM_Status__c</field>
+        <literalValue>Additional Information Provided</literalValue>
+        <name>AFA DOA Addtn Info Provided</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Update_CM_NMI</fullName>
+        <description>When Approver Needs More Info, Channel Manager Actions should be update to NMI</description>
+        <field>GE_PRM_Chnl_Mgr_Actns__c</field>
+        <literalValue>Approver Need More Information</literalValue>
+        <name>GE PRM Update CM NMI</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <targetObject>GE_PRM_Appointment__c</targetObject>
+    </fieldUpdates>
+    <rules>
+        <fullName>GE PRM AFA Apprv NMI</fullName>
+        <actions>
+            <name>GE_PRM_Update_CM_NMI</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>GE_PRM_AFA_DOA_NMI_Tsk</name>
+            <type>Task</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>GE_PRM_Appointment_Approval__c.GE_PRM_Status__c</field>
+            <operation>equals</operation>
+            <value>Need More Info</value>
+        </criteriaItems>
+        <description>When an Approvers requires Need More Info</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <tasks>
+        <fullName>GE_PRM_AFA_DOA_NMI_Tsk</fullName>
+        <assignedToType>owner</assignedToType>
+        <description>An Approver is requesting additional information. Please navigate to the AFA by clicking on &apos;Related To&apos; Link above to provide additional information requested</description>
+        <dueDateOffset>2</dueDateOffset>
+        <notifyAssignee>true</notifyAssignee>
+        <priority>High</priority>
+        <protected>false</protected>
+        <status>In Progress</status>
+        <subject>Fast Track AFA: DOA Approvers requesting more information</subject>
+    </tasks>
+</Workflow>

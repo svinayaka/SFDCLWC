@@ -1,0 +1,38 @@
+<apex:page standardController="TM_Price_Proposal__c" lightningStylesheets="true" extensions="MemberExt" recordSetVar="Member" action="{!init}">
+    <apex:form >   
+        <apex:pageBlock rendered="{!Hide_LC}">
+            
+            <apex:pageMessages ></apex:pageMessages>
+            <apex:commandButton action="{!cancel}" value="Back"/>
+        </apex:pageBlock>
+        <apex:pageBlock rendered="{!show_LC}">
+            
+            <apex:includeLightning />  
+            <div id="LightningComponentid" />    
+            <script>
+            var cureentId;
+            cureentId = '{!memId}';
+            $Lightning.use("c:PriceMachineApp", function() {
+                $Lightning.createComponent("c:CloneRecordCmp",
+                                           {"cureentId" : cureentId},
+                                           "LightningComponentid",
+                                           function(cmp) {
+                                               $A.eventService.addHandler({ "event": "c:SendDataToVFPage", "handler": retriveEventData });
+                                           });
+            });
+            
+            function retriveEventData(event) {
+                var recordTypeId = event.getParam("currentRecId");
+                CallApexMethod(recordTypeId) ;
+                
+            }
+            </script> 
+             <apex:actionFunction name="CallApexMethod"
+                                 action="{!apexMethod}" onComplete="window.open('/{!memId}','_self');">
+            <apex:param id="anode" name="node" value="" />
+
+            </apex:actionFunction>
+                 	
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,111 @@
+<apex:page standardController="SVMXC__Installed_Product__c"  extensions="GE_SS_Trip_WO_On_InstalledProduct"  >
+
+<apex:form >
+<script>
+    function deleteWO(idvalue) {
+        var cnfm = window.confirm('Are you sure?');
+        if(cnfm) {
+            callAF(idWO);
+        }   
+        
+    }
+    </script>
+<apex:actionFunction name="callAF" action="{!deleteWO}" reRender="WoTable">
+    <apex:param name="name1" value="" assignTo="{!idvalue}"/>
+    </apex:actionFunction>  
+
+   <apex:pageBlock id="WoTable">
+       <apex:pageBlockTable value="{!lstWorkOrder}" var="objWO">
+       
+           
+           <apex:column headerValue="Action     " >
+              <apex:outputlink target="_blank" value="/{!objWO.SVMXC__Service_Order__r.Id}/e" >Edit</apex:outputlink>|&nbsp;
+              <apex:commandLink value="Del" onclick="delRec('{!objWO.SVMXC__Service_Order__r.Id}');" rerender="WoTable"/>
+          </apex:column>
+           
+           
+           <!--<apex:column headervalue="Action">
+               
+               <apex:commandLink style="color:blue"  action="{!editWO}" value="Edit" target="_Top</font>">
+                    <apex:param name="WOid" value="{!objWO.SVMXC__Service_Order__r.Id}"/>
+               </apex:commandLink>
+               
+               |&nbsp;
+               <apex:commandLink style="color:blue" value="Del" onclick="deleteWO('{!objWO.SVMXC__Service_Order__r.Id}');" rerender="WoTable">
+                   <!-- <apex:param name="WOid" value="{!objWO.SVMXC__Service_Order__r.Id}"/>-->
+              <!-- </apex:commandLink>
+           </apex:column>-->
+           
+           <apex:column headerValue="Work Order Number" width="10%">
+               
+               <apex:outputlink target="_blank" value="/{!objWO.SVMXC__Service_Order__r.Id}" >{!objWO.SVMXC__Service_Order__r.Name}</apex:outputlink>
+           </apex:column>
+           
+             <apex:column headerValue="Parent Work Order" >
+               <apex:outputField value="{!objWO.SVMXC__Service_Order__r.GE_SS_Parent_Work_Order__r.Name}"/>
+             </apex:column>
+            
+            <apex:column headerValue="Engineer" >
+               <apex:outputField value="{!objWO.SVMXC__Service_Order__r.createdbyID}"/>
+           </apex:column>
+           
+                 
+           <apex:column >
+            <apex:facet name="header">Actual<br/>start date</apex:facet>
+               <apex:outputfield value="{!objWO.SVMXC__Service_Order__r.GE_SM_HQ_Actual_Start_Date__c}"  ></apex:outputfield>
+           </apex:column>
+
+           <apex:column headerValue="Actual end date" >
+               <apex:outputfield value="{!objWO.SVMXC__Service_Order__r.GE_SM_HQ_Actual_End_Date__c}"></apex:outputfield>
+           </apex:column>
+           
+           <apex:column headerValue="Uptime(NPT)(Hours)" >
+               <apex:outputfield value="{!objWO.SVMXC__Service_Order__r.GE_SS_Uptime_Hours__c}"  ></apex:outputfield>
+           </apex:column>
+           
+            <apex:column headerValue="Downtime(NPT)(Hours)" >
+               <apex:outputfield value="{!objWO.SVMXC__Service_Order__r.GE_SS_Downtime_NPT_Hours__c}"  ></apex:outputfield>
+           </apex:column>
+           
+           <apex:column headerValue="Reliability%" >
+               <apex:outputfield value="{!objWO.SVMXC__Service_Order__r.GE_SS_Reliability__c}"  ></apex:outputfield>
+           </apex:column>
+          
+      <!--     <apex:column style="  width: 10%;" >
+               <apex:facet name="header" >Order Status</apex:facet>
+               <apex:outputText value="{!objWO.SVMXC__Order_Status__c}" ></apex:outputText>
+           </apex:column>
+           
+           <apex:column style="  width: 10%;" >
+               <apex:facet name="header"  >Order Type</apex:facet>
+               <apex:outputText value="{!objWO.SVMXC__Order_Type__c}" ></apex:outputText>
+           </apex:column>
+
+            <apex:column style="  width: 15%;" >
+               <apex:facet name="header" >Last Modified Date</apex:facet>
+               <apex:outputfield value="{!objWO.LastModifiedDate}" ></apex:outputfield>
+           </apex:column>
+
+            <apex:column style="  width: 15%;" >
+               <apex:facet name="header" >Last Modified By</apex:facet>
+               <apex:outputlink target="_blank" value="/{!objWO.LastModifiedById}" >{!objWO.LastModifiedBy.Name}</apex:outputlink>
+              
+           </apex:column>
+          
+           <apex:column style="  width: 15%;" >
+               <apex:facet name="header" >Created Date</apex:facet>
+               <apex:outputfield value="{!objWO.CreatedDate}" ></apex:outputfield>
+           </apex:column>--> 
+           
+       </apex:pageBlockTable>
+       
+        <apex:panelGrid columns="2">
+           <apex:outputPanel rendered="{!recordSize}">
+           <apex:outputlink target="_blank" value="/apex/GE_SS_Trip_WO_On_InstalledProduct?id={!tmpID}&allRec=true" >Go To List ></apex:outputlink>
+           </apex:outputPanel>
+       </apex:panelGrid>
+   
+   </apex:pageBlock>
+
+</apex:form>
+</apex:page>

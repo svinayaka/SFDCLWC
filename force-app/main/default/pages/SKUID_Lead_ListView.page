@@ -1,0 +1,5 @@
+<apex:page standardController="Lead" recordSetVar="c"
+
+extensions="skuid.Redirects" action="{!redirect}?page=GEOG_Leads_List">
+
+</apex:page>

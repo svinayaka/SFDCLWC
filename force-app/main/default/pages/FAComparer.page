@@ -1,0 +1,143 @@
+<apex:page controller="FAComparer" sidebar="false" deferLastCommandUntilReady="true" >
+    <style type="text/css">
+       .customPopup{
+            left: 50%;
+            position: absolute;
+            z-index: 9999;
+            width: 820px;
+            height: 400px;
+            margin-left: -410px;
+            top:5px;
+        }
+        .customPopup1{
+            left: 50%;
+            position: absolute;
+            z-index: 9999;
+            width: 1000px;
+            height: 400px;
+            margin-left: -500px;
+            top:5px;
+        }
+       .customPopupbackground{
+            background-color: white;
+            opacity:0.9;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+        }
+    </style>
+    <apex:actionStatus id="AjaxStatus" onstart="DisableButton()" onstop="EnableButton()" ></apex:actionStatus>
+    <script>
+    function onKeyUp(e){
+        var keynum;
+        if(window.event){
+            keynum = e.keyCode;
+        }
+        if(keynum == 13) { 
+            submitJS();
+            return false; 
+        }
+        if(keynum == 27) { 
+            closePopupJS();
+            return false; 
+        }
+    }
+    function add(var1){
+        submitadd(var1);
+    }
+    function link(var1){
+        var1.style.color="blue";
+    }
+    function linkout(var1){
+        var1.style.color="black";
+    }
+    function DisableButton(){
+        document.getElementById('{!$Component.form1.pageblock.section.searchme}').disabled="disabled";
+        document.getElementById('{!$Component.form1.pageblock.section.searchme}').class="btnDisabled";
+    }
+    function EnableButton(){
+        document.getElementById('{!$Component.form1.pageblock.section.searchme}').disabled=false;
+        document.getElementById('{!$Component.form1.pageblock.section.searchme}').class="btn";        
+    }
+    </script>
+    <apex:form onkeypress="return onKeyUp(event)" id="form1" >
+    <apex:outputPanel style="z-index: 9999;position: absolute;right: 1%;" layout="block" >
+    <h1>{!viewCount} Views</h1>
+    </apex:outputPanel>
+    <br/>
+    <apex:outputPanel id="panel" >
+        <apex:actionStatus id="btnclick" onstart="DisableButton()" onstop="EnableButton()" />
+        <apex:outputPanel styleClass="customPopupbackground" layout="block" rendered="{!manageField}" >
+        <apex:outputPanel styleClass="customPopup" layout="block" style="opacity:1.0;">
+            <apex:pageBlock tabStyle="Opportunity" >
+            <apex:pageMessages escape="false" />
+            <c:multiselectpicklist leftLabel="Available Fields" 
+                          leftOptions="{!selectLabels}" rightLabel="Selected Fields" 
+                          rightOptions="{!selectedLabels}" size="20" width="350px" />
+            <br/>
+            <apex:outputPanel style="z-index: 9999;position: absolute;left:3%;bottom:-6%;" layout="block" >
+            <h1 style="font-style:italic;color:#D80000;">{!errormsg}</h1>
+            </apex:outputPanel>
+            <apex:panelGrid columns="2" style="margin-left: 700px;">
+                <apex:commandButton value="Ok" action="{!addFields}" rerender="panel"/>
+                <apex:commandButton value="Cancel" action="{!closePopup}" rerender="panel"/>
+            </apex:panelGrid>
+            </apex:pageBlock>
+        </apex:outputPanel>
+        </apex:outputPanel>
+        <apex:outputPanel styleClass="customPopupbackground" layout="block" rendered="{!addRecords}" >
+        <apex:outputPanel styleClass="customPopup1" layout="block" style="opacity:1.0;">
+            <apex:pageBlock tabStyle="Opportunity" >
+                <br/>
+                Search for: <apex:inputText value="{!searchString}" id="search1" />
+                <apex:commandButton value="Search" action="{!submit}" rerender="panel" style="width:80px;" />
+                <apex:pageMessages escape="false" rendered="{!addRecords}" />
+                <apex:dynamicComponent componentValue="{!SearchedRecord}" rendered="{!IF(size==0,false,true)}" />
+                <apex:panelGrid columns="3" styleClass="center">
+                    <apex:commandLink action="{!previous}" reRender="panel" rendered="{!showprevious}">Previous</apex:commandlink>
+                    <apex:commandLink action="{!next}" reRender="panel" rendered="{!shownext}">Next</apex:commandlink>
+                    <apex:outputText > Viewing {!IF(size==0,0,(offset+1))} to {!showSize} of {!size} in total</apex:outputText>
+                </apex:panelGrid>
+            <apex:panelGrid columns="3" style="margin-left: 790px;">
+                <apex:commandButton value="Add & Search" action="{!selectNSearchRecords}" rerender="panel" disabled="{!IF(size==0,true,false)}"/>
+                <apex:commandButton value="Add" action="{!selectRecords}" rerender="panel" disabled="{!IF(size==0,true,false)}"/>
+                <apex:commandButton value="Cancel" action="{!closePopup}" rerender="panel"/>
+            </apex:panelGrid>
+            </apex:pageBlock>
+        </apex:outputPanel>
+        </apex:outputPanel>
+    <apex:actionFunction action="{!closePopup}" name="closePopupJS" reRender="panel"/>
+    <apex:actionFunction action="{!submit}" name="submitJS" reRender="panel"/>
+    <apex:actionFunction action="{!addField}" name="addField" reRender="panel"/>
+    <apex:actionfunction action="{!selectRecord}" name="submitadd" rerender="panel">
+        <apex:param assignto="{!addId}" name="param1" value=""/>
+    </apex:actionfunction>
+    <apex:pageBlock title="FA Comparison Model" tabStyle="Document" id="pageblock" >
+        <apex:pageBlockButtons style="float:right;" location="top" title="Export">
+            <apex:commandButton value="Export as PDF" action="{!exportAsPDF}" style="width:130px;" disabled="{!IF(count==0||count>5,true,false)}" />
+            <apex:commandButton value="Download as EXCEL" action="{!exportAsXLS}" style="width:150px;" disabled="{!IF(count==0,true,false)}" />
+        </apex:pageBlockButtons>
+        <apex:pageBlockSection collapsible="false" title="Search a Record" columns="1" rendered="{!AND(IF(count>19,false,true),NOT(addRecords))}" id="section" >
+            <apex:pageMessages escape="false" rendered="{!NOT(OR(addRecords,manageField))}" />
+                <apex:outputPanel layout="block" id="panel2">
+                    Search for:&nbsp;
+                    <apex:inputText value="{!searchString}" />
+                    <apex:commandButton value="Search" action="{!submit}" rerender="panel" status="btnclick" style="width:80px;" id="searchme" />
+                </apex:outputPanel>
+        </apex:pageBlockSection>
+        <apex:outputPanel layout="block" style="overflow-x:auto;max-height:400px;" >
+        <apex:dynamicComponent componentValue="{!MyPageBlockTable}" />
+        </apex:outputPanel>
+        <apex:panelGrid styleClass="left" columns="3">
+        <apex:selectList value="{!selectedLabel}" size="1" onchange="addField()" disabled="{!manageField}" rendered="{!IF(selectLabel.size==1,false,true)}">
+              <apex:selectOptions value="{!selectLabel}"/>
+        </apex:selectList>
+        <apex:commandLink value="Manage Fields" action="{!showPopup}" rerender="panel" rendered="{!NOT(manageField)}"/>
+        </apex:panelGrid>
+    </apex:pageBlock>
+    </apex:outputPanel>
+    </apex:form>
+</apex:page>

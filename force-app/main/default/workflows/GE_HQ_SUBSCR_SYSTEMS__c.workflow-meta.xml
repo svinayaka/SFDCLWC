@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>GE_HQ_Update_Ext_ID_of_Subscr_Sys</fullName>
+        <description>Updates the field &apos;External ID&apos; field of &apos;Subscribed System&apos; object after creation/Updation of record.</description>
+        <field>GE_HQ_External_ID__c</field>
+        <formula>GE_HQ_External_ID_Fm__c</formula>
+        <name>GE_HQ_Update_Ext_ID_of_Subscr_Sys</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <rules>
+        <fullName>GE_HQ_Update_Ext_ID_of_Subscr_Sys</fullName>
+        <actions>
+            <name>GE_HQ_Update_Ext_ID_of_Subscr_Sys</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>GE_HQ_SUBSCR_SYSTEMS__c.GE_HQ_DUNS_Number__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <description>Updates the field &apos;External ID&apos; field after updating any record with the formula filed &apos;External ID fm&apos; value to avoid duplicity</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

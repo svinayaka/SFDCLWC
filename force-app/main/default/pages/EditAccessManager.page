@@ -1,0 +1,102 @@
+<apex:page standardController="GE_OG_AccessManager__c" extensions="EditAccessManager">
+  <apex:form >
+  <apex:sectionHeader title="Edit" subtitle="{!GE_OG_AccessManager__c.Name}"/>
+    <apex:pageBlock title="Access Manager Detail" id="pgbk">
+      <apex:pageBlockButtons location="bottom">
+          <apex:commandButton action="{!save}" id="saveButton" title="Save" value="Save"/>
+          <apex:commandButton action="{!cancel}" id="cancelButton" title="Cancel" value="Cancel"/>
+      </apex:pageBlockButtons>
+      <apex:pageBlockSection columns="1">
+          <apex:outputField value="{!GE_OG_AccessManager__c.Is_Active__c}">
+              <apex:inlineEditSupport showOnEdit="saveButton, cancelButton" 
+                  event="ondblclick" changedStyleClass="myBoldClass" resetFunction="resetInlineEdit"/>
+          </apex:outputField>
+          <apex:outputField value="{!GE_OG_AccessManager__c.GE_OG_Super_User__c}" >
+              <apex:inlineEditSupport showOnEdit="saveButton, cancelButton" 
+                  event="ondblclick" changedStyleClass="myBoldClass" resetFunction="resetInlineEdit"/>
+          </apex:outputField>
+          <apex:outputField value="{!GE_OG_AccessManager__c.GE_OG_Access_Type__c}" rendered="false" />
+          <apex:outputField value="{!GE_OG_AccessManager__c.GE_OG_Assigned_Permission_Sets__c}" rendered="false" />
+          <apex:outputField value="{!GE_OG_AccessManager__c.GE_OG_Assigned_Profiles__c}" rendered="false" />
+          <apex:outputField value="{!GE_OG_AccessManager__c.GE_OG_Assigned_Managed_Packages__c}" rendered="false" />
+          <apex:outputField value="{!GE_OG_AccessManager__c.GE_OG_Assigned_Groups__c}" rendered="false" />
+          <apex:outputField value="{!GE_OG_AccessManager__c.GE_OG_Assigned_Queues__c}" rendered="false" />
+          <apex:outputPanel id="accessType" >
+          <div style="margin-left: 10%;">
+          <c:multiselectpicklist leftLabel="Available Access"
+              rightLabel="Enabled Access"
+              leftOptions="{!allAccessType}"                
+              rightOptions="{!enabledAccessType}"
+              updownOption="false"
+              size="5"
+              width="400px"/>
+          </div>
+          </apex:outputPanel>
+          <apex:outputPanel id="managedPackage" >
+          <div style="margin-left: 10%;">
+          <c:multiselectpicklist leftLabel="Available Managed Packages"
+              rightLabel="Enabled Managed Packages"
+              leftOptions="{!allManagedPackages}"                
+              rightOptions="{!enabledManagedPackages}"
+              updownOption="false"
+              size="5"
+              width="400px"/>
+          </div>
+          </apex:outputPanel>  
+          <apex:outputPanel id="profiles" >
+          <div style="margin-left: 10%;">
+          <c:multiselectpicklist leftLabel="Available Profiles"
+              rightLabel="Enabled Profiles"
+              leftOptions="{!allProfiles}"                
+              rightOptions="{!enabledProfiles}"
+              updownOption="false"
+              size="10"
+              width="400px"/>
+          </div>
+          </apex:outputPanel> 
+          <apex:outputPanel id="permissionSet" >
+          <div style="margin-left: 10%;">
+          <c:multiselectpicklist leftLabel="Available Permission Sets"
+              rightLabel="Enabled Permission Sets"
+              leftOptions="{!allPermissionSets}"                
+              rightOptions="{!enabledPermissionSets}"
+              updownOption="false"
+              size="10"
+              width="400px"/>
+          </div>
+          </apex:outputPanel>
+          <apex:outputPanel id="group" >
+          <div style="margin-left: 10%;">
+          <c:multiselectpicklist leftLabel="Available Groups"
+              rightLabel="Enabled Groups"
+              leftOptions="{!allGroups}"                
+              rightOptions="{!enabledGroups}"
+              updownOption="false"
+              size="10"
+              width="400px"/>
+          </div>
+          </apex:outputPanel>
+          <apex:outputPanel id="queue" >
+          <div style="margin-left: 10%;">
+          <c:multiselectpicklist leftLabel="Available Queues"
+              rightLabel="Enabled Queues"
+              leftOptions="{!allQueues}"                
+              rightOptions="{!enabledQueues}"
+              updownOption="false"
+              size="10"
+              width="400px"/>
+          </div>
+          </apex:outputPanel>
+      </apex:pageBlockSection>
+    </apex:pageBlock>
+  </apex:form>
+  <script>
+    $j = jQuery.noConflict();
+    $j(document).ready(function(){        
+        $j('[id$=pgbk]').css("background-color","white");
+        //$j('[id$=managedPackage]').hide();
+    }); 
+    <apex:includeScript value="{!URLFOR($Resource.jqueryUI, 'jqueryUI/jquery-1.10.2.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jqueryUI, 'jqueryUI/jquery-ui.js')}"/>
+</script>
+</apex:page>

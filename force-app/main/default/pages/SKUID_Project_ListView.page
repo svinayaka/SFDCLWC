@@ -1,0 +1,5 @@
+<apex:page standardController="Project_ge_og__c" recordSetVar="c"
+
+extensions="skuid.Redirects" action="{!redirect}?page=GEOG_Sales_ProjectList">
+
+</apex:page>

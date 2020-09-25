@@ -1,0 +1,77 @@
+<apex:page standardController="Quote" Extensions="GE_PartCommQuoteControllerExt" recordSetvar="quotes" tabStyle="Quote">
+  <style type="text/css">
+    .pbTitle {
+        white-space: nowrap
+    }
+  </style>
+  <div class="bPageTitle"><div class="ptBody"><div class="content">
+     <img src="/s.gif" alt="Quotes"  class="pageTitleIcon" title="Quotes"/>
+     <h1 class="pageDescription">Quotes</h1>
+  </div></div></div>
+<apex:form id="theForm">
+ <apex:pageBlock title="Viewing Quotes (created previous 90 days)" >
+    <apex:pageBlockTable var="q" value="{!quotePagination}" id="list">
+        <apex:column >
+          <apex:facet name="header">
+             <apex:outputText >Quote Number</apex:outputText>
+          </apex:facet>
+            <apex:outputLink value="/{!q.Id}">{!q.QuoteNumber}</apex:outputLink>
+        </apex:column>
+        <apex:column >
+          <apex:facet name="header">
+             <apex:outputText >Status</apex:outputText>
+          </apex:facet>
+            <apex:outputText value="{!q.Status}"></apex:outputText>
+        </apex:column>
+        <apex:column >
+          <apex:facet name="header">
+             <apex:outputText >Quote Name</apex:outputText>
+          </apex:facet>
+            <apex:outputText value="{!q.Name}"></apex:outputText>
+        </apex:column>
+        <apex:column >
+          <apex:facet name="header">
+             <apex:outputText >Opportunity</apex:outputText>
+          </apex:facet>
+            <apex:outputLink value="/{!q.OpportunityId}">{!q.Opportunity.Name}</apex:outputLink>
+        </apex:column>
+        <apex:column >
+          <apex:facet name="header">
+             <apex:outputText >Account Name</apex:outputText>
+          </apex:facet>
+             <apex:outputLink value="/{!q.Opportunity.Account.Id}">{!q.Opportunity.Account.Name}</apex:outputLink>
+        </apex:column>
+        <apex:column >
+          <apex:facet name="header">
+             <apex:outputText >Expiration Date</apex:outputText>
+          </apex:facet>
+          <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+            <apex:param value="{!q.ExpirationDate}"/> 
+          </apex:outputText>
+        </apex:column>
+        <apex:column >
+          <apex:facet name="header">
+             <apex:outputText >Grand Total</apex:outputText>
+          </apex:facet>
+          <apex:outputText value="{0,number,#,##0.00}">
+             <apex:param value="{!q.GE_SOR_Grand_Total__c}"/>
+          </apex:outputText>
+        </apex:column>
+        <apex:column >
+          <apex:facet name="header">
+             <apex:outputText >Created Date</apex:outputText>
+          </apex:facet>
+          <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+            <apex:param value="{!q.CreatedDate}"/> 
+          </apex:outputText>
+        </apex:column>
+    </apex:pageBlockTable>
+    <apex:panelGrid columns="4">
+      <apex:commandLink action="{!first}">First</apex:commandlink>
+      <apex:commandLink action="{!previous}">Previous</apex:commandlink>
+      <apex:commandLink action="{!next}">Next</apex:commandlink>
+      <apex:commandLink action="{!last}">Last</apex:commandlink>
+    </apex:panelGrid>
+  </apex:pageBlock>
+  </apex:form> 
+</apex:page>

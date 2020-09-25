@@ -1,0 +1,105 @@
+<!--
+Page Name         : GE_HQ_Financials
+Purpose/Overview  : This VF section shows all the 'Closed won', Pipeline amount and market penetration details of an Account Plan (Displays the values from the Accont related Opptys' pipeline info and the forecasteds SAS info inserted at Account Plan level
+Author            : Jayadev Rath
+Change History    : Date Modified : Developer Name     : Method/Section Modified/Added : Purpose/Overview of Change
+                  : Felix Release : Jayadev Rath       : Created : Created the page to provide the financial overview of a particular Account Plan
+                  : 24th Oct 2011 : Jayadev Rath       : Updated the UI (The tab name to Closed won) and the values as currency format.
+-->
+<apex:page standardController="GE_HQ_Account_Plan__c" tabStyle="account" extensions="GE_HQ_FinancialsController" >
+       <apex:pageMessages id="errors" />
+<apex:form > 
+   <style>
+      .activeTab {background-color: #236FBD; color:white; background-image:none}
+      .inactiveTab { background-color: #D6F0F9; color:black; background-image:none}
+   </style> 
+      <apex:tabPanel switchType="client" selectedTab=" tabdetails" id="AccTabPanel" tabClass="activeTab" inactiveTabClass="inactiveTab">   
+        <apex:stylesheet value="{!$Resource.style360viewpageRC}"/>
+        <apex:tab label="Closed Won" name="Closed Won" id="tabPacing">
+        <apex:pageBlock title="Closed Won- Information" id="PacingBlock" rendered="{!NOT(ISNULL(PacingRecs))}">
+        <apex:pageBlockTable value="{!PacingRecs}" var="PR" id="PacingRecords">
+            <apex:column headerValue="P&L Name" value="{!PR.PnL}"/>
+            <apex:column headerValue="Expected Order Year" value="{!PR.Year}"/>
+            <apex:column headerValue="Total Pipeline Amount">
+                <apex:outputText value="{0, number, USD ###,###,###,###}">
+                   <apex:param value="{!PR.Value}" />
+                </apex:outputText>
+            </apex:column>            
+        </apex:pageBlockTable>
+
+        <table width="100%"><tr></tr><tr><td>
+        <apex:commandLink value="<< First" action="{!getFirstPacing}" reRender="PacingBlock" rendered="{!renderFirstPacing}" />
+        <apex:outputText value="<< First" rendered="{!NOT(renderFirstPacing)}" /> &nbsp;
+        <apex:commandLink value="< Previous" action="{!getPrevPacing}" reRender="PacingBlock" rendered="{!renderPrevPacing}" />
+        <apex:outputText value="< Previous" rendered="{!NOT(renderPrevPacing)}" /> &nbsp;
+        <apex:commandLink value="Next >" action="{!getNextPacing}" reRender="PacingBlock" rendered="{!renderNextPacing}" />
+        <apex:outputText value="Next >" rendered="{!NOT(renderNextPacing)}" /> &nbsp;
+        <apex:commandLink value="Last >>" action="{!getLastPacing}" reRender="PacingBlock" rendered="{!renderLastPacing}" />
+        <apex:outputText value="Last >>" rendered="{!NOT(renderLastPacing)}" /> &nbsp;
+        </td><td align="right">
+        <apex:outputText >Records {!StartRecPacing}-{!EndRecPacing} of {!TotalPacingRecords} </apex:outputText>
+        </td></tr></table>
+    </apex:pageBlock>
+        <apex:pageBlock title="Pacing Records" id="EmptyPacingBlock" rendered="{!ISNULL(PacingRecs)}">
+            <p align="center"> <apex:outputText > No records found. </apex:outputText></p>    
+        </apex:pageBlock>
+        </apex:tab>
+
+        <apex:tab label="Pipeline" name="Pipeline" id="tabPipeline">
+        <apex:pageBlock title="Pipeline information" id="PipelineBlock" rendered="{!NOT(ISNULL(PipelineRecs))}">
+            <apex:pageBlockTable value="{!PipelineRecs}" var="PL" id="PipelineRecords">
+                <apex:column headerValue="P&L Name" value="{!PL.PnL}"/>
+                <apex:column headerValue="Expected Order Year" value="{!PL.Year}"/>
+                <apex:column headerValue="Total Pipeline Amount">
+                    <apex:outputText value="{0, number, USD ###,###,###,###}">
+                       <apex:param value="{!PL.Value}" />
+                    </apex:outputText>
+                </apex:column>
+
+            </apex:pageBlockTable>
+        <table width="100%"><tr></tr><tr><td>
+        <apex:commandLink value="<< First" action="{!getFirstPipeline}" reRender="PipelineBlock" rendered="{!renderFirstPL}" />
+        <apex:outputText value="<< First" rendered="{!NOT(renderFirstPL)}" /> &nbsp;
+        <apex:commandLink value="< Previous" action="{!getPrevPipeline}" reRender="PipelineBlock" rendered="{!renderPrevPL}" />
+        <apex:outputText value="< Previous" rendered="{!NOT(renderPrevPL)}" /> &nbsp;
+        <apex:commandLink value="Next >" action="{!getNextPipeline}" reRender="PipelineBlock" rendered="{!renderNextPL}" />
+        <apex:outputText value="Next >" rendered="{!NOT(renderNextPL)}" /> &nbsp;
+        <apex:commandLink value="Last >>" action="{!getLastPipeline}" reRender="PipelineBlock" rendered="{!renderLastPL}" />
+        <apex:outputText value="Last >>" rendered="{!NOT(renderLastPL)}" /> &nbsp;
+        </td><td align="right">
+        <apex:outputText >Records {!StartRecPL}-{!EndRecPL} of {!TotalPipelineRecords} </apex:outputText>
+        </td></tr></table>
+    </apex:pageBlock>
+        <apex:pageBlock title="Pipeline Records" id="EmptyPipelineBlock" rendered="{!ISNULL(PipelineRecs)}">
+            <p align="center"> <apex:outputText > No records found. </apex:outputText></p>    
+        </apex:pageBlock>
+        </apex:tab>        
+        
+       <!-- <apex:tab label="Penetration" name="Penetration" id="Penetrating">
+        <apex:pageBlock title="Penetration information" id="PenetratingBlock" rendered="{!NOT(ISNULL(PenetratingRecs))}">
+            <apex:pageBlockTable value="{!PenetratingRecs}" var="PT" id="PenetratingRecords">
+                <apex:column headerValue="P&L Name" value="{!PT.PnL}"/>
+                <apex:column headerValue="Expected Order Year" value="{!PT.Year}"/>
+                <apex:column headerValue="Order/SAS (%)" value="{!PT.Value}"/>
+            </apex:pageBlockTable>
+        <table width="100%"><tr></tr><tr><td>
+        <apex:commandLink value="<< First" action="{!getFirstPT}" reRender="PenetratingBlock" rendered="{!renderFirstPT}" />
+        <apex:outputText value="<< First" rendered="{!NOT(renderFirstPT)}" /> &nbsp;
+        <apex:commandLink value="< Previous" action="{!getPrevPT}" reRender="PenetratingBlock" rendered="{!renderPrevPT}" />
+        <apex:outputText value="< Previous" rendered="{!NOT(renderPrevPT)}" /> &nbsp;
+        <apex:commandLink value="Next >" action="{!getNextPT}" reRender="PenetratingBlock" rendered="{!renderNextPT}" />
+        <apex:outputText value="Next >" rendered="{!NOT(renderNextPT)}" /> &nbsp;
+        <apex:commandLink value="Last >>" action="{!getLastPT}" reRender="PenetratingBlock" rendered="{!renderLastPT}" />
+        <apex:outputText value="Last >>" rendered="{!NOT(renderLastPT)}" /> &nbsp;
+        </td><td align="right">
+        <apex:outputText >Records {!StartRecPT}-{!EndRecPT} of {!TotalPTRecords} </apex:outputText>
+        </td></tr></table>
+    </apex:pageBlock>
+        <apex:pageBlock title="Penetrating Records" id="EmptyPenetratingBlock" rendered="{!ISNULL(PenetratingRecs)}">
+            <p align="center"> <apex:outputText >  No records found. </apex:outputText></p>
+        </apex:pageBlock>
+        </apex:tab> -->       
+
+      </apex:tabPanel>
+</apex:form>
+</apex:page>

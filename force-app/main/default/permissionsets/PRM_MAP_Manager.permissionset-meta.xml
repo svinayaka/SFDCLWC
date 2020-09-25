@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>PRM MAP Manager permission to update the MAP Eligibility True or False as required</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>GE_HQ_Account_Plan__c.Fidelity_Eligibility_GEOG__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>GE_HQ_Account_Plan__c.MAP_Eligibility_GEOG__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>OLD_PRM MAP Manager</label>
+    <license>Salesforce</license>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>GE_HQ_Account_Plan__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <recordTypeVisibilities>
+        <recordType>GE_HQ_Account_Plan__c.GE_PRM_Business_Plan</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+</PermissionSet>

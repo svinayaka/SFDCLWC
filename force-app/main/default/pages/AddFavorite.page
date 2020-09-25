@@ -1,0 +1,26 @@
+<apex:page standardController="TM_Price_Proposal__c"
+           lightningStylesheets="true" extensions="MemberExt"
+           recordSetVar="Member" action="{!getAddToFavorite}">
+    <script >
+
+  
+    function myFunction(){
+        
+        location.reload();
+    }
+
+    </script>
+    <apex:form > 
+        <apex:pageBlock rendered="{!Hide_LC}" id="form">
+            
+            <apex:pageMessages ></apex:pageMessages>
+            <apex:commandButton action="{!cancel}" value="Back"/>
+        </apex:pageBlock>
+         <apex:pageBlock rendered="{!show_LC}">
+            
+            <apex:pageMessages ></apex:pageMessages>
+            
+            <apex:commandButton action="{!cancel}" value="Back" onclick="myFunction();"/>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

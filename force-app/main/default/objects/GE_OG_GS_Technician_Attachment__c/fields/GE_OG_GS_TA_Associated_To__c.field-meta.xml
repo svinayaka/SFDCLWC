@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GE_OG_GS_TA_Associated_To__c</fullName>
+    <description>AG 11/114 R-19384</description>
+    <externalId>false</externalId>
+    <label>Associated To</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>Blue Photo</fullName>
+                <default>false</default>
+                <label>Blue Photo</label>
+            </value>
+            <value>
+                <fullName>Certification</fullName>
+                <default>false</default>
+                <label>Certification</label>
+            </value>
+            <value>
+                <fullName>Changes to Competency Level</fullName>
+                <default>false</default>
+                <label>Changes to Competency Level</label>
+            </value>
+            <value>
+                <fullName>Courses</fullName>
+                <default>false</default>
+                <label>Courses</label>
+            </value>
+            <value>
+                <fullName>CPF</fullName>
+                <default>false</default>
+                <label>CPF</label>
+            </value>
+            <value>
+                <fullName>CTPS</fullName>
+                <default>false</default>
+                <label>CTPS</label>
+            </value>
+            <value>
+                <fullName>CV</fullName>
+                <default>false</default>
+                <label>CV</label>
+            </value>
+            <value>
+                <fullName>Degree</fullName>
+                <default>false</default>
+                <label>Degree</label>
+            </value>
+            <value>
+                <fullName>Expertise</fullName>
+                <default>false</default>
+                <label>Expertise</label>
+            </value>
+            <value>
+                <fullName>Identity Card</fullName>
+                <default>false</default>
+                <label>Identity Card</label>
+            </value>
+            <value>
+                <fullName>LOI</fullName>
+                <default>false</default>
+                <label>LOI</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Passport</fullName>
+                <default>false</default>
+                <label>Passport</label>
+            </value>
+            <value>
+                <fullName>Professional Work Council</fullName>
+                <default>false</default>
+                <label>Professional Work Council</label>
+            </value>
+            <value>
+                <fullName>Proof of address</fullName>
+                <default>false</default>
+                <label>Proof of address</label>
+            </value>
+            <value>
+                <fullName>Red Photo</fullName>
+                <default>false</default>
+                <label>Red Photo</label>
+            </value>
+            <value>
+                <fullName>Site Entry</fullName>
+                <default>false</default>
+                <label>Site Entry</label>
+            </value>
+            <value>
+                <fullName>Visa</fullName>
+                <default>false</default>
+                <label>Visa</label>
+            </value>
+            <value>
+                <fullName>White Photo</fullName>
+                <default>false</default>
+                <label>White Photo</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

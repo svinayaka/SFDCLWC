@@ -1,0 +1,119 @@
+<apex:page standardController="GE_HQ_Acc_AccPlan_Rel__c" extensions="GEHQAccountSearchPageController" tabStyle="Account" id="pageId">
+
+    <script type="text/javascript">
+        function fun(userNameVal){
+            var v = document.getElementById(userNameVal).value;
+            alert(v);
+        }
+        function fun1(){
+            alert('Records were cloned successfully .....');
+        }
+        var selectedCount = 0;
+  
+        function validateSelection1()
+        {
+
+            var inputElem = document.getElementsByTagName("input");
+            for(var i=0; i<inputElem.length; i++)
+            {
+        
+                if(inputElem[i].id.indexOf("ids")!=-1 || inputElem[i].id.indexOf("chkSelectAll")!=-1)
+                {
+                    if(inputElem[i].checked==true)
+                    {
+                        selectedCount=1;
+                    }
+                }   
+            }
+    
+    
+          if(selectedCount == 0)
+          {
+              alert('Please select at least one Account');
+              return false;
+          }
+          return true;
+        }
+        
+
+    </script>
+
+    <apex:form id="formId">
+        <apex:sectionHeader title="Clone User GE Accounts" />
+        <apex:pageBlock id="pageBlockId">
+            <apex:panelGrid columns="2" id="panelId">
+                <apex:pageBlockSection >
+                <!-- <apex:outputLabel >Select User:</apex:outputLabel> -->
+                <apex:inputField value="{!AccPlanObj.GE_HQ_Select_User__c}" id="userName"/>
+                </apex:pageBlockSection>
+                <!-- <apex:message for="userName"/> -->
+            </apex:panelGrid>
+            <apex:panelGrid columns="2">
+                <apex:outputLabel ></apex:outputLabel>
+                <apex:commandButton value="Go" action="{!goButton}"/>
+            </apex:panelGrid>
+            <apex:messages />
+        </apex:pageBlock>
+        
+        <apex:panelGrid columns="7" rendered="{!NOT(ISNULL(accountResults))}">
+            <apex:commandButton action="{!processSelectButton}" value="Process Selected" id="AddButton"  onclick="return validateSelection1();" status="Adding" />
+            &nbsp;
+            <apex:commandButton action="{!CancelClone}" value="Cancel"/> 
+            &nbsp;
+        </apex:panelGrid>
+
+        
+        <apex:pageblock id="pageblock"  >
+            <apex:pageBlockSection title="Selected user GE Accounts" id="results" columns="1" collapsible="true">
+                <apex:outputLabel value="No GE Account records were found for the selected user" rendered="{!TotalNoOfAccounts == 0}"> </apex:outputLabel>
+                <apex:pageBlockTable value="{!accountResults}" id="TableData" var="a" rendered="{!NOT(ISNULL(accountResults))}">
+                    <apex:column headerValue="Select All" >
+    
+                    <apex:facet name="header">
+                      <apex:inputCheckbox id="chkSelectAll"  title="Select All" value="{!chkFlag}" >
+                          <apex:actionSupport event="onclick" action="{!chkAllBox}" reRender="pageblock"/>
+                      </apex:inputCheckbox>
+                    </apex:facet>
+ 
+                    <apex:selectCheckboxes value="{!Selected}" id="ids" >
+                        <apex:selectOption itemvalue="{!a.ID}" >
+                        </apex:selectOption>
+                        
+                    </apex:selectCheckBoxes>
+
+                    </apex:column> 
+
+<apex:column headerValue="Account Name">
+<apex:outputLink target="new" value="/{!a.Id}">{!a.Name}</apex:outputLink>
+</apex:column>
+
+<apex:column value="{!a.GE_HQ_DUNS_Number__c}"></apex:column>
+<apex:column value="{!a.GE_HQ_Region_Tier1__c}"></apex:column>
+<apex:column value="{!a.ShippingCity}"></apex:column>
+<apex:column value="{!a.ShippingCountry}"></apex:column>
+<apex:column value="{!a.ShippingState}"></apex:column>
+<apex:column value="{!a.Phone}"></apex:column>
+
+</apex:pageBlockTable>
+
+</apex:pageBlockSection>
+<apex:pageBlockButtons location="bottom" rendered="{!NOT(ISNULL(accountResults))}">
+        <table width="100%"  rendered="{!NOT(ISNULL(accountResults))}"><tr></tr><tr><td align="left">
+        <apex:commandLink value="<< First" action="{!getFirst}" reRender="pageblock" rendered="{!hasFirst}" />
+        <apex:outputText value="<< First" rendered="{!NOT(hasFirst)}" /> &nbsp;
+        <apex:commandLink value="< Previous" action="{!getPrev}" reRender="pageblock" rendered="{!hasPrev}" />
+        <apex:outputText value="< Previous" rendered="{!NOT(hasPrev)}" /> &nbsp;
+        <apex:commandLink value="Next >" action="{!getNext}" reRender="pageblock" rendered="{!hasNext}" />
+        <apex:outputText value="Next >" rendered="{!NOT(hasNext)}" /> &nbsp;
+        <apex:commandLink value="Last >>" action="{!getLast}" reRender="pageblock" rendered="{!hasLast}" />
+        <apex:outputText value="Last >>" rendered="{!NOT(hasLast)}" /> &nbsp;
+        </td><td align="right">
+        <apex:outputText >Records {!StartRec}-{!EndRec} of {!TotalNoOfAccounts} </apex:outputText>
+        </td></tr></table>
+
+</apex:pageBlockButtons>
+</apex:pageblock>        
+
+    </apex:form>
+  
+</apex:page>

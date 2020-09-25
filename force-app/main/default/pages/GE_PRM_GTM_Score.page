@@ -1,0 +1,57 @@
+<apex:page standardController="GE_PRM_Go_to_Market_St__c">
+    <html xmlns="http://www.w3.org/1999/xhtml">
+        <head>
+            <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+            <title/>
+            <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+            <script type="text/javascript">
+                google.load('visualization', '1', {packages: ['corechart']});
+                var Score = "{JSENCODE(!GE_PRM_Go_to_Market_St__c.GE_PRM_GTM_Score__c)}";
+                var Type = "{JSENCODE(!GE_PRM_Go_to_Market_St__c.GE_PRM_GTM_Type__c)}"; 
+              
+            </script>
+            <script type="text/javascript">
+            function drawVisualization() 
+                {
+                // Create and populate the data table.
+                var data = new google.visualization.DataTable();
+                var raw_data = [[Type, +Score]];
+                var dummydata = [' '];
+                data.addColumn('string', 'Year');
+                
+                for (var i = 0; i  < raw_data.length; ++i) 
+                    {
+                    data.addColumn('number', raw_data[i][0]);    
+                    }
+                data.addRows(dummydata.length);
+                
+                for (var j = 0; j < dummydata.length; ++j) 
+                    {    
+                    data.setValue(j, 0, dummydata[j].toString());    
+                    }
+                    
+                for (var i = 0; i  < raw_data.length; ++i) 
+                    {
+                    for (var j = 1; j  < raw_data[i].length; ++j) 
+                        {
+                        data.setValue(j-1, i+1, raw_data[i][j]);    
+                        }
+                    }
+                // Create and draw the visualization.
+                new google.visualization.BarChart(document.getElementById('visualization')).
+                draw(data,
+                    {
+                    title:"Direct/Indirect Decision",
+                    width:900, height:150,
+                    vAxis: {title: ""},
+                    hAxis: {title: "", minValue: -600, maxValue: 600}
+                    });
+                }
+            google.setOnLoadCallback(drawVisualization);
+            </script>
+        </head>
+        <body style="font-family: Arial;border: 0 none;">
+            <div id="visualization" style="width: 600px; height: 150px;"></div>
+        </body>
+    </html>
+</apex:page>

@@ -1,0 +1,35 @@
+<!--   
+Page Name         : GE_OG_Timeline
+Purpose/Overview  : Providing a Timeline View of the Related Unit Event of an Account.
+Author            : Malemleima Chanu
+
+-->
+
+
+<apex:page standardController="Account" >
+ <div id="my-timeline" style="height:465px">
+   <apex:outputPanel layout="block" style="font-weight:bold" > Unit Event Timeline </apex:outputPanel> &nbsp;
+
+ <apex:form > 
+   <apex:pageBlock tabStyle="Account"> 
+     <apex:pageBlockButtons > 
+     <apex:commandButton action="{!cancel}" value="Go Back"  styleClass="btn"  /> 
+     </apex:pageBlockButtons>
+     <div id="GE_HQ_Timeline" style="height:25px"/>
+     <apex:param name="id" value="{!Account.Id}" />
+     <apex:scontrol controlName="Timeline" width="-100" height="310" subject="{!Account.Id}" >
+     <apex:param name="rtid" value="{!$CurrentPage.parameters.ibSet}"/> 
+     </apex:scontrol>
+     <div id="GE_HQ_Timeline" style="height:10px"/>
+   </apex:pageBlock>
+ </apex:form>
+ 
+ <apex:facet name="caption">
+    <script>
+      window.location="/{!Account.Id}";
+    </script>
+    <input id="newbtn" type='button' class='btn' value="Go Back" onClick="javascript&colon; gotonew()" />
+ </apex:facet>
+ 
+ </div>
+</apex:page>

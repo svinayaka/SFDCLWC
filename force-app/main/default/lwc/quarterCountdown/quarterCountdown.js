@@ -7,27 +7,36 @@ export default class App extends LightningElement {
    month = (this.today.getMonth())+1;
    quarter = Math.floor((this.today.getMonth() + 3) / 3);
 
-    getLastdate(){
-          var date2
+    getdates(){
+          var lastDate,firstDate;
       if (this.quarter == 1){
-        date2 = new Date("03/31/"+this.year);
+        lastDate = new Date("03/31/"+this.year);
+        firstDate = new Date("01/01/"+this.year);
       } 
       else if (this.quarter == 2){
-        date2 = new Date("06/30/"+this.year);
+        lastDate = new Date("06/30/"+this.year);
+        firstDate = new Date("04/01/"+this.year);
       } 
       else if (this.quarter == 3){
-        date2 = new Date("09/30/"+this.year);
+        lastDate = new Date("09/30/"+this.year);
+        firstDate = new Date("07/01/"+this.year);
       } 
        else if (this.quarter == 4){
-        date2 = new Date("12/31/"+this.year);
+        lastDate = new Date("12/31/"+this.year);
+        firstDate = new Date("10/01/"+this.year);
       }
-      return date2;
+      return {lastDate,firstDate};
       }
-    date2= this.getLastdate();
-    //date2 = new Date("09/30/"+this.year);
-    date1 = new Date(this.month+"/"+this.date+"/"+this.year);
-    
-    result = this.date2 - this.date1;
+    dates= this.getdates();
+    firstDate = this.dates.firstDate;
+    lastDate = this.dates.lastDate;    
+    thisDate = new Date(this.month+"/"+this.date+"/"+this.year);
+    result = this.lastDate - this.thisDate;
     result = (this.result/ (1000*60*60*24)); 
-       
+
+    totalDates = this.lastDate - this.firstDate;
+    totalDates = (this.totalDates/ (1000*60*60*24)); 
+    percent = (this.result*100)/this.totalDates;
+    width = "width:"+this.percent+"%;";
+    
 }

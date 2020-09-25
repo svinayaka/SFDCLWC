@@ -1,0 +1,116 @@
+<apex:page >
+<!--
+<apex:page StandardController="GE_HQ_Account_Plan__c" extensions="Charting" showHeader="true" sidebar="false" id="page" readOnly="true">
+    <apex:stylesheet value="{!URLFOR($Resource.charting)}" />
+    <apex:form id="theForm">
+             <h1><B>Global Account &nbsp;
+                <apex:outputField value="{!GE_HQ_Account_Plan__c.GE_HQ_DDUNS_Number__r.name}"/> with &nbsp;
+                 <u><apex:outputField value="{!GE_HQ_Account_Plan__c.GE_HQ_DDUNS_fm__c}"/> </u>
+                    &nbsp;
+                    &nbsp;
+                    &nbsp;
+                  </B>  </h1>
+            <apex:actionRegion >  
+                <div class="yearSelection">
+               
+                    <apex:outputLabel value="Tier2 P&L"/>
+                    <apex:inputField value="{!GE_HQ_Account_Plan__c.GE_OG_Tier_2_P_L__c}">
+                        <apex:actionSupport action="{!setTiers}" event="onchange" rerender="mainPanel">
+                        </apex:actionSupport>
+                    </apex:inputField>
+                    
+                    <apex:outputLabel value="Tier3 P&L"/>
+                    <apex:inputField value="{!GE_HQ_Account_Plan__c.GE_OG_Tier_3_P_L__c}">
+                        <apex:actionSupport action="{!setTiers}" event="onchange" rerender="mainPanel">
+                        </apex:actionSupport>
+                    </apex:inputField>
+
+                </div>
+            </apex:actionRegion>
+
+            <apex:outputPanel id="mainPanel">
+                
+                <table class="list fixed" border="0px" style="vertical-align: top;">
+
+                            <tr>
+
+                        <td align="left" style="vertical-align: top;">
+                            
+                                <div class="ChartHeader">
+                                    <apex:outputLink title="Opportunities Revenue by Region Report" value="/{!ReportId}?pv3={!DDUNS}&pv4={!SUBSTITUTE(Tier2Value, '&', '%26')}&pv5={!SUBSTITUTE(tier3Value, '&', '%26')}" target="_blank">CurrYr Tier-1 Region(Act-Hi,Commit,Won)</apex:outputLink>
+                                    </div>          
+                                <apex:chart width="400" height="500" data="{!data}" theme="Category4">
+                                    <apex:legend position="bottom"/>
+                                    <apex:axis type="Numeric" position="left" fields="Revenue" title="Sum of Opportunity Amount" grid="true"/>
+                                    <apex:axis type="Category" position="bottom" fields="Region" title="Region">
+                                        <apex:chartLabel rotate="315"/>
+                                    </apex:axis>
+                                    <apex:barSeries colorsProgressWithinSeries="true" title="Region Sales" orientation="vertical" axis="left" xField="Region" yField="Revenue">
+                                        <apex:chartTips height="10" width="120" valueField="label"/>
+                                    </apex:barSeries>
+                                </apex:chart>
+                        </td>
+
+               <td align="left" style="vertical-align: top;">
+                            
+                                <div class="ChartHeader">
+                                    <apex:outputLink title="OG Oppty by Stage-Current Year" value="/{!stageReportId}?pv3={!DDUNS}&pv4={!SUBSTITUTE(Tier2Value, '&', '%26')}&pv5={!SUBSTITUTE(tier3Value, '&', '%26')}" target="_blank">Opportunity By PL- Current Year</apex:outputLink>
+                                    </div>          
+                                <apex:chart width="400" height="500" data="{!stagedata}" theme="Category4">
+                                    <apex:legend position="bottom"/>
+                                    <apex:axis type="Numeric" position="left" fields="Revenue" title="Sum of Opportunity Amount" grid="true"/>
+                                    <apex:axis type="Category" position="bottom" fields="Region" title="Tier 2 Account Region">
+                                        <apex:chartLabel rotate="315"/>
+                                    </apex:axis>
+                                    <apex:barSeries colorsProgressWithinSeries="true" title="Region Sales" orientation="vertical" axis="left" xField="Region" yField="Revenue">
+                                        <apex:chartTips height="10" width="120" valueField="label"/>
+                                    </apex:barSeries>
+                                </apex:chart>
+                        </td>
+                        
+                    </tr>
+          
+                    <tr>
+
+                        <td align="left" style="vertical-align: top;">
+                            
+                                <div class="ChartHeader">
+                                    <apex:outputLink title="OG Tier 2 Account Region-Current Year" value="/{!tier2ReportId}?pv3={!DDUNS}&pv4={!SUBSTITUTE(Tier2Value, '&', '%26')}&pv5={!SUBSTITUTE(tier3Value, '&', '%26')}" target="_blank">CurrYr Tier-2 Region(Act-Hi,Commit,Won)</apex:outputLink>
+                                    </div>          
+                                <apex:chart width="400" height="500" data="{!data}" theme="Category4">
+                                    <apex:legend position="bottom"/>
+                                    <apex:axis type="Numeric" position="left" fields="Revenue" title="Sum of Opportunity Amount" grid="true"/>
+                                    <apex:axis type="Category" position="bottom" fields="Region" title="Tier 2 Account Region">
+                                        <apex:chartLabel rotate="315"/>
+                                    </apex:axis>
+                                    <apex:barSeries colorsProgressWithinSeries="true" title="Region Sales" orientation="vertical" axis="left" xField="Region" yField="Revenue">
+                                        <apex:chartTips height="10" width="120" valueField="label"/>
+                                    </apex:barSeries>
+                                </apex:chart>
+                        </td>
+
+                        <td align="left" style="vertical-align: top;">
+                            
+                                <div class="ChartHeader">
+                                    <apex:outputLink title="OG Oppty by Stage-Current Year" value="/{!stageReportId}?pv3={!DDUNS}&pv4={!SUBSTITUTE(Tier2Value, '&', '%26')}&pv5={!SUBSTITUTE(tier3Value, '&', '%26')}" target="_blank">Oppty by Stage - Current Year</apex:outputLink>
+                                    </div>          
+                                <apex:chart width="400" height="500" data="{!stagedata}" theme="Category4">
+                                    <apex:legend position="bottom"/>
+                                    <apex:axis type="Numeric" position="left" fields="Revenue" title="Sum of Opportunity Amount" grid="true"/>
+                                    <apex:axis type="Category" position="bottom" fields="Region" title="Tier 2 Account Region">
+                                        <apex:chartLabel rotate="315"/>
+                                    </apex:axis>
+                                    <apex:barSeries colorsProgressWithinSeries="true" title="Region Sales" orientation="vertical" axis="left" xField="Region" yField="Revenue">
+                                        <apex:chartTips height="10" width="120" valueField="label"/>
+                                    </apex:barSeries>
+                                </apex:chart>
+                        </td>
+                        
+                        
+                    </tr>
+                </table>
+            </apex:outputPanel>
+            
+    </apex:form>    
+--> 
+</apex:page>

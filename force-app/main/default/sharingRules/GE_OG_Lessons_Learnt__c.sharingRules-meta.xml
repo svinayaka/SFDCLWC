@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>SD_Users</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>SD Users</label>
+        <sharedTo>
+            <roleAndSubordinates>FFX_SD_User</roleAndSubordinates>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Service Delivery</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingOwnerRules>
+        <fullName>Read_access_to_SS_Users</fullName>
+        <accessLevel>Read</accessLevel>
+        <label>Read access to SS Users</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>SMax_SS_Admin</roleAndSubordinatesInternal>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>SMax_SS_Admin</roleAndSubordinatesInternal>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>SS_Sharing_Rule</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>SS Super User Sharing Rule</label>
+        <sharedTo>
+            <group>SS_Super_Users</group>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>SMax_SS_Admin</roleAndSubordinatesInternal>
+        </sharedFrom>
+    </sharingOwnerRules>
+</SharingRules>

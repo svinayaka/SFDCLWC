@@ -1,0 +1,21 @@
+<!--
+================================================================
+Type Name   : SVMX_EODocMessage
+Author      : Raja Kumar M
+Created Date: 10/12/2013
+Reason      : This Page is used to display the Message Banner on work order if Executive Ovveride is checked.
+================================================================
+-->
+
+<apex:page standardController="SVMXC__Service_Order__c" extensions="SVMX_EODocAttached_Cntrl" action="{!messageAction}" sidebar="false" showHeader="false">
+    <apex:OutputLabel style="background-color:black;" rendered="{!flag}">*********************************************************************************************************************************************************************************************************************************************************************************************************</apex:OutputLabel>
+    <br />
+    <br />
+    <b><apex:outputText value="{!Msg}" style="background-color:yellow;font-size:14px" />
+    </b>
+    <br />
+    <br />
+    <apex:OutputLabel style="background-color:black;" rendered="{!flag}">*********************************************************************************************************************************************************************************************************************************************************************************************************</apex:OutputLabel>
+    
+          
+</apex:page>

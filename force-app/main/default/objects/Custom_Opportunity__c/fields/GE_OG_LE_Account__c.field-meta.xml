@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GE_OG_LE_Account__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <externalId>false</externalId>
+    <label>Account Legal Entity</label>
+    <referenceTo>Account</referenceTo>
+    <relationshipLabel>Offline Opportunities (LE Account)</relationshipLabel>
+    <relationshipName>Offline_Opportunities1</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

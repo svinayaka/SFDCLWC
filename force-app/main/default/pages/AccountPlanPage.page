@@ -1,0 +1,549 @@
+<apex:page standardcontroller="GE_HQ_Account_Plan__c" applyBodyTag="false" extensions="SaveAndOpenPDF" renderAs="{!renderAs}"  action="{!saveAndOpenPDF}" sidebar="false" showHeader="false" standardstylesheets="false" tabStyle="Appointment__tab">
+  
+  <head>
+  
+  <style type="text/css">
+   .outBorder {
+    border:1px outset black;
+   }
+   .inBorder{
+    border-top:1px solid blue;
+    border-left:1px solid blue;
+    border-bottom:1px solid blue;
+    border-right:1px solid blue;
+    border-collapse:collapse;
+   }
+   
+   
+   .fontSize
+   {
+   font-size:12px;
+   
+   }
+   
+   .infoSection
+   {
+   font-weight: bold !important;
+   
+   }
+  </style>
+  
+  
+  
+  
+  
+  
+      <style>
+      .odd { 
+        
+        background-color:#D3DFEF;
+      }
+    .even {
+        background-color:#ffffff;
+    }
+    
+    .tableHeader
+    {
+    background-color:#8DB3E2;
+    }
+    
+    .sectionHeader {
+    background: #2d97cc; width: 50%;
+    
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 6px;
+    
+    }
+    
+
+.rowWithBorder
+{
+border-width: 1px;
+border-style: solid;
+border-color: #000000;
+}
+
+
+    
+   </style>
+   
+<style>
+.TableTitle {
+
+background-color:#8EB2E2; 
+
+}   
+</style>
+
+   <style>
+
+
+body
+
+{
+
+font-family: Times;
+
+}
+
+TD{font-family: Times; font-size: 10pt;}
+
+</style>
+<style>
+
+.captionClass
+
+{
+
+font-weight:bold; 
+color: white;
+
+background-color:#333366;
+font-size:20px;
+font-family:Times;
+
+}
+</style>
+  </head>
+
+ 
+   <body topmargin="0" leftmargin="0" marginheight="0" marginwidth="0" style="font-family:Times">
+  
+  
+    <apex:form id="frm">
+        <apex:pageMessages /> 
+       
+        
+        
+        <table>
+  <tr><td colspan="2">
+  <apex:image id="theImage" value="{!$Resource.ChannelPartnerMAPAttachment}"/>
+  </td></tr>
+  <tr>
+  <tr><td></td></tr>
+  <tr><td></td></tr>
+  <tr><td></td></tr>
+  <tr><td></td></tr>
+  <tr><td></td></tr>
+  <td>Date:&nbsp;
+  <!--<apex:outputField value="{!GE_HQ_Account_Plan__c.Last_sent_Date_to_Channel_Partner_GEOG__c}"/>
+  <apex:outputText value="{! IF((GE_HQ_Account_Plan__c.Last_sent_Date_to_Channel_Partner_GEOG__c== null),{!today()} ,{!today()} ) }"/>
+  
+  <apex:outputText value="{!TODAY()}"/>-->
+  
+  
+  
+  <apex:outputText value="{0,date,dd'/'MM'/'yyyy}">
+         <apex:param value="{!TODAY()}"/>
+         </apex:outputText>
+  
+  
+  
+  
+  
+  </td>
+  </tr>
+  
+  <tr>
+  <td>Baker Hughes Channel Manager:
+  <apex:outputField value="{!GE_HQ_Account_Plan__c.Primary_Channel_Manager_GEOG__c}"/>
+  </td>
+  </tr>
+  </table>
+  <br/>
+  
+  <table style="font-family:Times;">
+  <tr><td colspan="3" style="font-size:14pt; font-style:italic;">Instructions:</td></tr>
+  <tr><td style="font-family:">
+  1. Review this document and respond to the email that was sent along with this attachment
+  </td></tr>
+  
+  <tr><td>
+  2. If everything is agreed, reply to the email with only the word ‘Agree’
+  </td></tr>
+  
+  
+  <tr><td>
+  3. If changes are required, reply to the email with only the word ‘Modify’
+  </td></tr>
+  
+  
+  <tr><td>
+  4. Questions? Contact your Baker Hughes Channel Manager 
+  </td></tr>
+  
+  
+  </table>       
+        
+  <br/>
+  <br/>
+  
+  <div style="font-family:Times;">
+  <table style="border-collapse:collapse">
+  <tr>
+  <th><span style="font-size:14pt;">Information</span></th>
+  </tr>
+  <tr>
+  
+    
+     <td><apex:outputText value="Legal name"/>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+     <td><apex:outputText value="{!GE_HQ_Account_Plan__c.Account_Legal_Entity_GEOG__r.Name}"/>
+    
+     </td>
+</tr>
+
+
+ <tr>
+ 
+    
+     <td> <apex:outputText value="Address"/>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                      <td> <apex:outputText value="{!GE_HQ_Account_Plan__c.Mailing_Street_GEOG__c}"/>
+     </td>
+     
+</tr>
+
+<tr>
+ 
+    
+     <td> <apex:outputText value="City"/>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                      <td> <apex:outputText value="{!GE_HQ_Account_Plan__c.Mailing_City_GEOG__c}"/>
+     </td>
+     
+     
+</tr>
+     
+     <tr>
+ 
+    
+     <td> <apex:outputText value="Postal Code"/>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                      <td> 
+                      <apex:outputText value="{!GE_HQ_Account_Plan__c.Mailing_Zip_Postal_Code_GEOG__c}"/>
+     </td>
+     
+</tr>
+     
+     <tr>
+ 
+    
+     <td> <apex:outputText value="State/Province"/>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                      <td>  <apex:outputText value="{!GE_HQ_Account_Plan__c.Mailing_State_Province_GEOG__c}"/>
+     </td>
+     
+</tr>
+     
+     <tr>
+ 
+    
+     <td> <apex:outputText value="Country"/>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                      <td> <apex:outputText value="{!GE_HQ_Account_Plan__c.Mailing_Country_GEOG__c}"/>
+     </td>
+     
+</tr>
+     
+     <tr>
+ 
+    
+     <td> <apex:outputText value="Principal Channel Contact"/>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+     <td> <apex:outputText value="{!GE_HQ_Account_Plan__c.Channel_Partner_Contact_Name_GEOG__r.Name}"/>
+     </td>
+     
+</tr>
+     
+     <tr>
+ 
+    
+     <td> <apex:outputText value="Title"/>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                      <td> <apex:outputText value="{!GE_HQ_Account_Plan__c.Title_GEOG__c}"/>
+     </td>
+     
+</tr>
+     
+     <tr>
+ 
+    
+     <td> <apex:outputText value="Phone"/>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                      <td> <apex:outputText value="{!GE_HQ_Account_Plan__c.Phone_GEOG__c}"/>
+     </td>
+     
+</tr>
+
+
+ <tr>
+ 
+    
+     <td> <apex:outputText value="Mobile"/>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                      <td> <apex:outputText value="{!GE_HQ_Account_Plan__c.Mobile_GEOG__c}"/>
+     </td>
+     
+</tr>
+
+
+ <tr>
+ 
+    
+     <td> <apex:outputText value="Email"/>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                      <td>  <apex:outputText value="{!GE_HQ_Account_Plan__c.Email_GEOG__c}"/>
+     </td>
+     
+</tr>
+     
+     
+     
+     </table>
+     
+     
+     
+    </div>
+   <br/>
+   <br/>
+   <br/>
+   <br/>
+   
+              
+              <!--TABLE FOR TARGETS AND ACTUALS-->
+              
+              <table  border="1px"  class="list fixed" width="700px" style="font-family:Times; border-collapse:collapse;">
+                                    <colgroup>
+                                        <col width="20%"/>
+                                        <col width="40%"/>
+                                        <col width="40%"/>
+                                        </colgroup>
+                                    
+                                    <tr style="background: #333366; ">                
+                    <td colspan="3" style="padding-left: 10px; font-weight:bold; color: white;vertical-align: middle;border: 0px;height:40px;font-size:20px;font-family:Times;">Orders Target and Performance </td>
+                </tr>
+                                    
+                                    <tr>
+                                        <th bgcolor="#4F81BC" style="font-weight:bold; color: white;">Quarter</th>
+                                        <th bgcolor="#4F81BC" style="font-weight:bold; color: white;"><apex:outputText value="{!GE_HQ_Account_Plan__c.GE_PRM_Year__c}"></apex:outputText> Orders Target ($)</th>
+                                        <th bgcolor="#4F81BC" style="font-weight:bold; color: white;"><apex:outputText value="{!GE_HQ_Account_Plan__c.GE_PRM_Year__c}"></apex:outputText> Orders Actuals ($)</th>
+                                        </tr>
+                                        <!--Q1 row-->
+                                        <tr>
+                                        <td bgcolor="#4F81BC" style="font-weight:bold; color: white;">
+                                        Q1
+                                        </td>
+                                        <td bgcolor="#A6BFDE">
+                                        
+                                       <apex:outputField value="{!GE_HQ_Account_Plan__c.CY_Orders_Target_M_Q1_GEOG__c}"/>  
+                                        </td>
+                                        <td bgcolor="#A6BFDE">
+                                       <apex:outputField value="{!GE_HQ_Account_Plan__c.CY_Orders_Actual_M_Q1_GEOG__c}"/>  
+                                        </td>
+                                        </tr>
+                                        <!--Q2 row-->
+                                        
+                                        <tr>
+                                         <td bgcolor="#4F81BC" style="font-weight:bold; color: white;">
+                                        Q2
+                                        </td>
+                                        <td bgcolor="#D3DFEF">
+                                        
+                                       <apex:outputField value="{!GE_HQ_Account_Plan__c.CY_Orders_Target_M_Q2_GEOG__c}"/>  
+                                        </td>
+                                        <td bgcolor="#D3DFEF">
+                                       <apex:outputField value="{!GE_HQ_Account_Plan__c.CY_Orders_Actual_M_Q2_GEOG__c}"/>  
+                                        </td>
+                                        </tr>
+                                        <!--Q3 row-->
+                                        
+                                        <tr>
+                                         <td bgcolor="#4F81BC" style="font-weight:bold; color: white;">
+                                        Q3
+                                        </td>
+                                        
+                                        <td bgcolor="#A6BFDE">
+                                       <apex:outputField value="{!GE_HQ_Account_Plan__c.CY_Orders_Target_M_Q3_GEOG__c}"/>  
+                                        </td>
+                                        <td bgcolor="#A6BFDE">
+                                       <apex:outputField value="{!GE_HQ_Account_Plan__c.CY_Orders_Actual_M_Q3_GEOG__c}"/>  
+                                        </td>
+                                        </tr>
+                                        
+                                        <!--Q4 row-->
+                                        
+                                        <tr>
+                                        <td bgcolor="#4F81BC" style="font-weight:bold; color: white;">
+                                        Q4
+                                        </td>
+                                        <td bgcolor="#D3DFEF">
+                                        
+                                       <apex:outputField value="{!GE_HQ_Account_Plan__c.CY_Orders_Target_M_Q4_GEOG__c}"/>  
+                                        </td>
+                                        <td bgcolor="#D3DFEF">
+                                       <apex:outputField value="{!GE_HQ_Account_Plan__c.CY_Orders_Actual_M_Q4_GEOG__c}"/>  
+                                        </td>
+                                        </tr>
+                                        
+                                        
+                                          <!--Total Year row-->
+                                        
+                                        <tr>
+                                         <td bgcolor="#4F81BC" style="font-weight:bold; color: white;">
+                                        Total Year
+                                        </td>
+                                        <td bgcolor="#A6BFDE">
+                                        
+                                       <apex:outputField value="{!GE_HQ_Account_Plan__c.Total_Year_Target_GEOG__c}"/>  
+                                        </td>
+                                        <td bgcolor="#A6BFDE">
+                                       <apex:outputField value="{!GE_HQ_Account_Plan__c.Total_Year_Actuals_GEOG__c}"/>  
+                                        </td>
+                                        </tr>
+                                        
+                                        
+                                        
+                                        </table>
+                                        <br/> <br/> <br/><br/> <br/><br/> <br/>
+                                        
+                                        <!--TABLE Key actions needed to grow our business  for Completed tasks
+                                        Deferred','Rejected','Completed'
+                                          -->
+                                      
+                             
+        <apex:dataTable value="{!lstIncomTasks}" var="tasks" id="theTable"       rowClasses="outBorder,rowWithBorder"    columnsWidth="10%,10%,10%,10%,10%,10%,40%" width="800px">
+       
+         
+          <apex:facet name="caption">
+          <table style="border-collapse:collapse;width:700px;">
+          <tr>
+          <td style="background: #333366;font-weight:bold; color: white;height:40px;font-size:20px;font-family:Times;">Key Opened actions needed to grow our business
+          </td>
+          </tr> 
+          </table>
+          
+          </apex:facet>
+         
+         
+
+        <apex:column headerClass="TableTitle" styleClass="inBorder" >
+        
+        
+         <apex:facet name="header" ><span style="font-weight:bold; color: white;">Subject</span></apex:facet>
+         
+         
+            <apex:outputText styleClass="fontSize" value="{!tasks.Subject}"/>
+            
+        </apex:column>
+
+        <apex:column headerClass="TableTitle" styleClass="inBorder">
+        
+          <apex:facet name="header"><span style="font-weight:bold; color: white;">Type</span> </apex:facet>
+
+          
+           <apex:outputText styleClass="fontSize" value="{!tasks.Type}"/>
+        </apex:column>
+        <apex:column headerClass="TableTitle" styleClass="inBorder">
+        
+            <apex:facet name="header"><span style="font-weight:bold; color: white;">Owner</span></apex:facet>
+            
+          <apex:outputText styleClass="fontSize" value="{!tasks.owner.name}"/>
+        </apex:column>
+        
+        <apex:column headerClass="TableTitle" styleClass="inBorder">
+        
+            <apex:facet name="header"><span style="font-weight:bold; color: white;">Channel contact</span></apex:facet>           
+          <apex:outputText styleClass="fontSize" value="{!tasks.Who.Name}"/>
+        </apex:column>   
+        
+        <apex:column headerClass="TableTitle" styleClass="inBorder">
+                    <apex:facet name="header"><span style="font-weight:bold; color: white;">Due Date</span></apex:facet>                       
+            <!--<apex:outputText value="{!tasks.ActivityDate}"/>-->
+            
+            <apex:outputText styleClass="fontSize" value="{0,date,dd'/'MM'/'yyyy}">
+         <apex:param value="{!tasks.ActivityDate}"/>
+         </apex:outputText>
+        </apex:column>            
+        
+        <apex:column headerClass="TableTitle" styleClass="inBorder">
+        
+            <apex:facet name="header"><span style="font-weight:bold; color: white;">Status</span></apex:facet>      
+            <apex:outputText styleClass="fontSize" value="{!tasks.status}"/>
+        </apex:column>
+        
+        <apex:column headerClass="TableTitle" styleClass="inBorder">
+        
+            <apex:facet name="header"><span style="font-weight:bold; color: white;">Comments</span></apex:facet>   
+            <apex:outputText styleClass="fontSize" value="{!tasks.Description}"/>
+        </apex:column>        
+      </apex:dataTable>  
+      
+      <br/><br/><br/><br/>
+      
+      
+       <!--TABLE Key actions needed to grow our business  for Completed tasks
+                                        Not Started','In Progress','Waiting on someone else
+                                          -->
+                                        
+                               
+       <apex:dataTable value="{!lstCompletedTasks}" var="tasks" id="theTable1" styleClass="beta"
+            rowClasses="outBorder,rowWithBorder"  columnsWidth="10%,10%,10%,10%,10%,10%,40%" width="800px">
+       
+         
+          <apex:facet name="caption">
+          <table style="border-collapse:collapse;width:700px;">
+          <tr>
+          <td style="background: #333366;font-weight:bold; color: white;height:40px;font-size:20px;font-family:Times;">Key Closed actions 
+          </td>
+          </tr> 
+          </table>
+          
+          </apex:facet>
+         
+         
+
+         <apex:column headerClass="TableTitle" styleClass="inBorder" >
+        
+        
+         <apex:facet name="header" ><span style="font-weight:bold; color: white;">Subject</span></apex:facet>
+         
+         
+            <apex:outputText styleClass="fontSize" value="{!tasks.Subject}"/>
+            
+        </apex:column>
+
+        <apex:column headerClass="TableTitle" styleClass="inBorder">
+        
+          <apex:facet name="header"><span style="font-weight:bold; color: white;">Type</span> </apex:facet>
+
+          
+           <apex:outputText styleClass="fontSize" value="{!tasks.Type}"/>
+        </apex:column>
+        <apex:column headerClass="TableTitle" styleClass="inBorder">
+        
+            <apex:facet name="header"><span style="font-weight:bold; color: white;">Owner</span></apex:facet>
+            
+          <apex:outputText styleClass="fontSize" value="{!tasks.owner.name}"/>
+        </apex:column>
+        
+        <apex:column headerClass="TableTitle" styleClass="inBorder">
+        
+            <apex:facet name="header"><span style="font-weight:bold; color: white;">Channel contact</span></apex:facet>           
+          <apex:outputText styleClass="fontSize" value="{!tasks.Who.Name}"/>
+        </apex:column>   
+        
+        <apex:column headerClass="TableTitle" styleClass="inBorder">
+                    <apex:facet name="header"><span style="font-weight:bold; color: white;">Due Date</span></apex:facet>                       
+            <!--<apex:outputText value="{!tasks.ActivityDate}"/>-->
+            
+            <apex:outputText styleClass="fontSize" value="{0,date,dd'/'MM'/'yyyy}">
+         <apex:param value="{!tasks.ActivityDate}"/>
+         </apex:outputText>
+        </apex:column>        
+        
+        <apex:column headerClass="TableTitle" styleClass="inBorder">
+        
+            <apex:facet name="header"><span style="font-weight:bold; color: white;">Status</span></apex:facet>      
+            <apex:outputText styleClass="fontSize" value="{!tasks.status}"/>
+        </apex:column>
+        
+        <apex:column headerClass="TableTitle" styleClass="inBorder">
+        
+            <apex:facet name="header"><span style="font-weight:bold; color: white;">Comments</span></apex:facet>   
+            <apex:outputText styleClass="fontSize" value="{!tasks.Description}"/>
+        </apex:column>        
+      </apex:dataTable>
+   </apex:form>
+    </body>
+</apex:page>

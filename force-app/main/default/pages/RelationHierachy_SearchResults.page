@@ -1,0 +1,48 @@
+<apex:page controller="Relationship_HierarchyController" tabStyle="Account">
+    <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" />
+  <script>
+      function storeSelected(){
+        var radioBtns = document.getElementsByClassName("radioBtn");
+        for(var i = 0; i < radioBtns.length; i++){
+            if(radioBtns[i].checked){
+            jQuery('[id$=hiddenId]').val(radioBtns[i].value);
+        }
+      }
+      return true;
+      }
+  </script>
+  <apex:form >
+      <apex:pageBlock >
+          <apex:inputHidden value="{!strSlectedId}" id="hiddenId"/>
+          <apex:pageBlockTable value="{!lstAccountResult}" var="lst">
+            <apex:column headerValue="Select">
+            <input type ="radio" name="select" value="{!lst.id}"  class="radioBtn"/>
+            </apex:column>
+            
+            <apex:column headerValue="Name" value="{!lst.Name}"/>
+            <apex:column headerValue="Member of" value="{!lst.Member_of_GE_OG__r.Name}"/> 
+            <apex:column headerValue="Region" value="{!lst.Region_GEOG__c}"/>
+            <apex:column headerValue="Country" value="{!lst.Country_GEOG__c}"/>
+            <apex:column headerValue="Tier Value" value="{!lst.Account_Tier_GEOG__c}"/>
+            <apex:column headerValue="Type" value="{!lst.Type}"/>
+            <apex:column headerValue="Classification" value="{!lst.Classification__c}"/>
+            
+            <apex:column headerValue="Action">
+            <apex:outputLink value="/{!lst.Id}" target="_blank" rendered="{!IF((lst.Account_Tier_GEOG__c=='Country'), true,false)}">View Account</apex:outputLink>
+            <!--<apex:outputLink rendered="{!IF((lst.Account_Tier_GEOG__c=='Regional'), true,false)}" value="/apex/AddNewAccount_GEOG?id={!lst.Id}&name={!searchtext}&region={!selectedRegion}&Country={!selectedCountry}">+Add Country Account</apex:outputLink>-->
+            </apex:column>
+            
+            <apex:column headerValue="Owner" value="{!lst.Owner.Name}"/>          
+        </apex:pageblockTable>
+        
+        <apex:pageBlockbuttons >
+            <apex:commandButton value="Submit" onclick="return storeSelected();" action="{!processSelectedAccount}"/>
+            <apex:commandButton value="Cancel" action="{!goBack}"/>
+        </apex:pageBlockbuttons>
+        
+        
+    </apex:pageBlock>
+    
+    <!--<apex:actionFunction name="processSelectedAccount" id="processSelectedAccount" action="{!processSelectedAccount}"/>-->
+  </apex:form>
+</apex:page>

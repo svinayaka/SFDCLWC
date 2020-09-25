@@ -1,0 +1,1424 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Commercial_Line_30_expiry</fullName>
+        <description>Commercial Line &lt;30 expiry</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_ES_User_Lead_Sales_Person__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>GE_PRM_Commercial_Manager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>GE_PRM_Regional_Compliance_Manager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_New_templates/Commercial_Line_30_expiry_html</template>
+    </alerts>
+    <alerts>
+        <fullName>Commercial_Line_60_expiry</fullName>
+        <description>Commercial Line &lt;60 expiry</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_ES_User_Lead_Sales_Person__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>GE_PRM_Commercial_Manager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>GE_PRM_Regional_Compliance_Manager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_New_templates/Commercial_Line_60_expiry_html</template>
+    </alerts>
+    <alerts>
+        <fullName>Commercial_Line_90_expiry</fullName>
+        <description>Commercial Line &lt;90 expiry</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_ES_User_Lead_Sales_Person__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>GE_PRM_Commercial_Manager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>GE_PRM_Regional_Compliance_Manager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_New_templates/Commercial_Line_90_expiry_html</template>
+    </alerts>
+    <alerts>
+        <fullName>Complete</fullName>
+        <description>Complete</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>PRM_Finance_Users</recipient>
+            <type>group</type>
+        </recipients>
+        <recipients>
+            <recipient>PRM_Marketing_Users</recipient>
+            <type>group</type>
+        </recipients>
+        <recipients>
+            <field>GE_ES_User_Lead_Sales_Person__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>GE_PRM_Commercial_Manager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>GE_PRM_ERP_Contact__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_New_templates/Complete_html</template>
+    </alerts>
+    <alerts>
+        <fullName>Contract_reviewed_confirmed</fullName>
+        <description>Contract reviewed &amp; confirmed</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_PRM_Commercial_Manager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_New_templates/Contract_reviewed_confirmed_html</template>
+    </alerts>
+    <alerts>
+        <fullName>Contract_sent_to_Channel_Partner_for_signature</fullName>
+        <description>Contract sent to Channel Partner for signature</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_ES_User_Lead_Sales_Person__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>GE_PRM_Commercial_Manager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_New_templates/Contract_sent_to_Channel_Partner_for_signature_html</template>
+    </alerts>
+    <alerts>
+        <fullName>Contract_sent_to_GE_signatory</fullName>
+        <description>Contract sent to GE signatory</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_ES_User_Lead_Sales_Person__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>GE_PRM_Commercial_Manager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_New_templates/Contract_sent_to_GE_signatory_html</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_Alert_for_Execution_contract</fullName>
+        <description>DM Email Notifications - Contracts; Execution Contract Expiry Email Alert to the Users; Email Sent to Contract Owner, Record Creator, Expiration Alerts Email</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <recipients>
+            <field>Expiration_Alerts_Email_GEOG__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/Contract_Record_Expiry_Email2_GEOG</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_Notification_Email_180_days_before_Contract_Expiration_date</fullName>
+        <description>GE_Notification Email 180 days before Contract Expiration date</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>OG_FA_Read_Write_Group</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/GE_180_days_before_Contract_expiration</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_Notification_Email_180_days_before_Contract_Expiration_date1</fullName>
+        <description>DM Email Notifications - Contracts; GE_Notification Email 180 days before Contract Expiration date1; Email sent to OG FA Read/Write Group</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>OG_FA_Read_Write_Group</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/GE_180_days_before_Contract_expiration</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_Notification_Email_30_days_before_Contract_Expiration_date1</fullName>
+        <description>DM Email Notifications - Contracts; GE_Notification Email 30 days before Contract Expiration date1; Email sen to OG FA Read/Write Group</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>OG_FA_Read_Write_Group</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/GE_30_days_before_Contract_expiration</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_Notification_Email_90_days_before_Contract_Expiration_date1</fullName>
+        <description>DM Email Notifications - Contracts; GE_Notification Email 90 days before Contract Expiration date1; Email sent to OG FA Read/Write Group</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>OG_FA_Read_Write_Group</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/GE_90_days_before_Contract_expiration</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_Notification_Email_Last_days_before_Contract_Expiration_date</fullName>
+        <description>DM Email Notifications - Contracts; GE_Notification Email Last days before Contract Expiration date; Email sent to OG FA Read/Write Group</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>OG_FA_Read_Write_Group</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/GE_Last_day_of_Contract_expiration</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_OG_EmailNotification_On_Last_day_of_Contract_Pricing_Validity_date</fullName>
+        <description>DM EMail Notifications - Contracts; GE_OG_EmailNotification_On_Last_day_of_Contract_Pricing_Validity_date; Email sent to OG FA Read/Write Group</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>OG_FA_Read_Write_Group</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/GE_OG_EmailNotification_on_Last_day_of_Contract_Pricing_Validity</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_OG_EmailNotification_before_30_days_of_Contract_Pricing_Validity_date</fullName>
+        <description>DM Email Notifications - Contracts; GE_OG_EmailNotification_before_30_days_of_Contract_Pricing_Validity_date; Email sent to OG FA Read/Write Group</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>OG_FA_Read_Write_Group</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/GE_OG_EmailNotification_on_30_days_before_Contract_Pricing_Validity</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_OG_EmailNotification_before_90_days_of_Contract_Pricing_Validity_date</fullName>
+        <description>DM Email Notifications - Contracts; GE_OG_EmailNotification_before_90_days_of_Contract_Pricing_Validity_date; Email sent to OG FA Read/Write Group</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>OG_FA_Read_Write_Group</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/GE_OG_EmailNotification_on_90_days_before_Contract_Pricing_Validity</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PRM_Contract_Draft_date</fullName>
+        <description>GE_PRM_Contract Draft date</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_PRM_Commercial_Manager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_New_templates/Draft_contract_generated_html</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PRM_Notify_Recom_Owner_On_Contract_Status</fullName>
+        <description>GE_PRM_Notify_Recom_Owner_On_Contract_Status</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>energy.integration.og@ge.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PRM_Contract_Email_Channel_Manager</template>
+    </alerts>
+    <alerts>
+        <fullName>sendEmail_to_Public_group_for_Non_Renewal</fullName>
+        <description>sendEmail to Public group for Non-Renewal</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>GE_PRM_Contractual_Team</recipient>
+            <type>group</type>
+        </recipients>
+        <recipients>
+            <field>GE_PRM_PrimarySalesChannel_Manager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>GE_PRM_Region_Sales_Channel_Leader__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>GE_PRM_channel_Appoinment_createdby__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_New_templates/send_email_to_Public_group_for_non_renewal</template>
+    </alerts>
+    <alerts>
+        <fullName>send_email_to_Public_group_for_Termination</fullName>
+        <description>send email to Public group for Termination</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>GE_PRM_Contractual_Team</recipient>
+            <type>group</type>
+        </recipients>
+        <recipients>
+            <field>GE_PRM_PrimarySalesChannel_Manager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>GE_PRM_Region_Sales_Channel_Leader__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>GE_PRM_channel_Appoinment_createdby__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_New_templates/send_email_to_Public_group_for_Termination</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Activated_Date_Update</fullName>
+        <field>GE_PRM_Activated_Date__c</field>
+        <formula>Now()</formula>
+        <name>Activated Date Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Awaiting_Rev_bfr_sent_to_Chn_Date</fullName>
+        <field>GE_PRM_Awaiting_Rev_bfr_sent_to_Chn_Date__c</field>
+        <formula>NOW()</formula>
+        <name>Awaiting Rev bfr sent to Chn Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Awaiting_execution_by_Channel_Dt_Update</fullName>
+        <field>GE_PRM_Awaiting_execution_by_Channel_Dt__c</field>
+        <formula>Now()</formula>
+        <name>Awaiting execution by Channel Dt Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Awaiting_execution_by_GE_Date_Update</fullName>
+        <field>GE_PRM_Awaiting_execution_by_GE_Date__c</field>
+        <formula>Now()</formula>
+        <name>Awaiting execution by GE Date Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Awaiting_to_be_sent_to_Channel_Update</fullName>
+        <field>GE_PRM_Awaiting_to_be_sent_to_Channel_Dt__c</field>
+        <formula>NOW()</formula>
+        <name>Awaiting to be sent to Channel Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Blank_out_Hold_reason</fullName>
+        <field>Hold_Comment__c</field>
+        <name>Blank out Hold reason</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Blank_out_Red_Flag_reason</fullName>
+        <field>Red_Line_Comment__c</field>
+        <name>Blank out Red Flag reason</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Contract_On_hold_by_GE_Cycle_Time_Update</fullName>
+        <field>GE_PRM_Contract_On_hold_by_GE_Cycle_Time__c</field>
+        <formula>GE_PRM_Execute_Time__c - GE_PRM_Awaiting_execution_by_Channel_Dt__c</formula>
+        <name>Contract On-hold by GE Cycle Time_Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_CP_signed_contract_Date_Status_Update</fullName>
+        <field>Status</field>
+        <literalValue>GE signature</literalValue>
+        <name>GE CP signed contract Date Status Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_Confirmed_Draft_Date_Status_Update</fullName>
+        <field>Status</field>
+        <literalValue>Generate Final</literalValue>
+        <name>GE Confirmed Draft Date Status Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_Contract_CP_Date_Status_Update</fullName>
+        <field>Status</field>
+        <literalValue>CP signature</literalValue>
+        <name>GE Contract CP Date Status Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_Contract_Draft_Date_Status_Update</fullName>
+        <field>Status</field>
+        <literalValue>GE Confirm</literalValue>
+        <name>GE Contract Draft Date Status Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_Executed_Date_Status_Update</fullName>
+        <field>Status</field>
+        <literalValue>Executed</literalValue>
+        <name>GE Executed Date Status Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_OG_Set_Status_to_Active</fullName>
+        <field>Status</field>
+        <literalValue>Activated</literalValue>
+        <name>GE_OG_Set Status to Active</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_OG_Status_Update</fullName>
+        <field>Status</field>
+        <literalValue>Expired</literalValue>
+        <name>GE_OG_Status_Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Contract_Start_Date_Pre_Populate</fullName>
+        <description>Update the Contract Start Date field with recommendation&apos;s agreement effective date value</description>
+        <field>StartDate</field>
+        <formula>GE_PRM_Recommendation_Link__r.GE_PRM_Agreement_effective_date__c</formula>
+        <name>GE_PRM_Contract_Start_Date_Pre_Populate</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Contract_Term_Pre_Populate</fullName>
+        <description>This will update the contract term based on the recommendation&apos;s agreement term</description>
+        <field>ContractTerm</field>
+        <formula>CASE( GE_PRM_Recommendation_Link__r.GE_PRM_Agreement_term__c , &apos;1 Year&apos;,1, &apos;2 Years&apos;, 2, &apos;3 Years&apos;, 3, &apos;4 Years&apos;, 4, &apos;5 Years&apos;, 5, &apos;6 Years&apos;, 6, &apos;7 Years&apos;, 7, &apos;8 Years&apos;, 8, &apos;9 Years&apos;, 9, &apos;10 Years&apos;, 10, &apos;11 Years&apos;, 11, &apos;12 Years&apos;, 12, &apos;13 Years&apos;, 13, &apos;14 Years&apos;, 14, &apos;15 Years&apos;, 15, &apos;16 Years&apos;, 16,0)  * 12</formula>
+        <name>GE_PRM_Contract_Term_Pre_Populate</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Execute_time_update</fullName>
+        <description>update Execute time to current date/time</description>
+        <field>GE_PRM_Execute_Time__c</field>
+        <formula>Now()</formula>
+        <name>GE_PRM_Execute_time_update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Previous_Contract_Pre_Populate</fullName>
+        <field>GE_PRM_Previous_Contract__c</field>
+        <formula>GE_PRM_Recommendation_Link__r.GE_PRM_Previous_Agreement_needed_to_rene__c</formula>
+        <name>GE_PRM_Previous_Contract_Pre_Populate</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_update_Recom_OwnerEmail</fullName>
+        <field>GE_PRM_Recommendation_Owner_Email__c</field>
+        <formula>CreatedBy.Email</formula>
+        <name>GE_PRM_update_Recom_OwnerEmail</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_Sign_completed_Date_Status_Update</fullName>
+        <field>Status</field>
+        <literalValue>Close-Out</literalValue>
+        <name>GE Sign completed Date Status Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>On_Hold_by_GE_Date_Update</fullName>
+        <field>GE_PRM_On_Hold_by_GE_Date__c</field>
+        <formula>Now()</formula>
+        <name>On Hold by GE Date Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>PRM_Update_Contract_Name</fullName>
+        <field>Name</field>
+        <formula>LEFT(Account.Name, 80)</formula>
+        <name>PRM Update Contract Name</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_Contract_Status_to_Expired</fullName>
+        <field>Status</field>
+        <literalValue>Expired Contract</literalValue>
+        <name>Set Contract Status to Expired</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_Status_to_Activated</fullName>
+        <field>Status</field>
+        <literalValue>Activated</literalValue>
+        <name>Set Status to Activated</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <rules>
+        <fullName>Commercial Line Expiry</fullName>
+        <active>false</active>
+        <criteriaItems>
+            <field>Contract.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Channel Addendum Agreement</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_OG_Contract_End_Date__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.Status</field>
+            <operation>equals</operation>
+            <value>Executed</value>
+        </criteriaItems>
+        <description>Commercial Line Expiry</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Commercial_Line_30_expiry</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Contract.EndDate</offsetFromField>
+            <timeLength>-30</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Commercial_Line_90_expiry</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Contract.EndDate</offsetFromField>
+            <timeLength>-90</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Commercial_Line_60_expiry</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Contract.EndDate</offsetFromField>
+            <timeLength>-60</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>Complete</fullName>
+        <actions>
+            <name>Complete</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Contract.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Channel Addendum Agreement</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.Status</field>
+            <operation>equals</operation>
+            <value>Executed,Active</value>
+        </criteriaItems>
+        <description>Complete</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Contract Draft date</fullName>
+        <actions>
+            <name>GE_PRM_Contract_Draft_date</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Contract.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Channel Addendum Agreement</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_Contract_Draft_date__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.Status</field>
+            <operation>equals</operation>
+            <value>Draft</value>
+        </criteriaItems>
+        <description>Contract Draft date</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Contract reviewed %26 confirmed</fullName>
+        <actions>
+            <name>Contract_reviewed_confirmed</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Contract.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Channel Addendum Agreement</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.Status</field>
+            <operation>equals</operation>
+            <value>Review</value>
+        </criteriaItems>
+        <description>Contract reviewed &amp; confirmed</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Contract sent to Channel Partner for signature</fullName>
+        <actions>
+            <name>Contract_sent_to_Channel_Partner_for_signature</name>
+            <type>Alert</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Contract.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Channel Addendum Agreement</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_Contract_Sent_to_CP__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <description>Contract sent to Channel Partner for signature</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Contract sent to GE signatory</fullName>
+        <actions>
+            <name>Contract_sent_to_GE_signatory</name>
+            <type>Alert</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Contract.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Channel Addendum Agreement</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_ASC_Signed_contarct_received__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <description>Contract sent to GE signatory</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>DM Contract Expired</fullName>
+        <active>true</active>
+        <description>Set the value of Contract status to Expired when Contract End Date is reached</description>
+        <formula>AND($RecordType.DeveloperName== &apos;Deal_Machine_Contract&apos;,   ISPICKVAL(Status, &apos;Activated&apos;) )</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Set_Contract_Status_to_Expired</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <offsetFromField>Contract.GE_OG_Contract_End_Date__c</offsetFromField>
+            <timeLength>1</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>Execution Contract Expiry Alert</fullName>
+        <active>true</active>
+        <formula>AND  (   OwnerId != Null,   RecordType.Name = &apos;Contract&apos;,  (EndDate - Expiration_Alert_Days_GEOG__c) &gt;=  TODAY()     )</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Email_Alert_for_Execution_contract</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Contract.ExpirationAlertDate_GEOG__c</offsetFromField>
+            <timeLength>-1</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>GE CP signed contract Date Status Update</fullName>
+        <actions>
+            <name>GE_CP_signed_contract_Date_Status_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 AND 2 AND 3 AND 6 AND 7 AND ((4 AND 8) OR (5 AND 9))</booleanFilter>
+        <criteriaItems>
+            <field>Contract.GE_PRM_Contract_Draft_date__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_GE_Confirmed_Date__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_Contract_Sent_to_CP__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_ASC_Signed_contract_received__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_ASC_Signed_contarct_received__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_GE_Signatures_completed__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_Close_out__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Channel Master Agreement</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Channel Addendum Agreement</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE Confirmed Date Status Update</fullName>
+        <actions>
+            <name>GE_Confirmed_Draft_Date_Status_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 AND 2 AND 3 AND 6 AND 7 AND ((5 AND 8) OR (4 AND 9))</booleanFilter>
+        <criteriaItems>
+            <field>Contract.GE_PRM_Contract_Draft_date__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_GE_Confirmed_Date__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_Contract_Sent_to_CP__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_ASC_Signed_contarct_received__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_ASC_Signed_contract_received__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_GE_Signatures_completed__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_Close_out__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Channel Master Agreement</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Channel Addendum Agreement</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE Contract CP Date Status Update</fullName>
+        <actions>
+            <name>GE_Contract_CP_Date_Status_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 AND 2 AND 3 AND 6 AND 7 AND ((4 AND 9) OR (5 AND 8))</booleanFilter>
+        <criteriaItems>
+            <field>Contract.GE_PRM_Contract_Draft_date__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_GE_Confirmed_Date__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_Contract_Sent_to_CP__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_ASC_Signed_contract_received__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_ASC_Signed_contarct_received__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_GE_Signatures_completed__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_Close_out__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Channel Addendum Agreement</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Channel Master Agreement</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE Contract Draft Date Status Update</fullName>
+        <actions>
+            <name>GE_Contract_Draft_Date_Status_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 AND 2 AND 3 AND 6 AND 7 AND ((4 AND 8) OR (5 AND 9))</booleanFilter>
+        <criteriaItems>
+            <field>Contract.GE_PRM_Contract_Draft_date__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_GE_Confirmed_Date__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_Contract_Sent_to_CP__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_ASC_Signed_contract_received__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_ASC_Signed_contarct_received__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_GE_Signatures_completed__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_Close_out__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Channel Master Agreement</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Channel Addendum Agreement</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE Executed Date Status Update</fullName>
+        <actions>
+            <name>GE_Executed_Date_Status_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 AND 2 AND 3 AND 4 AND 6 AND ((8 AND 9) OR (5 AND 7))</booleanFilter>
+        <criteriaItems>
+            <field>Contract.GE_PRM_Contract_Draft_date__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_GE_Confirmed_Date__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_Contract_Sent_to_CP__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_GE_Signatures_completed__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_ASC_Signed_contarct_received__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_Close_out__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Channel Addendum Agreement</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Channel Master Agreement</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_ASC_Signed_contract_received__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE Sign completed Date Status Update</fullName>
+        <actions>
+            <name>GE_Sign_completed_Date_Status_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 AND 2 AND 3 AND 6 AND 7 AND ((4 AND 8) OR (5 AND 9))</booleanFilter>
+        <criteriaItems>
+            <field>Contract.GE_PRM_Contract_Draft_date__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_GE_Confirmed_Date__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_Contract_Sent_to_CP__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_ASC_Signed_contract_received__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_ASC_Signed_contarct_received__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_GE_Signatures_completed__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_Close_out__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Channel Master Agreement</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Channel Addendum Agreement</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_Email Alert Before 180 Days of Contract End Date</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>Contract.GE_OG_ContractDaysToExpire__c</field>
+            <operation>greaterThan</operation>
+            <value>180</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_Record_Type_Name__c</field>
+            <operation>equals</operation>
+            <value>OG Frame Agreement</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>GE_Notification_Email_180_days_before_Contract_Expiration_date1</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Contract.GE_OG_Contract_End_Date__c</offsetFromField>
+            <timeLength>-180</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>GE_Email Alert Before 30 Days of Contract End Date</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>Contract.GE_OG_ContractDaysToExpire__c</field>
+            <operation>greaterThan</operation>
+            <value>30</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_Record_Type_Name__c</field>
+            <operation>equals</operation>
+            <value>OG Frame Agreement</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>GE_Notification_Email_30_days_before_Contract_Expiration_date1</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Contract.GE_OG_Contract_End_Date__c</offsetFromField>
+            <timeLength>-30</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>GE_Email Alert Before 30 Days of Contract Pricing Validity Date</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>Contract.GE_OG_PricingDaysToExpire__c</field>
+            <operation>greaterThan</operation>
+            <value>30</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_Record_Type_Name__c</field>
+            <operation>equals</operation>
+            <value>OG Frame Agreement</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>GE_OG_EmailNotification_before_30_days_of_Contract_Pricing_Validity_date</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Contract.GE_Pricing_Validity__c</offsetFromField>
+            <timeLength>-30</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>GE_Email Alert Before 90 Days of Contract End Date</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>Contract.GE_OG_ContractDaysToExpire__c</field>
+            <operation>greaterThan</operation>
+            <value>90</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_Record_Type_Name__c</field>
+            <operation>equals</operation>
+            <value>OG Frame Agreement</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>GE_Notification_Email_90_days_before_Contract_Expiration_date1</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Contract.GE_OG_Contract_End_Date__c</offsetFromField>
+            <timeLength>-90</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>GE_Email Alert Before 90 Days of Contract Pricing Validity Date</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>Contract.GE_OG_PricingDaysToExpire__c</field>
+            <operation>greaterThan</operation>
+            <value>90</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_Record_Type_Name__c</field>
+            <operation>equals</operation>
+            <value>OG Frame Agreement</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>GE_OG_EmailNotification_before_90_days_of_Contract_Pricing_Validity_date</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Contract.GE_Pricing_Validity__c</offsetFromField>
+            <timeLength>-90</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>GE_Email Alert On Last Day of Contract Pricing Validity Date</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>Contract.GE_OG_PricingDaysToExpire__c</field>
+            <operation>greaterOrEqual</operation>
+            <value>0</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_Record_Type_Name__c</field>
+            <operation>equals</operation>
+            <value>OG Frame Agreement</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>GE_OG_EmailNotification_On_Last_day_of_Contract_Pricing_Validity_date</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Contract.GE_Pricing_Validity__c</offsetFromField>
+            <timeLength>0</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>GE_Email Alert on Last Date Contract End Date</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>Contract.GE_OG_ContractDaysToExpire__c</field>
+            <operation>greaterOrEqual</operation>
+            <value>0</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_Record_Type_Name__c</field>
+            <operation>equals</operation>
+            <value>OG Frame Agreement</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>GE_Notification_Email_Last_days_before_Contract_Expiration_date</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Contract.GE_OG_Contract_End_Date__c</offsetFromField>
+            <timeLength>0</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>GE_OG_Set Status to Activate</fullName>
+        <actions>
+            <name>GE_OG_Set_Status_to_Active</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Set_Status_to_Activated</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND( $RecordType.DeveloperName =&apos;OG_Frame_Agreement&apos;, OR(AND( ISBLANK(StartDate), ISBLANK(GE_OG_Contract_End_Date__c) ,StartDate &lt; Today() ,GE_OG_Contract_End_Date__c &gt; Today())))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_OG_Set Status to Expire</fullName>
+        <actions>
+            <name>GE_OG_Status_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>GE_OG_Contract_End_Date__c &lt;= Today()&amp;&amp;  $RecordType.DeveloperName=&apos;OG_Frame_Agreement&apos;</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_PRM_Activated Date_populate</fullName>
+        <actions>
+            <name>Activated_Date_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND( 		ISPICKVAL(Status ,&apos;Executed&apos;), 		 OR($RecordType.DeveloperName = &apos;GE_PRM_Agreement&apos;,$RecordType.DeveloperName = &apos;GE_PRM_Master_Agreement&apos;), 		ISNULL( GE_PRM_Activated_Date__c  )  		)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_PRM_Awaiting Review before to be sent to Channel Date_populate</fullName>
+        <actions>
+            <name>Awaiting_Rev_bfr_sent_to_Chn_Date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND( 		ISPICKVAL(Status ,&apos;Review&apos;), 		 OR($RecordType.DeveloperName = &apos;GE_PRM_Agreement&apos;,$RecordType.DeveloperName = &apos;GE_PRM_Master_Agreement&apos;,$RecordType.DeveloperName = &apos;PRM_Non_renewal_Termination_Communication&apos;), 		ISNULL(  GE_PRM_Awaiting_Rev_bfr_sent_to_Chn_Date__c  )  		)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_PRM_Awaiting execution by Channel Date_populate</fullName>
+        <actions>
+            <name>Awaiting_execution_by_Channel_Dt_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND( 		ISPICKVAL(Status ,&apos;Negotiate&apos;), 		 OR($RecordType.DeveloperName = &apos;GE_PRM_Agreement&apos;,$RecordType.DeveloperName = &apos;GE_PRM_Master_Agreement&apos;,$RecordType.DeveloperName = &apos;PRM_Non_renewal_Termination_Communication&apos;), 		ISNULL(  GE_PRM_Awaiting_execution_by_Channel_Dt__c  )  		)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_PRM_Awaiting execution by GE Date_populate</fullName>
+        <actions>
+            <name>Awaiting_execution_by_GE_Date_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND( 		ISPICKVAL(Status ,&apos;Close-Out&apos;), 		 OR($RecordType.DeveloperName = &apos;GE_PRM_Agreement&apos;,$RecordType.DeveloperName = &apos;GE_PRM_Master_Agreement&apos;,$RecordType.DeveloperName = &apos;PRM_Non_renewal_Termination_Communication&apos;), 		ISNULL(  GE_PRM_Awaiting_execution_by_GE_Date__c  )  		)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_PRM_Awaiting to be sent to Channel Date_populate</fullName>
+        <actions>
+            <name>Awaiting_to_be_sent_to_Channel_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND( 		ISPICKVAL(Status ,&apos;Review&apos;), 		 OR($RecordType.DeveloperName = &apos;GE_PRM_Agreement&apos;,$RecordType.DeveloperName = &apos;GE_PRM_Master_Agreement&apos;), 		ISNULL( GE_PRM_Awaiting_to_be_sent_to_Channel_Dt__c  )  		)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_PRM_Contract On-hold by GE Cycle Time_populate</fullName>
+        <actions>
+            <name>Contract_On_hold_by_GE_Cycle_Time_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>IF(   NOT(ISPICKVAL(Status, &apos;Negotiate&apos;)),true,false )</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_PRM_Contract_Start_Date_Pre_Populate</fullName>
+        <actions>
+            <name>GE_PRM_Contract_Start_Date_Pre_Populate</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Contract.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>PRM Addendum,PRM Master Agreement</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.StartDate</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <description>This rule will populate the field contract start date</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_PRM_Contract_Term_Pre_Populate</fullName>
+        <actions>
+            <name>GE_PRM_Contract_Term_Pre_Populate</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Contract.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>PRM Addendum,PRM Master Agreement</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.ContractTerm</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <description>This rule will populate contract term field on creation if user did not enter the data on creation</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_PRM_Execute_Time_Change_on_Status</fullName>
+        <actions>
+            <name>GE_PRM_Execute_time_update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>To update the Execute Time with the current date/time whenever the Status changes to &apos;Execute&apos;</description>
+        <formula>AND( ISPICKVAL(Status ,&apos;Execute&apos;), OR($RecordType.DeveloperName = &apos;GE_PRM_Agreement&apos;,$RecordType.DeveloperName = &apos;GE_PRM_Master_Agreement&apos;,$RecordType.DeveloperName = &apos;PRM_Non_renewal_Termination_Communication&apos;), ISNULL( GE_PRM_Execute_Time__c ) )</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_PRM_Notify_Channel_Manager</fullName>
+        <actions>
+            <name>GE_PRM_Notify_Recom_Owner_On_Contract_Status</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>GE_PRM_update_Recom_OwnerEmail</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>This rule will send an email alert to channel manager (recommendation owner) when contract status reaches &quot;Executed&quot;, &quot;Non-Renewed&quot;, &quot;Terminated&quot;.</description>
+        <formula>GE_PRM_Contract_Status__c =&apos;Executed&apos; || GE_PRM_Contract_Status__c =&apos;Non Renewed&apos; || GE_PRM_Contract_Status__c =&apos;Terminated&apos; &amp;&amp;
+ISCHANGED(GE_PRM_Contract_Status__c) &amp;&amp;
+GE_PRM_NRT_Email__c  = False &amp;&amp; 
+Termination_Email__c  = False  &amp;&amp;  
+GE_PRM_Record_Type_Name__c != &apos;Channel Master Agreement&apos;  &amp;&amp;  
+GE_PRM_Record_Type_Name__c != &apos;Channel Addendum Agreement&apos;</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_PRM_On Hold by GE Date_populate</fullName>
+        <actions>
+            <name>On_Hold_by_GE_Date_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <formula>AND( 		ISPICKVAL(Status ,&apos;On hold by GE&apos;), 		 OR($RecordType.DeveloperName = &apos;GE_PRM_Agreement&apos;,$RecordType.DeveloperName = &apos;GE_PRM_Master_Agreement&apos;), 		 ISNULL( GE_PRM_On_Hold_by_GE_Date__c )  		)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_PRM_Previous_Contract_Pre_Populate</fullName>
+        <actions>
+            <name>GE_PRM_Previous_Contract_Pre_Populate</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Contract.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>PRM Addendum,PRM Master Agreement</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.GE_PRM_Previous_Contract__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <description>This rule will populate the field previous contract number on both agreement and master agreement records</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_PRM_sendEmail to Publicgroup for Nonrenew</fullName>
+        <actions>
+            <name>sendEmail_to_Public_group_for_Non_Renewal</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 AND 2</booleanFilter>
+        <criteriaItems>
+            <field>Contract.GE_PRM_NRT_Email__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.Status</field>
+            <operation>equals</operation>
+            <value>Under NR/T</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_PRM_sendEmail to Publicgroup for Termination</fullName>
+        <actions>
+            <name>send_email_to_Public_group_for_Termination</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 AND 2</booleanFilter>
+        <criteriaItems>
+            <field>Contract.Termination_Email__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.Status</field>
+            <operation>equals</operation>
+            <value>Under NR/T</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Hold Flag Check</fullName>
+        <actions>
+            <name>Blank_out_Hold_reason</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Contract.Hold_Flag__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>PRM Update Contract Name</fullName>
+        <actions>
+            <name>PRM_Update_Contract_Name</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(NOT(ISBLANK( Account.Name) ), OR( $RecordType.Name = &apos;Channel Addendum Agreement&apos;, $RecordType.Name =&apos;Channel Master Agreement&apos;))</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Red Line Check</fullName>
+        <actions>
+            <name>Blank_out_Red_Flag_reason</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Contract.Red_Line__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+</Workflow>

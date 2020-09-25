@@ -1,0 +1,8 @@
+<apex:page standardController="GE_Installed_Base__c" extensions="GE_ES_GIBWrapper" action="{!submit}" sidebar="true">
+<apex:form >
+    <apex:pageBlock >
+        <apex:pageMessages ></apex:pageMessages>
+        <apex:commandButton value="Go to Installed Base" action="{!OrigIBPage}" />
+    </apex:pageBlock>
+</apex:form> 
+</apex:page>

@@ -1,0 +1,21 @@
+<apex:page controller="GE_OG_NPT_Accept" action="{!ChangeOwnerName}" >
+<apex:messages />
+    <script>
+        var isBlanksubType="{!isBlank_SubType}";
+        var isValidationError ="{!ValidationException}";
+        if(isValidationError == "true")
+        {
+            alert('Please fill the mandatory fields first');
+            window.top.location.href = "{!JSENCODE(redirectURL)}";}
+            
+        if(isBlanksubType == "true"){
+            alert('You are not a member of this Queue ');
+            window.top.location.href = "{!JSENCODE(redirectURL)}";
+        }
+        else{
+            window.top.location.href = "{!JSENCODE(redirectURL)}";
+        }
+    
+    </script>
+
+</apex:page>

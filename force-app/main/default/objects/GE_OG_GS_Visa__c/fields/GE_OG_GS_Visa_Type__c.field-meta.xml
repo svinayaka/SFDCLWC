@@ -1,0 +1,551 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GE_OG_GS_Visa_Type__c</fullName>
+    <description>R-19370 AG 6/11/2014</description>
+    <externalId>false</externalId>
+    <label>Visa Type</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>30 days Visa Exempt</fullName>
+                <default>false</default>
+                <label>30 days Visa Exempt</label>
+            </value>
+            <value>
+                <fullName>457 Visa</fullName>
+                <default>false</default>
+                <label>457 Visa</label>
+            </value>
+            <value>
+                <fullName>AGO - Ordinary Visa</fullName>
+                <default>false</default>
+                <label>AGO - Ordinary Visa</label>
+            </value>
+            <value>
+                <fullName>AGO - Work Permit</fullName>
+                <default>false</default>
+                <label>AGO - Work Permit</label>
+            </value>
+            <value>
+                <fullName>Application in progress</fullName>
+                <default>false</default>
+                <label>Application in progress</label>
+            </value>
+            <value>
+                <fullName>ARG-Short Term work permit - ART 24</fullName>
+                <default>false</default>
+                <label>ARG-Short Term work permit - ART 24</label>
+            </value>
+            <value>
+                <fullName>AUS - Subclass 400</fullName>
+                <default>false</default>
+                <label>AUS - Subclass 400</label>
+            </value>
+            <value>
+                <fullName>AUS - Subclass 457</fullName>
+                <default>false</default>
+                <label>AUS - Subclass 457</label>
+            </value>
+            <value>
+                <fullName>AUS - Subclass 600 (Visitor Visa)</fullName>
+                <default>false</default>
+                <label>AUS - Subclass 600 (Visitor Visa)</label>
+            </value>
+            <value>
+                <fullName>AUS - Subclass 651 (eVisitor visa)</fullName>
+                <default>false</default>
+                <label>AUS - Subclass 651 (eVisitor visa)</label>
+            </value>
+            <value>
+                <fullName>BGD - e-type visa</fullName>
+                <default>false</default>
+                <label>BGD - e-type visa</label>
+            </value>
+            <value>
+                <fullName>BHR - Enoc Visit</fullName>
+                <default>false</default>
+                <label>BHR - Enoc Visit</label>
+            </value>
+            <value>
+                <fullName>BHR - Work Visa</fullName>
+                <default>false</default>
+                <label>BHR - Work Visa</label>
+            </value>
+            <value>
+                <fullName>BOL - Visa Objeto Determinado</fullName>
+                <default>false</default>
+                <label>BOL - Visa Objeto Determinado</label>
+            </value>
+            <value>
+                <fullName>BRA - 1 year Technical Visa</fullName>
+                <default>false</default>
+                <label>BRA - 1 year Technical Visa</label>
+            </value>
+            <value>
+                <fullName>BRA - 90 days Technical Visa</fullName>
+                <default>false</default>
+                <label>BRA - 90 days Technical Visa</label>
+            </value>
+            <value>
+                <fullName>BRA - Visto de Trabalho com Contrato</fullName>
+                <default>false</default>
+                <label>BRA - Visto de Trabalho com Contrato</label>
+            </value>
+            <value>
+                <fullName>BRN - Employment Pass</fullName>
+                <default>false</default>
+                <label>BRN - Employment Pass</label>
+            </value>
+            <value>
+                <fullName>BRN - Professional Pass (PVP)</fullName>
+                <default>false</default>
+                <label>BRN - Professional Pass (PVP)</label>
+            </value>
+            <value>
+                <fullName>BRN - Special Permit</fullName>
+                <default>false</default>
+                <label>BRN - Special Permit</label>
+            </value>
+            <value>
+                <fullName>Business Visa</fullName>
+                <default>false</default>
+                <label>Business Visa</label>
+            </value>
+            <value>
+                <fullName>Business VISA - R   B1 / B2</fullName>
+                <default>false</default>
+                <label>Business VISA - R   B1 / B2</label>
+            </value>
+            <value>
+                <fullName>Business Visa Upon Arrival</fullName>
+                <default>false</default>
+                <label>Business Visa Upon Arrival</label>
+            </value>
+            <value>
+                <fullName>C312</fullName>
+                <default>false</default>
+                <label>C312</label>
+            </value>
+            <value>
+                <fullName>C-3-1 Visa</fullName>
+                <default>false</default>
+                <label>C-3-1 Visa</label>
+            </value>
+            <value>
+                <fullName>C-3-9 Visa</fullName>
+                <default>false</default>
+                <label>C-3-9 Visa</label>
+            </value>
+            <value>
+                <fullName>CAN - Business Visitor Status</fullName>
+                <default>false</default>
+                <label>CAN - Business Visitor Status</label>
+            </value>
+            <value>
+                <fullName>CAN - Work Permit</fullName>
+                <default>false</default>
+                <label>CAN - Work Permit</label>
+            </value>
+            <value>
+                <fullName>CHL - Special Work Permit for Tourist</fullName>
+                <default>false</default>
+                <label>CHL - Special Work Permit for Tourist</label>
+            </value>
+            <value>
+                <fullName>CHN - M Visa</fullName>
+                <default>false</default>
+                <label>CHN - M Visa</label>
+            </value>
+            <value>
+                <fullName>CHN - Z Visa + WP</fullName>
+                <default>false</default>
+                <label>CHN - Z Visa + WP</label>
+            </value>
+            <value>
+                <fullName>COL - PIP-7</fullName>
+                <default>false</default>
+                <label>COL - PIP-7</label>
+            </value>
+            <value>
+                <fullName>COL - Special Entry Permit</fullName>
+                <default>false</default>
+                <label>COL - Special Entry Permit</label>
+            </value>
+            <value>
+                <fullName>COL - TP13 (TEMPORARY Work Visa 180 days)</fullName>
+                <default>false</default>
+                <label>COL - TP13 (TEMPORARY Work Visa 180 days)</label>
+            </value>
+            <value>
+                <fullName>COL - TP-4 (Temporary Work Visa)</fullName>
+                <default>false</default>
+                <label>COL - TP-4 (Temporary Work Visa)</label>
+            </value>
+            <value>
+                <fullName>DZA - Business Visa</fullName>
+                <default>false</default>
+                <label>DZA - Business Visa</label>
+            </value>
+            <value>
+                <fullName>Electronic Limited Stay Permit</fullName>
+                <default>false</default>
+                <label>Electronic Limited Stay Permit</label>
+            </value>
+            <value>
+                <fullName>Employment Pass</fullName>
+                <default>false</default>
+                <label>Employment Pass</label>
+            </value>
+            <value>
+                <fullName>E notification - Instant Approval</fullName>
+                <default>false</default>
+                <label>E notification - Instant Approval</label>
+            </value>
+            <value>
+                <fullName>ENTRY VISA</fullName>
+                <default>false</default>
+                <label>ENTRY VISA</label>
+            </value>
+            <value>
+                <fullName>GHA - B-2</fullName>
+                <default>false</default>
+                <label>GHA - B-2</label>
+            </value>
+            <value>
+                <fullName>GNQ - TP Visa</fullName>
+                <default>false</default>
+                <label>GNQ - TP Visa</label>
+            </value>
+            <value>
+                <fullName>GNQ - TP Visa + Work Permit</fullName>
+                <default>false</default>
+                <label>GNQ - TP Visa + Work Permit</label>
+            </value>
+            <value>
+                <fullName>HGK - Employment Visa</fullName>
+                <default>false</default>
+                <label>HGK - Employment Visa</label>
+            </value>
+            <value>
+                <fullName>HRV - Certificate of Work</fullName>
+                <default>false</default>
+                <label>HRV - Certificate of Work</label>
+            </value>
+            <value>
+                <fullName>INA - Work Permit + Vitas, IMTA, KITAS</fullName>
+                <default>false</default>
+                <label>INA - Work Permit + Vitas, IMTA, KITAS</label>
+            </value>
+            <value>
+                <fullName>IND - Employment Visa</fullName>
+                <default>false</default>
+                <label>IND - Employment Visa</label>
+            </value>
+            <value>
+                <fullName>IRQ - Ordinary Visa</fullName>
+                <default>false</default>
+                <label>IRQ - Ordinary Visa</label>
+            </value>
+            <value>
+                <fullName>ISR - B-1 Visa</fullName>
+                <default>false</default>
+                <label>ISR - B-1 Visa</label>
+            </value>
+            <value>
+                <fullName>JPN - Short Stay Visitor Visa (Business)</fullName>
+                <default>false</default>
+                <label>JPN - Short Stay Visitor Visa (Business)</label>
+            </value>
+            <value>
+                <fullName>KAZ-B2</fullName>
+                <default>false</default>
+                <label>KAZ-B2</label>
+            </value>
+            <value>
+                <fullName>KAZ-C3</fullName>
+                <default>false</default>
+                <label>KAZ-C3</label>
+            </value>
+            <value>
+                <fullName>KOR - C-2</fullName>
+                <default>false</default>
+                <label>KOR - C-2</label>
+            </value>
+            <value>
+                <fullName>KOR - C-3-4</fullName>
+                <default>false</default>
+                <label>KOR - C-3-4</label>
+            </value>
+            <value>
+                <fullName>KOR - D-7</fullName>
+                <default>false</default>
+                <label>KOR - D-7</label>
+            </value>
+            <value>
+                <fullName>KWT - Multiple Entry Commercial</fullName>
+                <default>false</default>
+                <label>KWT - Multiple Entry Commercial</label>
+            </value>
+            <value>
+                <fullName>Labor Registration</fullName>
+                <default>false</default>
+                <label>Labor Registration</label>
+            </value>
+            <value>
+                <fullName>LYB - Business Visa + Desert Pass</fullName>
+                <default>false</default>
+                <label>LYB - Business Visa + Desert Pass</label>
+            </value>
+            <value>
+                <fullName>MAR - Resident Visa</fullName>
+                <default>false</default>
+                <label>MAR - Resident Visa</label>
+            </value>
+            <value>
+                <fullName>MEX - FM3</fullName>
+                <default>false</default>
+                <label>MEX - FM3</label>
+            </value>
+            <value>
+                <fullName>MEX - FMM</fullName>
+                <default>false</default>
+                <label>MEX - FMM</label>
+            </value>
+            <value>
+                <fullName>MEX - FMN</fullName>
+                <default>false</default>
+                <label>MEX - FMN</label>
+            </value>
+            <value>
+                <fullName>Multi Entries Visa</fullName>
+                <default>false</default>
+                <label>Multi Entries Visa</label>
+            </value>
+            <value>
+                <fullName>MYS - Professional Visit Pass (PVP)</fullName>
+                <default>false</default>
+                <label>MYS - Professional Visit Pass (PVP)</label>
+            </value>
+            <value>
+                <fullName>MYS - Social Visit Pass (SVP)</fullName>
+                <default>false</default>
+                <label>MYS - Social Visit Pass (SVP)</label>
+            </value>
+            <value>
+                <fullName>NGA - Short Term Regulation (STR)</fullName>
+                <default>false</default>
+                <label>NGA - Short Term Regulation (STR)</label>
+            </value>
+            <value>
+                <fullName>NGA - Temporary Work Permit (TWP)</fullName>
+                <default>false</default>
+                <label>NGA - Temporary Work Permit (TWP)</label>
+            </value>
+            <value>
+                <fullName>OMN - Express Visa</fullName>
+                <default>false</default>
+                <label>OMN - Express Visa</label>
+            </value>
+            <value>
+                <fullName>OMN - Short Work Visa</fullName>
+                <default>false</default>
+                <label>OMN - Short Work Visa</label>
+            </value>
+            <value>
+                <fullName>Permanent Resident</fullName>
+                <default>false</default>
+                <label>Permanent Resident</label>
+            </value>
+            <value>
+                <fullName>PER - Working Appointed Visa</fullName>
+                <default>false</default>
+                <label>PER - Working Appointed Visa</label>
+            </value>
+            <value>
+                <fullName>PNG - Work Permit + Work Visa</fullName>
+                <default>false</default>
+                <label>PNG - Work Permit + Work Visa</label>
+            </value>
+            <value>
+                <fullName>Professional Visit Pass</fullName>
+                <default>false</default>
+                <label>Professional Visit Pass</label>
+            </value>
+            <value>
+                <fullName>Reciprocal ANZ agreement</fullName>
+                <default>false</default>
+                <label>Reciprocal ANZ agreement</label>
+            </value>
+            <value>
+                <fullName>Residency Permit</fullName>
+                <default>false</default>
+                <label>Residency Permit</label>
+            </value>
+            <value>
+                <fullName>RUS - Commercial Visa</fullName>
+                <default>false</default>
+                <label>RUS - Commercial Visa</label>
+            </value>
+            <value>
+                <fullName>RUS - Technical Visa</fullName>
+                <default>false</default>
+                <label>RUS - Technical Visa</label>
+            </value>
+            <value>
+                <fullName>SAU - Visit Work Visa</fullName>
+                <default>false</default>
+                <label>SAU - Visit Work Visa</label>
+            </value>
+            <value>
+                <fullName>SEN - Employment Contract</fullName>
+                <default>false</default>
+                <label>SEN - Employment Contract</label>
+            </value>
+            <value>
+                <fullName>SGP - Business Visit Pass</fullName>
+                <default>false</default>
+                <label>SGP - Business Visit Pass</label>
+            </value>
+            <value>
+                <fullName>SGP - Employment Pass</fullName>
+                <default>false</default>
+                <label>SGP - Employment Pass</label>
+            </value>
+            <value>
+                <fullName>SGP - Short Term for Exempted Activities</fullName>
+                <default>false</default>
+                <label>SGP - Short Term for Exempted Activities</label>
+            </value>
+            <value>
+                <fullName>Short Term Visa</fullName>
+                <default>false</default>
+                <label>Short Term Visa</label>
+            </value>
+            <value>
+                <fullName>Technical 1 year Visa</fullName>
+                <default>false</default>
+                <label>Technical 1 year Visa</label>
+            </value>
+            <value>
+                <fullName>Technical Visa</fullName>
+                <default>false</default>
+                <label>Technical Visa</label>
+            </value>
+            <value>
+                <fullName>Temporary Work Permit</fullName>
+                <default>false</default>
+                <label>Temporary Work Permit</label>
+            </value>
+            <value>
+                <fullName>THA - B Visa + Work Authorization</fullName>
+                <default>false</default>
+                <label>THA - B Visa + Work Authorization</label>
+            </value>
+            <value>
+                <fullName>THA - Urgent Work Permit</fullName>
+                <default>false</default>
+                <label>THA - Urgent Work Permit</label>
+            </value>
+            <value>
+                <fullName>TUN - Mission Letter</fullName>
+                <default>false</default>
+                <label>TUN - Mission Letter</label>
+            </value>
+            <value>
+                <fullName>TUR - Assembly/Installation Visa</fullName>
+                <default>false</default>
+                <label>TUR - Assembly/Installation Visa</label>
+            </value>
+            <value>
+                <fullName>UAE - Long Term Employment Visa + Oil Security Pass</fullName>
+                <default>false</default>
+                <label>UAE - Long Term Employment Visa + Oil Security Pass</label>
+            </value>
+            <value>
+                <fullName>UAE - Mission Visa</fullName>
+                <default>false</default>
+                <label>UAE - Mission Visa</label>
+            </value>
+            <value>
+                <fullName>UAE - Mission Visa + Oil Security Pass</fullName>
+                <default>false</default>
+                <label>UAE - Mission Visa + Oil Security Pass</label>
+            </value>
+            <value>
+                <fullName>USA - B-1</fullName>
+                <default>false</default>
+                <label>USA - B-1</label>
+            </value>
+            <value>
+                <fullName>USA - ESTA</fullName>
+                <default>false</default>
+                <label>USA - ESTA</label>
+            </value>
+            <value>
+                <fullName>USA - J-1</fullName>
+                <default>false</default>
+                <label>USA - J-1</label>
+            </value>
+            <value>
+                <fullName>USA - L-1</fullName>
+                <default>false</default>
+                <label>USA - L-1</label>
+            </value>
+            <value>
+                <fullName>UZB - B-2</fullName>
+                <default>false</default>
+                <label>UZB - B-2</label>
+            </value>
+            <value>
+                <fullName>VEN - TR-L</fullName>
+                <default>false</default>
+                <label>VEN - TR-L</label>
+            </value>
+            <value>
+                <fullName>VEN - TR-N</fullName>
+                <default>false</default>
+                <label>VEN - TR-N</label>
+            </value>
+            <value>
+                <fullName>Visa exempt</fullName>
+                <default>false</default>
+                <label>Visa exempt</label>
+            </value>
+            <value>
+                <fullName>Visit Pass Temporary Employment (VPTE)</fullName>
+                <default>false</default>
+                <label>Visit Pass Temporary Employment (VPTE)</label>
+            </value>
+            <value>
+                <fullName>VNM - Work Permit Exemption + MEBV (Multiple Entries BV)</fullName>
+                <default>false</default>
+                <label>VNM - Work Permit Exemption + MEBV (Multiple Entries BV)</label>
+            </value>
+            <value>
+                <fullName>Work Permit</fullName>
+                <default>false</default>
+                <label>Work Permit</label>
+            </value>
+            <value>
+                <fullName>Work Visa</fullName>
+                <default>false</default>
+                <label>Work Visa</label>
+            </value>
+            <value>
+                <fullName>ZAF - Short Term Work Authorization</fullName>
+                <default>false</default>
+                <label>ZAF - Short Term Work Authorization</label>
+            </value>
+            <value>
+                <fullName>ZMB - Employment Auhtorization + Entry Visa</fullName>
+                <default>false</default>
+                <label>ZMB - Employment Auhtorization + Entry Visa</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

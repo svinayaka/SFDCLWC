@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>32.0</apiVersion>
+    <availableInTouch>false</availableInTouch>
+    <confirmationTokenRequired>false</confirmationTokenRequired>
+    <description>MCS Related Contracts list to show all the related contracts(Look up and Master-Detail relationship)</description>
+    <label>GE_MCS_Related_Contracts</label>
+</ApexPage>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>GE_PRM_Recomendation_Soft_Reject</fullName>
+        <description>GE_PRM_Recomendation_Soft_Reject</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PRM_Soft_Reject</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PRM_Send_Email_Notification_to_Approvers</fullName>
+        <description>Send Email Notification to Approvers</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_PRM_Approvers__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PRM_Notification_for_Approvers</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PRM_Send_Email_Notification_to_Delegated_Users</fullName>
+        <description>Send Email Notification to Delegated Users</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_PRM_Delegated_User__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PRM_Notification_for_Approvers</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>GE_PRM_New_Renewal_Soft_Rejected</fullName>
+        <description>Updates the Recommendation Record Type to New Renewal - Soft Rejected</description>
+        <field>RecordTypeId</field>
+        <lookupValue>GE_PRM_New_Renewal_Soft_Rejected</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>GE_PRM New Renewal Soft Rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <targetObject>GE_PRM_Recommendation__c</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Nullify_Sub_Status_On_Recom_DOA</fullName>
+        <description>This will update the sub status of the recommendation to null whenever DOA is soft rejected</description>
+        <field>GE_PRM_Sub_Status__c</field>
+        <literalValue>-None-</literalValue>
+        <name>GE_PRM_Nullify_Sub_Status_On_Recom_DOA</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <targetObject>GE_PRM_Recommendation__c</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Ter_Non_Renewal_Soft_Reject</fullName>
+        <description>Updates the Recommendation Record Type to Termination/Non-Renewal - Soft Rejected</description>
+        <field>RecordTypeId</field>
+        <lookupValue>GE_PRM_Termination_Non_Renewal_Soft_Rejected</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Termination/Non-Renewal - Soft Reject</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <targetObject>GE_PRM_Recommendation__c</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Uncheck_Complete_Soft_Reject_Task</fullName>
+        <description>Uncheck the Checkbox - Complete Soft Reject Task on Recommendation Level</description>
+        <field>GE_PRM_Complete_Soft_Reject_Task__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck - Complete Soft Reject Task</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <targetObject>GE_PRM_Recommendation__c</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Update_DOA_Approved_Rejected_Date</fullName>
+        <description>This will update the DOA Approved/Rejected time stamp field on recom approvals when recom approvals are approved or rejected</description>
+        <field>GE_PRM_DOA_Approved_Rejected_Time_Stamp__c</field>
+        <formula>NOW()</formula>
+        <name>GE_PRM_Update_DOA_Approved_Rejected_Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Update_Status_Change_Date</fullName>
+        <field>GE_PRM_Status_Date__c</field>
+        <formula>NOW()</formula>
+        <name>Update Status Change Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>New_Product_Line_Soft_Rejected</fullName>
+        <description>Updates the Recommendation Record Type to New Product Line - Soft Rejected</description>
+        <field>RecordTypeId</field>
+        <lookupValue>GE_PRM_New_Product_Line_Soft_Rejected</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>GE_PRM_New Product Line - Soft Rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <targetObject>GE_PRM_Recommendation__c</targetObject>
+    </fieldUpdates>
+</Workflow>

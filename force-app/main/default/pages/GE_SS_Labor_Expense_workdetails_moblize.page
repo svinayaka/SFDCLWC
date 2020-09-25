@@ -1,0 +1,71 @@
+<apex:page standardController="SVMXC__Service_Order__c"  extensions="GE_SS_Labor_Expense_workdetails_moblize"  >
+<apex:form >
+
+    <script>
+    function delRec(idvalue) {
+        var con = window.confirm('Are you sure');
+        if(con) {
+            callfunc(idvalue);
+        }     
+        
+    }
+    </script>
+
+    <apex:actionFunction name="callfunc" action="{!deleteRec}" reRender="pbt">
+    <apex:param name="name1" value="" assignTo="{!idval}"/>
+    </apex:actionFunction>
+   <apex:pageBlock id="pbt">
+       <apex:pageBlockTable value="{!lsttoolfrWD}" var="toolfore" >
+            
+          <apex:column headerValue="Action" >
+              <apex:outputlink target="_blank" value="/{!toolfore.Id}/e" >Edit</apex:outputlink> 
+          </apex:column>
+           <apex:column headerValue="Line Number" Width="10%">
+               <apex:outputlink target="_blank" value="/{!toolfore.id}" >{!toolfore.Name}</apex:outputlink>
+           </apex:column>
+           <!--
+           <apex:column headerValue="Record Type" >
+               <apex:outputField value="{!toolfore.recordtype.name}" />
+           </apex:column>
+           -->
+           <apex:column headerValue="Technician/Equipment" >
+               <apex:outputField value="{!toolfore.SVMXC__Group_Member__r.name}" />
+           </apex:column>
+           <apex:column >
+            <apex:facet name="header">Line Type</apex:facet>
+               <apex:outputfield value="{!toolfore.SVMXC__Line_Type__c}" ></apex:outputfield>
+           </apex:column>
+           
+           <apex:column headerValue="Status" >
+               <apex:outputfield value="{!toolfore.SVMXC__Line_Status__c}" ></apex:outputfield>
+           </apex:column>
+           
+           <apex:column headerValue="Service Start Date" >
+               <apex:outputfield value="{!toolfore.GE_SS_Service_Start_Date__c}" ></apex:outputfield>
+           </apex:column>
+           
+           <apex:column headerValue="Service End Date" >
+               <apex:outputfield value="{!toolfore.GE_SS_Service_End_Date__c}" ></apex:outputfield>
+           </apex:column>
+           
+           <apex:column headerValue="Total Days in Service" >
+               <apex:outputfield value="{!toolfore.GE_SS_Total_Days_in_Service__c}" ></apex:outputfield>
+           </apex:column>
+           <apex:column headerValue="Total Billable Days" >
+               <apex:outputfield value="{!toolfore.GE_SS_Billable_Days__c}" ></apex:outputfield>
+           </apex:column>
+           <apex:column headerValue="Attachment with Signature Available?" >
+               <apex:outputfield value="{!toolfore.GE_SS_Attach_with_Signature_Available__c}" ></apex:outputfield>
+           </apex:column>
+          
+       </apex:pageBlockTable>
+       <apex:panelGrid columns="2">
+           <!--<apex:commandLink value="Show more"/>-->
+           <apex:outputPanel rendered="{!recordSize}">
+           <apex:outputlink target="_blank" value="/apex/GE_SS_Labor_Expense_workdetails_moblize?id={!Aid}&allRec=true" >Go To List ></apex:outputlink>
+           </apex:outputPanel>
+       </apex:panelGrid>
+   </apex:pageBlock>
+
+</apex:form>
+</apex:page>

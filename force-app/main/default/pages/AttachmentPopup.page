@@ -1,0 +1,25 @@
+<apex:page controller="AttachmentPopUpController" sidebar="false" showHeader="false" id="page1" >
+    <script type="text/javascript">
+        function OnClick(name,id){
+//alert(name);
+                top.window.opener.AttachmentPopupClose(name,id);
+            }
+
+    </script>
+    <apex:form id="form1">
+        <apex:pageBlock title="Select Attachment" id="pbA">
+             <apex:outputLabel value="Please select file:" style="font-weight:bold"></apex:outputLabel>
+             <apex:inputFile value="{!attachment.Body}"  filename="{!attachment.name}" style="margin-right: 360px;" id="inpFile"/>&nbsp;&nbsp;&nbsp;
+            <apex:commandButton value="Attach" action="{!attach}" status="loading" />
+<apex:outputLabel value="{!attachmentName}"/>
+            <apex:outputPanel id="opDone">
+                 <apex:inputHidden value="{!attachmentName}" id="attName"/>
+                  <apex:inputHidden value="{!attachmentId}" id="attId"/>
+                <apex:commandButton value="Done" onclick="OnClick('{!attachmentName}','{!attachmentId}')"  />
+            </apex:outputPanel>
+        </apex:pageBlock>
+        
+        
+        
+    </apex:form>
+</apex:page>

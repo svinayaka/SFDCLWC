@@ -1,0 +1,2 @@
+<apex:page standardController="Quote" extensions="GE_ConfigQuoteRedirectControllerExt" action="{!redirectToPage}">
+</apex:page>

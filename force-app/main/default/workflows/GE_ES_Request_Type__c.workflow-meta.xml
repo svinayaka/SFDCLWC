@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>GE_OG_Request_for_Application_Engineer_Approval</fullName>
+        <description>Request for Application Engineer Approval</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_OGMCS_AppEngr__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>GE_OGMCS_CommMngr__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>GE_OGMCS_Initrev__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/Request_Type_Approval_Request</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_OG_Request_for_Quote_Approval</fullName>
+        <description>Request for Quoting Approval</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_OGMCS_Initrev__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>GE_OGMCS_Quote__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/Request_Type_Approval_Request</template>
+    </alerts>
+    <alerts>
+        <fullName>Request_Type_Record_Export_To_ERP</fullName>
+        <description>Request Type Record Export To ERP</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/Request_Type_Export_To_ERP_Email</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>CPO_Status_Change</fullName>
+        <field>GE_ES_CPOstatus__c</field>
+        <literalValue>BCR</literalValue>
+        <name>CPO Status Change</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_OG_Delivery_Flag_updated_to_Green</fullName>
+        <field>GE_OG_Delivery_Flag__c</field>
+        <literalValue>GREEN</literalValue>
+        <name>Delivery Flag updated to Green</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_OG_Delivery_Flag_updated_to_Orange</fullName>
+        <field>GE_OG_Delivery_Flag__c</field>
+        <literalValue>ORANGE</literalValue>
+        <name>Delivery Flag updated to Orange</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_OG_Delivery_Flag_updated_to_Red</fullName>
+        <field>GE_OG_Delivery_Flag__c</field>
+        <literalValue>RED</literalValue>
+        <name>Delivery Flag updated to Red</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_OG_Request_Status_to_Application</fullName>
+        <field>GE_OGMCS_ReqSts__c</field>
+        <literalValue>Application scope</literalValue>
+        <name>Request Status to Application Scope</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_OG_Request_Status_to_Complete</fullName>
+        <field>GE_OGMCS_ReqSts__c</field>
+        <literalValue>Completion</literalValue>
+        <name>Request Status to Complete</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_OG_Request_Status_to_Initial_Reviewer</fullName>
+        <field>GE_OGMCS_ReqSts__c</field>
+        <literalValue>Initial review</literalValue>
+        <name>Request Status to Initial Reviewer</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_OG_Request_Status_to_Launch</fullName>
+        <field>GE_OGMCS_ReqSts__c</field>
+        <literalValue>Launch</literalValue>
+        <name>Request Status to Launch</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_OG_Request_Status_to_Quoting</fullName>
+        <field>GE_OGMCS_ReqSts__c</field>
+        <literalValue>Quoting</literalValue>
+        <name>Request Status to Quoting</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_ERP_Counter</fullName>
+        <field>GE_OG_ERP_Counter__c</field>
+        <formula>GE_OG_ERP_Counter__c + 1</formula>
+        <name>Update_ERP_Counter</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Last_ERP_Export_Date</fullName>
+        <field>GE_OG_Last_ERP_Export_Date__c</field>
+        <formula>NOW()</formula>
+        <name>Update Last ERP Export Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Request_Type_As_False_GE_OG</fullName>
+        <field>request_type_islocked_ge_og__c</field>
+        <literalValue>0</literalValue>
+        <name>Update_Request_Type_As_False_GE_OG</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>test_field_update</fullName>
+        <field>GE_OG_Source_Type__c</field>
+        <literalValue>Maintenance Contract on NU</literalValue>
+        <name>test field update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <outboundMessages>
+        <fullName>SendRequestTypeIdToTMSP6</fullName>
+        <apiVersion>35.0</apiVersion>
+        <description>Send Request type Id to TMS Oracle P6</description>
+        <endpointUrl>https://api.geoilandgas.com/v1/gs/field-automation/exports/opportunity?api_key=5my8yay5nz7jmvfgrbykfh5b</endpointUrl>
+        <fields>Id</fields>
+        <includeSessionId>false</includeSessionId>
+        <integrationUser>energy.integration.og@ge.com</integrationUser>
+        <name>SendRequestTypeIdToTMSP6</name>
+        <protected>false</protected>
+        <useDeadLetterQueue>false</useDeadLetterQueue>
+    </outboundMessages>
+    <rules>
+        <fullName>Change CPO Status</fullName>
+        <actions>
+            <name>CPO_Status_Change</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>GE_ES_Request_Type__c.GE_ES_CPOstatus__c</field>
+            <operation>equals</operation>
+            <value>CPO Creation</value>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_OGMCS_CPO Action Needed</fullName>
+        <actions>
+            <name>CPO_Action_Needed</name>
+            <type>Task</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(RecordType.DeveloperName =&apos;AS_CPO_detail&apos;, OR($Profile.Name =&apos;GE_ES Sales Mgr_MCS-SI&apos;, $Profile.Name=&apos;GE_ES Commercial Manager&apos;,$Profile.Name=&apos;GE_ES Vertical Lead&apos;))</formula>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_OG_Delivery_Flag_Green</fullName>
+        <actions>
+            <name>GE_OG_Delivery_Flag_updated_to_Green</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Delivery Flag will be GREEN when the &quot;Proposal Sent Date&quot; &lt;= &quot;Bid Due Date&quot; OR Days to CS Commitment Date &gt; 14</description>
+        <formula>OR((GE_OG_Days_to_CS_Commitment_Date__c &gt;14), (GE_OGGS_PrslSntDt__c &lt;= GE_OGGS_BidDueDt__c) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_OG_Delivery_Flag_Orange</fullName>
+        <actions>
+            <name>GE_OG_Delivery_Flag_updated_to_Orange</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Delivery Flag will be &apos;ORANGE&apos; when &quot;Bid Due Date&quot; &gt; Today AND Days to CS Commitment Date &lt;14</description>
+        <formula>AND( (GE_OGGS_BidDueDt__c)&gt; today(), (GE_OG_Days_to_CS_Commitment_Date__c &lt;14), (GE_OG_Days_to_CS_Commitment_Date__c &gt;0) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_OG_Delivery_Flag_Red</fullName>
+        <actions>
+            <name>GE_OG_Delivery_Flag_updated_to_Red</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Delivery Flag will be &apos;Red&apos; when the below condition meets</description>
+        <formula>OR( (GE_OGGS_BidDueDt__c &lt; GE_OG_CS_Committed_Date__c), (GE_OGGS_PrslSntDt__c&gt;GE_OGGS_BidDueDt__c),   AND( OR(ISPICKVAL(GE_OG_Deal_Progress__c, &apos;2.First Proposal Pending&apos;), ISPICKVAL(GE_OG_Deal_Progress__c, &apos;4.Revised Proposal Pending&apos;)),  (GE_OGGS_BidDueDt__c &lt;today())) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_OG_TM_Update_GE_OG_TM_Scope_of_supply_Base_Offer</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>GE_ES_Request_Type__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>DSR</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Request Type Export To ERP</fullName>
+        <actions>
+            <name>Request_Type_Record_Export_To_ERP</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula>GE_OG_ERP_Counter__c&gt;0</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>TriggerOMtoTMSP6</fullName>
+        <actions>
+            <name>Update_ERP_Counter</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Last_ERP_Export_Date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>This WF rule will trigger the OM to TMS P6 (Mashery) when following criteria are met 
+
+- ITO Checklist Ready = Yes
+- ERP Counter (GE_OG_ERP_Counter__c) has changed either via update from Opportunity or Request Type</description>
+        <formula>IF(AND(GE_OG_ITO_Checklist_Ready__c = &apos;Yes&apos;, export_to_erp_ge_og__c,  RecordType.Name =  $Label.FSE_Check_List, NOT( ISCHANGED(GE_OG_Last_ERP_Export_Status__c) )), True, False)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update_Request_Type_GE_OG</fullName>
+        <actions>
+            <name>Update_Request_Type_As_False_GE_OG</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>request_type_islocked_ge_og__c</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <tasks>
+        <fullName>CPO_Action_Needed</fullName>
+        <assignedToType>owner</assignedToType>
+        <dueDateOffset>0</dueDateOffset>
+        <notifyAssignee>true</notifyAssignee>
+        <offsetFromField>GE_ES_Request_Type__c.CreatedDate</offsetFromField>
+        <priority>Normal</priority>
+        <protected>false</protected>
+        <status>Not Started</status>
+        <subject>CPO Action Needed</subject>
+    </tasks>
+</Workflow>

@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>GE_PW_NUC_FAR_email_sent</fullName>
+        <ccEmails>dlenergy.genebilling@ge.com</ccEmails>
+        <description>NOT Used - Email sent when FAR details are entered</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Account Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial Leader</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/GE_PW_NUC_FAR_Mail</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Check_Is_digital_product_as_true</fullName>
+        <field>Is_Digital_Product_ge_og__c</field>
+        <literalValue>1</literalValue>
+        <name>Check Is digital product as true</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_OG_Update_Oppty_Multi_Tier3</fullName>
+        <field>MultiTier3_ge_og__c</field>
+        <literalValue>1</literalValue>
+        <name>GE OG Update Oppty Multi Tier3</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <targetObject>OpportunityId</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Num_Of_Unit</fullName>
+        <field>of_Units_Text__c</field>
+        <formula>TEXT(detail_ge_og__c)</formula>
+        <name>Num Of Units</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Num_Of_Units</fullName>
+        <field>of_Units_Text__c</field>
+        <formula>TEXT(detail_ge_og__c)</formula>
+        <name>Num Of Units</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Opportunity_Product_CM_From_PriceBook_CM</fullName>
+        <field>GE_OG_SS_Oppty_Product_CM__c</field>
+        <formula>If(ISBlank( GE_OG_SS_Oppty_Product_CM__c ), Product2.GE_OG_CM__c ,GE_OG_SS_Oppty_Product_CM__c)</formula>
+        <name>Opportunity_Product_CM_From_PriceBook_CM</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_Synergy_flag_on_OLI_as_True</fullName>
+        <field>Synergy_ge_og__c</field>
+        <literalValue>1</literalValue>
+        <name>Set Synergy flag on OLI as True</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Atq_Date_from_Product</fullName>
+        <field>ATQ_Date_from_Product_GE_OG__c</field>
+        <formula>PricebookEntry.Product2.ATQ_Date_ge_og__c</formula>
+        <name>Update Atq Date from Product</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_MMI_Product_flag</fullName>
+        <field>Is_MMI_Product_ge_og__c</field>
+        <literalValue>1</literalValue>
+        <name>Update MMI Product flag</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Opportunity_Closed_As_False</fullName>
+        <field>closed_opportunity_ge_og__c</field>
+        <literalValue>0</literalValue>
+        <name>Update_Opportunity_Closed_As_False</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Primary_Quote_to_FALSE</fullName>
+        <description>Updates the Primary Quote to Unchecked.</description>
+        <field>GE_ES_Primary_Quote__c</field>
+        <literalValue>0</literalValue>
+        <name>Update Primary Quote to FALSE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>update_1st_delivery_date</fullName>
+        <field>x1st_delivery_date_ge_og__c</field>
+        <formula>Opportunity.delivery_date_ge_og__c</formula>
+        <name>update 1st delivery date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>update_revenue_scheduling_field</fullName>
+        <field>Is_Revenue_Product_Ge_Og__c</field>
+        <literalValue>1</literalValue>
+        <name>update revenue scheduling field</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <rules>
+        <fullName>ATQ Date population from Product</fullName>
+        <actions>
+            <name>Update_Atq_Date_from_Product</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Product2.product_id_ge_og__c</field>
+            <operation>notEqual</operation>
+            <value>null</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Check Digital Product Flag on OLI</fullName>
+        <actions>
+            <name>Check_Is_digital_product_as_true</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>PricebookEntry.Product2.digital_ge_og__c = TRUE</formula>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE OG Update Multi Tier3 Flag</fullName>
+        <actions>
+            <name>GE_OG_Update_Oppty_Multi_Tier3</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>GE_HQ_Ref_Opp_Business_Tier3__c &lt;&gt; GE_PTier3_PL__c</formula>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Set Synergy flag on OLI upon creation</fullName>
+        <actions>
+            <name>Set_Synergy_flag_on_OLI_as_True</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Opportunity.Synergy_Opportunity_ge_og__c</field>
+            <operation>equals</operation>
+            <value>Yes</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update MMI Product flag</fullName>
+        <actions>
+            <name>Update_MMI_Product_flag</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Product2.Must_Move_Inventory_ge_og__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <description>To Update &apos;Is MMI Product&apos; flag on Opportunity Product</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Num Of Units</fullName>
+        <actions>
+            <name>Num_Of_Units</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>ISNEW() || ISCHANGED(detail_ge_og__c)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update_Opportunity_1st_Product_Delivery_Date_GE_OG</fullName>
+        <actions>
+            <name>update_1st_delivery_date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>OpportunityLineItem.x1st_delivery_date_ge_og__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <description>Update 1st delivery date on product when a product is added.</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update_Opportunity_Closed_As_False</fullName>
+        <actions>
+            <name>Update_Opportunity_Closed_As_False</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>closed_opportunity_ge_og__c</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update_Opportunity_Product_From_PriceBook</fullName>
+        <actions>
+            <name>Opportunity_Product_CM_From_PriceBook_CM</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>If(AND( OR(Opportunity.RecordType.Name =  $Label.O_G, Opportunity.RecordType.Name =  $Label.Grouped_Flow, Opportunity.RecordType.Name =  $Label.Hedge, Opportunity.RecordType.Name =  $Label.O_G_Closed  ),ISBLANK( GE_OG_SS_Oppty_Product_CM__c)), True, False)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+</Workflow>

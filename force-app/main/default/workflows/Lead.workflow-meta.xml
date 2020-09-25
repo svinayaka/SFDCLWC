@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>GE_ES_Populate_City</fullName>
+        <field>City</field>
+        <formula>GE_HQ_City__c</formula>
+        <name>GE ES Populate City</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_ES_Populate_Country</fullName>
+        <field>Country</field>
+        <formula>TEXT(Country_ge_og__c)</formula>
+        <name>GE ES Populate Country</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_ES_Populate_Lead_Initiator</fullName>
+        <field>GE_ES_Lead_To__c</field>
+        <formula>CreatedBy.FirstName  +&apos;  &apos;+ CreatedBy.LastName</formula>
+        <name>GE_ES_Populate_Lead Initiator</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_ES_Populate_State</fullName>
+        <field>State</field>
+        <formula>TEXT(GE_HQ_State_Province__c)</formula>
+        <name>GE ES Populate State</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_ES_Populate_Street</fullName>
+        <field>Street</field>
+        <formula>GE_HQ_Street__c</formula>
+        <name>GE ES Populate Street</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_ES_Populate_ZipCode</fullName>
+        <field>PostalCode</field>
+        <formula>GE_HQ_ZipCode__c</formula>
+        <name>GE ES Populate ZipCode</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_ES_Update_Status_Chg_Date</fullName>
+        <description>Pick up on any change to the Lead_Status and stamp Today() into the the GE_ES_Lead_Status_Chg_Date field</description>
+        <field>Lead_Status_Change_Date_ge_og__c</field>
+        <formula>Today()</formula>
+        <name>GE_ES_Update_Status_Chg_Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <rules>
+        <fullName>GE ES Populate Standard City Field</fullName>
+        <actions>
+            <name>GE_ES_Populate_City</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Lead.GE_HQ_City__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <description>Rule to update Standard City field from Custom GE_HQ_City__c field</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE ES Populate Standard Country Field</fullName>
+        <actions>
+            <name>GE_ES_Populate_Country</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Rule to update Standard Country field from Custom GE_HQ_Country__c field</description>
+        <formula>!ISPICKVAL(Country_ge_og__c, &apos;&apos;)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE ES Populate Standard State Field</fullName>
+        <actions>
+            <name>GE_ES_Populate_State</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Lead.GE_HQ_State_Province__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <description>Rule to update Standard State field from Custom GE_HQ_State_Province__c field</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE ES Populate Standard Street Field</fullName>
+        <actions>
+            <name>GE_ES_Populate_Street</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Lead.GE_HQ_Street__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <description>Rule to update Standard Street field from Custom GE_HQ_Street__c field</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE ES Populate Standard ZipCode Field</fullName>
+        <actions>
+            <name>GE_ES_Populate_ZipCode</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Lead.GE_HQ_ZipCode__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <description>Rule to update Standard ZipCode field from Custom GE_HQ_ZipCode__c field</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_ES_Populate_Lead Initiator</fullName>
+        <actions>
+            <name>GE_ES_Populate_Lead_Initiator</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Lead.LastName</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_ES_Populate_Lead_Status_Chg_Date</fullName>
+        <actions>
+            <name>GE_ES_Update_Status_Chg_Date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Pick up on any change to the Lead_Status and stamp Today() into the the GE_ES_Lead_Status_Chg_Date field</description>
+        <formula>ISCHANGED(Status)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

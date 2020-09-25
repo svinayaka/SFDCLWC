@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GE_OG_GS_Visa_WP_Download_View</fullName>
+    <columns>GE_OG_GS_Passport_Technician__c</columns>
+    <columns>GE_OG_GS_Visa_Country__c</columns>
+    <columns>GE_OG_GS_Visa_Expiry__c</columns>
+    <columns>GE_OG_GS_Visa_Expiry_Date__c</columns>
+    <columns>GE_OG_GS_Visa_For__c</columns>
+    <columns>GE_OG_GS_Visa_Status__c</columns>
+    <columns>GE_OG_GS_Visa_Type__c</columns>
+    <columns>GE_OG_GS_Region__c</columns>
+    <columns>GE_OG_GS_Assignment_ID__c</columns>
+    <columns>GE_OG_GS_Sponsorship__c</columns>
+    <columns>GE_OG_GS_Visa_Issued_Date__c</columns>
+    <columns>GE_OG_GS_Validity_Start_Date__c</columns>
+    <columns>GE_OG_GS_Maximum_Days_of_Stay__c</columns>
+    <columns>GE_OG_GS_Maximum_Number_of_Uses__c</columns>
+    <columns>GE_OG_GS_Visa_Note__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>Visa/WP Download View</label>
+    <language>en_US</language>
+</ListView>

@@ -1,0 +1,52 @@
+<!--Purpose/Overview : Requirement R-19211 Display related contracts for master detail and lockup relation for Contract records.
+Functional Area :M&C SFDC
+Author: Naveen Vuppu
+Created Date: October 24, 2014   
+Modified By : 
+Modified Date:
+Reason:- 
+-->
+<apex:page standardController="Contract" extensions="GE_MCS_Related_ContractsCon" >
+<style>
+   .fewerMore { display: none;}
+        .processButton {
+        color: #333;
+        margin: 1px;
+        padding: 2px 3px;
+        border: 1px solid #b5b5b5;
+        border-bottom-color: #7f7f7f;
+        background: #e8e8e9 url('/img/alohaSkin/btn_sprite.png') repeat-x right top;
+        font-weight: bold;
+        font-size: .9em;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        border-radius: 3px;
+        display: -webkit-inline-box;
+        text-decoration: none;
+        }
+           
+ </style>
+ <apex:form >
+ 
+   
+   <apex:pageMessage summary="You do not have Sufficient permissions to view this page (Please request for Permission Set - 'GE Support Contract Access' to view this Section)" severity="warning" strength="3" rendered="{!NOT(psrender)}" />
+   <apex:pageblock id="CustomList" mode="inlineEdit" rendered="{!psrender}">
+    <center><apex:commandLink action="{!NewContr}" value="New Related Contract" target="_top" styleClass="processButton " shape="rect"/></center>
+    <apex:pageblocktable value="{!contrz}" var="c" rendered="{!NOT(ISNULL(contrz))}">
+       <apex:column >
+       <apex:facet name="header">Action</apex:facet>
+       <apex:commandLink action="{!editContr}" value="Edit" immediate="true" target="_top">&nbsp; | &nbsp;
+       <apex:param name="contrid" value="{!c.id}"/>
+      </apex:commandLink>
+       <apex:commandLink action="{!deleteRcontr}" value="Del" onclick="return confirm('Are you sure?');">
+         <apex:param name="contrid" value="{!c.id}"/>
+       </apex:commandLink>
+      </apex:column>
+      <apex:column headerValue="Related Contract Name" value="{!c.Name}"/>
+      <apex:column headerValue="Contract Master" value="{!c.GE_MCS_Contract_Master__c}" />
+      <apex:column headerValue="Contract Lookup" value="{!c.GE_MCS_Contract_Lookup__c}"/>
+      <apex:column headerValue="Relationship" value="{!c.GE_MCS_Relationship__c}"/>    
+   </apex:pageblocktable>
+  </apex:pageblock>
+ </apex:form>
+</apex:page>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>DRA_CWI_Overall_Percentage_Calculation</fullName>
+        <field>SD_CWI_DRA_Overall_Percentage__c</field>
+        <formula>(SD_CWI_People_Percentage__c +SD_CWI_Equipment_Percentage__c+ SD_CWI_Technical_and_Planning_Percentage__c)/3</formula>
+        <name>DRA CWI Overall% Calculation</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>DRA_DCF_Overall_Percentage_Calculation</fullName>
+        <field>DCF_DRA_Overall_Percentage__c</field>
+        <formula>(SD_DCF_People_Percentage__c +SD_DCF_Equipment_Percentage__c+ SD_DCF_Technical_and_Planning_Percentage__c+SD_DCF_Products_Percentage__c+SD_DCF_Logistics_Percentage__c)/5</formula>
+        <name>DRA DCF Overall% Calculation</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>DRA_DS_Overall_Percentage_Calculation</fullName>
+        <field>SD_DS_DRA_Overall_Percentage__c</field>
+        <formula>(SD_DS_Technical_and_Planning_Percentage__c+SD_DS_Equipment_Percentage__c+SD_DS_People_Percentage__c+SD_DS_Monitoring_Comms_Percentage__c+SD_DS_Logistics_Percentage__c)/5</formula>
+        <name>DRA DS Overall% Calculation</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <rules>
+        <fullName>DRA DCF DS Overall%25 Calculation</fullName>
+        <actions>
+            <name>DRA_CWI_Overall_Percentage_Calculation</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>DRA_DCF_Overall_Percentage_Calculation</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>DRA_DS_Overall_Percentage_Calculation</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>FX5__Job__c.OwnerId</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

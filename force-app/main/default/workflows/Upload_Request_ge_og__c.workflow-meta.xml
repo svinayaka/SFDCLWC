@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Email_to_IT_Team</fullName>
+        <description>Email to IT Team</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>IT_DEV_Team_ge_og</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>All/MMI_Upload_File_submitted</template>
+    </alerts>
+    <alerts>
+        <fullName>NotifyThe_Com_EX_User_when_the_Mass_cancel_of_opportunities_request_is_completed</fullName>
+        <description>NotifyThe Com-EX User when the Mass cancel of opportunities request is completed.</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Opportunity_Email_Templates/Opportunity_delete_request_Completed</template>
+    </alerts>
+    <alerts>
+        <fullName>Notify_IT_team_when_opportunity_upload_request_is_submitted</fullName>
+        <description>Notify IT team when opportunity upload request is submitted.</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Opportunity_Upload_Request_notification</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Opportunity_Email_Templates/Opportunity_delete_request</template>
+    </alerts>
+    <rules>
+        <fullName>MMI Upload File submitted</fullName>
+        <actions>
+            <name>Email_to_IT_Team</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Upload_Request_ge_og__c.Status__c</field>
+            <operation>equals</operation>
+            <value>Submitted</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Upload_Request_ge_og__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>MMI Upload Request</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Notify when user submits opportunity for delete</fullName>
+        <actions>
+            <name>Notify_IT_team_when_opportunity_upload_request_is_submitted</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Upload_Request_ge_og__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Opportunity Upload Request</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Upload_Request_ge_og__c.Status__c</field>
+            <operation>equals</operation>
+            <value>Submitted</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Send mail to users after completing mass cancel</fullName>
+        <actions>
+            <name>NotifyThe_Com_EX_User_when_the_Mass_cancel_of_opportunities_request_is_completed</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Upload_Request_ge_og__c.Status__c</field>
+            <operation>equals</operation>
+            <value>Completed</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

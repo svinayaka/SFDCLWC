@@ -1,0 +1,2735 @@
+<apex:page standardStylesheets="false" sidebar="false" docType="html-5.0" applyHtmlTag="false" applyBodyTag="false" showHeader="false">
+        <html lang="en">
+
+        <head >
+            
+            <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+            <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+            <meta name="HandheldFriendly" content="true" /> 
+
+            <!--<meta http-equiv="X-UA-Compatible" content="IE=Edge" />-->
+            
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+            <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+
+            <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jQuery.Validate/1.6/jQuery.Validate.min.js"></script>
+
+            <!-------start scripts for datepicker------------------------------------------------------------------------------>
+
+            <!-- Include jQuery -->
+            <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+            <!-- Include Date Range Picker -->
+            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
+
+            <!-------End scripts for datepicker------------------------------------------------------------------------------>
+
+            <style>
+                <!--to break lines for input text fields--> input.break {
+                    word-wrap: break-word;
+                    word-break: break-word;
+                }
+                body {
+                    padding-left: 5px;
+                    padding-right: 5px;
+                }
+                header {
+                    background-color: #00a572;
+                    text-align: center;
+                    padding-top: 14px;
+                    padding-bottom: -50px;
+                    margin-top: -60px;
+                    margin-bottom: 0px;
+                    border-radius: 10px 10px 0 0;
+                    color: aliceblue;
+                }
+            </style>
+
+            <script>
+                $(document).ready(function() {
+                    var date_input = $('input[name="00NA000000B0uFm"]'); //our date input has the name "date"
+                    var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+                    date_input.datepicker({
+                        format: 'mm/dd/yyyy',
+                        container: container,
+                        todayHighlight: true,
+                        autoclose: true,
+                    })
+                })
+            </script>
+
+            <script>
+                $(document).ready(function() {
+                    var date_input = $('input[name="00NA000000B0uFb"]'); //our date input has the name "date"
+                    var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+                    $("#otherType").hide();
+                    date_input.datepicker({
+                        format: 'mm/dd/yyyy',
+                        container: container,
+                        todayHighlight: true,
+                        autoclose: true,
+                    })
+                })
+            </script>
+
+
+
+            <script>
+                var isRequired = false;
+                $(document).ready(function() {
+
+                    var errorMsg = 0;
+                    var MnC = [{
+                        display: "--None--",
+                        value: "--None--"
+                    }, {
+                        display: "Control Solutions",
+                        value: "Control Solutions"
+                    }, {
+                        display: "Inspection Technologies",
+                        value: "Inspection Technologies"
+                    }, {
+                        display: "Measurement &amp; Sensing",
+                        value: "Measurement &amp; Sensing"
+                    }, {
+                        display: "Bently Nevada",
+                        value: "Bently Nevada"
+                    }, {
+                        display: "PII",
+                        value: "PII"
+                    }];
+
+                    var Subsea = [{
+                        display: "--None--",
+                        value: "--None--"
+                    }, {
+                        display: "Subsea Drilling Systems",
+                        value: "Subsea Drilling Systems"
+                   
+                    }, {
+                        display: "Subsea Production Systems, Services & Offshore",
+                        value: "Subsea Production Systems, Services & Offshore"
+                    }, {
+                        display: "Flexible Pipeline Systems & Wellstream Construction Services",
+                        value: "Flexible Pipeline Systems & Wellstream Construction Services"
+                    }, {
+                        display: "Surface Pressure Control",
+                        value: "Surface Pressure Control"
+                    }];
+
+                    var Surface = [{
+                        display: "--None--",
+                        value: "--None--"
+                    }, {
+                        display: "Wireline Services",
+                        value: "Wireline Services"
+                    }, {
+                        display: "Artificial Lift",
+                        value: "Artificial Lift"
+                    }, {
+                        display: "Drilling Services",
+                        value: "Drilling Services"
+                    }, {
+                        display: "Drilling & Completion Fluids",
+                        value: "Drilling & Completion Fluids"
+                    }, {
+                        display: "Drill Bits",
+                        value: "Drill Bits"
+                    }, {
+                        display: "Completions",
+                        value: "Completions"
+                    }, {
+                        display: "Wellbore interventions",
+                        value: "Wellbore interventions"
+                    }, {
+                        display: "Pressure Pumping",
+                        value: "Pressure Pumping"
+                    }, {
+                        display: "Chemicals",
+                        value: "Chemicals"
+                    }];
+
+                    var DTS = [{
+                        display: "--None--",
+                        value: "--None--"
+                    }, /*{
+                        display: "New Units",
+                        value: "New Units"
+                    },*/ {
+                        display: "Equipment &amp; Projects",
+                        value: "Equipment &amp; Projects"
+                    }, {
+                        display: "FPT- Aftermarket Solutions",
+                                  
+                        value:   "FPT- Aftermarket Solutions"
+                    }, {
+                        display: "FPT- Valve Projects",
+                                  
+                        value: "FPT- Valve Projects"
+                    }, {
+                        display: "Power Transmission ",
+                        value: "Power Transmission "
+                    }, {
+                        display: "PVS",
+                        value: "PVS"
+                    },{
+                        display: "Services - CS &amp; TX",
+                        value: "Services - CS &amp; TX"
+                        //"IA&amp;GT"
+                    }, {
+                        display: "Services - Upgrades",
+                        value: "Services - Upgrades"
+                    }, {
+                        display: "Thermodyn",
+                        value: "Thermodyn"
+                    }/*{
+                        display: "Power Transmission ",
+                        value: "Power Transmission "
+                    }, {
+                        display: "Gas Processing",
+                        value: "Gas Processing"
+                  
+                    }, {
+                        display: "RC - New Units",
+                        value: "RC - New Units"
+                    }, {
+                        display: "RC - Services",
+                        value: "RC - Services"
+                    }, {
+                        display: "FPT- Valve Projects",
+                                  
+                        value: "FPT- Valve Projects"
+                    }, {
+                        display: "FPT- Aftermarket Solutions",
+                                  
+                        value:   "FPT- Aftermarket Solutions"
+                    }, {
+                        display: "FPT- Natural Gas Solutions",
+                        value: "FPT- Natural Gas Solutions"
+                    }, {
+                        display: "PVS",
+                        value: "PVS"
+                    }*/];
+
+                    $("#00NA000000B0uEx").change(function() { <!--business field ID-->
+                        <!--alert('changed');-->
+                        var parent = $(this).val();
+                        switch (parent) {
+                            case 'Digital Solutions':
+                                list(MnC);
+                                break;
+                            case 'Oil Field Equipment':
+                                list(Subsea);
+                                break;
+                            case 'Oil Field Services':
+                                list(Surface);
+                                break;
+                            case 'Turbomachinery & Process Solutions':
+                                list(DTS);
+                                break;
+
+                            default: //default child option is blank
+                                $("#00NA000000B0uG6").html('--None--'); <!-- sub business field ID-->
+                                break;
+                        }
+                    });
+
+                    function list(array_list) { <!--sub business field ID 00NA000000B0uG6-->
+                        $("#00NA000000B0uG6").html(""); //reset child options
+                        $(array_list).each(function(i) { //populate child options
+                            $("#00NA000000B0uG6").append("<option value=\"" + array_list[i].value + "\">" + array_list[i].display + "</option>");
+                        });
+                    }
+
+
+                    <!-------------------------------------------------------------------------------------------------------------------------------------->
+                    var ControlSolutions = [{
+                        display: "--None--",
+                        value: "--None--"
+                    }, {
+                        display: "Bahrain",
+                        value: "Bahrain"
+                    }, {
+                        display: "Bracknell",
+                        value: "Bracknell"
+                    }, {
+                        display: "Campinas",
+                        value: "Campinas"
+                    }, {
+                        display: "Carol Stream",
+                        value: "Carol Stream"
+                    }, {
+                        display: "Fot",
+                        value: "Fot"
+                    }, {
+                        display: "Longmont",
+                        value: "Longmont"
+                    }, {
+                        display: "Louisville",
+                        value: "Louisville"
+                    }, {
+                        display: "Maracaibo",
+                        value: "Maracaibo"
+                    }, {
+                        display: "Salem",
+                        value: "Salem"
+                    }, {
+                        display: "Seoul",
+                        value: "Seoul"
+                    }, {
+                        display: "Shanghai",
+                        value: "Shanghai"
+                    }, {
+                        display: "Singapore",
+                        value: "Singapore"
+                    }, {
+                        display: "Woodward",
+                        value: "Woodward"
+                    }];
+
+                    var InspectionTechnologies = [{
+                        display: "--None--",
+                        value: "--None--"
+                    }, {
+                        display: "AGFA",
+                        value: "AGFA"
+                    }, {
+                        display: "Ahrensburg",
+                        value: "Ahrensburg"
+                    }, {
+                        display: "Alzenau",
+                        value: "Alzenau"
+                    }, {
+                        display: "Coventry",
+                        value: "Coventry"
+                    }, {
+                        display: "Hechingen",
+                        value: "Hechingen"
+                    }, {
+                        display: "Hong Kong",
+                        value: "Hong Kong"
+                    }, {
+                        display: "Huerth",
+                        value: "Huerth"
+                    }, {
+                        display: "Lewistown",
+                        value: "Lewistown"
+                    }, {
+                        display: "Limonest",
+                        value: "Limonest"
+                    }, {
+                        display: "Nove Mesto",
+                        value: "Nove Mesto"
+                    }, {
+                        display: "Pasadena",
+                        value: "Pasadena"
+                    }, {
+                        display: "Skaneateles",
+                        value: "Skaneateles"
+                    }, {
+                        display: "Wunstorf",
+                        value: "Wunstorf"
+                    }];
+
+                    var MeasurementSensing = [{
+                        display: "--None--",
+                        value: "--None--"
+                    }, {
+                        display: "Abu Dhabi",
+                        value: "Abu Dhabi"
+                    }, {
+                        display: "Bergen",
+                        value: "Bergen"
+                    }, {
+                        display: "Boston Center",
+                        value: "Boston Center"
+                    }, {
+                        display: "Changzhou",
+                        value: "Changzhou"
+                    }, {
+                        display: "Groby",
+                        value: "Groby"
+                    }, {
+                        display: "Oslo",
+                        value: "Oslo"
+                    }, {
+                        display: "Pforzheim",
+                        value: "Pforzheim"
+                    }, {
+                        display: "Pune (India)",
+                        value: "Pune (India)"
+                    }, {
+                        display: "Sao Paolo",
+                        value: "Sao Paolo"
+                    }, {
+                        display: "Shannon",
+                        value: "Shannon"
+                    }, {
+                        display: "Toulouse",
+                        value: "Toulouse"
+                    }, {
+                        display: "Tsukishima",
+                        value: "Tsukishima"
+                    }, {
+                        display: "Twinsburg",
+                        value: "Twinsburg"
+                    }, {
+                        display: "Vadodara",
+                        value: "Vadodara"
+                    }];
+
+                    var BentlyNevada = [{
+                        display: "--None--",
+                        value: "--None--"
+                    }, {
+                        display: "AL Manamah",
+                        value: "AL Manamah"
+                    }, {
+                        display: "Bahrain",
+                        value: "Bahrain"
+                    }, {
+                        display: "Campinas",
+                        value: "Campinas"
+                    }, {
+                        display: "Christchurch",
+                        value: "Christchurch"
+                    }, {
+                        display: "Fot",
+                        value: "Fot"
+                    }, {
+                        display: "Minden",
+                        value: "Minden"
+                    }, {
+                        display: "Mumbai",
+                        value: "Mumbai"
+                    }, {
+                        display: "Singapore",
+                        value: "Singapore"
+                    }, {
+                        display: "Solheimsviken",
+                        value: "Solheimsviken"
+                    }];
+
+
+                    var FTValveProj = [{
+                        display: "--None--",
+                        value: "--None--"
+                    }, {
+                        display: "Alexandria",
+                        value: "Alexandria"
+                    }, {
+                        display: "Avon",
+                        value: "Avon"
+                    }, {
+                        display: "Coimbatore",
+                        value: "Coimbatore"
+                    }, {
+                        display: "Conde",
+                        value: "Conde"
+                    }, {
+                        display: "Elk Grove Village",
+                        value: "Elk Grove Village"
+                    }, {
+                        display: "Jacksonville",
+                        value: "Jacksonville"
+                    }, {
+                        display: "Kariwa",
+                        value: "Kariwa"
+                    }, {
+                        display: "Mexico",
+                        value: "Mexico"
+                    }, {
+                        display: "Salt Lake City",
+                        value: "Salt Lake City"
+                    }, {
+                        display: "Skelmersdale",
+                        value: "Skelmersdale"
+                    }, {
+                        display: "Suzhou",
+                        value: "Suzhou"
+                    }, {
+                        display: "Ulsan City",
+                        value: "Ulsan City"
+                    }];
+
+                    var FTAfterMarket = [{
+                        display: "--None--",
+                        value: "--None--"
+                    }, {
+                        display: "Brazil",
+                        value: "Brazil"
+                    }, {
+                        display: "Deer Park",
+                        value: "Deer Park"
+                    }, {
+                        display: "Edenvale",
+                        value: "Edenvale"
+                    }, {
+                        display: "Jebel Ali",
+                        value: "Jebel Ali"
+                    }, {
+                        display: "Naples",
+                        value: "Naples"
+                    }, {
+                        display: "Singapore",
+                        value: "Singapore"
+                    }];
+
+                    var FTNaturalGas = [{
+                        display: "--None--",
+                        value: "--None--"
+                    }, {
+                        display: "Bradford",
+                        value: "Bradford"
+                    }, {
+                        display: "Port Northwest",
+                        value: "Port Northwest"
+                    }, {
+                        display: "Skelmersdale",
+                        value: "Skelmersdale"
+                    }, {
+                        display: "Talamona",
+                        value: "Talamona"
+                    }];
+
+                    var p2 = [{
+                        display: "--None--",
+                        value: "--None--"
+                    }, {
+                        display: "Beijing",
+                        value: "Beijing"
+                    }, {
+                        display: "Buenos Aires",
+                        value: "Buenos Aires"
+                    }, {
+                        display: "Calgary",
+                        value: "Calgary"
+                    }, {
+                        display: "Cramlington",
+                        value: "Cramlington"
+                    }, {
+                        display: "Doha",
+                        value: "Doha"
+                    }, {
+                        display: "Houston",
+                        value: "Houston"
+                    }, {
+                        display: "Kansas City",
+                        value: "Kansas City"
+                    }, {
+                        display: "Kuala Lumpur",
+                        value: "Kuala Lumpur"
+                    }, {
+                        display: "Stutensee",
+                        value: "Stutensee"
+                    }, {
+                        display: "Toronto",
+                        value: "Toronto"
+                    }];
+
+
+                    <!-------------------------------FPT Dependency for job fields mandatory---------->
+
+
+                    $("#00NA000000B0uG6").change(function() { <!--SUB business field ID-->
+                        <!--alert('changed');-->
+                        var parent = $(this).val();
+                        switch (parent) {
+
+                            case 'FPT- Valve Projects':
+                                list1(FTValveProj);
+                                break;
+                            case 'FPT- Aftermarket Solutions':
+                                  
+                                list1(FTAfterMarket);
+                                break;
+                            case 'FPT- Natural Gas Solutions':
+                                list1(FTNaturalGas);
+                                break;
+
+
+                            default: //default child option is blank
+                                $("#00NA000000B0uFH").html('--None--'); <!-- M&C JOB LOCATION field ID-->
+                                break;
+                        }
+                    });
+
+                    function list1(array_list1) { <!--M&C JOB LOCATION field ID 00NA000000B0uFH-->
+                        $("#00NA000000B0uFH").html(""); //reset child options
+                        $(array_list1).each(function(i) { //populate child options
+                            $("#00NA000000B0uFH").append("<option value=\"" + array_list1[i].value + "\">" + array_list1[i].display + "</option>");
+                        });
+                    }
+
+
+                    $("#00NA000000B0uG6").change(function() {
+
+                        var text = $("#00NA000000B0uG6 option:selected").text();
+                        var value = $("#00NA000000B0uG6 option:selected").val();
+                        <!-- alert('vales-->' + text + '--' + value);-->
+                        if (text == "FPT- Valve Projects") {
+                            isRequired = true;
+                            $("#idlblMCjobType").append('<span id="astJobType11"><Font color="red" size="5" >*</Font></span>');
+                            $("#idlblMCLocation").append('<span id="astJobType22"><Font color="red" size="5" >*</Font></span>');
+                            $("#idlblMCJobNumber").append('<span id="astJobType33"><Font color="red" size="5" >*</Font></span>');
+
+                        } else //if exists, remove the asterisk
+                        {
+                            isRequired = false;
+                            var isContains = $("#astJobType11").find("font");
+                            if (isContains != null) {
+                                $("#astJobType11").remove();
+                                $("#astJobType22").remove();
+                                $("#astJobType33").remove();
+
+                            }
+                            isContains = $("#spMcJobType").find("font");
+                            if (isContains != null) {
+                                $("#spMcJobType").remove();
+                                $("#spMCJobNum").remove();
+                                $("#spMCJobLoc").remove();
+
+                            }
+                        }
+                    });
+
+
+                    $("#00NA000000B0uG6").change(function() { <!--SUB business field ID-->
+                        <!--alert('changed');-->
+                        var parent = $(this).val();
+                        switch (parent) {
+
+                            case 'FPT- Valve Projects':
+                                list1(FTValveProj);
+                                break;
+                            case 'FPT- Aftermarket Solutions':
+                                list1(FTAfterMarket);
+                                break;
+                            case 'FPT- Natural Gas Solutions':
+                                list1(FTNaturalGas);
+                                break;
+
+
+                            default: //default child option is blank
+                                $("#00NA000000B0uFH").html('--None--'); <!-- M&C JOB LOCATION field ID-->
+                                break;
+                        }
+                    });
+
+                    function list1(array_list1) { <!--M&C JOB LOCATION field ID 00NA000000B0uFH-->
+                        $("#00NA000000B0uFH").html(""); //reset child options
+                        $(array_list1).each(function(i) { //populate child options
+                            $("#00NA000000B0uFH").append("<option value=\"" + array_list1[i].value + "\">" + array_list1[i].display + "</option>");
+                        });
+                    }
+
+
+                    $("#00NA000000B0uG6").change(function() {
+
+                        var text = $("#00NA000000B0uG6 option:selected").text();
+                        var value = $("#00NA000000B0uG6 option:selected").val();
+                        <!-- alert('vales-->' + text + '--' + value);-->
+                        if (text == "FPT- Aftermarket Solutions") {
+                                     
+                            isRequired = true;
+                            $("#idlblMCjobType").append('<span id="astJobType111"><Font color="red" size="5" >*</Font></span>');
+                            $("#idlblMCLocation").append('<span id="astJobType222"><Font color="red" size="5" >*</Font></span>');
+                            $("#idlblMCJobNumber").append('<span id="astJobType333"><Font color="red" size="5" >*</Font></span>');
+
+                        } else //if exists, remove the asterisk
+                        {
+                            isRequired = false;
+                            var isContains = $("#astJobType111").find("font");
+                            if (isContains != null) {
+                                $("#astJobType111").remove();
+                                $("#astJobType222").remove();
+                                $("#astJobType333").remove();
+
+                            }
+                            isContains = $("#spMcJobType").find("font");
+                            if (isContains != null) {
+                                $("#spMcJobType").remove();
+                                $("#spMCJobNum").remove();
+                                $("#spMCJobLoc").remove();
+
+                            }
+                        }
+                    });
+
+
+                    $("#00NA000000B0uG6").change(function() { <!--SUB business field ID-->
+                        <!--alert('changed');-->
+                        var parent = $(this).val();
+                        switch (parent) {
+
+                            case 'FPT- Valve Projects':
+                                  
+                                list1(FTValveProj);
+                                break;
+                            case 'FPT- Aftermarket Solutions':
+                                list1(FTAfterMarket);
+                                break;
+                            case 'FPT- Natural Gas Solutions':
+                                list1(FTNaturalGas);
+                                break;
+
+
+                            default: //default child option is blank
+                                $("#00NA000000B0uFH").html('--None--'); <!-- M&C JOB LOCATION field ID-->
+                                break;
+                        }
+                    });
+
+                    function list1(array_list1) { <!--M&C JOB LOCATION field ID 00NA000000B0uFH-->
+                        $("#00NA000000B0uFH").html(""); //reset child options
+                        $(array_list1).each(function(i) { //populate child options
+                            $("#00NA000000B0uFH").append("<option value=\"" + array_list1[i].value + "\">" + array_list1[i].display + "</option>");
+                        });
+                    }
+                    $('#00NA000000B0uEx').on('change',function(){
+                            if( $(this).val()==="Turbomachinery & Process Solutions"){
+                            $("#otherType").show()
+                            }
+                            else{
+                            $("#otherType").hide()
+                            }
+                        });
+
+                    $("#00NA000000B0uG6").change(function() {
+
+                        var text = $("#00NA000000B0uG6 option:selected").text();
+                        var value = $("#00NA000000B0uG6 option:selected").val();
+                        <!-- alert('vales-->' + text + '--' + value);-->
+                        if (text == "FPT- Natural Gas Solutions") {
+                            isRequired = true;
+                            $("#idlblMCjobType").append('<span id="astJobType1111"><Font color="red" size="5" >*</Font></span>');
+                            $("#idlblMCLocation").append('<span id="astJobType2222"><Font color="red" size="5" >*</Font></span>');
+                            $("#idlblMCJobNumber").append('<span id="astJobType3333"><Font color="red" size="5" >*</Font></span>');
+
+                        } else //if exists, remove the asterisk
+                        {
+                            isRequired = false;
+                            var isContains = $("#astJobType111").find("font");
+                            if (isContains != null) {
+                                $("#astJobType1111").remove();
+                                $("#astJobType2222").remove();
+                                $("#astJobType3333").remove();
+
+                            }
+                            isContains = $("#spMcJobType").find("font");
+                            if (isContains != null) {
+                                $("#spMcJobType").remove();
+                                $("#spMCJobNum").remove();
+                                $("#spMCJobLoc").remove();
+
+                            }
+                        }
+                    });
+
+
+
+
+                    <!-------------------------------end-------------------------------------------->
+
+                    $("#00NA000000B0uG6").change(function() { <!--SUB business field ID-->
+                        <!--alert('changed');-->
+                        var parent = $(this).val();
+                        switch (parent) {
+                            case 'Control Solutions':
+                                list1(ControlSolutions);
+                                break;
+                            case 'Inspection Technologies':
+                                list1(InspectionTechnologies);
+                                break;
+                            case 'Measurement &amp; Sensing':
+                                list1(MeasurementSensing);
+                                break;
+                            case 'Bently Nevada':
+                                list1(BentlyNevada);
+                                break;
+                            case 'FPT- Valve Projects':
+                                  
+                                list1(FTValveProj);
+                                break;
+                            case 'FPT- Aftermarket Solutions':
+                                list1(FTAfterMarket);
+                                break;
+                            case 'FPT- Natural Gas Solutions':
+                                list1(FTNaturalGas);
+                                break;
+                            case 'PII':
+                                list1(p2);
+                                break;
+
+                            default: //default child option is blank
+                                $("#00NA000000B0uFH").html('--None--'); <!-- M&C JOB LOCATION field ID-->
+                                break;
+                        }
+                    });
+
+                    function list1(array_list1) { <!--M&C JOB LOCATION field ID 00NA000000B0uFH-->
+                        $("#00NA000000B0uFH").html(""); //reset child options
+                        $(array_list1).each(function(i) { //populate child options
+                            $("#00NA000000B0uFH").append("<option value=\"" + array_list1[i].value + "\">" + array_list1[i].display + "</option>");
+                        });
+                    }
+
+
+                    $("#00NA000000B0uEx").change(function() {
+
+                        var text = $("#00NA000000B0uEx option:selected").text();
+                        var value = $("#00NA000000B0uEx option:selected").val();
+                        <!--alert('vales-->' + text + '--' + value);-->
+                        if (text == "Digital Solutions") {
+                            isRequired = true;
+                            $("#idlblMCjobType").append('<span id="astJobType1"><Font color="red" size="5" >*</Font></span>');
+                            $("#idlblMCLocation").append('<span id="astJobType2"><Font color="red" size="5" >*</Font></span>');
+                            $("#idlblMCJobNumber").append('<span id="astJobType3"><Font color="red" size="5" >*</Font></span>');
+
+                        } else //if exists, remove the asterisk
+                        {
+                            isRequired = false;
+                            var isContains = $("#astJobType1").find("font");
+                            if (isContains != null) {
+                                $("#astJobType1").remove();
+                                $("#astJobType2").remove();
+                                $("#astJobType3").remove();
+
+
+
+                            }
+                            isContains = $("#spMcJobType").find("font");
+                            if (isContains != null) {
+                                $("#spMcJobType").remove();
+                                $("#spMCJobNum").remove();
+                                $("#spMCJobLoc").remove();
+                            }
+                        }
+                    });
+
+                    $("#idbtnSubmit").click(function() {
+                        var error = false;
+
+                        var subject = $('#idSubject').val();
+                        var description = $('#idDescription').val();
+                        var Impact = $('#00NA000000B0uFa').val();
+                        var KeyAccount = $('#00N1200000B2Ky9').val();
+                        var customerEscalation = $('#00NA000000B0uFY').val();
+                        var productSafetyImpact = $('#00NA000000B0uFc').val();
+                        var escalatedRequest = $('#00NA000000B0uFj').val();
+                        var Escalation = $('#00N2a000002DmGz').val();
+                        var impactDescription = $('#00NA000000B0uFD').val();
+                        var typeOfIssue = $('#00NA000000B0uFP').val();
+                        var typeOfIssuelevel2 = $('#00N1200000Ad2cL').val();
+                        var actionTaken = $('#00NA000000B0uEw').val();
+                        var Customername = $('#00NA000000B0uEv').val();
+                        var issueEventDate = $('#00NA000000B0uFm').val();
+                        //var customerWantDate = $('#00NA000000B0uFb').val();
+                        //var mCJobType = $('#00NA000000B0uFG').val();
+                        //var mCJobNum = $('#00NA000000B0uFw').val();
+                        var siteName = $('#00NA000000B0uFM').val();
+                        var cContactName = $('#00NA000000B0uF7').val();
+                        var email = $('#email').val();
+                        var cCustomerPhone = $('#00NA000000B0uF9').val();
+                        var cProjectSalesorder = $('#00NA000000B0uG0').val();
+                        var cCustomerAdd = $('#00N1200000B168O').val();
+                        var business = $('#00NA000000B0uEx').val();
+                        var subBusiness = $('#00NA000000B0uG6').val();
+                        var delReqToResl = $('#00NA000000B0uFN').val();
+                        var sitename = $('#00NA000000B0uFM').val();
+                        var customeremail = $('#00NA000000B0uF8').val();
+                     <!-->   var verticalseg = $('#00N0R000000G7uA').val();<-->
+                        
+                        if(email)
+                        {
+                            var mailformat = $('#email').val();
+                            var atpos = mailformat.indexOf("@");
+                            var dotpos = mailformat.lastIndexOf(".");
+                            var ge = mailformat.substring(atpos+1);
+                            //alert(ge);
+                            if (ge !== "ge.com" && ge !== "bhge.com" && ge !== "bakerhughes.com") {
+                                error = true;
+                                if (errorMsg == 1) {
+                                    var isContains = $("#spemail").find("font");
+                                    if (isContains != null) {
+                                        $("#spemail").remove();
+                                    }
+                                }
+                                $('#email').before('<span id="spemail"><Font color="red"><b>ERROR:</b> Not a valid Email Adrress</Font></span>');
+                                errorMsg = 1;
+                                
+                            }
+                            else {
+                            $("#spemail").find("font").remove();
+                            }
+                            
+                        }
+
+                        //  alert('business --->' + business );
+                        if (subject == '' || subject == null) {
+                            error = true;
+
+                            //  alert(errorMsg);
+                            if (errorMsg == 1) {
+                                var isContains = $("#spSubject").find("font");
+                                if (isContains != null) {
+                                    $("#spSubject").remove();
+                                }
+                            }
+                            $('#idSubject').before('<span id="spSubject"><Font color="red"><b>ERROR:</b> You must enter a value</Font></span>');
+                            errorMsg = 1;
+
+                        } else {
+                            $("#spSubject").find("font").remove();
+                        }
+                        if (customeremail == '' || customeremail == null) {
+                            error = true;
+
+                            //  alert(errorMsg);
+                            if (errorMsg == 1) {
+                                var isContains = $("#spcustomeremail").find("font");
+                                if (isContains != null) {
+                                    $("#spcustomeremail").remove();
+                                }
+                            }
+                            $('#00NA000000B0uF8').before('<span id="spcustomeremail"><Font color="red"><b>ERROR:</b> You must enter a value</Font></span>');
+                            errorMsg = 1;
+
+                        } else {
+                            $("#spcustomeremail").find("font").remove();
+                        }
+                        if (Customername == '' || Customername == null) {
+                            error = true;
+
+                            //  alert(errorMsg);
+                            if (errorMsg == 1) {
+                                var isContains = $("#spCustomername").find("font");
+                                if (isContains != null) {
+                                    $("#spCustomername").remove();
+                                }
+                            }
+                            $('#00NA000000B0uEv').before('<span id="spCustomername"><Font color="red"><b>ERROR:</b> You must enter a value</Font></span>');
+                            errorMsg = 1;
+
+                        } else {
+                            $("#spSubject").find("font").remove();
+                        }
+                        if (description == '' || description == null) {
+                            error = true;
+                            //  alert(errorMsg);
+
+                            if (errorMsg == 1) {
+                                var isContains = $("#spDescription").find("font");
+                                if (isContains != null) {
+                                    $("#spDescription").remove();
+                                }
+                            }
+
+                            <!--  $("div:has('font'):contains('You must enter a value')").remove();-->
+                            $('#idDescription').before('<span id="spDescription"><Font color="red"><b>ERROR:</b> You must enter a value</Font></span>');
+                            errorMsg = 1;
+                            <!-- alert('Description Cannot be blank');-->
+
+                        } else {
+                            $("#spDescription").find("font").remove();
+                        }
+
+                        /*if (customerEscalation == '--None--') {
+                            error = true;
+                            if (errorMsg == 1) {
+                                var isContains = $("#spCE").find("font");
+                                if (isContains != null) {
+                                    $("#spCE").remove();
+                                }
+                            }
+                            $('#00NA000000B0uFY').before('<span id="spCE"><Font color="red"><b>ERROR:</b> You must enter a value</Font></span>');
+                            errorMsg = 1;
+
+                        } else {
+                            $("#spCE").find("font").remove();
+                        }*/
+
+
+                        if (Impact == '--None--') {
+                            error = true;
+                            if (errorMsg == 1) {
+                                var isContains = $("#spImpact").find("font");
+                                if (isContains != null) {
+                                    $("#spImpact").remove();
+                                }
+                            }
+
+                            $('#00NA000000B0uFa').before('<span id="spImpact"><Font color="red"><b>ERROR:</b> You must enter a value</Font></span>');
+                            errorMsg = 1;
+                            <!--alert('option to be slected');-->
+                            //return false;
+                        } else {
+                            $("#spImpact").find("font").remove();
+                        }
+
+                        if (productSafetyImpact == '--None--') {
+                            error = true;
+
+                            if (errorMsg == 1) {
+                                var isContains = $("#spPSI").find("font");
+                                if (isContains != null) {
+                                    $("#spPSI").remove();
+                                }
+                            }
+                            $('#00NA000000B0uFc').before('<span id="spPSI"><Font color="red"><b>ERROR:</b> You must enter a value</Font></span>');
+                            errorMsg = 1;
+
+                        } else {
+                            $("#spPSI").find("font").remove();
+                        }
+
+                        /*if (escalatedRequest == '--None--') {
+                            error = true;
+                            //  alert('escalated issue = none');
+                            if (errorMsg == 1) {
+                                var isContains = $("#spEscalatedReq").find("font");
+                                if (isContains != null) {
+                                    $("#spEscalatedReq").remove();
+                                }
+                            }
+                            $('#00NA000000B0uFj').before('<span id="spEscalatedReq"><Font color="red"><b>ERROR:</b> You must enter a value</Font></span>');
+                            errorMsg = 1;
+                        } else {
+                            $("#spEscalatedReq").find("font").remove();
+                        }*/
+                        
+                        if (Escalation == '--None--') {
+                            error = true;
+                            
+                            if (errorMsg == 1) {
+                                var isContains = $("#eEscalation").find("font");
+                                if (isContains != null) {
+                                    $("#eEscalation").remove();
+                                }
+                            }
+                            $('#00N2a000002DmGz').before('<span id="eEscalation"><Font color="red"><b>ERROR:</b> You must enter a value</Font></span>');
+                            errorMsg = 1;
+                        } else {
+                            $("#eEscalation").find("font").remove();
+                        }
+        
+
+                        if (impactDescription == '' || impactDescription == null) {
+                            error = true;
+                            if (errorMsg == 1) {
+                                var isContains = $("#spImpDesc").find("font");
+                                if (isContains != null) {
+                                    $("#spImpDesc").remove();
+                                }
+                            }
+                            $('#00NA000000B0uFD').before('<span id="spImpDesc"><Font color="red"><b>ERROR:</b> You must enter a value</Font></span>');
+                            errorMsg = 1;
+                        } else {
+                            $("#spImpDesc").find("font").remove();
+                        }
+                        if (typeOfIssue == '--None--') {
+                            error = true;
+                            if (errorMsg == 1) {
+                                var isContains = $("#spTypeOfIssue").find("font");
+                                if (isContains != null) {
+                                    $("#spTypeOfIssue").remove();
+                                }
+                            }
+                            $('#00NA000000B0uFP').before('<span id="spTypeOfIssue"><Font color="red"><b>ERROR:</b> You must enter a value</Font></span>');
+                            errorMsg = 1;
+
+                        } else {
+                            $("#spTypeOfIssue").find("font").remove();
+                        }
+
+                        /*if (typeOfIssuelevel2 == '--None--') {
+                            error = true;
+                            if (errorMsg == 1) {
+                                var isContains = $("#spTypeOfIssue").find("font");
+                                if (isContains != null) {
+                                    $("#spTypeOfIssue").remove();
+                                }
+                            }
+                            $('#00N21000000H9Uc').before('<span id="spTypeOfIssue"><Font color="red"><b>ERROR:</b> You must enter a value</Font></span>');
+                            errorMsg = 1;
+
+                        } else {
+                            $("#spTypeOfIssue").find("font").remove();
+                        }*/
+
+                        if (business == '--None--') {
+                            error = true;
+                            if (errorMsg == 1) {
+                                var isContains = $("#spBusiness").find("font");
+                                if (isContains != null) {
+                                    $("#spBusiness").remove();
+                                }
+                            }
+                            $('#00NA000000B0uEx').before('<span id="spBusiness"><Font color="red"><b>ERROR:</b> You must enter a value</Font></span>');
+                            errorMsg = 1;
+                        } else {
+                            $("#spBusiness").find("font").remove();
+
+                        }
+
+                        if (actionTaken == '' || actionTaken == null) {
+                            error = true;
+                            if (errorMsg == 1) {
+                                var isContains = $("#spActionTaken").find("font");
+                                if (isContains != null) {
+                                    $("#spActionTaken").remove();
+                                }
+                            }
+                            $('#00NA000000B0uEw').before('<span id="spActionTaken"><Font color="red"><b>ERROR:</b> You must enter a value</Font></span>');
+                            errorMsg = 1;
+
+                        } else {
+                            $("#spActionTaken").find("font").remove();
+                        }
+                        if (issueEventDate == '') {
+                            error = true;
+                            if (errorMsg == 1) {
+                                var isContains = $("#spIssueEventTaken").find("font");
+                                if (isContains != null) {
+                                    $("#spIssueEventTaken").remove();
+                                }
+                            }
+                            $('#00NA000000B0uFm').before('<span id="spIssueEventTaken"><Font color="red"><b>ERROR:</b> You must enter a value</Font></span>');
+                            errorMsg = 1;
+                        } else {
+                            $("#spIssueEventTaken").find("font").remove();
+                        }
+                        /*if (customerWantDate == '') {
+                            error = true;
+                            if (errorMsg == 1) {
+                                var isContains = $("#spCustomerWantDate").find("font");
+                                if (isContains != null) {
+                                    $("#spCustomerWantDate").remove();
+                                }
+                            }
+                            $('#00NA000000B0uFb').before('<span id="spCustomerWantDate"><Font color="red"><b>ERROR:</b> You must enter a value</Font></span>');
+                            errorMsg = 1;
+                        } else {
+                            $("#spCustomerWantDate").find("font").remove();
+                        }*/
+
+                        if (cCustomerAdd == '' || cCustomerAdd == null) {
+                            error = true;
+                            if (errorMsg == 1) {
+                                var isContains = $("#spCCustomerAdd").find("font");
+                                if (isContains != null) {
+                                    $("#spCCustomerAdd").remove();
+                                }
+                            }
+                            $('#00N1200000B168O').before('<span id="spCCustomerAdd"><Font color="red"><b>ERROR:</b> You must enter a value</Font></span>');
+                            errorMsg = 1;
+
+                        } else {
+                            $("#spCCustomerAdd").find("font").remove();
+                        }
+
+                        if (cCustomerPhone == '' || cCustomerPhone == null) {
+                            error = true;
+                            if (errorMsg == 1) {
+                                var isContains = $("#spCCustomerPhone ").find("font");
+                                if (isContains != null) {
+                                    $("#spCCustomerPhone").remove();
+                                }
+                            }
+                            $('#00NA000000B0uF9').before('<span id="spCCustomerPhone"><Font color="red"><b>ERROR:</b> You must enter a value</Font></span>');
+                            errorMsg = 1;
+
+                        } else {
+                            $("#spCCustomerPhone").find("font").remove();
+                        }
+
+                        if (cContactName == '' || cContactName == null) {
+                            error = true;
+                            if (errorMsg == 1) {
+                                var isContains = $("#spCContactName").find("font");
+                                if (isContains != null) {
+                                    $("#spCContactName").remove();
+                                }
+                            }
+                            $('#00NA000000B0uF7').before('<span id="spCContactName"><Font color="red"><b>ERROR:</b> You must enter a value</Font></span>');
+                            errorMsg = 1;
+
+                        } else {
+                            $("#spCContactName").find("font").remove();
+                        }
+
+                        if (email == '' || email == null) {
+                            error = true;
+                            if (errorMsg == 1) {
+                                var isContains = $("#spEmail").find("font");
+                                if (isContains != null) {
+                                    $("#spEmail").remove();
+                                }
+                            }
+                            $('#email').before('<span id="spEmail"><Font color="red"><b>ERROR:</b> You must enter a value</Font></span>');
+                            errorMsg = 1;
+
+                        } else {
+                            $("#spEmail").find("font").remove();
+                        }
+
+                        if (siteName == '') {
+                            error = true;
+                            if (errorMsg == 1) {
+                                var isContains = $("#spSiteName").find("font");
+                                if (isContains != null) {
+                                    $("#spSiteName").remove();
+                                }
+                            }
+                            $('#00NA000000B0uFM').before('<span id="spSiteName"><Font color="red"><b>ERROR:</b> You must enter a value</Font></span>');
+                            errorMsg = 1;
+
+                        } else {
+                            $("#spSiteName").find("font").remove();
+                        }
+
+
+                        /*if ((mCJobType == '--None--' || mCJobType == null) && isRequired == true) {
+                            error = true;
+                            //  alert('mCJobType = none');
+                            if (errorMsg == 1) {
+                                var isContains = $("#spMcJobType").find("font");
+                                if (isContains != null) {
+                                    $("#spMcJobType").remove();
+                                }
+                            }
+                            $('#00NA000000B0uFG').before('<span id="spMcJobType"><Font color="red"><b>ERROR:</b> You must enter a value</Font></span>');
+                            errorMsg = 1;
+
+                        } else {
+                            $("#spMcJobType").find("font").remove();
+                        }*/
+                        /*if (mCJobNum == '' && isRequired == true) {
+                            error = true;
+                            //  alert('mCJobNum = none');
+                            if (errorMsg == 1) {
+                                var isContains = $("#spMcJobNum").find("font");
+                                if (isContains != null) {
+                                    $("#spMcJobNum").remove();
+                                }
+                            }
+                            $('#00NA000000B0uFw').before('<span id="spMcJobNum"><Font color="red"><b>ERROR:</b> You must enter a value</Font></span>');
+                            errorMsg = 1;
+
+                        } else {
+                            $("#spMcJobNum").find("font").remove();
+                        }*/
+                        
+
+                        if (subBusiness == '--None--' || subBusiness == null) {
+                            error = true;
+
+                            if (errorMsg == 1) {
+                                var isContains = $("#spSubBusiness").find("font");
+                                if (isContains != null) {
+                                    $("#spSubBusiness").remove();
+                                }
+                            }
+                            $('#00NA000000B0uG6').before('<span id="spSubBusiness"><Font color="red"><b>ERROR:</b> You must enter a value</Font></span>');
+                            errorMsg = 1;
+
+                        } else {
+                            $("#spSubBusiness").find("font").remove();
+                        }
+
+                        if (delReqToResl == '') {
+                            error = true;
+
+                            if (errorMsg == 1) {
+                                var isContains = $("#spdelReqToResl").find("font");
+                                if (isContains != null) {
+                                    $("#spdelReqToResl").remove();
+                                }
+                            }
+                            $('#00NA000000B0uFN').before('<span id="spdelReqToResl"><Font color="red"><b>ERROR:</b> You must enter a value</Font></span>');
+                            errorMsg = 1;
+
+                        } else {
+                            $("#spdelReqToResl").find("font").remove();
+                        }
+                        if (error == true) {
+                            return false;
+                        } else return true;
+
+
+                    });
+
+
+                });
+            </script>
+            <!--  <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>-->
+            <!--  <meta name="viewport" content="width=device-width, initial-scale=1"/>-->
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet" />
+
+            <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+            <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+            <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        </head>
+        <!--  ----------------------------------------------------------------------  -->
+        <!--  NOTE: Please add the following <META> element to your page <HEAD>.      -->
+        <!--  If necessary, please modify the charset parameter to specify the        -->
+        <!--  character set of your HTML page.                                        -->
+        <!--  ----------------------------------------------------------------------  -->
+
+        <!--<META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8">-->
+        <!--<meta name="viewport" content='width=600'/>-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <!--  ----------------------------------------------------------------------  -->
+        <!--  NOTE: Please add the following <FORM> element to your page.             -->
+        <!--  ----------------------------------------------------------------------  -->
+      
+        <!--DEV-->
+        <!--<form action="https://geog--dev1.cs92.my.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8" method="POST" id="idform">-->
+        <!--SIT-->
+        <!--<form action="https://geog--sit1.cs47.my.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8" method="POST" id="idform">-->
+        <!--Production-->
+        <form action="https://geog.my.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8" method="POST" id="idform">
+        
+            <!---style="background-color: #4180C5;padding-top:-14px; "-->
+            <!-------HEADER------>
+            <!--<div class="col-xs-6 form-group" >
+                 <apex:image url="{!URLFOR($Resource.Mobile_GELogo,'ge_monogram_primary_white_RGB.png')}"   />
+              
+            </div>
+            <div class="col-xs-6">
+                <div class="row">
+                    <label class="col-xs-12"></label>
+                </div>
+                </div>
+
+    <div class="col-xs-6 form-group" style="color:blue;">
+      <h1 style="font-size:25px;
+    font-family:verdana;">CIR CASE FORM</h1>
+                
+            </div>-->
+
+            <div class="row">
+                <div class="col-xs-12 form-group">
+                    <!--<apex:image url="{!URLFOR($Resource.Mobile_GELogo,'ge-monogram-white.svg')}" style="opacity:1.0;filter:alpha(opacity=40);margin:12 50 50 50;vertical-align:right" />-->
+                    <img src="{!$Resource.Baker_Hughes_Logo}" width="230"  height="61"/>
+                    <header>
+                        <h2>CIR CASE FORM</h2>
+                        
+                  
+                    </header>
+                    <h5 style="color:#00a572;"> <br/><b>Before entering a CIR case using this form, please always utilize your designated Front Line of Defense tool first. Otherwise, to confirm whether a CIR is needed, please adhere to the Customer Issue Resolution Global Procedure- BHGE-QUA-030 (EN).<a style="color:#FF3F33;" href="{!$Resource.CIR_Web_Form_Doc}">Click here to know more</a></b></h5>
+                </div>
+
+
+
+            </div>
+
+            <!------HEADER---------------------->
+
+
+            <input type="hidden" name="orgid" value="00DA0000000QC05" />
+             <!-- <input type="hidden" name="debug" value="1"/> -->
+            <input type="hidden" id="origin" name="origin" value="Web" />
+            <input type="hidden" name="retURL" value="mycommunities.force.com/WebCIR/WebFormCIRThankyou" />
+
+            <!--  ----------------------------------------------------------------------  -->
+            <!--  NOTE: These fields are optional debugging elements. Please uncomment    -->
+            <!--  these lines if you wish to test in debug mode.                          -->
+            <!--  <input type="hidden" name="debug" value=1>                              -->
+            <!--  <input type="hidden" name="debug" value="nehal.jain@birlasoft.com">     -->
+            <!--  ----------------------------------------------------------------------  -->
+
+
+
+            <input type="hidden" name="recordType" id="recordType" value="012A0000000oEOi" />
+
+
+            <body>
+            
+            
+                <div class="row">
+                
+                    <div class="col-xs-6 form-group">
+                        <label>Key Account Name</label><font color="red" size="5" > </font>
+                        <select id="00N1200000B2Ky9" class="form-control" name="00N1200000B2Ky9" title="Key Account Name">
+                            <option value="None">--None--</option>
+                            <option value="0011200001FxaCJ">TOTAL / HQ</option>
+                            <option value="0011200001FxU1O">BP / HQ</option>
+                            <option value="0011200001FxULw">CHEVRON / HQ</option>
+                            <option value="0011200001FxVKr">ENI / HQ</option>
+                            <option value="0011200001FxVVL">EXXON MOBIL / HQ</option>
+                            <option value="0011200001FxZKL">SHELL / HQ</option>
+                            <option value="0011200001FxZgc">STATOIL / HQ</option>
+                            <option value="0011200001FxWEq">HESS CORPORATION / HQ</option>
+                            <option value="0011200001FxUbS">CONOCOPHILLIPS / HQ</option>
+                           <!-- <option value="0011200001FxZ6d">SAUDI ARAMCO / HQ</option>-->
+                        </select>
+                    </div>
+                    
+                    
+                        <div class="col-xs-6 form-group">
+                            <label>Impact on Customer</label><span id='spanid_123'><font color="red" size="5">*</font></span>
+                            <select id="00NA000000B0uFa" class="form-control" name="00NA000000B0uFa" title="Impact on Customer">
+                                <option value="">--None--</option>
+                                <option value="High">High</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Low">Low</option>
+                            </select>
+                        </div>
+                        
+                        <div class="col-xs-6 form-group">
+                            <label>Escalation</label><font color="red" size="5">*</font>
+                            <select id="00N2a000002DmGz" class="form-control" name="00N2a000002DmGz" title="Escalation">
+                                <option value="">--None--</option>
+                                <option value="Formal Customer Complaint">Formal Customer Complaint</option>
+                                <option value="Business Directed Escalation">Business Directed Escalation</option>
+                                <!--<option value="Executive Directed Complaint">Executive Directed Complaint</option>-->
+                                <option value="Internal & External Escalation">Internal &amp; External Escalation</option>
+                                <option value="No Escalation">No Escalation</option>
+                            </select>
+                        </div>
+                        
+                        <!--<div class="col-xs-6 form-group">
+                            <label>Customer Escalation</label><font color="red" size="5">*</font>
+                            <select id="00NA000000B0uFY" class="form-control" name="00NA000000B0uFY" title="Customer Escalation">
+                                <option value="">--None--</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>-->
+                        
+                        
+                        
+                        <div class="col-xs-6 form-group">
+                            <!-- <div class="row">-->
+                            <label>HSE/Product Safety Impact</label><font color="red" size="5">*</font>
+                            <!--</div>-->
+                            <!--  <div class="row">
+                    <div class="col-xs-12 col-sm-6">-->
+                            <select id="00NA000000B0uFc" class="form-control" name="00NA000000B0uFc" title="HSE/Product Safety Impact">
+                                <option value="">--None--</option>
+                                <option value="Accident">Accident</option>
+                                <option value="Near Miss">Near Miss</option>
+                                <option value="Hazardous Condition">Hazardous Condition</option>
+                                <option value="No Impact">No Impact</option>
+                            </select>
+                            <!--</div>
+                    
+                </div>-->
+                        </div>
+                        <!--<div class="col-xs-6 form-group">
+                            <label>GE Escalation</label><font color="red" size="5">*</font>
+                            <select id="00NA000000B0uFj" class="form-control" name="00NA000000B0uFj" title="GE Escalation">
+                                <option value="">--None--</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>-->
+                        <div class="col-xs-12 col-sm-6">
+                            <label>Impact on Customer - Description</label><font color="red" size="5">*</font>
+                            <textarea id="00NA000000B0uFD" class="form-control" name="00NA000000B0uFD" type="text" rows="2" cols="20" wrap="hard" placeholder="Provide a Short Description of the Business/Customer Impact associated with this issue. Define the Impact in terms of Equipment Down/ Forced Outage/Financial Impact."></textarea>
+                        </div>
+                    </div>
+                    <!---->
+                    <div class="row">
+                        <div class="col-xs-6 form-group">
+                            <label>Type of Issue</label><font color="red" size="5">*</font>
+                            <select id="00NA000000B0uFP" class="form-control" name="00NA000000B0uFP" title="Type of Issue">
+                                <option value="">--None--</option>
+                                <option value="Technical">Technical</option>
+                                <option value="Material">Material</option>
+                                <option value="Commercial/Relational">Commercial/Relational</option>
+                            </select>
+                        </div>
+                        
+                        <div class="col-xs-6 form-group">
+                            <label>Type of Issue Level 2</label><font color="red" size="5"> </font>
+                            <select id="00N1200000Ad2cL" class="form-control" name="00N1200000Ad2cL" title="Type of Issue Level 2">
+                                <option value="">--None--</option>
+                                <option value="Commercial / Relationship">Commercial / Relationship</option>
+                                <option value="Installation/Commissioning">Installation/Commissioning</option>
+                                <option value="Other">Other</option>
+                                <option value="Product Delivery">Product Delivery</option>
+                                <option value="Product Design/Reliability">Product Design/Reliability</option>
+                                <option value="Product Quality">Product Quality</option>
+                                <option value="Service Delivery">Service Delivery</option>
+                                <option value="Service Engineering">Service Engineering</option>
+                                <option value="Service Quality">Service Quality</option>
+                            </select>
+                        </div>
+
+                        <div class="col-xs-6 form-group">
+                            <label>Business</label><font color="red" size="5">*</font>
+                            <select id="00NA000000B0uEx" class="form-control" name="00NA000000B0uEx" title="Business">
+                                <option value="">--None--</option>
+                                <option value="Digital Solutions">Digital Solutions</option>
+                                <option value="Oil Field Equipment">Oil Field Equipment</option>
+                                <option value="Oil Field Services">Oil Field Services</option>
+                                <option value="Turbomachinery & Process Solutions">Turbomachinery &amp; Process Solutions</option>
+                            </select>
+                        </div>
+
+                        <!--<div class="col-xs-6">
+                            <div class="row">
+                                <label class="col-xs-12">Sub Business</label><font color="red" size="5"></font>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6">
+                                    <select id="00NA000000B0uG6" class="form-control" name="00NA000000B0uG6" title="Sub Business">
+                                    </select>
+                                </div>
+                                <div class="col-xs-12 col-sm-6">
+                                    <!--   <input class="form-control" type="text"/>
+                                </div>
+                            </div>
+                        </div>
+                        -->
+                        <div class="col-xs-6 form-group">
+                            
+                                <label >Sub Business</label><span id='spanid_123'><font color="red" size="5">*</font></span>
+                                    <select id="00NA000000B0uG6" class="form-control" name="00NA000000B0uG6" title="Sub Business">
+                                    </select>    
+                        </div>
+                        <div class="col-xs-6 form-group">
+                            <label>Subject</label><font color="red" size="5">*</font>
+                            <input id="idSubject" class="form-control" maxlength="80" name="subject" size="20" type="text" placeholder="" />
+                        </div>
+                        
+                        <div class="col-xs-6 form-group">
+                            <label>Description</label><font color="red" size="5">*</font>
+                            <textarea id="idDescription" name="description" class="form-control" type="text" rows="2" cols="20" wrap="hard" placeholder=""></textarea>
+                        </div>
+                    </div>
+
+                    <!---->
+
+                    <div class="row">
+                        <div class="col-xs-6 form-group">
+                                <label >Customer Name</label><font color="red" size="5">*</font>
+                                <input id="00NA000000B0uEv" class="form-control" maxlength="50" name="00NA000000B0uEv" size="20" type="text" placeholder="Please type Customer Name as accurately as possible" />
+                        </div>
+                        <div class="col-xs-6 form-group">
+                            <label>Action Taken Prior to CIR</label><font color="red" size="5">*</font>
+                            <textarea id="00NA000000B0uEw" class="form-control" name="00NA000000B0uEw" type="text" rows="2" cols="20" wrap="hard" placeholder="Actions Taken To Resolve Prior to Initiating CIR"></textarea>
+                        </div>
+                        
+                        
+                        <!--<div class="col-xs-6">
+                            
+                            <!--<div class="row">
+                                <div class="col-xs-12 col-sm-6">
+                                    <textarea id="00NA000000B0uEv" class="form-control" name="00NA000000B0uEv" type="text" rows="2" cols="20" wrap="hard" placeholder=""></textarea>
+                                </div>
+                                <!--<div class="col-xs-12 col-sm-6">
+                                      <input class="form-control" type="text"/>
+                                </div>
+                            </div>
+                        </div>-->
+                       
+                        
+                        <div class="col-xs-6 form-group">
+                            <label>Specific Deliverable Required to Resolve</label><font color="red" size="5">*</font>
+                            <textarea id="00NA000000B0uFN" class="form-control" name="00NA000000B0uFN" type="text" rows="2" cols="20" wrap="hard" placeholder="Type here a check list of requirements to resolve this case. They must be aligned with Customer expectations"></textarea>
+
+                        </div>
+                        
+                        <div class="col-xs-6 form-group">
+                            <label>Site Name</label><font color="red" size="5">*</font>
+                            <textarea id="00NA000000B0uFM" class="form-control" name="00NA000000B0uFM" type="text" rows="2" cols="20" wrap="hard" placeholder="Type here the Site Name"></textarea>
+
+                        </div>
+                        
+                        
+                        
+                        
+                        <!-->
+<div id="otherType" class="col-xs-6 form-group">
+                            <label>Vertical Segment</label><font color="red" size="5">*</font>
+                            <select id="00N0R000000G7uA" class="form-control" name="00N0R000000G7uA" title="Vertical Segment">
+                                <option value="">--None--</option>
+                                <option value="On- / Offshore Production">On- / Offshore Production</option>
+                                <option value="Liquefied Natural Gas">Liquefied Natural Gas</option>
+                                <option value="Pipeline, Gas Processing">Pipeline, Gas Processing</option>
+                                <option value="Refinery & Petrochemical">Refinery &amp; Petrochemical</option>
+                                <option value="Industrial">Industrial</option>
+                                <option value="Undefined">Undefined</option>
+                            </select>
+                          
+                        </div><-->
+                    </div>
+                    <!---->
+
+                    <div class="row">
+                        <div class="col-xs-6 form-group">
+                            <label>Issue Event Date</label><font color="red" size="5">*</font>
+                            <span class="dateInput dateOnlyInput"><input  id="00NA000000B0uFm" class="form-control" name="00NA000000B0uFm" value="" size="12" type="text" placeholder="Issue Event Date" /></span>
+                        </div>
+
+                        <div class="col-xs-6 form-group">
+                            <!--<label>Customer Want Date</label><font color="red" size="5">*</font>-->
+                            <label>Customer Want Date</label>
+                            <span class="dateInput dateOnlyInput"><input  id="00NA000000B0uFb" class="form-control" name="00NA000000B0uFb" value="" size="12" type="text" placeholder="Customer Want Date" /></span>
+                        </div>
+                        
+                        
+                        
+                        <!--<div class="col-xs-6">
+
+                            <div class="row">
+                                <label class="col-xs-12">O&amp;GKey Account Name</label>
+                            </div> 
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6">
+                                    <select id="00NA000000B0uFo" class="form-control" name="00NA000000B0uFo" title="O&amp;G Key Account Name">
+                                        <option value="">--None--</option>
+                                        <option value="ABAN OFFSHORE">ABAN OFFSHORE</option>
+                                        <option value="ABENGOA">ABENGOA</option>
+                                        <option value="ABU DHABI NATIONAL OIL COMPANY">ABU DHABI NATIONAL OIL COMPANY</option>
+                                        <option value="ABU DHABI WATER AND ELECTRICITY">ABU DHABI WATER AND ELECTRICITY</option>
+                                        <option value="ACCIONA">ACCIONA</option>
+                                        <option value="ADANI ENTERPRISES LIMITED">ADANI ENTERPRISES LIMITED</option>
+                                        <option value="ADANI WELSPUN">ADANI WELSPUN</option>
+                                        <option value="ADRIANA RESOURCES">ADRIANA RESOURCES</option>
+                                        <option value="AECOM">AECOM</option>
+                                        <option value="AECON">AECON</option>
+                                        <option value="AEP">AEP</option>
+                                        <option value="AES">AES</option>
+                                        <option value="AGL AUSTRALIA">AGL AUSTRALIA</option>
+                                        <option value="AGNICO-EAGLE MINES LIMITED">AGNICO-EAGLE MINES LIMITED</option>
+                                        <option value="AGR GROUP">AGR GROUP</option>
+                                        <option value="AGRIUM INC">AGRIUM INC</option>
+                                        <option value="AIOC">AIOC</option>
+                                        <option value="AIR FRANCE - KLM">AIR FRANCE - KLM</option>
+                                        <option value="AIR LIQUIDE">AIR LIQUIDE</option>
+                                        <option value="AIR PRODUCTS AND CHEMICALS, INC.">AIR PRODUCTS AND CHEMICALS, INC.</option>
+                                        <option value="AK ENERJI">AK ENERJI</option>
+                                        <option value="AKER SOLUTIONS">AKER SOLUTIONS</option>
+                                        <option value="AK STEEL">AK STEEL</option>
+                                        <option value="AKZO NOBEL NV">AKZO NOBEL NV</option>
+                                        <option value="ALBERTA OILSANDS">ALBERTA OILSANDS</option>
+                                        <option value="ALCOA">ALCOA</option>
+                                        <option value="AL JULAIAH">AL JULAIAH</option>
+                                        <option value="ALLIANCE PIPELINE">ALLIANCE PIPELINE</option>
+                                        <option value="ALL NIPPON AIRWAYS">ALL NIPPON AIRWAYS</option>
+                                        <option value="ALSTOM POWER INC">ALSTOM POWER INC</option>
+                                        <option value="AL TAMIMI CONTRACTING AND TRADING">AL TAMIMI CONTRACTING AND TRADING</option>
+                                        <option value="ALTRIA GROUP">ALTRIA GROUP</option>
+                                        <option value="ALUMINUM CORPORATION OF CHINA LIMITED">ALUMINUM CORPORATION OF CHINA LIMITED</option>
+                                        <option value="AMEC">AMEC</option>
+                                        <option value="AMTRAK">AMTRAK</option>
+                                        <option value="ANADARKO">ANADARKO</option>
+                                        <option value="ANDORA ENERGY CORPORATION">ANDORA ENERGY CORPORATION</option>
+                                        <option value="ANGLO AMERICAN BRASIL LTDA.">ANGLO AMERICAN BRASIL LTDA.</option>
+                                        <option value="ANGLOGOLD ASHANTI LTD">ANGLOGOLD ASHANTI LTD</option>
+                                        <option value="ANHEUSER BUSCH INBEV SA">ANHEUSER BUSCH INBEV SA</option>
+                                        <option value="ANTOFAGASTA PLC">ANTOFAGASTA PLC</option>
+                                        <option value="ANYANG IRON AND STEEL GROUP CO., LTD.">ANYANG IRON AND STEEL GROUP CO., LTD.</option>
+                                        <option value="APACHE CORPORATION">APACHE CORPORATION</option>
+                                        <option value="ARCELORMITTAL">ARCELORMITTAL</option>
+                                        <option value="ARCHER DANIELS MIDLAND">ARCHER DANIELS MIDLAND</option>
+                                        <option value="ARIZONA PUBLIC SERVICE">ARIZONA PUBLIC SERVICE</option>
+                                        <option value="ATCO GROUP">ATCO GROUP</option>
+                                        <option value="ATHABASCA OIL SANDS CORP">ATHABASCA OIL SANDS CORP</option>
+                                        <option value="ATWOOD OCEANICS">ATWOOD OCEANICS</option>
+                                        <option value="AURECON">AURECON</option>
+                                        <option value="AUSENCO">AUSENCO</option>
+                                        <option value="AVISTA UTILITIES">AVISTA UTILITIES</option>
+                                        <option value="BABCOCK_AND_WILCOX">BABCOCK_AND_WILCOX</option>
+                                        <option value="BAKER HUGHES">BAKER HUGHES</option>
+                                        <option value="BALFOUR_BEATTY">BALFOUR_BEATTY</option>
+                                        <option value="BAOSTEEL">BAOSTEEL</option>
+                                        <option value="BARRICK">BARRICK</option>
+                                        <option value="BASF AKTIENGESELLSCHAFT">BASF AKTIENGESELLSCHAFT</option>
+                                        <option value="BASIN ELECTRIC POWER COOPERATIVE">BASIN ELECTRIC POWER COOPERATIVE</option>
+                                        <option value="BAYTEX ENERGY">BAYTEX ENERGY</option>
+                                        <option value="BECHTEL">BECHTEL</option>
+                                        <option value="BENXI IRON AND STEEL COMPANY">BENXI IRON AND STEEL COMPANY</option>
+                                        <option value="BG GROUP">BG GROUP</option>
+                                        <option value="BHARAT HEAVY ELECTRICALS">BHARAT HEAVY ELECTRICALS</option>
+                                        <option value="BHP">BHP</option>
+                                        <option value="BHUSHAN STEEL">BHUSHAN STEEL</option>
+                                        <option value="BIRCHWOOD RESOURCES">BIRCHWOOD RESOURCES</option>
+                                        <option value="BIS INDUSTRIES">BIS INDUSTRIES</option>
+                                        <option value="BLACK &amp; VEATCH">BLACK &amp; VEATCH</option>
+                                        <option value="BLACKPEARL RESOURCES INC">BLACKPEARL RESOURCES INC</option>
+                                        <option value="BLUE HORIZON">BLUE HORIZON</option>
+                                        <option value="BORUSAN HOLDING">BORUSAN HOLDING</option>
+                                        <option value="BOSTON BEER COMPANY LIMITED PARTNERSHIP">BOSTON BEER COMPANY LIMITED PARTNERSHIP</option>
+                                        <option value="BP">BP</option>
+                                        <option value="BRASKEM SA">BRASKEM SA</option>
+                                        <option value="BRION ENERGY">BRION ENERGY</option>
+                                        <option value="BROOKFIELD ASSET MGMT">BROOKFIELD ASSET MGMT</option>
+                                        <option value="BROOKFIELD POWER">BROOKFIELD POWER</option>
+                                        <option value="BUNDESREPUBLIK DEUTSCHLAND">BUNDESREPUBLIK DEUTSCHLAND</option>
+                                        <option value="BUNGE">BUNGE</option>
+                                        <option value="BURLINGTON NORTHERN SANTA FE">BURLINGTON NORTHERN SANTA FE</option>
+                                        <option value="BURNS &amp; MCDONNELL">BURNS &amp; MCDONNELL</option>
+                                        <option value="BURNS &amp; ROE">BURNS &amp; ROE</option>
+                                        <option value="BUZZI UNICEM">BUZZI UNICEM</option>
+                                        <option value="CAIRN ENERGY">CAIRN ENERGY</option>
+                                        <option value="CAITHNESS CORPORATION">CAITHNESS CORPORATION</option>
+                                        <option value="CALIBRE GROUP">CALIBRE GROUP</option>
+                                        <option value="CALIK ENERJI">CALIK ENERJI</option>
+                                        <option value="CALPINE">CALPINE</option>
+                                        <option value="CAMECO CORPORATION">CAMECO CORPORATION</option>
+                                        <option value="CAMERON INTERNATIONAL">CAMERON INTERNATIONAL</option>
+                                        <option value="CAMPBELL F&amp;B">CAMPBELL F&amp;B</option>
+                                        <option value="CANADIAN HYDRO DEVELOPERS">CANADIAN HYDRO DEVELOPERS</option>
+                                        <option value="CANADIAN NATIONAL RAILWAY">CANADIAN NATIONAL RAILWAY</option>
+                                        <option value="CANADIAN NATURAL RESOURCES LIMITED">CANADIAN NATURAL RESOURCES LIMITED</option>
+                                        <option value="CANADIAN OIL SANDS LTD">CANADIAN OIL SANDS LTD</option>
+                                        <option value="CANADIAN PACIFIC RAILWAY">CANADIAN PACIFIC RAILWAY</option>
+                                        <option value="CARBONES DEL CERREJON LLC">CARBONES DEL CERREJON LLC</option>
+                                        <option value="CARGILL INCORPORATED">CARGILL INCORPORATED</option>
+                                        <option value="CARLSBERG">CARLSBERG</option>
+                                        <option value="CARTIER ENERGIE INC.">CARTIER ENERGIE INC.</option>
+                                        <option value="CAVALIER ENERGY">CAVALIER ENERGY</option>
+                                        <option value="CEGELEC">CEGELEC</option>
+                                        <option value="CEMEX">CEMEX</option>
+                                        <option value="CENOVUS ENERGY">CENOVUS ENERGY</option>
+                                        <option value="CENTERPOINT">CENTERPOINT</option>
+                                        <option value="CENTRAL ELECTRICITY GENERATING COMPANY">CENTRAL ELECTRICITY GENERATING COMPANY</option>
+                                        <option value="CENTRAL POWER GENERATION CO. (CPGCL) - GUDDU">CENTRAL POWER GENERATION CO. (CPGCL) - GUDDU</option>
+                                        <option value="CENTRICA">CENTRICA</option>
+                                        <option value="CEVITAL SPA">CEVITAL SPA</option>
+                                        <option value="CFE">CFE</option>
+                                        <option value="CF INDUSTRIES">CF INDUSTRIES</option>
+                                        <option value="CH2M HILL">CH2M HILL</option>
+                                        <option value="CHENGDA ENGINEERING">CHENGDA ENGINEERING</option>
+                                        <option value="CHESAPEAKE ENERGY">CHESAPEAKE ENERGY</option>
+                                        <option value="CHEVRON CORPORATION">CHEVRON CORPORATION</option>
+                                        <option value="CHICAGO BRIDGE &amp; IRON (CB&amp;I)">CHICAGO BRIDGE &amp; IRON (CB&amp;I)</option>
+                                        <option value="CHINA COAL">CHINA COAL</option>
+                                        <option value="CHINA DATANG CORPORATION">CHINA DATANG CORPORATION</option>
+                                        <option value="CHINA DVLP BANK">CHINA DVLP BANK</option>
+                                        <option value="CHINA GUODIAN CORPORATION">CHINA GUODIAN CORPORATION</option>
+                                        <option value="CHINA HARBOUR ENGINEERING COMPANY LTD (CHEC)">CHINA HARBOUR ENGINEERING COMPANY LTD (CHEC)</option>
+                                        <option value="CHINA HUADIAN CORPORATION">CHINA HUADIAN CORPORATION</option>
+                                        <option value="CHINA HUANENG GROUP">CHINA HUANENG GROUP</option>
+                                        <option value="CHINA HUANQIU CONTRACTING &amp; ENG CORP (HQCEC)">CHINA HUANQIU CONTRACTING &amp; ENG CORP (HQCEC)</option>
+                                        <option value="CHINA MACHINERY ENGINEERING CORP. (CMEC)">CHINA MACHINERY ENGINEERING CORP. (CMEC)</option>
+                                        <option value="CHINA NATIONAL CHEMICAL CORPORATION">CHINA NATIONAL CHEMICAL CORPORATION</option>
+                                        <option value="CHINA NATIONAL MACHINERY">CHINA NATIONAL MACHINERY</option>
+                                        <option value="CHINA NATIONAL OFFSHORE">CHINA NATIONAL OFFSHORE</option>
+                                        <option value="CHINA NATIONAL PETROLEUM CORPORATION (CNPC)">CHINA NATIONAL PETROLEUM CORPORATION (CNPC)</option>
+                                        <option value="CHINA NUCLEAR ENGINEERING CORP. (CNEC)">CHINA NUCLEAR ENGINEERING CORP. (CNEC)</option>
+                                        <option value="CHINA OCEAN SHIPPING (GROUP) COMPANY (COSCO)">CHINA OCEAN SHIPPING (GROUP) COMPANY (COSCO)</option>
+                                        <option value="CHINA POWER INVEST">CHINA POWER INVEST</option>
+                                        <option value="CHINA RESOURCES POWER HOLDINGS COMPANY LIMITED">CHINA RESOURCES POWER HOLDINGS COMPANY LIMITED</option>
+                                        <option value="CHINA SHIPBUILDING INDUSTRY CORPORATION">CHINA SHIPBUILDING INDUSTRY CORPORATION</option>
+                                        <option value="CHINA SHIPPING (GROUP) COMPANY">CHINA SHIPPING (GROUP) COMPANY</option>
+                                        <option value="CHINA STATE SHIPBUILDING CORPORATION (CSSC)">CHINA STATE SHIPBUILDING CORPORATION (CSSC)</option>
+                                        <option value="CHONGQING STEEL">CHONGQING STEEL</option>
+                                        <option value="CHUBU ELECTRIC POWER">CHUBU ELECTRIC POWER</option>
+                                        <option value="CIMPOR CEMENT">CIMPOR CEMENT</option>
+                                        <option value="CITIC">CITIC</option>
+                                        <option value="CKD GROUP">CKD GROUP</option>
+                                        <option value="CLARKE ENERGY">CLARKE ENERGY</option>
+                                        <option value="CLEAN ENERGY FUELS">CLEAN ENERGY FUELS</option>
+                                        <option value="CLIFFS NATURAL RESOURCES">CLIFFS NATURAL RESOURCES</option>
+                                        <option value="CLP POWER">CLP POWER</option>
+                                        <option value="CMS ENERGY CORPORATION">CMS ENERGY CORPORATION</option>
+                                        <option value="COAL INDIA LIMITED">COAL INDIA LIMITED</option>
+                                        <option value="COCA COLA">COCA COLA</option>
+                                        <option value="CODELCO">CODELCO</option>
+                                        <option value="COFCO CORPORATION">COFCO CORPORATION</option>
+                                        <option value="COGENTRIX">COGENTRIX</option>
+                                        <option value="COMPETITIVE POWER VENTURES">COMPETITIVE POWER VENTURES</option>
+                                        <option value="CONAGRA">CONAGRA</option>
+                                        <option value="CONNACHER OIL AND GAS LIMITED">CONNACHER OIL AND GAS LIMITED</option>
+                                        <option value="Conoco PHILLIPS">Conoco PHILLIPS</option>
+                                        <option value="CONSOL ENERGY">CONSOL ENERGY</option>
+                                        <option value="CONSOLIDATED EDISON">CONSOLIDATED EDISON</option>
+                                        <option value="CONSTELLATION BRANDS">CONSTELLATION BRANDS</option>
+                                        <option value="CONTINENTAL RESOURCES">CONTINENTAL RESOURCES</option>
+                                        <option value="CPFL">CPFL</option>
+                                        <option value="CRAFT BREWERS ALLIANCE, INC.">CRAFT BREWERS ALLIANCE, INC.</option>
+                                        <option value="CSN (COMPANHIA SIDERURGICA NACIONAL)">CSN (COMPANHIA SIDERURGICA NACIONAL)</option>
+                                        <option value="CSX CORPORATION">CSX CORPORATION</option>
+                                        <option value="DAELIM GROUP">DAELIM GROUP</option>
+                                        <option value="DAEWOO ENGINEERING &amp; CONSTRUCTION">DAEWOO ENGINEERING &amp; CONSTRUCTION</option>
+                                        <option value="DAEWOO SHIPBUILDING &amp; MARINE ENGINEERING">DAEWOO SHIPBUILDING &amp; MARINE ENGINEERING</option>
+                                        <option value="DALIAN SHIDE GROUP">DALIAN SHIDE GROUP</option>
+                                        <option value="DALIAN SHIPBUILDING">DALIAN SHIPBUILDING</option>
+                                        <option value="DANGOTE GROUP">DANGOTE GROUP</option>
+                                        <option value="DANONE">DANONE</option>
+                                        <option value="DAYTON POWER &amp; LIGHT">DAYTON POWER &amp; LIGHT</option>
+                                        <option value="DEAN FOODS">DEAN FOODS</option>
+                                        <option value="DEEP WELL OIL &amp; GAS">DEEP WELL OIL &amp; GAS</option>
+                                        <option value="DEL MONTE">DEL MONTE</option>
+                                        <option value="DEVON ENERGY">DEVON ENERGY</option>
+                                        <option value="DIAGEO PLC">DIAGEO PLC</option>
+                                        <option value="DIAMOND OFFSHORE">DIAMOND OFFSHORE</option>
+                                        <option value="DOLE">DOLE</option>
+                                        <option value="DOMINION RESOURCES">DOMINION RESOURCES</option>
+                                        <option value="DONGFANG ELECTRIC">DONGFANG ELECTRIC</option>
+                                        <option value="DOOSAN HEAVY INDUSTRIES">DOOSAN HEAVY INDUSTRIES</option>
+                                        <option value="DOW CHEMICAL COMPANY (THE)">DOW CHEMICAL COMPANY (THE)</option>
+                                        <option value="DOWNER EDI LIMITED">DOWNER EDI LIMITED</option>
+                                        <option value="DRESSER">DRESSER</option>
+                                        <option value="DRIL-QUIP">DRIL-QUIP</option>
+                                        <option value="DR PEPPER SNAPPLE">DR PEPPER SNAPPLE</option>
+                                        <option value="DRUMMOND COMPANY, INC.">DRUMMOND COMPANY, INC.</option>
+                                        <option value="DTE ENERGY">DTE ENERGY</option>
+                                        <option value="DUBAI ALUMINIUM COMPANY">DUBAI ALUMINIUM COMPANY</option>
+                                        <option value="DUBAI ELECTRICITY &amp; WATER AUTHORITY">DUBAI ELECTRICITY &amp; WATER AUTHORITY</option>
+                                        <option value="DUKE ENERGY">DUKE ENERGY</option>
+                                        <option value="DUPONT (E.I. DUPONT DE NEMOURS)">DUPONT (E.I. DUPONT DE NEMOURS)</option>
+                                        <option value="DURO FELGUERA">DURO FELGUERA</option>
+                                        <option value="DYNEGY">DYNEGY</option>
+                                        <option value="E.ON">E.ON</option>
+                                        <option value="EASTMAN CHEMICAL">EASTMAN CHEMICAL</option>
+                                        <option value="EBX">EBX</option>
+                                        <option value="ECOPETROL">ECOPETROL</option>
+                                        <option value="EDF">EDF</option>
+                                        <option value="EDISON EDIPOWER">EDISON EDIPOWER</option>
+                                        <option value="EDISON INTERNATIONAL">EDISON INTERNATIONAL</option>
+                                        <option value="EDP">EDP</option>
+                                        <option value="EGAT">EGAT</option>
+                                        <option value="EGYPTIAN ELECTRICITY HOLDING COMPANY">EGYPTIAN ELECTRICITY HOLDING COMPANY</option>
+                                        <option value="EKPC">EKPC</option>
+                                        <option value="ELECTRICITY OF VIETNAM">ELECTRICITY OF VIETNAM</option>
+                                        <option value="EL PASO ENERGY">EL PASO ENERGY</option>
+                                        <option value="EMBRAER">EMBRAER</option>
+                                        <option value="EMERA">EMERA</option>
+                                        <option value="ENBRIDGE INC">ENBRIDGE INC</option>
+                                        <option value="ENBW ENERGIE BADEN-W+£RTTEMBERG AG">ENBW ENERGIE BADEN-W+£RTTEMBERG AG</option>
+                                        <option value="ENCANA">ENCANA</option>
+                                        <option value="ENCANTO POTASH">ENCANTO POTASH</option>
+                                        <option value="ENEL GROUP">ENEL GROUP</option>
+                                        <option value="ENELVEN">ENELVEN</option>
+                                        <option value="ENERGY CAPTIAL PARTNERS">ENERGY CAPTIAL PARTNERS</option>
+                                        <option value="ENERGY FUTURE HOLDINGS">ENERGY FUTURE HOLDINGS</option>
+                                        <option value="ENERJISA">ENERJISA</option>
+                                        <option value="ENGRO CORPORATION">ENGRO CORPORATION</option>
+                                        <option value="ENI">ENI</option>
+                                        <option value="ENKA POWER">ENKA POWER</option>
+                                        <option value="ENSCO">ENSCO</option>
+                                        <option value="ENTERGY">ENTERGY</option>
+                                        <option value="EOG RESOURCES">EOG RESOURCES</option>
+                                        <option value="EOS VENTURES">EOS VENTURES</option>
+                                        <option value="EQUATE PETROCHEMICAL">EQUATE PETROCHEMICAL</option>
+                                        <option value="ESB">ESB</option>
+                                        <option value="ESKOM">ESKOM</option>
+                                        <option value="ESSAR GROUP">ESSAR GROUP</option>
+                                        <option value="ET ENERGY LTD">ET ENERGY LTD</option>
+                                        <option value="EVRAZ HOLDING">EVRAZ HOLDING</option>
+                                        <option value="EXCELSIOR">EXCELSIOR</option>
+                                        <option value="EXELON">EXELON</option>
+                                        <option value="EXERGY">EXERGY</option>
+                                        <option value="EXXON MOBIL">EXXON MOBIL</option>
+                                        <option value="FAGEN">FAGEN</option>
+                                        <option value="FATIMA GROUP">FATIMA GROUP</option>
+                                        <option value="FAUJI FOUNDATION">FAUJI FOUNDATION</option>
+                                        <option value="FEMSA">FEMSA</option>
+                                        <option value="FERROSTAAL">FERROSTAAL</option>
+                                        <option value="FERROVIAL/CINTRA">FERROVIAL/CINTRA</option>
+                                        <option value="FINA ENERJI">FINA ENERJI</option>
+                                        <option value="FIRST ENERGY">FIRST ENERGY</option>
+                                        <option value="FIRST WIND ENERGY">FIRST WIND ENERGY</option>
+                                        <option value="FLUOR">FLUOR</option>
+                                        <option value="FMC">FMC</option>
+                                        <option value="FMG">FMG</option>
+                                        <option value="FMPA">FMPA</option>
+                                        <option value="FOREST OIL">FOREST OIL</option>
+                                        <option value="FORMOSA PLASTICS CORPORATION">FORMOSA PLASTICS CORPORATION</option>
+                                        <option value="FORTESCUE METALS GROUP LTD">FORTESCUE METALS GROUP LTD</option>
+                                        <option value="FORTUM">FORTUM</option>
+                                        <option value="FORTUNE BRANDS">FORTUNE BRANDS</option>
+                                        <option value="FOUNDATION POWER COMPANY DAHARKI LIMITED (FPCDL)">FOUNDATION POWER COMPANY DAHARKI LIMITED (FPCDL)</option>
+                                        <option value="FRED OLSEN">FRED OLSEN</option>
+                                        <option value="FREEPORT">FREEPORT</option>
+                                        <option value="GAIL (INDIA)">GAIL (INDIA)</option>
+                                        <option value="GALLO">GALLO</option>
+                                        <option value="GAMA">GAMA</option>
+                                        <option value="GAS NATURAL GROUP">GAS NATURAL GROUP</option>
+                                        <option value="GAZ METRO">GAZ METRO</option>
+                                        <option value="GAZPROM">GAZPROM</option>
+                                        <option value="GDF SUEZ">GDF SUEZ</option>
+                                        <option value="GE ENERGY – BRITISH GAS">GE ENERGY – BRITISH GAS</option>
+                                        <option value="GENERAL ELECTRIC">GENERAL ELECTRIC</option>
+                                        <option value="GENERAL MILLS">GENERAL MILLS</option>
+                                        <option value="GENERTEC">GENERTEC</option>
+                                        <option value="GERDAU">GERDAU</option>
+                                        <option value="GEXPRO">GEXPRO</option>
+                                        <option value="GLAXO SMITH KLINE">GLAXO SMITH KLINE</option>
+                                        <option value="GLENCORE">GLENCORE</option>
+                                        <option value="GMR">GMR</option>
+                                        <option value="GOLDCORP INC">GOLDCORP INC</option>
+                                        <option value="GREENFIELD ENERGY SERVICES">GREENFIELD ENERGY SERVICES</option>
+                                        <option value="GRIZZLY">GRIZZLY</option>
+                                        <option value="GROUP FIVE">GROUP FIVE</option>
+                                        <option value="GRUPO MODELO">GRUPO MODELO</option>
+                                        <option value="GS ENGINEERING &amp; CONSTRUCTION">GS ENGINEERING &amp; CONSTRUCTION</option>
+                                        <option value="GUJARAT STATE PETROLEUM">GUJARAT STATE PETROLEUM</option>
+                                        <option value="HABAS GROUP">HABAS GROUP</option>
+                                        <option value="HALLIBURTON">HALLIBURTON</option>
+                                        <option value="HALMORE POWER">HALMORE POWER</option>
+                                        <option value="HANCOCK PROSPECTING">HANCOCK PROSPECTING</option>
+                                        <option value="HANWHA ENGINEERING &amp; CONSTRUCTION">HANWHA ENGINEERING &amp; CONSTRUCTION</option>
+                                        <option value="HARBIN POWER">HARBIN POWER</option>
+                                        <option value="HARVEST ENERGY">HARVEST ENERGY</option>
+                                        <option value="HATCHCOS HOLDINGS PTY LTD">HATCHCOS HOLDINGS PTY LTD</option>
+                                        <option value="HEBEI STEEL">HEBEI STEEL</option>
+                                        <option value="HEIDELBERG CEMENT">HEIDELBERG CEMENT</option>
+                                        <option value="HEINEKEN">HEINEKEN</option>
+                                        <option value="HENAN LIYUAN">HENAN LIYUAN</option>
+                                        <option value="HERSHEY COMPANY">HERSHEY COMPANY</option>
+                                        <option value="HESS">HESS</option>
+                                        <option value="HIGHMOUNT ENERGY">HIGHMOUNT ENERGY</option>
+                                        <option value="HINDALCO">HINDALCO</option>
+                                        <option value="HITACHI, LTD">HITACHI, LTD</option>
+                                        <option value="HJ HEINZ">HJ HEINZ</option>
+                                        <option value="HOLCIM">HOLCIM</option>
+                                        <option value="HOLLYFRONTIER">HOLLYFRONTIER</option>
+                                        <option value="HONEYWELL">HONEYWELL</option>
+                                        <option value="HORIZON WIND ENERGY">HORIZON WIND ENERGY</option>
+                                        <option value="HORMEL">HORMEL</option>
+                                        <option value="HUNTSMAN">HUNTSMAN</option>
+                                        <option value="HUSKY ENERGY">HUSKY ENERGY</option>
+                                        <option value="HYDRIL">HYDRIL</option>
+                                        <option value="HYDRO ONE">HYDRO ONE</option>
+                                        <option value="HYDRO QUEBEC">HYDRO QUEBEC</option>
+                                        <option value="HYUNDAI ENGINEERING &amp; CONSTRUCTION (HDEC)">HYUNDAI ENGINEERING &amp; CONSTRUCTION (HDEC)</option>
+                                        <option value="HYUNDAI ENGINEERING COMPANY (HEC)">HYUNDAI ENGINEERING COMPANY (HEC)</option>
+                                        <option value="HYUNDAI HEAVY INDUSTRIES (HHI)">HYUNDAI HEAVY INDUSTRIES (HHI)</option>
+                                        <option value="IAMGOLD CORPORTATION">IAMGOLD CORPORTATION</option>
+                                        <option value="IBERDROLA">IBERDROLA</option>
+                                        <option value="ICE">ICE</option>
+                                        <option value="IDEMITSU">IDEMITSU</option>
+                                        <option value="IHI CORPORATION">IHI CORPORATION</option>
+                                        <option value="INDIAN OIL CORPORATION">INDIAN OIL CORPORATION</option>
+                                        <option value="INDO GULF CORPORATION">INDO GULF CORPORATION</option>
+                                        <option value="INDUSTRIAS PE+æOLES, S.A.B. DE C.V.">INDUSTRIAS PE+æOLES, S.A.B. DE C.V.</option>
+                                        <option value="INEOS AG">INEOS AG</option>
+                                        <option value="INGERSOLL RAND">INGERSOLL RAND</option>
+                                        <option value="INGREDION">INGREDION</option>
+                                        <option value="INPEX">INPEX</option>
+                                        <option value="INTERNATIONAL PAPER">INTERNATIONAL PAPER</option>
+                                        <option value="INTER RAO">INTER RAO</option>
+                                        <option value="INVENERGY LLC">INVENERGY LLC</option>
+                                        <option value="IRAQ MINISTRY OF OIL">IRAQ MINISTRY OF OIL</option>
+                                        <option value="IRVING OIL LIMITED">IRVING OIL LIMITED</option>
+                                        <option value="ISOLUX CORSAN">ISOLUX CORSAN</option>
+                                        <option value="ISRAEL ELECTRIC">ISRAEL ELECTRIC</option>
+                                        <option value="ISTROENERGO">ISTROENERGO</option>
+                                        <option value="ITALCEMENTI CEMENT">ITALCEMENTI CEMENT</option>
+                                        <option value="ITAL-THAI">ITAL-THAI</option>
+                                        <option value="ITHACA ENERGY">ITHACA ENERGY</option>
+                                        <option value="ITOCHU NAES">ITOCHU NAES</option>
+                                        <option value="IVANHOE">IVANHOE</option>
+                                        <option value="JACOS LIMITED">JACOS LIMITED</option>
+                                        <option value="JAL">JAL</option>
+                                        <option value="JAMAICA PUBLIC SERVICE">JAMAICA PUBLIC SERVICE</option>
+                                        <option value="JBS">JBS</option>
+                                        <option value="JD IRVING">JD IRVING</option>
+                                        <option value="JEA">JEA</option>
+                                        <option value="JFE HOLDINGS INC">JFE HOLDINGS INC</option>
+                                        <option value="JIANGSU TIANYU">JIANGSU TIANYU</option>
+                                        <option value="JIANGXI METALLURGY GROUP CORPORATION">JIANGXI METALLURGY GROUP CORPORATION</option>
+                                        <option value="JIANLONG STEEL HOLDINGS CO">JIANLONG STEEL HOLDINGS CO</option>
+                                        <option value="JINDAL STEEL &amp; POWER">JINDAL STEEL &amp; POWER</option>
+                                        <option value="JIUQUAN IRON &amp; STEEL (GROUP) CO., LTD.">JIUQUAN IRON &amp; STEEL (GROUP) CO., LTD.</option>
+                                        <option value="JOHN DEERE">JOHN DEERE</option>
+                                        <option value="JSW STEEL">JSW STEEL</option>
+                                        <option value="JURONG SHIPYARD">JURONG SHIPYARD</option>
+                                        <option value="JUWI">JUWI</option>
+                                        <option value="KANSAI ELECTRIC POWER">KANSAI ELECTRIC POWER</option>
+                                        <option value="KANSAS CITY SOUTHERN">KANSAS CITY SOUTHERN</option>
+                                        <option value="KARACHI ELECTRIC SUPPLY COMPANY (KESC)">KARACHI ELECTRIC SUPPLY COMPANY (KESC)</option>
+                                        <option value="KARNALYTE RESOURCES">KARNALYTE RESOURCES</option>
+                                        <option value="KAZAKHMYS PLC">KAZAKHMYS PLC</option>
+                                        <option value="KCA DEUTAG">KCA DEUTAG</option>
+                                        <option value="KELLOGG">KELLOGG</option>
+                                        <option value="KELLOGG BROWN &amp; ROOT">KELLOGG BROWN &amp; ROOT</option>
+                                        <option value="KEPPEL FELS">KEPPEL FELS</option>
+                                        <option value="KERR MCGEE">KERR MCGEE</option>
+                                        <option value="KGHM POLSKA MIEDZ S A">KGHM POLSKA MIEDZ S A</option>
+                                        <option value="KHARAFI NATIONAL">KHARAFI NATIONAL</option>
+                                        <option value="KIEWIT PACIFIC COMPANY">KIEWIT PACIFIC COMPANY</option>
+                                        <option value="KINDER MORGAN">KINDER MORGAN</option>
+                                        <option value="KINROSS">KINROSS</option>
+                                        <option value="KIRIN HOLDINGS">KIRIN HOLDINGS</option>
+                                        <option value="KOCH INDUSTRIES">KOCH INDUSTRIES</option>
+                                        <option value="KODIAK ELECTRIC ASSOCIATION">KODIAK ELECTRIC ASSOCIATION</option>
+                                        <option value="KOMATSU">KOMATSU</option>
+                                        <option value="KONINKLIJKE DSM">KONINKLIJKE DSM</option>
+                                        <option value="KOREA ELECTRICAL POWER CORP. (KEPCO)">KOREA ELECTRICAL POWER CORP. (KEPCO)</option>
+                                        <option value="KOREAN AIR">KOREAN AIR</option>
+                                        <option value="KOREA NATIONAL OIL">KOREA NATIONAL OIL</option>
+                                        <option value="KOT ADDU POWER COMPANY LTD">KOT ADDU POWER COMPANY LTD</option>
+                                        <option value="LADWP">LADWP</option>
+                                        <option value="LAFARGE CEMENT">LAFARGE CEMENT</option>
+                                        <option value="LANCO">LANCO</option>
+                                        <option value="LAND O&#39;LAKES, INC.">LAND O&#39;LAKES, INC.</option>
+                                        <option value="LARICINA ENERGY LTD">LARICINA ENERGY LTD</option>
+                                        <option value="LARSEN &amp; TOUBRO">LARSEN &amp; TOUBRO</option>
+                                        <option value="LEIGHTON HOLDINGS">LEIGHTON HOLDINGS</option>
+                                        <option value="LG CHEM">LG CHEM</option>
+                                        <option value="LINDE/BOC">LINDE/BOC</option>
+                                        <option value="LINN ENERGY">LINN ENERGY</option>
+                                        <option value="LONJAS">LONJAS</option>
+                                        <option value="LOTTE ENGINEERING &amp; CONSTRUCTION">LOTTE ENGINEERING &amp; CONSTRUCTION</option>
+                                        <option value="LUKOIL">LUKOIL</option>
+                                        <option value="LUNDIN">LUNDIN</option>
+                                        <option value="LYCOPODIUM">LYCOPODIUM</option>
+                                        <option value="LYONDELLBASELL">LYONDELLBASELL</option>
+                                        <option value="MAANSHAN IRON AND STEEL COMPANY">MAANSHAN IRON AND STEEL COMPANY</option>
+                                        <option value="MAERSK">MAERSK</option>
+                                        <option value="MAIRE GESTIONI (TECNIMONT)">MAIRE GESTIONI (TECNIMONT)</option>
+                                        <option value="MANGALORE REFINERIES">MANGALORE REFINERIES</option>
+                                        <option value="MANITOBA HYDRO ELECTRIC BOARD">MANITOBA HYDRO ELECTRIC BOARD</option>
+                                        <option value="MARAFIQ">MARAFIQ</option>
+                                        <option value="MARATHON OIL CORPORATION">MARATHON OIL CORPORATION</option>
+                                        <option value="MARATHON PETROLEUM CORPORATION">MARATHON PETROLEUM CORPORATION</option>
+                                        <option value="MARS INCORPORATED">MARS INCORPORATED</option>
+                                        <option value="MARUBENI CORPORATION">MARUBENI CORPORATION</option>
+                                        <option value="MASTER WIND ENERGY">MASTER WIND ENERGY</option>
+                                        <option value="MCCAIN FOODS GROUP INC">MCCAIN FOODS GROUP INC</option>
+                                        <option value="MDU RESOURCES GROUP">MDU RESOURCES GROUP</option>
+                                        <option value="MEG ENERGY">MEG ENERGY</option>
+                                        <option value="MESA POWER">MESA POWER</option>
+                                        <option value="METHANEX">METHANEX</option>
+                                        <option value="METKA">METKA</option>
+                                        <option value="MIDAMERICAN ENERGY">MIDAMERICAN ENERGY</option>
+                                        <option value="MITSUBISHI">MITSUBISHI</option>
+                                        <option value="MITSUI &amp; CO. LTD">MITSUI &amp; CO. LTD</option>
+                                        <option value="MOE IRAQ">MOE IRAQ</option>
+                                        <option value="MOLSON COORS MILLER">MOLSON COORS MILLER</option>
+                                        <option value="MOLYCORP">MOLYCORP</option>
+                                        <option value="MONDELEZ INTERNATIONAL">MONDELEZ INTERNATIONAL</option>
+                                        <option value="MONSANTO">MONSANTO</option>
+                                        <option value="MUBADALA DEVELOPMENT COMPANY">MUBADALA DEVELOPMENT COMPANY</option>
+                                        <option value="MURPHY OIL">MURPHY OIL</option>
+                                        <option value="NANJING TURBINE &amp; ELECTRIC MACHINERY (GROUP) CO., LTD. (NTC)">NANJING TURBINE &amp; ELECTRIC MACHINERY (GROUP) CO., LTD. (NTC)</option>
+                                        <option value="NATIONAL GRID">NATIONAL GRID</option>
+                                        <option value="NATIONAL OILWELL VARCO">NATIONAL OILWELL VARCO</option>
+                                        <option value="NATREF">NATREF</option>
+                                        <option value="NATURAL CHEM GROUP LLC">NATURAL CHEM GROUP LLC</option>
+                                        <option value="NESTLE">NESTLE</option>
+                                        <option value="NEW BELGIUM BREWING COMPANY INC">NEW BELGIUM BREWING COMPANY INC</option>
+                                        <option value="NEWCREST">NEWCREST</option>
+                                        <option value="NEWFIELD EXPLORATION">NEWFIELD EXPLORATION</option>
+                                        <option value="NEW YORK POWER AUTHORITY">NEW YORK POWER AUTHORITY</option>
+                                        <option value="NEXTERA ENERGY INC">NEXTERA ENERGY INC</option>
+                                        <option value="NIGERIAN NATIONAL PETROLEUM CORPORATION">NIGERIAN NATIONAL PETROLEUM CORPORATION</option>
+                                        <option value="NIPPON F&amp;B">NIPPON F&amp;B</option>
+                                        <option value="NIPPON STEEL CORPORATION">NIPPON STEEL CORPORATION</option>
+                                        <option value="NIRMA">NIRMA</option>
+                                        <option value="NISOURCE">NISOURCE</option>
+                                        <option value="NMDC LIMITED">NMDC LIMITED</option>
+                                        <option value="NOBLE CORPORATION">NOBLE CORPORATION</option>
+                                        <option value="NOBLE ENERGY">NOBLE ENERGY</option>
+                                        <option value="NOBLE ENVIRONMENTAL POWER">NOBLE ENVIRONMENTAL POWER</option>
+                                        <option value="NORFOLK SOUTHERN">NORFOLK SOUTHERN</option>
+                                        <option value="NORONT RESOURCES">NORONT RESOURCES</option>
+                                        <option value="NORSK HYDRO ASA">NORSK HYDRO ASA</option>
+                                        <option value="NORTHERN BLIZZARD RESOURCES">NORTHERN BLIZZARD RESOURCES</option>
+                                        <option value="NORTHERN POWER GENERATION CO. (NPGCL)">NORTHERN POWER GENERATION CO. (NPGCL)</option>
+                                        <option value="NORTH WEST UPGRADING">NORTH WEST UPGRADING</option>
+                                        <option value="NRG ENERGY, INC.">NRG ENERGY, INC.</option>
+                                        <option value="NSOLV CORPORATION">NSOLV CORPORATION</option>
+                                        <option value="NSTAR">NSTAR</option>
+                                        <option value="NTPC LIMITED">NTPC LIMITED</option>
+                                        <option value="NTR">NTR</option>
+                                        <option value="NUCOR CORPORATION">NUCOR CORPORATION</option>
+                                        <option value="OAKAJEE PORT AND RAIL PTY LTD">OAKAJEE PORT AND RAIL PTY LTD</option>
+                                        <option value="OAK POINT ENERGY">OAK POINT ENERGY</option>
+                                        <option value="OCCIDENTAL PETROLEUM CORPORATION">OCCIDENTAL PETROLEUM CORPORATION</option>
+                                        <option value="ODJFELL">ODJFELL</option>
+                                        <option value="OILSANDS QUEST INC">OILSANDS QUEST INC</option>
+                                        <option value="OKLAHOMA GAS AND ELECTRIC">OKLAHOMA GAS AND ELECTRIC</option>
+                                        <option value="OMAN PETROCHEMICALS">OMAN PETROCHEMICALS</option>
+                                        <option value="ONGC">ONGC</option>
+                                        <option value="ONTARIO POWER">ONTARIO POWER</option>
+                                        <option value="OPHIR">OPHIR</option>
+                                        <option value="ORIENT POWER COMPANY">ORIENT POWER COMPANY</option>
+                                        <option value="ORIGIN ENERGY">ORIGIN ENERGY</option>
+                                        <option value="OSAGE MUNICIPAL UTILITIES">OSAGE MUNICIPAL UTILITIES</option>
+                                        <option value="OSAKA GAS">OSAKA GAS</option>
+                                        <option value="OSUM">OSUM</option>
+                                        <option value="OUTOTEC">OUTOTEC</option>
+                                        <option value="OVA ELEKTRIK AS">OVA ELEKTRIK AS</option>
+                                        <option value="OWN ENERGY">OWN ENERGY</option>
+                                        <option value="PATRIOT RENEWABLES">PATRIOT RENEWABLES</option>
+                                        <option value="PDVSA">PDVSA</option>
+                                        <option value="PEABODY">PEABODY</option>
+                                        <option value="PEMEX">PEMEX</option>
+                                        <option value="PENNGROWTH">PENNGROWTH</option>
+                                        <option value="PENN WEST">PENN WEST</option>
+                                        <option value="PEPSICO">PEPSICO</option>
+                                        <option value="PETROBANK">PETROBANK</option>
+                                        <option value="PETROBRAS">PETROBRAS</option>
+                                        <option value="PETROCHINA">PETROCHINA</option>
+                                        <option value="PETROFAC">PETROFAC</option>
+                                        <option value="PETRONAS">PETRONAS</option>
+                                        <option value="PETROQUIRIQUIRE">PETROQUIRIQUIRE</option>
+                                        <option value="PETROSA">PETROSA</option>
+                                        <option value="PETROVIETNAM">PETROVIETNAM</option>
+                                        <option value="PG&amp;E CORPORATION">PG&amp;E CORPORATION</option>
+                                        <option value="PIONEER CHLOR ALKALI">PIONEER CHLOR ALKALI</option>
+                                        <option value="PIONEER NATURAL RESOURCES">PIONEER NATURAL RESOURCES</option>
+                                        <option value="POLIMEKS">POLIMEKS</option>
+                                        <option value="POLSKI KONCERN NAFTOWY ORLEN">POLSKI KONCERN NAFTOWY ORLEN</option>
+                                        <option value="POSCO ENGINEERING &amp; CONSTRUCTION">POSCO ENGINEERING &amp; CONSTRUCTION</option>
+                                        <option value="POTASH CORPORATION OF SASKATCHEWAN">POTASH CORPORATION OF SASKATCHEWAN</option>
+                                        <option value="POWER GENERATION COMPANY OF TRINIDAD &amp; TOBAGO">POWER GENERATION COMPANY OF TRINIDAD &amp; TOBAGO</option>
+                                        <option value="POWER GRID CORPORATION OF INDIA LIMITED">POWER GRID CORPORATION OF INDIA LIMITED</option>
+                                        <option value="PPL CORPORATION">PPL CORPORATION</option>
+                                        <option value="PPL SHIPYARD">PPL SHIPYARD</option>
+                                        <option value="PRAXAIR, INC">PRAXAIR, INC</option>
+                                        <option value="PREMIER OIL">PREMIER OIL</option>
+                                        <option value="PRIDE INTERNATIONAL">PRIDE INTERNATIONAL</option>
+                                        <option value="PROCTER &amp; GAMBLE">PROCTER &amp; GAMBLE</option>
+                                        <option value="PRODUCTOS ALIMENTICIOS BELROS SA">PRODUCTOS ALIMENTICIOS BELROS SA</option>
+                                        <option value="PSEG">PSEG</option>
+                                        <option value="PT IMECO INTER SERANA">PT IMECO INTER SERANA</option>
+                                        <option value="PT PLN (PERSERO)">PT PLN (PERSERO)</option>
+                                        <option value="PTT PUBLIC COMPANY LIMITED">PTT PUBLIC COMPANY LIMITED</option>
+                                        <option value="PUERTO RICO ELECTRIC POWER">PUERTO RICO ELECTRIC POWER</option>
+                                        <option value="PUGET SOUND ENERGY">PUGET SOUND ENERGY</option>
+                                        <option value="PUNJ LLOYD">PUNJ LLOYD</option>
+                                        <option value="QATAR AIRWAYS">QATAR AIRWAYS</option>
+                                        <option value="QATAR ELECTRICITY &amp; WATER COMPANY">QATAR ELECTRICITY &amp; WATER COMPANY</option>
+                                        <option value="QATAR PETROLEUM">QATAR PETROLEUM</option>
+                                        <option value="RELIANCE INDUSTRIES LIMITED">RELIANCE INDUSTRIES LIMITED</option>
+                                        <option value="REMGRO LTD">REMGRO LTD</option>
+                                        <option value="RENEWABLE ENERGY SYSTEMS">RENEWABLE ENERGY SYSTEMS</option>
+                                        <option value="REPSOL YPF, S.A.">REPSOL YPF, S.A.</option>
+                                        <option value="RESOURCE GENERATION LIMITED">RESOURCE GENERATION LIMITED</option>
+                                        <option value="REUNION POWER">REUNION POWER</option>
+                                        <option value="REXEL">REXEL</option>
+                                        <option value="RII NORTH AMERICA">RII NORTH AMERICA</option>
+                                        <option value="RIO TINTO">RIO TINTO</option>
+                                        <option value="RIVA GROUP">RIVA GROUP</option>
+                                        <option value="RIVERDALE MINING PTY LTD">RIVERDALE MINING PTY LTD</option>
+                                        <option value="ROCKTENN">ROCKTENN</option>
+                                        <option value="ROHM AND HAAS">ROHM AND HAAS</option>
+                                        <option value="ROLLS ROYCE">ROLLS ROYCE</option>
+                                        <option value="ROSNEFT">ROSNEFT</option>
+                                        <option value="ROWAN INTERNATIONAL">ROWAN INTERNATIONAL</option>
+                                        <option value="RWE">RWE</option>
+                                        <option value="SABMILLER PLC">SABMILLER PLC</option>
+                                        <option value="SADELMI">SADELMI</option>
+                                        <option value="SAIF GROUP">SAIF GROUP</option>
+                                        <option value="SAIL">SAIL</option>
+                                        <option value="SALINE WATER CONVERSION COMPANY">SALINE WATER CONVERSION COMPANY</option>
+                                        <option value="SAMRA ELECTRIC POWER GENERATING CO">SAMRA ELECTRIC POWER GENERATING CO</option>
+                                        <option value="SAMSUNG C&amp;T">SAMSUNG C&amp;T</option>
+                                        <option value="SAMSUNG GROUP">SAMSUNG GROUP</option>
+                                        <option value="SAN BUENAVENTURA SOAP COMPANY">SAN BUENAVENTURA SOAP COMPANY</option>
+                                        <option value="SAN DIEGO GAS &amp; ELECTRIC">SAN DIEGO GAS &amp; ELECTRIC</option>
+                                        <option value="SANDRIDGE ENERGY">SANDRIDGE ENERGY</option>
+                                        <option value="SANTEE COOPER">SANTEE COOPER</option>
+                                        <option value="SANTOS LIMITED">SANTOS LIMITED</option>
+                                        <option value="SAPPHIRE ELECTRIC">SAPPHIRE ELECTRIC</option>
+                                        <option value="SAPPHIRE WIND POWER COMPANY LTD">SAPPHIRE WIND POWER COMPANY LTD</option>
+                                        <option value="SAPUTO INC">SAPUTO INC</option>
+                                        <option value="SARA LEE">SARA LEE</option>
+                                        <option value="SASOL">SASOL</option>
+                                        <option value="SAUDI ARABIAN MINING COMPANY">SAUDI ARABIAN MINING COMPANY</option>
+                                        <option value="SAUDI ARAMCO">SAUDI ARAMCO</option>
+                                        <option value="0011200001FxWEq">HESS CORPORATION / HQ</option>
+                            <option value="0011200001FxUbS">CONOCOPHILLIPS / HQ</option>
+                                        <option value="SAUDI BASIC INDUSTRIES CORPORATION">SAUDI BASIC INDUSTRIES CORPORATION</option>
+                                        <option value="SAUDI ELECTRIC">SAUDI ELECTRIC</option>
+                                        <option value="SCANA">SCANA</option>
+                                        <option value="SCHLUMBERGER">SCHLUMBERGER</option>
+                                        <option value="SCOMI">SCOMI</option>
+                                        <option value="SDAG">SDAG</option>
+                                        <option value="SEADRILL">SEADRILL</option>
+                                        <option value="SENECA ENERGY">SENECA ENERGY</option>
+                                        <option value="SEPCO">SEPCO</option>
+                                        <option value="SEVERSTAL">SEVERSTAL</option>
+                                        <option value="SHANDONG ELECTRIC POWER ENGINEERING CONSULTING INSTITUTE CORP. LTD">SHANDONG ELECTRIC POWER ENGINEERING CONSULTING INSTITUTE CORP. LTD</option>
+                                        <option value="SHANDONG IRON &amp; STEEL GROUP CO., LTD.">SHANDONG IRON &amp; STEEL GROUP CO., LTD.</option>
+                                        <option value="SHANXI XISHAN COAL AND ELECTRICITY">SHANXI XISHAN COAL AND ELECTRICITY</option>
+                                        <option value="SHELL">SHELL</option>
+                                        <option value="SHENHUA GROUP CORPORATION LIMITED">SHENHUA GROUP CORPORATION LIMITED</option>
+                                        <option value="SHENZHEN ENERGY GROUP">SHENZHEN ENERGY GROUP</option>
+                                        <option value="SHENZHEN YUHU ELECTRIC">SHENZHEN YUHU ELECTRIC</option>
+                                        <option value="SHOUGANG CORPORATION">SHOUGANG CORPORATION</option>
+                                        <option value="SIAM CEMENT">SIAM CEMENT</option>
+                                        <option value="SIBUR">SIBUR</option>
+                                        <option value="SIEMENS AG">SIEMENS AG</option>
+                                        <option value="SILVER WHEATON CORP">SILVER WHEATON CORP</option>
+                                        <option value="SILVER WILLOW ENERGY">SILVER WILLOW ENERGY</option>
+                                        <option value="SINCLAIR KNIGHT MERZ">SINCLAIR KNIGHT MERZ</option>
+                                        <option value="SINOHYDRO">SINOHYDRO</option>
+                                        <option value="SINOPEC">SINOPEC</option>
+                                        <option value="SKANSKA">SKANSKA</option>
+                                        <option value="SK ENGINEERING &amp; CONSTRUCTION">SK ENGINEERING &amp; CONSTRUCTION</option>
+                                        <option value="SKYPOWER">SKYPOWER</option>
+                                        <option value="SNC LAVALIN">SNC LAVALIN</option>
+                                        <option value="SOFTBANK CORP">SOFTBANK CORP</option>
+                                        <option value="SOLAR TURBINES INC">SOLAR TURBINES INC</option>
+                                        <option value="SOLID ENERGY">SOLID ENERGY</option>
+                                        <option value="SOLVAY RHODIA">SOLVAY RHODIA</option>
+                                        <option value="SONANGOL">SONANGOL</option>
+                                        <option value="SONATRACH">SONATRACH</option>
+                                        <option value="SONDEX">SONDEX</option>
+                                        <option value="SONELGAZ">SONELGAZ</option>
+                                        <option value="SONGA OFFSHORE">SONGA OFFSHORE</option>
+                                        <option value="SOUTHERN CALIFORNIA EDISON">SOUTHERN CALIFORNIA EDISON</option>
+                                        <option value="SOUTHERN COMPANY">SOUTHERN COMPANY</option>
+                                        <option value="SOUTHERN PACIFIC RESOURCES">SOUTHERN PACIFIC RESOURCES</option>
+                                        <option value="SOUTHWESTERN ENERGY">SOUTHWESTERN ENERGY</option>
+                                        <option value="SPECTRA ENERGY">SPECTRA ENERGY</option>
+                                        <option value="SSE">SSE</option>
+                                        <option value="STATE GRID CORPORATION OF CHINA">STATE GRID CORPORATION OF CHINA</option>
+                                        <option value="STATOIL">STATOIL</option>
+                                        <option value="STENA DRILLING">STENA DRILLING</option>
+                                        <option value="STX HEAVY INDUSTRIES">STX HEAVY INDUSTRIES</option>
+                                        <option value="SUBSEA 7">SUBSEA 7</option>
+                                        <option value="SUMITOMO CORPORATION">SUMITOMO CORPORATION</option>
+                                        <option value="SUNCOR">SUNCOR</option>
+                                        <option value="SUNSHINE">SUNSHINE</option>
+                                        <option value="SYNGENTA">SYNGENTA</option>
+                                        <option value="TAIHEIYO CEMENT CORPORATION">TAIHEIYO CEMENT CORPORATION</option>
+                                        <option value="TAIWAN POWER COMPANY">TAIWAN POWER COMPANY</option>
+                                        <option value="TAIYUAN STEEL">TAIYUAN STEEL</option>
+                                        <option value="TANGSHAN">TANGSHAN</option>
+                                        <option value="TAPAL ENERGY">TAPAL ENERGY</option>
+                                        <option value="TASEKO MINES">TASEKO MINES</option>
+                                        <option value="TATA GROUP">TATA GROUP</option>
+                                        <option value="TATE &amp; LYLE - F&amp;B">TATE &amp; LYLE - F&amp;B</option>
+                                        <option value="TAWHIRI POWER">TAWHIRI POWER</option>
+                                        <option value="TECHINT">TECHINT</option>
+                                        <option value="TECHNIP">TECHNIP</option>
+                                        <option value="TECK COMINICO">TECK COMINICO</option>
+                                        <option value="TECK RESOURCES LIMITED">TECK RESOURCES LIMITED</option>
+                                        <option value="TECNICAS REUNIDAS">TECNICAS REUNIDAS</option>
+                                        <option value="TECO">TECO</option>
+                                        <option value="TENAGA NASIONAL BERHAD">TENAGA NASIONAL BERHAD</option>
+                                        <option value="TEPCO">TEPCO</option>
+                                        <option value="TERNA">TERNA</option>
+                                        <option value="TERNIUM">TERNIUM</option>
+                                        <option value="THE BOSTON BEER COMPANY">THE BOSTON BEER COMPANY</option>
+                                        <option value="THE J M SMUCKER COMPANY">THE J M SMUCKER COMPANY</option>
+                                        <option value="THE MOSAIC COMPANY">THE MOSAIC COMPANY</option>
+                                        <option value="THERMAX">THERMAX</option>
+                                        <option value="THE WILLIAMS COMPANIES">THE WILLIAMS COMPANIES</option>
+                                        <option value="THIRD PLANET WINDPOWER">THIRD PLANET WINDPOWER</option>
+                                        <option value="THYSSENKRUPP">THYSSENKRUPP</option>
+                                        <option value="TIANJIN BOHAI CHEMICAL GROUP COMPANY">TIANJIN BOHAI CHEMICAL GROUP COMPANY</option>
+                                        <option value="TOKYO GAS">TOKYO GAS</option>
+                                        <option value="TOSHIBA CORPORATION">TOSHIBA CORPORATION</option>
+                                        <option value="TOTAL">TOTAL</option>
+                                        <option value="TOYO ENGINEERING">TOYO ENGINEERING</option>
+                                        <option value="TRANSALTA">TRANSALTA</option>
+                                        <option value="TRANSCANADA">TRANSCANADA</option>
+                                        <option value="TRANSCENTURY">TRANSCENTURY</option>
+                                        <option value="TRANSOCEAN SEDCO FOREX">TRANSOCEAN SEDCO FOREX</option>
+                                        <option value="TULLOW OIL">TULLOW OIL</option>
+                                        <option value="TURCAS PETROL">TURCAS PETROL</option>
+                                        <option value="TURKISH AIRLINES">TURKISH AIRLINES</option>
+                                        <option value="TVA">TVA</option>
+                                        <option value="TYSON">TYSON</option>
+                                        <option value="UGL LTD">UGL LTD</option>
+                                        <option value="UHDE INDIA PRIVATE LTD">UHDE INDIA PRIVATE LTD</option>
+                                        <option value="UNILEVER">UNILEVER</option>
+                                        <option value="UNION FENOSA">UNION FENOSA</option>
+                                        <option value="UNION PACIFIC">UNION PACIFIC</option>
+                                        <option value="UNITED COMPANY RUSAL PLC">UNITED COMPANY RUSAL PLC</option>
+                                        <option value="USIMINAS">USIMINAS</option>
+                                        <option value="US MAGNESIUM">US MAGNESIUM</option>
+                                        <option value="US STEEL">US STEEL</option>
+                                        <option value="VALE GROUP">VALE GROUP</option>
+                                        <option value="VALERO ENERGY CORPORATION">VALERO ENERGY CORPORATION</option>
+                                        <option value="VALIN CORPORATION">VALIN CORPORATION</option>
+                                        <option value="VALUE CREATION INC">VALUE CREATION INC</option>
+                                        <option value="VATTENFALL">VATTENFALL</option>
+                                        <option value="VEDANTA ALUMINUM">VEDANTA ALUMINUM</option>
+                                        <option value="VEOLIA ENVIRONNEMENT">VEOLIA ENVIRONNEMENT</option>
+                                        <option value="VIETSOVPETRO">VIETSOVPETRO</option>
+                                        <option value="VOTORANTIM">VOTORANTIM</option>
+                                        <option value="WASTE MANAGEMENT">WASTE MANAGEMENT</option>
+                                        <option value="WEATHERFORD">WEATHERFORD</option>
+                                        <option value="WELLSTREAM">WELLSTREAM</option>
+                                        <option value="WEST DELTA ELECTRICITY">WEST DELTA ELECTRICITY</option>
+                                        <option value="WHEELABRATOR">WHEELABRATOR</option>
+                                        <option value="WIND CAPITAL GROUP">WIND CAPITAL GROUP</option>
+                                        <option value="WISCONSIN ELECTRIC POWER">WISCONSIN ELECTRIC POWER</option>
+                                        <option value="WISCONSIN PUBLIC SERVICE">WISCONSIN PUBLIC SERVICE</option>
+                                        <option value="WOLF CREEK NUCLEAR">WOLF CREEK NUCLEAR</option>
+                                        <option value="WOLSELEY">WOLSELEY</option>
+                                        <option value="WOOD GROUP">WOOD GROUP</option>
+                                        <option value="WOONGJIN COWAY">WOONGJIN COWAY</option>
+                                        <option value="WORLEY PARSONS">WORLEY PARSONS</option>
+                                        <option value="WUHAN IRON &amp; STEEL">WUHAN IRON &amp; STEEL</option>
+                                        <option value="XCEL ENERGY INC.">XCEL ENERGY INC.</option>
+                                        <option value="XSTRATA PLC">XSTRATA PLC</option>
+                                        <option value="YANKUANG GROUP CO., LTD.">YANKUANG GROUP CO., LTD.</option>
+                                        <option value="ZHEJIANG PROVINCIAL ENERGY GROUP">ZHEJIANG PROVINCIAL ENERGY GROUP</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-12 col-sm-6">
+                                    <!--   <input class="form-control" type="text"/>
+                                </div>
+                            </div>
+                            
+                        </div>-->
+                        <div class="col-xs-6 form-group">
+                            <label>Site Country</label>
+                            <select id="00NA000000B0uFL" class="form-control" name="00NA000000B0uFL" title="Site Country">
+                                <option value="">--None--</option>
+                                <option value="AFGHANISTAN">AFGHANISTAN</option>
+                                <option value="ALAND ISLANDS">ALAND ISLANDS</option>
+                                <option value="ALBANIA">ALBANIA</option>
+                                <option value="ALGERIA">ALGERIA</option>
+                                <option value="AMERICAN SAMOA">AMERICAN SAMOA</option>
+                                <option value="ANDORRA">ANDORRA</option>
+                                <option value="ANGOLA">ANGOLA</option>
+                                <option value="ANGUILLA">ANGUILLA</option>
+                                <option value="ANTARCTICA">ANTARCTICA</option>
+                                <option value="ANTIGUA AND BARBUDA">ANTIGUA AND BARBUDA</option>
+                                <option value="ARGENTINA">ARGENTINA</option>
+                                <option value="ARMENIA">ARMENIA</option>
+                                <option value="ARUBA">ARUBA</option>
+                                <option value="AUSTRALIA">AUSTRALIA</option>
+                                <option value="AUSTRIA">AUSTRIA</option>
+                                <option value="AZERBAIJAN">AZERBAIJAN</option>
+                                <option value="BAHAMAS">BAHAMAS</option>
+                                <option value="BAHRAIN">BAHRAIN</option>
+                                <option value="BANGLADESH">BANGLADESH</option>
+                                <option value="BARBADOS">BARBADOS</option>
+                                <option value="BELARUS">BELARUS</option>
+                                <option value="BELGIUM">BELGIUM</option>
+                                <option value="BELIZE">BELIZE</option>
+                                <option value="BENIN">BENIN</option>
+                                <option value="BERMUDA">BERMUDA</option>
+                                <option value="BHUTAN">BHUTAN</option>
+                                <option value="BOLIVIA, PLURINATIONAL STATE OF">BOLIVIA, PLURINATIONAL STATE OF</option>
+                                <option value="BONAIRE, SINT EUSTATIUS AND SABA">BONAIRE, SINT EUSTATIUS AND SABA</option>
+                                <option value="BOSNIA AND HERZEGOVINA">BOSNIA AND HERZEGOVINA</option>
+                                <option value="BOTSWANA">BOTSWANA</option>
+                                <option value="BOUVET ISLAND">BOUVET ISLAND</option>
+                                <option value="BRAZIL">BRAZIL</option>
+                                <option value="BRITISH INDIAN OCEAN TERRITORY">BRITISH INDIAN OCEAN TERRITORY</option>
+                                <option value="BRUNNEI DARUSSALAM">BRUNNEI DARUSSALAM</option>
+                                <option value="BULGARIA">BULGARIA</option>
+                                <option value="BURKINA FASO">BURKINA FASO</option>
+                                <option value="BURUNDI">BURUNDI</option>
+                                <option value="CAMBODIA">CAMBODIA</option>
+                                <option value="CAMEROON">CAMEROON</option>
+                                <option value="CANADA">CANADA</option>
+                                <option value="CAPE VERDE">CAPE VERDE</option>
+                                <option value="CAYMAN ISLANDS">CAYMAN ISLANDS</option>
+                                <option value="CENTRAL AFRICAN REPUBLIC">CENTRAL AFRICAN REPUBLIC</option>
+                                <option value="CHAD">CHAD</option>
+                                <option value="CHILE">CHILE</option>
+                                <option value="CHINA">CHINA</option>
+                                <option value="CHRISTMAS ISLAND">CHRISTMAS ISLAND</option>
+                                <option value="COCOS (KEELING) ISLANDS">COCOS (KEELING) ISLANDS</option>
+                                <option value="COLOMBIA">COLOMBIA</option>
+                                <option value="COMOROS">COMOROS</option>
+                                <option value="CONGO">CONGO</option>
+                                <option value="CONGO, THE DEMOCRATIC REPUBLIC OF THE">CONGO, THE DEMOCRATIC REPUBLIC OF THE</option>
+                                <option value="COOK ISLANDS">COOK ISLANDS</option>
+                                <option value="COSTA RICA">COSTA RICA</option>
+                                <option value="COTE D&#39;IVOIRE">COTE D&#39;IVOIRE</option>
+                                <option value="CROATIA">CROATIA</option>
+                                <option value="CUBA">CUBA</option>
+                                <option value="CURACAO">CURACAO</option>
+                                <option value="CYPRUS">CYPRUS</option>
+                                <option value="CZECH REPUBLIC">CZECH REPUBLIC</option>
+                                <option value="DENMARK">DENMARK</option>
+                                <option value="DJIBOUTI">DJIBOUTI</option>
+                                <option value="DOMINICA">DOMINICA</option>
+                                <option value="DOMINICAN REPUBLIC">DOMINICAN REPUBLIC</option>
+                                <option value="ECUADOR">ECUADOR</option>
+                                <option value="EGYPT">EGYPT</option>
+                                <option value="EL SALVADOR">EL SALVADOR</option>
+                                <option value="EQUATORIAL GUINEA">EQUATORIAL GUINEA</option>
+                                <option value="ERITREA">ERITREA</option>
+                                <option value="ESTONIA">ESTONIA</option>
+                                <option value="ETHIOPIA">ETHIOPIA</option>
+                                <option value="FALKLAND ISLANDS (MALVINAS)">FALKLAND ISLANDS (MALVINAS)</option>
+                                <option value="FAROE ISLANDS">FAROE ISLANDS</option>
+                                <option value="FIJI">FIJI</option>
+                                <option value="FINLAND">FINLAND</option>
+                                <option value="FRANCE">FRANCE</option>
+                                <option value="FRENCH GUIANA">FRENCH GUIANA</option>
+                                <option value="FRENCH GUYANA">FRENCH GUYANA</option>
+                                <option value="FRENCH POLYNESIA">FRENCH POLYNESIA</option>
+                                <option value="FRENCH SOUTHERN TERRITORIES">FRENCH SOUTHERN TERRITORIES</option>
+                                <option value="FRENCH SOUTHERN TERRITORY">FRENCH SOUTHERN TERRITORY</option>
+                                <option value="GABON">GABON</option>
+                                <option value="GAMBIA">GAMBIA</option>
+                                <option value="GEORGIA">GEORGIA</option>
+                                <option value="GERMANY">GERMANY</option>
+                                <option value="GHANA">GHANA</option>
+                                <option value="GIBRALTAR">GIBRALTAR</option>
+                                <option value="GREECE">GREECE</option>
+                                <option value="GREENLAND">GREENLAND</option>
+                                <option value="GRENADA">GRENADA</option>
+                                <option value="GUADELOUPE">GUADELOUPE</option>
+                                <option value="GUAM">GUAM</option>
+                                <option value="GUATEMALA">GUATEMALA</option>
+                                <option value="GUERNSEY">GUERNSEY</option>
+                                <option value="GUINEA">GUINEA</option>
+                                <option value="GUINEA-BISSAU">GUINEA-BISSAU</option>
+                                <option value="GUYANA">GUYANA</option>
+                                <option value="HAITI">HAITI</option>
+                                <option value="HEARD ISLAND AND MCDONALD ISLANDS">HEARD ISLAND AND MCDONALD ISLANDS</option>
+                                <option value="HOLY SEE (VATICAN CITY STATE)">HOLY SEE (VATICAN CITY STATE)</option>
+                                <option value="HONDURAS">HONDURAS</option>
+                                <option value="HONG KONG">HONG KONG</option>
+                                <option value="HUNGARY">HUNGARY</option>
+                                <option value="ICELAND">ICELAND</option>
+                                <option value="INDIA">INDIA</option>
+                                <option value="INDONESIA">INDONESIA</option>
+                                <option value="IRAN, ISLAMIC REPUBLIC OF">IRAN, ISLAMIC REPUBLIC OF</option>
+                                <option value="IRAQ">IRAQ</option>
+                                <option value="IRELAND">IRELAND</option>
+                                <option value="ISLAND OF MAN">ISLAND OF MAN</option>
+                                <option value="ISLE OF MAN">ISLE OF MAN</option>
+                                <option value="ISRAEL">ISRAEL</option>
+                                <option value="ITALY">ITALY</option>
+                                <option value="JAMAICA">JAMAICA</option>
+                                <option value="JAPAN">JAPAN</option>
+                                <option value="JERSEY">JERSEY</option>
+                                <option value="JORDAN">JORDAN</option>
+                                <option value="JUAN DE NOVA ISLAND">JUAN DE NOVA ISLAND</option>
+                                <option value="KAZAKHSTAN">KAZAKHSTAN</option>
+                                <option value="KENYA">KENYA</option>
+                                <option value="KIRIBATI">KIRIBATI</option>
+                                <option value="KOREA, DEMOCRATIC PEOPLE&#39;S REPUBLIC OF">KOREA, DEMOCRATIC PEOPLE&#39;S REPUBLIC OF</option>
+                                <option value="KOREA, REPUBLIC OF">KOREA, REPUBLIC OF</option>
+                                <option value="KUWAIT">KUWAIT</option>
+                                <option value="KYRGYZSTAN">KYRGYZSTAN</option>
+                                <option value="LAO PEOPLE&#39;S DEMOCRATIC REPUBLIC">LAO PEOPLE&#39;S DEMOCRATIC REPUBLIC</option>
+                                <option value="LATVIA">LATVIA</option>
+                                <option value="LEBANON">LEBANON</option>
+                                <option value="LESOTHO">LESOTHO</option>
+                                <option value="LIBERIA">LIBERIA</option>
+                                <option value="LIBYAN ARAB JAMAHIRIYA">LIBYAN ARAB JAMAHIRIYA</option>
+                                <option value="LIECHTENSTEIN">LIECHTENSTEIN</option>
+                                <option value="LITHUANIA">LITHUANIA</option>
+                                <option value="LUXEMBOURG">LUXEMBOURG</option>
+                                <option value="MACAO">MACAO</option>
+                                <option value="MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF">MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF</option>
+                                <option value="MADAGASCAR">MADAGASCAR</option>
+                                <option value="MALAWI">MALAWI</option>
+                                <option value="MALAYSIA">MALAYSIA</option>
+                                <option value="MALDIVES">MALDIVES</option>
+                                <option value="MALI">MALI</option>
+                                <option value="MALTA">MALTA</option>
+                                <option value="MARSHALL ISLANDS">MARSHALL ISLANDS</option>
+                                <option value="MARTINIQUE">MARTINIQUE</option>
+                                <option value="MAURITANIA">MAURITANIA</option>
+                                <option value="MAURITIUS">MAURITIUS</option>
+                                <option value="MAYOTTE">MAYOTTE</option>
+                                <option value="MEXICO">MEXICO</option>
+                                <option value="MICRONESIA, FEDERATED STATES OF">MICRONESIA, FEDERATED STATES OF</option>
+                                <option value="MOLDOVA, REPUBLIC OF">MOLDOVA, REPUBLIC OF</option>
+                                <option value="MONACO">MONACO</option>
+                                <option value="MONGOLIA">MONGOLIA</option>
+                                <option value="MONTENEGRO">MONTENEGRO</option>
+                                <option value="MONTSERRAT">MONTSERRAT</option>
+                                <option value="MOROCCO">MOROCCO</option>
+                                <option value="MOZAMBIQUE">MOZAMBIQUE</option>
+                                <option value="MYANMAR">MYANMAR</option>
+                                <option value="NAMIBIA">NAMIBIA</option>
+                                <option value="NAURU">NAURU</option>
+                                <option value="NEPAL">NEPAL</option>
+                                <option value="NETHERLANDS">NETHERLANDS</option>
+                                <option value="NETHERLANDS ANTILLES">NETHERLANDS ANTILLES</option>
+                                <option value="NEW CALEDONIA">NEW CALEDONIA</option>
+                                <option value="NEW ZEALAND">NEW ZEALAND</option>
+                                <option value="NICARAGUA">NICARAGUA</option>
+                                <option value="NIGER">NIGER</option>
+                                <option value="NIGERIA">NIGERIA</option>
+                                <option value="NIUE">NIUE</option>
+                                <option value="NORFOLK ISLANDS">NORFOLK ISLANDS</option>
+                                <option value="NORTHERN MARIANA ISLANDS">NORTHERN MARIANA ISLANDS</option>
+                                <option value="NORWAY">NORWAY</option>
+                                <option value="OMAN">OMAN</option>
+                                <option value="PAKISTAN">PAKISTAN</option>
+                                <option value="PALAU">PALAU</option>
+                                <option value="PALESTINIAN TERRITORY, OCCUPIED">PALESTINIAN TERRITORY, OCCUPIED</option>
+                                <option value="PANAMA">PANAMA</option>
+                                <option value="PAPUA NEW GUINEA">PAPUA NEW GUINEA</option>
+                                <option value="PARAGUAY">PARAGUAY</option>
+                                <option value="PERU">PERU</option>
+                                <option value="PHILIPPINES">PHILIPPINES</option>
+                                <option value="PITCAIRN">PITCAIRN</option>
+                                <option value="POLAND">POLAND</option>
+                                <option value="PORTUGAL">PORTUGAL</option>
+                                <option value="PUERTO RICO">PUERTO RICO</option>
+                                <option value="QATAR">QATAR</option>
+                                <option value="REPUBLIC OF KOSOVO">REPUBLIC OF KOSOVO</option>
+                                <option value="REUNION">REUNION</option>
+                                <option value="ROMANIA">ROMANIA</option>
+                                <option value="RUSSIAN FEDERATION">RUSSIAN FEDERATION</option>
+                                <option value="RWANDA">RWANDA</option>
+                                <option value="SAINT. LUCIA">SAINT. LUCIA</option>
+                                <option value="SAINT BARTHELEMY">SAINT BARTHELEMY</option>
+                                <option value="SAINTE LUCIA">SAINTE LUCIA</option>
+                                <option value="SAINT HELENA, ASCENSION AND TRISTAN DA CUNHA">SAINT HELENA, ASCENSION AND TRISTAN DA CUNHA</option>
+                                <option value="SAINT KITTS AND NEVIS">SAINT KITTS AND NEVIS</option>
+                                <option value="SAINT LUCIA">SAINT LUCIA</option>
+                                <option value="SAINT MARTIN (FRENCH PART)">SAINT MARTIN (FRENCH PART)</option>
+                                <option value="SAINT PIERRE AND MIQUELON">SAINT PIERRE AND MIQUELON</option>
+                                <option value="SAINT VINCENT AND THE GRENADINES">SAINT VINCENT AND THE GRENADINES</option>
+                                <option value="SAMOA">SAMOA</option>
+                                <option value="SAN MARINO">SAN MARINO</option>
+                                <option value="SAO TOME AND PRINCIPE">SAO TOME AND PRINCIPE</option>
+                                <option value="SAUDI ARABIA">SAUDI ARABIA</option>
+                                <option value="SENEGAL">SENEGAL</option>
+                                <option value="SERBIA">SERBIA</option>
+                                <option value="SEYCHELLES">SEYCHELLES</option>
+                                <option value="SIERRA LEONE">SIERRA LEONE</option>
+                                <option value="SINGAPORE">SINGAPORE</option>
+                                <option value="SINT MAARTEN (DUTCH PART)">SINT MAARTEN (DUTCH PART)</option>
+                                <option value="SLOVAKIA">SLOVAKIA</option>
+                                <option value="SLOVENIA">SLOVENIA</option>
+                                <option value="SOLOMON ISLANDS">SOLOMON ISLANDS</option>
+                                <option value="SOMALIA">SOMALIA</option>
+                                <option value="SOUTH AFRICA">SOUTH AFRICA</option>
+                                <option value="SOUTH GEORGIA AND THE SOUTH SANDWHICH ISLANDS">SOUTH GEORGIA AND THE SOUTH SANDWHICH ISLANDS</option>
+                                <option value="SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS">SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS</option>
+                                <option value="SOUTH SUDAN">SOUTH SUDAN</option>
+                                <option value="SPAIN">SPAIN</option>
+                                <option value="SRI LANKA">SRI LANKA</option>
+                                <option value="SUDAN">SUDAN</option>
+                                <option value="SURINAME">SURINAME</option>
+                                <option value="SVALBARD AND JAN MAYEN">SVALBARD AND JAN MAYEN</option>
+                                <option value="SWAZILAND">SWAZILAND</option>
+                                <option value="SWEDEN">SWEDEN</option>
+                                <option value="SWITZERLAND">SWITZERLAND</option>
+                                <option value="SYRIAN ARAB REPUBLIC">SYRIAN ARAB REPUBLIC</option>
+                                <option value="TAIWAN, PROVINCE OF CHINA">TAIWAN, PROVINCE OF CHINA</option>
+                                <option value="TAJIKISTAN">TAJIKISTAN</option>
+                                <option value="TANZANIA, UNITED REPUBLIC OF">TANZANIA, UNITED REPUBLIC OF</option>
+                                <option value="THAILAND">THAILAND</option>
+                                <option value="TIMOR">TIMOR</option>
+                                <option value="TIMOR-LESTE">TIMOR-LESTE</option>
+                                <option value="TOGO">TOGO</option>
+                                <option value="TOKELAU">TOKELAU</option>
+                                <option value="TONGA">TONGA</option>
+                                <option value="TRINIDAD AND TOBAGO">TRINIDAD AND TOBAGO</option>
+                                <option value="TUNISIA">TUNISIA</option>
+                                <option value="TURKEY">TURKEY</option>
+                                <option value="TURKMENISTAN">TURKMENISTAN</option>
+                                <option value="TURKS AND CAICOS ISLANDS">TURKS AND CAICOS ISLANDS</option>
+                                <option value="TUVALU">TUVALU</option>
+                                <option value="UGANDA">UGANDA</option>
+                                <option value="UKRAINE">UKRAINE</option>
+                                <option value="UNITED ARAB EMIRATES">UNITED ARAB EMIRATES</option>
+                                <option value="UNITED KINGDOM">UNITED KINGDOM</option>
+                                <option value="UNITED STATES">UNITED STATES</option>
+                                <option value="UNITED STATES MINOR OUTLYING ISLANDS">UNITED STATES MINOR OUTLYING ISLANDS</option>
+                                <option value="URUGUAY">URUGUAY</option>
+                                <option value="UZBEKISTAN">UZBEKISTAN</option>
+                                <option value="VANUATU">VANUATU</option>
+                                <option value="VENEZUELA, BOLIVARIAN REPUBLIC OF">VENEZUELA, BOLIVARIAN REPUBLIC OF</option>
+                                <option value="VIET NAM">VIET NAM</option>
+                                <option value="VIRGIN ISLANDS">VIRGIN ISLANDS</option>
+                                <option value="VIRGIN ISLANDS, BRITISH">VIRGIN ISLANDS, BRITISH</option>
+                                <option value="VIRGIN ISLANDS, U.S.">VIRGIN ISLANDS, U.S.</option>
+                                <option value="WALLIS AND FUTUNA">WALLIS AND FUTUNA</option>
+                                <option value="WESTERN SAHARA">WESTERN SAHARA</option>
+                                <option value="YEMEN">YEMEN</option>
+                                <option value="ZAMBIA">ZAMBIA</option>
+                                <option value="ZIMBABWE">ZIMBABWE</option>
+                            </select>
+                        </div>
+                        
+                        <div class="col-xs-6 form-group">
+                            <label>Project Name</label>
+                            <input id="00NA000000B0uFz" class="form-control" maxlength="50" name="00NA000000B0uFz" size="20" type="text" placeholder="" />
+                        </div>
+                        
+                        <div class="col-xs-6 form-group">
+                            <label>Project / Sales Order ID</label>
+                            <input id="00NA000000B0uG0" class="form-control" maxlength="50" name="00NA000000B0uG0" size="20" type="text" placeholder="" />
+                        </div>
+                        
+                        <div class="col-xs-6 form-group">
+                            <label>Job Type</label>
+                            <select id="00NA000000B0uFG" class="form-control" name="00NA000000B0uFG" title="Job Type">
+                            <option value="">--None--</option>
+                            <option value="CCM">CCM</option>
+                            <option value="CiTRAS">CiTRAS</option>
+                            <option value="Contract Number">Contract Number</option>
+                            <option value="DWG Number">DWG Number</option>
+                            <option value="FIRT">FIRT</option>
+                            <option value="FSR">FSR</option>
+                            <option value="IBS-CIT">IBS-CIT</option>
+                            <option value="ICN">ICN</option>
+                            <option value="Job Number">Job Number</option>
+                            <option value="Maximo SR">Maximo SR</option>
+                            <option value="NCM/NCR">NCM/NCR</option>
+                            <option value="NPS">NPS</option>
+                            <option value="Other">Other</option>
+                            <option value="Outage Tracker">Outage Tracker</option>
+                            <option value="PAC">PAC</option>
+                            <option value="PO Number">PO Number</option>
+                            <option value="Project ID">Project ID</option>
+                            <option value="Project Issue Log">Project Issue Log</option>
+                            <option value="Punch list">Punch list</option>
+                            <option value="QCR Number">QCR Number</option>
+                            <option value="QTS">QTS</option>
+                            <option value="Quote #">Quote #</option>
+                            <option value="Related Inquiry">Related Inquiry</option>
+                            <option value="Repair Order Number">Repair Order Number</option>
+                            <option value="Sales Order #">Sales Order #</option>
+                            <option value="Serial #">Serial #</option>
+                            <option value="Service Notice">Service Notice</option>
+                            <option value="Service Order">Service Order</option>
+                            <option value="Tech Support">Tech Support</option>
+                            <option value="Vessel Name">Vessel Name</option>
+                            <option value="Vessel Number">Vessel Number</option>
+                            <option value="Warranty Number">Warranty Number</option>
+                            <option value="Opportunity ID">Opportunity ID</option>
+                            <option value="Parts">Parts</option>
+                            <option value="Repair">Repair</option>
+                            <option value="Outage">Outage</option>
+                            <option value="Troubleshooting (during operations)">Troubleshooting (during operations)</option>
+                            <option value="Project Execution">Project Execution</option>
+                            <option value="Project Installation">Project Installation</option>
+                            </select>
+                        </div>
+                        
+                        <div class="col-xs-6 form-group">
+                            <label>Job Number</label>
+                            <input id="00NA000000B0uFw" class="form-control" maxlength="50" name="00NA000000B0uFw" size="20" type="text" placeholder="" />
+                        </div>
+                        
+                        <div class="col-xs-6 form-group">
+                            <label >Location of Mfg /Service</label>
+                                    <select id="00NA000000B0uFH" class="form-control" name="00NA000000B0uFH" title="Location of Mfg /Service">
+                                    </select>
+                        </div>
+
+                    </div>
+                    <!---->
+
+                    <!--<div class="row">
+                        
+                        <div class="col-xs-6 form-group">
+                            <label>Site Name</label><span id='spanid_123'><font color="red" size="5">*</font></span>
+                            <input id="00NA000000B0uFM" class="form-control" maxlength="255" name="00NA000000B0uFM" size="20" type="text" placeholder="" />
+                        </div>
+                        <!--<div class="col-xs-6">
+                            <div class="row">
+                                <label class="col-xs-12" id="idlblMCjobType"> Job Type:</label>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6">
+                                    <select id="00NA000000B0uFG" class="form-control" name="00NA000000B0uFG" title=" Job Type">
+                                        <option value="">--None--</option>
+                                        <option value="CCM">CCM</option>
+                                        <option value="CiTRAS">CiTRAS</option>
+                                        <option value="Contract Number">Contract Number</option>
+                                        <option value="DWG Number">DWG Number</option>
+                                        <option value="FSR">FSR</option>
+                                        <option value="IBS-CIT">IBS-CIT</option>
+                                        <option value="ICN">ICN</option>
+                                        <option value="Job Number">Job Number</option>
+                                        <option value="Maximo SR">Maximo SR</option>
+                                        <option value="NCM/NCR">NCM/NCR</option>
+                                        <option value="NPS">NPS</option>
+                                        <option value="Other">Other</option>
+                                        <option value="Outage Tracker">Outage Tracker</option>
+                                        <option value="PAC">PAC</option>
+                                        <option value="PO Number">PO Number</option>
+                                        <option value="Project ID">Project ID</option>
+                                        <option value="Project Issue Log">Project Issue Log</option>
+                                        <option value="Punch list">Punch list</option>
+                                        <option value="QCR Number">QCR Number</option>
+                                        <option value="QTS">QTS</option>
+                                        <option value="Quote #">Quote #</option>
+                                        <option value="Related Inquiry">Related Inquiry</option>
+                                        <option value="Repair Order Number">Repair Order Number</option>
+                                        <option value="Sales Order #">Sales Order #</option>
+                                        <option value="Serial #">Serial #</option>
+                                        <option value="Service Notice">Service Notice</option>
+                                        <option value="Service Order">Service Order</option>
+                                        <option value="Tech Support">Tech Support</option>
+                                        <option value="Vessel Name">Vessel Name</option>
+                                        <option value="Vessel Number">Vessel Number</option>
+                                        <option value="Warranty Number">Warranty Number</option>
+                                    </select>
+                                </div>
+                                <!--<div class="col-xs-12 col-sm-6">
+                                    <!--   <input class="form-control" type="text"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 form-group">
+                            <label id="idlblMCJobNumber">Job Number</label>
+                            <input id="00NA000000B0uFw" class="form-control" maxlength="80" name="00NA000000B0uFw" size="20" type="number" placeholder="" />
+                        </div>
+
+                    </div>-->
+                    <!---->
+
+                    <div class="row">
+                        <!--<div class="col-xs-6 form-group">
+                            <label id="idlblMCLocation">Location</label>
+                            <select id="00NA000000B0uFH" class="form-control" name="00NA000000B0uFH" title="Location of Mfg/Service">
+                                <option value="">--None--</option>
+
+                            </select>
+                        </div>-->
+                        <div class="col-xs-6 form-group">
+                            <label>Customer Contact Name</label><font color="red" size="5">*</font>
+                            <input id="00NA000000B0uF7" class="form-control" maxlength="60" name="00NA000000B0uF7" size="20" type="text" placeholder="" />
+                        </div>
+                        <div class="col-xs-6 form-group">
+                            <label>Customer Email</label><font color="red" size="5">*</font>
+                            <input id="00NA000000B0uF8" class="form-control" maxlength="80" name="00NA000000B0uF8" size="20" type="email"  />
+                        </div>
+                        <!--<div class="col-xs-6 ">
+                            <div class="row">
+                                <label class="col-xs-12">Customer Email</label>
+
+                                <div class="col-xs-12 col-sm-6">
+                                    <input id="00NA000000B0uF8" class="form-control" maxlength="80" name="00NA000000B0uF8" size="20" type="email" />
+                                    <!--<input id="00NA000000B0uF8" class="form-control" maxlength="80" name="00NA000000B0uF8" size="20" type="email" placeholder="Your Email Address" />-->
+                                    <!-- <input  id="email" class="form-control" maxlength="80" name="email" size="20" type="email" />
+                                </div>
+                                <!--<div class="col-xs-12 col-sm-6">
+                                    <!--   <input class="form-control" type="text"/>
+                                </div>
+                            </div>
+                        </div>-->
+                        <div class="col-xs-6 form-group">
+                            <label>Employee Email</label><font color="red" size="5">*</font>
+                            <input id="email" maxlength="80" name="email" size="20" type="email" class="form-control" />
+                        </div>
+                        <div class="col-xs-6 form-group">
+                            <label>Customer Phone</label><span id='spanid_123'><font color="red" size="5">*</font></span>
+                            <input id="00NA000000B0uF9" class="form-control" maxlength="20" name="00NA000000B0uF9" onkeydown="formatPhoneOnEnter(this, event);" size="20" type="tel" placeholder="" />
+                        </div>
+                        <div class="col-xs-6 form-group">
+                            <label>Customer Address</label><span id='spanid_123'><font color="red" size="5">*</font></span>
+                            <textarea id="00N1200000B168O" class="form-control" name="00N1200000B168O" type="text" rows="2" cols="20" wrap="hard"></textarea>
+                        </div>
+                    </div>
+
+                    <!------------------->
+
+                    <input type="hidden" id="external" name="external" value="1" />
+                    <br/>
+                    <center>
+                        <input type="submit" class="form-control" name="submit" id="idbtnSubmit" style="background-color: #00a572;
+    color: aliceblue;
+    font-size:15px;" />
+                    </center>
+                    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>-->
+                    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+            </body>
+        </form>
+
+        </html>
+    </apex:page>

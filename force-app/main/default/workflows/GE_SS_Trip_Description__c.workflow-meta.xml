@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>SS_Trip_Description_Approved_Email</fullName>
+        <description>SS - Trip Description Approved Email</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/SS_Trip_Description_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>SS_Trip_Description_Rejected_Email</fullName>
+        <description>SS - Trip Description Rejected Email</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/SS_Trip_Description_Rejected</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Update_Active_field_on_Approved</fullName>
+        <field>GE_SS_Active__c</field>
+        <literalValue>1</literalValue>
+        <name>Update Active field on Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+</Workflow>

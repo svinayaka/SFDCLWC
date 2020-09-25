@@ -1,0 +1,1589 @@
+<apex:page sidebar="false" showHeader="false" controller="Predixdashboardpagecontroller" standardStylesheets="false" action="{!ShowFeed_Comment}">
+ 
+<apex:stylesheet value="{!URLFOR($Resource.Predix_NewUI, 'fonts.css')}"/>
+<apex:stylesheet value="{!URLFOR($Resource.Predix_NewUI, 'bootstrap.css')}"/>
+<apex:stylesheet value="{!URLFOR($Resource.Predix_NewUI, 'screen.css')}"/>
+<apex:includeScript value="{!URLFOR($Resource.Predix_NewUI, 'jquery-2.1.4.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.Predix_NewUI, 'jquery-ui.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.Predix_NewUI, 'jquery.mousewheel.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.Predix_NewUI, 'jquery.mCustomScrollbar.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.Predix_NewUI, 'js.cookie.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.Predix_NewUI, 'Dashboardscript.js')}"/>
+<!--<apex:includeScript value="{!URLFOR($Resource.Predix_NewUI, 'script.js')}"/>-->
+<!--<apex:includeScript value="{!URLFOR($Resource.Predix_files, 'ad_status.js')}"/>-->
+<apex:includeScript value="{!URLFOR($Resource.Predix_NewUI, 'c3.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.Predix_NewUI, 'd3.js')}"/>
+<html>
+<head>
+<title>GE Oil and Gas - Dashboard</title>
+<script>
+
+ 
+   var profileName = "{!$Profile.Name}";
+   //alert(profileName);
+   if(profileName == 'II Partner Community UO'){
+    // alert('system admmin---'+profileName);   
+      includeCSSfile('/Predix/resource/1448986370000/Predix_NewUI/conocoscreen.css');   
+      document.getElementById('dashB').style.display ="none";
+      document.getElementById('concoB').style.display ="block";      
+     
+   }else if(profileName == 'II Partner Community IPS'){
+    includeCSSfile('/Predix/resource/1448986370000/Predix_NewUI/columbiascreen.css'); 
+   }else if(profileName == 'II Partner Community My Fleet Manager'){
+    includeCSSfile('/Predix/resource/1448986370000/Predix_NewUI/MyFleetManager.css'); 
+   }else if(profileName == 'System Administrator'|| profileName == 'GE_ES Developer'|| profileName == 'GE OG Predix Agent' ){
+    //alert('Normal user---'+profileName);
+    var url = window.location.href;
+  //  alert(url);
+  //  alert(url.indexOf('/Predix/'));
+   if(url.indexOf('/Predix/')!= -1)
+   {
+     includeCSSfile('/Predix/resource/1448986370000/Predix_NewUI/AdminScreen.css');
+     }
+else{
+        includeCSSfile('/resource/1448986370000/Predix_NewUI/screen.css');
+    }
+           
+   }
+     
+ 
+function includeCSSfile(href) {
+    //alert(href);
+    var head_node = document.getElementsByTagName('head')[0];
+    var link_tag = document.createElement('link');
+    link_tag.setAttribute('rel', 'stylesheet');
+    link_tag.setAttribute('type', 'text/css');
+    link_tag.setAttribute('href', href);
+    head_node.appendChild(link_tag);
+}
+
+</script>
+</head>
+
+<body>
+<script>
+function showTableFormData()
+{
+        document.getElementById('tableDataId').style.display ="none";
+        document.getElementById('formDataId').style.display ="block";
+}
+
+
+function showTableData()
+{
+     document.getElementById('tableDataId').style.display ="block";
+   //  document.getElementById('formDataId').style.display ="block";
+   document.getElementById('formDataId').style.display ="none";
+   
+
+}
+
+
+function CallingmethodFollowInJavascript(repeatName, HasFollow){
+  
+    methodFollowInJavascript(repeatName,HasFollow);
+}
+
+function CallingRecordTypeCaseFunction(){
+        var recCount= {!recordTypeCount};
+        //alert("{!recordTypeCount}");
+        if (recCount> 1) {
+       document.getElementById('RTDashTableId').style.display= "block";
+       
+       document.getElementById('CaseDashtableId').style.display ="none";
+    } else {
+        document.getElementById('RTDashTableId').style.display= "none";
+         document.getElementById('CaseDashtableId').style.display ="block";
+    }
+       
+    }
+    
+    
+function HideGoFormData(){
+            
+            document.getElementById('RTDashTableId').style.display ="none";
+            document.getElementById('CaseDashtableId').style.display ="block";       
+    }
+    
+ /*function CallingRadioRecTypefunction(){
+        var recCount= {!recordTypeCount};
+
+        if (recCount> 1) {
+       document.getElementById('RTNewRadioId').style.display= "block";
+       
+       document.getElementById('NewRadioCaseId').style.display ="none";
+    } else {
+        document.getElementById('RTNewRadioId').style.display= "none";
+         document.getElementById('NewRadioCaseId').style.display ="block";
+    }
+       
+    }*/
+    function CallingRadioRecTypefunction(){
+        var recCount= {!recordTypeCount};
+
+        if (recCount> 1) {
+           document.getElementById('RTNewRadioId').style.display= "block";
+           document.getElementById('NewRadioCaseId').style.display ="none";
+           document.getElementById('SuggRadioCaseId').style.display ="none";
+           document.getElementById('BugRadioCaseId').style.display ="none";
+        } else {
+        document.getElementById('RTNewRadioId').style.display= "none";
+        if (document.getElementById('Kas').checked) {
+        //    alert(document.getElementById('Kas').value);
+         //   alert(document.getElementById('Kas').checked);
+            document.getElementById('SuggRadioCaseId').style.display = "block";
+            document.getElementById('BugRadioCaseId').style.display = "none";
+            document.getElementById('NewRadioCaseId').style.display = "none"
+        }
+        else if (document.getElementById('Pm').checked) {
+         //   alert(document.getElementById('Pm').value);
+          //  alert(document.getElementById('Pm').checked);
+            document.getElementById('SuggRadioCaseId').style.display = "block";
+            document.getElementById('NewRadioCaseId').style.display = "none"
+            document.getElementById('BugRadioCaseId').style.display = "none";
+        }
+        else if (document.getElementById('Er').checked) {
+        //    alert(document.getElementById('Er').value);
+         //   alert(document.getElementById('Er').checked);
+            document.getElementById('SuggRadioCaseId').style.display = "none";
+            document.getElementById('NewRadioCaseId').style.display = "block"
+            document.getElementById('BugRadioCaseId').style.display = "none";
+        }
+        else if (document.getElementById('Lb').checked) {
+        //    alert(document.getElementById('Lb').value);
+         //   alert(document.getElementById('Lb').checked);
+            document.getElementById('SuggRadioCaseId').style.display = "none";
+            document.getElementById('NewRadioCaseId').style.display = "none"
+            document.getElementById('BugRadioCaseId').style.display = "block";
+        }
+    }
+       
+}
+    
+function HideGoRadioButtonData(){
+            
+            document.getElementById('RTNewRadioId').style.display ="none";
+            document.getElementById('NewRadioCaseId').style.display ="block";      
+    }       
+    
+    function HideGoFormDataPlus(){
+            
+            document.getElementById('RecordTabplusId').style.display ="none";
+            document.getElementById('DashPlusCaseId').style.display ="block";       
+    }
+    
+    
+function onRadioSelectOption() {
+   // alert('hi');
+    document.getElementById('RTNewRadioId').style.display ="none";
+
+    
+    if (document.getElementById('Kas').checked) {
+        
+     //       alert(document.getElementById('Kas').value);
+   // alert(document.getElementById('Kas').checked);
+        document.getElementById('SuggRadioCaseId').style.display = "block";
+        document.getElementById('BugRadioCaseId').style.display = "none";
+        document.getElementById('NewRadioCaseId').style.display = "none"
+    }
+    else if (document.getElementById('Pm').checked) {
+   //     alert(document.getElementById('Pm').value);
+    //   alert(document.getElementById('Pm').checked);
+        document.getElementById('SuggRadioCaseId').style.display = "block";
+        document.getElementById('NewRadioCaseId').style.display = "none"
+        document.getElementById('BugRadioCaseId').style.display = "none";
+    }
+
+    else if (document.getElementById('Er').checked) {
+    //    alert(document.getElementById('Er').value);
+     //   alert(document.getElementById('Er').checked);
+        document.getElementById('SuggRadioCaseId').style.display = "none";
+        document.getElementById('NewRadioCaseId').style.display = "block"
+        document.getElementById('BugRadioCaseId').style.display = "none";
+    }
+
+    else if (document.getElementById('Lb').checked) {
+     //   alert(document.getElementById('Lb').value);
+      //  alert(document.getElementById('Lb').checked);
+        document.getElementById('SuggRadioCaseId').style.display = "none";
+        document.getElementById('NewRadioCaseId').style.display = "none"
+        document.getElementById('BugRadioCaseId').style.display = "block";
+}
+
+
+}    
+    
+  getValues = function() {
+        //var newCaseSubject = document.getElementById('j_id0:j_id13:j_id111').value;
+        var accId = document.getElementById('j_id0:j_id13:accId');
+        var conId = document.getElementById('j_id0:j_id13:conId');
+        if((accId === null || accId.value == '') || (conId === null || conId.value == '')) {
+            alert('Please enter account/contact name');
+            return false;
+        }
+        return true;
+        //alert(newCaseSubject);
+        //alert(accId);
+    }
+    
+      getValuesPlusCase = function() {
+        //var newCaseSubject = document.getElementById('j_id0:j_id13:j_id111').value;
+        var accId = document.getElementById('j_id0:j_id13:j_id58');
+        var conId = document.getElementById('j_id0:j_id13:j_id60');
+        if((accId === null || accId.value == '') || (conId === null || conId.value == '')) {
+            alert('Please enter account/contact name');
+            return false;
+        }
+        return true;
+        //alert(newCaseSubject);
+        //alert(accId);
+    }
+    
+   function getValuesRadioCase(type) {
+        var accId = document.getElementById('j_id0:j_id13:j_id128');
+        var accId1 = document.getElementById('j_id0:j_id13:j_id156');
+        var accId2 = document.getElementById('j_id0:j_id13:j_id142');
+        var conId = document.getElementById('j_id0:j_id13:j_id130');
+        var conId1 = document.getElementById('j_id0:j_id13:j_id158');
+        var conId2 = document.getElementById('j_id0:j_id13:j_id144');
+        
+        if(type == 'req'){
+            if(accId.value == '' || conId.value == ''){
+                alert('Please enter account/contact name');
+                return false;
+            }
+        }
+        
+        if(type == 'imp'){
+            if(accId1.value == '' || conId1.value == ''){
+                alert('Please enter account/contact name');
+                return false;
+            }
+        }
+        
+        if(type == 'bug'){
+            if(accId2.value == '' || conId2.value == ''){
+                alert('Please enter account/contact name');
+                return false;
+            }
+        }
+         return true;
+    }
+
+
+     
+     
+     
+
+ /* function OnSubmitNullPlusCase(){
+         //alert('hi');
+         var accId = $('#j_id0:j_id13:j_id58:accId').val(); 
+         var conId = $('#j_id0:j_id13:j_id60:conId').val();
+         var subId =$('#j_id0:j_id13:j_id62').val(); 
+         var Description = $('#j_id0:j_id13:j_id64').val();
+         //alert(conId);
+         //alert(accId);
+         //alert(subId);
+         //alert(Description);
+         
+         if(accId == undefined && conId == undefined && subId == undefined && Description ==undefined){
+            alert('Please select atleast one field to create the case.');
+            return false;
+         }
+            if(accId == '' && conId == '' )
+    { 
+        alert('Enter atleast one criteria in Advanced Search and click search!') ;     
+    }   
+  } */ 
+    
+
+</script>
+
+<script type="text/javascript">
+    var __sfdcSessionId = '{!GETSESSIONID()}';
+   
+    </script>
+    <script src="../../soap/ajax/34.0/connection.js" type="text/javascript"></script>
+    <script type="text/javascript">    
+    var writtenHTML = '';
+   
+    
+    
+    function setupPage() {
+      //function contains all code to execute after page is rendered
+      var searchKey = $('#idglobalsearch').val();
+      console.log(searchKey);
+      if(searchKey =='')
+      {
+         $('#idULsuggestedcases').html('');
+         $('#idULsuggestedcases').Hide(); 
+          return;
+      }
+      writtenHTML = '<ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content" id="ui-id-1" tabindex="0" style="display: block; position: relative; top: 0px; left: 1px; width: 1258px;"><li class="ui-menu-category">cases</li>';
+     
+      var resultCases =  sforce.connection.query("Select Id, Subject,CaseNumber,RecordType.Name From Case where  (Subject like '"+searchKey+"%' and Subject !=null) OR (CaseNumber like '"+searchKey+"%' and CaseNumber !=null) limit 10");
+      //console.log(resultCases.size);
+      var resultKnowledge = sforce.connection.query(
+          "SELECT Summary,Title,UrlName, Language, PublishStatus, KnowledgeArticleId FROM KnowledgeArticleVersion where Title like '"+searchKey+"%' and PublishStatus ='Online' and Language='en_US' and Title !=null limit 10");
+         
+    if (resultCases.size > 0) {
+      //get the records array
+      var records = resultCases.getArray('records');
+      //loop through the records and construct html string
+      for (var i = 0; i < records.length; i++) {
+        var cases = records[i];
+       
+       writtenHTML +=  '<li aria-label="Case : '+cases.CaseNumber +':'+ cases.Subject +'" class="ui-menu-item" id="ui-id-'+cases.Id+'" tabindex="-1"><a href="#top">' +cases.CaseNumber +':'+ cases.Subject+'</a></li>';
+      }
+    
+    }
+    else{
+        writtenHTML +=  '<li aria-label="Case : No data" class="ui-menu-item" id="ui-id-255" tabindex="-1"><a href="#top">No data</a>  </li>';
+    }
+    
+    //console.log(resultKnowledge.size);
+    writtenHTML +='<li class="ui-menu-category">knowledge</li>';
+    if(resultKnowledge.size > 0){
+       var records = resultKnowledge.getArray('records');
+       
+ 
+      //loop through the records and construct html string
+      for (var i = 0; i < records.length; i++) {
+        var knowledge = records[i];
+ 
+        writtenHTML +=  '<li aria-label="Knowledge : '+knowledge.Summary +'" class="ui-menu-item" id="ui-id-255" tabindex="-1"><a href="#top">' + knowledge.Summary+'</a> </li>';
+       
+      }
+      
+      }
+      else{
+         writtenHTML +=  '<li aria-label="Knowledge : No data" class="ui-menu-item" id="ui-id-255" tabindex="-1"><a href="#top">No data</a> </li>';
+      }
+      if(resultCases.size > 0 || resultKnowledge.size > 0){
+            writtenHTML+='</ul>';  
+            $('#idULsuggestedcases').html(writtenHTML);  
+            $('#idULsuggestedcases').Show();  
+      }
+     /* else
+      {
+        $('#idULsuggestedcases').html('');   
+      }
+      */
+     
+    //render the generated html string
+   
+    
+  }
+ 
+  function queryFailed(error, source) {
+    source.output.innerHTML = "An error has occurred: " + error;
+  }
+ 
+  </script>
+<apex:form >
+<aside>
+        <apex:actionFunction action="{!FollowCase}" name="methodFollowInJavascript"  rerender="followOutputPanel" >
+              <apex:param name="firstParam" assignTo="{!FollowParentId}" value="" /> 
+            <apex:param name="SecParam" assignTo="{!strFollowUnFollow}" value="" />              
+        </apex:actionFunction>
+        
+        <!--  <apex:actionFunction oncomplete="OnSubmitNullCase()" name="OnSubmitMethodInJavascript"   >
+                        
+        </apex:actionFunction>-->
+            
+  <h1><a class="external-link" href="http://www.ge.com">GE Oil and Gas</a></h1>
+  <!--/ Logo -->
+  <nav>
+    <ul>
+      <li class="icon link-new-case js-flyout" data-target="#newCaseFlyout" data-distance="44" data-role="nav"><a href="javascript:;" class="icon" onclick="CallingRecordTypeCaseFunction()" >New case</a></li>
+      <li class="icon active"><a href="javascript:;"><span class="icon icon-dashboard"></span>Dashboard</a></li>
+      <li class="icon"><a href="{!$site.prefix}/apex/PredixCasesPage"><span class="icon icon-cases"></span>Cases</a></li>
+     <!-- <li class="icon js-flyout" data-target="#enhancementsFlyout" data-distance="232" data-role="nav"><a href="javascript:;"><span class="icon icon-enhancements"></span>Enhancements</a></li>
+      <li class="icon"><a href="Knowledge.html"><span class="icon icon-knowledge"></span>Knowledge</a></li>-->
+    </ul>
+  </nav>
+  <!--/ Nav -->
+</aside>
+<!--/ Aside -->
+<div class="wrapper is-configable">
+  <header class="header-banner">
+  <!--<apex:outputPanel rendered="{!$Profile.Name == 'System Administrator,true,false'}">-->
+   <!--<apex:outputPanel rendered="{!IF($Profile.Name == 'System Administrator',true,false)}">
+   <apex:outputPanel rendered="{IF($User.CompanyName  == 'CONOCO PHILLIPS',true,false)}">-->
+   <!-- <apex:outputPanel rendered="{!IF($Profile.Name == 'System Administrator',true,false)}">-->
+  <apex:outputPanel rendered="{!IF((($Profile.Name <> 'II Partner Community UO') && ($Profile.Name <> 'II Partner Community IPS')&& ($Profile.Name <> 'II Partner Community My Fleet Manager')),true,false)}">   
+    
+    <section class="banner" id="dashB"  >
+      <div class="opacity"></div>
+      <div class="bottom-opacity"></div>
+      <div class="info-box">
+        <a href="javascript:;" class="thumbnail-link">
+        <!--<img src="{!IF($Profile.Name == 'Profile Name', 'someBanner.jpg', 'defaultBanner.jpg')}" />-->
+       
+        <apex:image url="{!URLFOR($Resource.Predix_NewUI,'banner-thumbnail.png')}"/>
+           
+       </a>
+       
+        <div class="text">
+          <span class="font16 block">Welcome,</span>
+          <h2>Name of the Company</h2>
+          <p>“A caption of the company lorem ipsum dolor sit amet cobsequery lore mipsum dolor sit amet goes here”</p>
+        </div>
+      
+        
+      </div>
+    </section>
+   
+   </apex:outputPanel>
+   
+   
+
+   
+    <!--/ .banner -->
+    <!--<apex:outputPanel rendered="{!IF($Profile.Name == 'II Partner Community UO',true,false)}"> -->
+     <!--<apex:outputPanel rendered="{!IF($Profile.Name == 'System Administrator',true,false)}">-->
+     <!--<apex:outputPanel rendered="{!IF($Profile.Name == 'II Partner Community UO',true,false)}">-->
+   <!--    <apex:outputPanel rendered="{!IF($User.CompanyName  == 'CONOCO PHILLIPS',true,false)}" >-->
+     
+<!--  {!IF(($User.CompanyName  == 'CONOCO PHILLIPS'),"banner-conoco",IF((($User.CompanyName  == 'COLUMBIA PIPELINE GROUP'),"banner-columbia","banner")))}-->
+  <!-- <section class="{!IF(($User.CompanyName  == 'CONOCO PHILLIPS'),"banner-conoco",IF(($User.CompanyName  == 'COLUMBIA PIPELINE GROUP'),"banner-columbia",""))}">
+      <div class="opacity"></div>
+      <div class="bottom-opacity"></div>
+      <div class="info-box"></div>
+    </section>-->
+   
+  <!-- </apex:outputPanel> -->
+   <apex:outputPanel rendered="{!IF($User.CompanyName  == 'CONOCO PHILLIPS',true,false)}">
+    
+    <section class="banner-conoco">
+    <!--  <div class="opacity"></div>
+      <div class="bottom-opacity"></div> -->
+      <div class="info-box">
+      
+      </div>
+    </section>
+     </apex:outputPanel>
+    <!--/ .banner conoco-->
+ <apex:outputPanel rendered="{!IF($User.CompanyName  == 'COLUMBIA PIPELINE GROUP',true,false)}">
+    
+    <section class="banner-columbia">
+     <!-- <div class="opacity"></div>
+      <div class="bottom-opacity"></div> -->
+      <div class="info-box">
+      
+      </div>
+    </section>
+     </apex:outputPanel>
+    <!--/ .banner columbia -->
+    
+
+    <div class="top-bar">
+      <div class="expand-side">
+        <div class="widget pull-left widget-search">
+          <div class="icon icon-search">
+           <!-- <input type="text" class="js-autocomplete" placeholder="Find cases, articles, documentation" />-->
+           <input type="text" class="js-autocomplete" id="idglobalsearch" placeholder="Find cases, articles, documentation" onKeyup="setupPage()"/>
+            <a href="javascript:;" class="icon search-btn"></a>
+            <div id='idULsuggestedcases' style='overflow:auto; '>
+        </div>
+          </div>
+        </div>
+        <!--/ .widget-search -->
+        <div class="widget widget-user pull-right js-flyout" data-target="#profileFlyout" data-left="137" data-width="full" data-role="header">
+          <a href="javascript:;" class="icon icon-drop">
+           <apex:image url="{!URLFOR($Resource.Predix_NewUI,'user-thumbnail-grey.png')}" width="50" height="50"/>
+          {!$User.FirstName} {!$User.LastName}
+          </a>
+        </div>
+        <!--/ .widget-user -->
+      </div>
+      <div class="widget widget-fullsize pull-right">
+        <a href="javascript:;" class="icon icon-fullsize"></a>
+      </div>
+      <!--/ .widget-config -->
+      <div class="widget widget-config pull-right js-flyout hide" data-target="#configFlyout" data-left="137" data-role="header">
+        <a href="javascript:;" class="icon icon-config"></a>
+      </div>
+      <!--/ .widget-config -->
+    </div>
+    <!--/ .top-bar -->
+  </header>
+  <!--/ Header -->
+  <div class="main-container dashboard-container">
+    <div class="section section-case-support">
+      <h2 class="hide">Cases &amp; Support</h2>
+      <div class="container-fluid">
+        <div class="col-xs-8 is-widget" data-value="cases">
+          <div class="panel panel-case blue">
+            <div class="panel-heading">
+              <a href="javascript:;" class="pull-right icon icon-plugin js-plugin" onclick="showTableFormData();"></a>
+              <div class="pull-right filter">
+               <!-- <span class="label">View:</span>-->
+                <div class="dropdown is-dropdown js-module-priorities">
+               <!--   <span class="icon">All priorities</span>-->
+                </div>
+                <!--/ .dropdown -->
+             <!--   <span class="label">Filter by:</span>-->
+                <div class="dropdown is-dropdown js-module-status">
+                 <!--  <span class="icon">Status</span>-->
+                </div>
+                <!--/ .dropdown -->
+              </div>
+              <h2 class="js-accordion">My Cases<span class="icon"></span></h2>
+            </div>
+            <!--/ .panel-heading -->
+            <div class="panel-body">
+              <div class="expand-areas">
+              <div class="table-cases"  id='tableDataId' style="display:block;">
+                  <div class="mCustomScrollbar">
+                    <div class="table-wrapper is-filter-table">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th class="col-priority"></th>
+                            <th class="center col-number">Case number</th>
+                            <th><span class="data-subject">Subject</span></th>
+                            <th class="col-date">Date</th>
+                            <th class="center col-status">Status</th>
+                            <th class="col-button"></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                    
+                        <apex:repeat id="RecentcaseTable" value="{!RecentCasesDisplay}" var="recentCs"  > 
+                          <tr onclick="window.location.href='{!$Site.prefix}/apex/predixCasedetailPage?id={!recentCs.caseObj.Id}'">
+                          <apex:outputPanel rendered="{!IF(recentCs.caseObj.Priority == 'P1–Level 1–Catastrophic service failure',true,false)}" > <td><span class="icon icon-priority icon-P1" data-name="P1"></span></td></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(recentCs.caseObj.Priority == 'P2–Level 2–Service failure',true,false)}"> <td><span class="icon icon-priority icon-P2" data-name="P2"></span></td></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(recentCs.caseObj.Priority == 'P3–Level 3–Limited loss of service',true,false)}"><td><span class="icon icon-priority icon-P3" data-name="P3"></span></td></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(recentCs.caseObj.Priority == 'P4–Level 4–No impact to service',true,false)}"> <td><span class="icon icon-priority icon-P4" data-name="P4"></span></td></apex:outputPanel>
+                         
+                            
+                            <td class="center">{!recentCs.caseObj.CaseNumber}</td>
+                            <td><span class="data-subject">{!recentCs.caseObj.subject}</span></td>
+                           <td style="display: table-cell;" data-name="date"><span> <apex:outputText value="{0,date,MM/dd/yyyy  hh:mm a}"> <apex:param value="{!recentCs.caseObj.createddate}" /> </apex:outputText></span></td>
+                            <apex:outputpanel rendered="{!IF(recentCs.caseObj.Status== 'New',true,false)}"><td class="center" data-name="New"><span class="status-new">{!recentCs.caseObj.Status}</span></td></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(recentCs.caseObj.Status== 'Acknowledged',true,false)}"><td class="center" data-name="Attended"><span>{!recentCs.caseObj.Status}</span></td></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(recentCs.caseObj.Status== 'Working',true,false)}"><td class="center" data-name="working"><span>{!recentCs.caseObj.Status}</span></td></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(recentCs.caseObj.Status== 'Resolved',true,false)}"><td class="center" data-name="Resolved"><span>{!recentCs.caseObj.Status}</span></td></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(recentCs.caseObj.Status== 'Closed',true,false)}"><td class="center" data-name="Closed"><span>{!recentCs.caseObj.Status}</span></td></apex:outputpanel>
+                         
+                            
+                          <!--  <td><a href="javascript:;" class="icon icon-follow js-follow">Follow</a></td>-->
+                          <td> <apex:outputPanel id="followOutputPanel" >
+              <a href="javascript:;" id="idFollow" onclick="CallingmethodFollowInJavascript('{!recentCs.caseObj.Id}','{!recentCs.HasFollow}')" class="pull-left icon icon-follow js-follow">{!recentCs.HasFollow}</a>
+              </apex:outputPanel> </td>
+                          </tr>
+                          </apex:repeat>
+                         
+                         <!-- <tr>
+                            <td><span class="icon icon-priority icon-P2" data-name="P2"></span></td>
+                            <td class="center">0125623</td>
+                            <td><span class="data-subject">Part A3M5 replacement</span></td>
+                            <td>1 hr ago</td>
+                            <td class="center" data-name="New"><span class="status-new">New</span></td>
+                            <td><a href="javascript:;" class="icon icon-follow js-follow">Follow</a></td>
+                          </tr>
+                          <tr>
+                            <td><span class="icon icon-priority icon-P4" data-name="P4"></span></td>
+                            <td class="center">7888118</td>
+                            <td><span class="data-subject">GH43 security</span></td>
+                            <td>2 hrs ago</td>
+                            <td class="center" data-name="New"><span class="status-new">New</span></td>
+                            <td><a href="javascript:;" class="icon icon-follow js-follow">Follow</a></td>
+                          </tr>
+                          <tr>
+                            <td><span class="icon icon-priority icon-P1" data-name="P1"></span></td>
+                            <td class="center">0125639</td>
+                            <td><span class="data-subject">Rolling part replacement</span></td>
+                            <td>5 hrs ago</td>
+                            <td class="center" data-name="New"><span class="status-new">New</span></td>
+                            <td><a href="javascript:;" class="icon icon-follow js-follow">Follow</a></td>
+                          </tr>
+                          <tr>
+                            <td><span class="icon icon-priority icon-P4" data-name="P4"></span></td>
+                            <td class="center">0256348</td>
+                            <td><span class="data-subject">Part A244 replacement</span></td>
+                            <td>Yesterday</td>
+                            <td class="center" data-name="Attended">Attended</td>
+                            <td><a href="javascript:;" class="icon icon-follow js-follow">Follow</a></td>
+                          </tr>
+                          <tr class="closed">
+                            <td><span class="icon icon-priority icon-P4" data-name="P4"></span></td>
+                            <td class="center">0465726</td>
+                            <td><span class="data-subject">Overloaded motor</span></td>
+                            <td>2 months ago</td>
+                            <td class="center" data-name="Closed">Closed</td>
+                            <td><a href="javascript:;" class="icon icon-follow js-follow">Follow</a></td>
+                          </tr>-->
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <!-- Scrollbar -->
+                  <div class="bar-bottom clearfix">
+                    <div class="pull-left note">
+                      <dl>
+                        <dt class="pull-left">Priority</dt>
+                        <dd class="pull-left"><span class="icon icon-priority icon-P1">P1</span></dd>
+                        <dd class="pull-left"><span class="icon icon-priority icon-P2">P2</span></dd>
+                        <dd class="pull-left"><span class="icon icon-priority icon-P3">P3</span></dd>
+                        <dd class="pull-left"><span class="icon icon-priority icon-P4">P4</span></dd>
+                      </dl>
+                    </div>
+                    <!--/ .note -->
+                    <a href="{!$site.prefix}/apex/PredixCasesPage" class="pull-right btn btn-primary">View all cases</a>
+                  </div>
+                  <!--/ .bar-bottom -->
+                </div>
+                <!--/ .table-cases -->
+               <!-- <p class="icon is-no-context">You currently have no cases open!</p>-->
+               <div id='formDataId' style="display:none;">
+               <!----ADDED RECORD TYPE DIV FOR (+) CASE CREATION--------->
+               <div class="form-new-case is-form icon" id='RecordTabplusId' style="display:none">
+    <h2 style="
+    padding-top: 30px;
+    color: #3693f8;
+    padding-left: 12px;" ><a href="javascript:;" class="icon icon-close"></a>Please Select Record Type</h2>
+    <div class="container-fluid">
+      <div class="col-xs-6">
+        <div class="form-group">
+          <label>Record Type</label>
+        <!-- <apex:selectList value="{!SelectedRecordType}" multiselect="false" size="1" styleClass="js-custom-select" >
+         <apex:selectOptions value="{!RecordTypes}"/>-->
+        <!-- <apex:actionsupport event="onclick" action="{!updateRecordType}" rerender="CaseNewtableOneId" />-->
+     <!--   </apex:selectList>-->
+         <!-- <input type="text" class="form-control default"  />-->
+        </div>
+      </div>
+      
+    
+    </div>
+    <!--/ .container -->
+    <div class="buttons-group" 
+    style="padding-right: 130px;">
+   <!-- <apex:commandButton styleclass="btn btn-success pull-right"  value="Submit"  action="{!updateRecordType}" reRender="CasePlustableId"  oncomplete="HideGoFormDataPlus()"/>
+     <apex:commandLink styleclass="pull-right link-cancel js-close" action="{!Cancel}" value="Cancel"/>-->
+     <!-- <a href="javascript:;" class="btn btn-success pull-right">Submit</a>-->
+    </div>
+    <!--/ .buttons-group -->
+  </div>
+  <!--/ .form-new-case -->
+  <!----END---------- RECORD TYPE DIV FOR (+) CASE CREATION--------->
+  <apex:outputPanel id="CasePlustableId">
+                <div class="form-cases is-form" id="DashPlusCaseId">
+                  <div class="mCustomScrollbar">
+                    <div class="form-new-case">
+                      <div class="container-fluid">
+                        <div class="col-xs-6">
+                          <div class="form-group">
+                            <label>Account name</label>
+                            <!--<input type="text" class="form-control default" data-value="Account name" value="Account name" />-->
+                           <apex:inputField value="{!CreatemyCases.AccountId}" />
+                        
+                          </div>
+                        </div>
+                        <div class="col-xs-6">
+                          <div class="form-group">
+                            <label>Contact name</label>
+                           <!-- <input type="text" class="form-control default" data-value="Contact name" value="Contact name" />-->
+                          <apex:inputfield value="{!CreatemyCases.ContactId}" />
+                          </div>
+                        </div>
+                        <div class="col-xs-12">
+                          <div class="comments-group">
+                            <div class="subject">
+                          <apex:inputField value="{!CreatemyCases.Subject}" styleclass="form-control default" html-placeholder="Subject"/>
+                            
+                             <!-- <input type="text" class="form-control default test1" data-value="Subject" value="Subject" />-->
+                            </div>
+                            <!--/ .subject -->
+                            <div class="desctiption">
+                           <apex:inputField Value="{!CreatemyCases.Description}" Styleclass="form-control default" html-placeholder="Description" />
+                             <!-- <textarea class="form-control default" data-value="Description">Description</textarea>-->
+                            </div>
+                            <!--/ .description -->
+                            <div class="input-group js-file-upload">
+                             <!-- <div class="drag-area">
+                                <input type="text" class="form-control" readonly='' value="Attach file or drag & drop here" />
+                                <input type="file" class="file-upload" />
+                                <a href="javascript:;" class="icon icon-remove js-remove"></a>
+                              </div>-->
+                              <!--<a href="javascript:;" class="icon icon-browser js-browser"></a>-->
+                            </div>
+                          </div>
+                          <!--/ .comments-group -->
+                        </div>
+                      <!--  <div class="col-xs-6">
+                          <div class="form-group">
+                            <select class="js-custom-select">
+                                <option>Priority</option>
+                              <option>P1</option>
+                              <option>P2</option>
+                              <option>P3</option>
+                              <option>P4</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-xs-6">
+                          <div class="form-group">
+                            <select class="js-custom-select">
+                              <option>Status</option>
+                              <option>New</option>
+                              <option>Attended</option>
+                              <option>Closed</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-xs-6">
+                          <div class="form-group">
+                            <select class="js-custom-select">
+                              <option>Case Type</option>
+                              <option>Bug</option>
+                              <option>Enhancement</option>
+                              <option>Problem</option>
+                              <option>Question</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-xs-6">
+                          <div class="form-group">
+                            <input type="text" class="form-control default" data-value="Company" value="Company" />
+                          </div>
+                        </div>
+                        <div class="col-xs-6">
+                          <div class="form-group">
+                            <input type="text" class="form-control default" data-value="Product" value="Product" />
+                          </div>
+                        </div>
+                        <div class="col-xs-6">
+                          <div class="form-group">
+                            <input type="text" class="form-control default" data-value="Customer Reference Number" value="Customer Reference Number" />
+                          </div>
+                        </div>-->
+                      </div>
+                      <!--/ .container -->
+                      <div class="buttons-group">
+                        <apex:commandButton styleclass="btn btn-success pull-right js-submit-case" action="{!Savemycase}" value="Submit" onclick="return getValuesPlusCase()"/>
+                         <apex:commandLink styleclass="pull-right link-cancel js-close" action="{!Cancel}" value="Cancel" immediate="true"/>
+                      <!-- <a href="javascript:;" class="btn btn-success pull-right js-submit-case">Submit</a>-->
+                       <!-- <a href="javascript:;" class="pull-right link-cancel js-close">Cancel</a>
+                        <strong class="icon icon-rules">Assign using asign active rules</strong>-->
+                      </div>
+                      <!--/ .buttons-group -->
+                    </div>
+                    <!--/ .form-new-case -->
+                  </div>
+                </div>
+                </apex:outputPanel>
+                </div>
+                <div class="table-cases">
+                  <div class="mCustomScrollbar">
+                    <div class="table-wrapper is-filter-table">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th class="col-priority"></th>
+                            <th class="center col-number">Case number</th>
+                            <th><span class="data-subject">Subject</span></th>
+                            <th class="col-date">Date</th>
+                            <th class="center col-status">Status</th>
+                            <th class="col-button"></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        <apex:repeat id="caseTable" value="{!RecentCasesDisplay}" var="recentCs"  > 
+                           <tr onclick="window.location.href='{!$Site.prefix}/apex/PredixCaseDetailPage?id={!recentCs.caseObj.Id}'">
+                          <apex:outputPanel rendered="{!IF(recentCs.caseObj.Priority == 'P1–Level 1–Catastrophic service failure',true,false)}" > <td><span class="icon icon-priority icon-P1" data-name="P1"></span></td></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(recentCs.caseObj.Priority == 'P2–Level 2–Service failure',true,false)}"> <td><span class="icon icon-priority icon-P2" data-name="P2"></span></td></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(recentCs.caseObj.Priority == 'P3–Level 3–Limited loss of service',true,false)}"><td><span class="icon icon-priority icon-P3" data-name="P3"></span></td></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(recentCs.caseObj.Priority == 'P4–Level 4–No impact to service',true,false)}"> <td><span class="icon icon-priority icon-P4" data-name="P4"></span></td></apex:outputPanel>
+                         
+                            
+                            <td class="center">{!recentCs.caseObj.CaseNumber}</td>
+                            <td><span class="data-subject">{!recentCs.caseObj.subject}</span></td>
+                           <td style="display: table-cell;" data-name="date"><span> <apex:outputText value="{0,date,MM/dd/yyyy  hh:mm a}"> <apex:param value="{!recentCs.caseObj.createddate}" /> </apex:outputText></span></td>
+                            <apex:outputpanel rendered="{!IF(recentCs.caseObj.Status== 'New',true,false)}"><td class="center" data-name="New"><span class="status-new">{!recentCs.caseObj.Status}</span></td></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(recentCs.caseObj.Status== 'Acknowledged',true,false)}"><td class="center" data-name="Attended"><span>{!recentCs.caseObj.Status}</span></td></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(recentCs.caseObj.Status== 'Working',true,false)}"><td class="center" data-name="working"><span>{!recentCs.caseObj.Status}</span></td></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(recentCs.caseObj.Status== 'Resolved',true,false)}"><td class="center" data-name="Resolved"><span>{!recentCs.caseObj.Status}</span></td></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(recentCs.caseObj.Status== 'Closed',true,false)}"><td class="center" data-name="Closed"><span>{!recentCs.caseObj.Status}</span></td></apex:outputpanel>
+                         
+                            
+                             <td> <apex:outputPanel id="followOutputPanel" >
+              <a href="javascript:;" id="idFollow" onclick="CallingmethodFollowInJavascript('{!recentCs.caseObj.Id}','{!recentCs.HasFollow}')" class="pull-left icon icon-follow js-follow">{!recentCs.HasFollow}</a>
+              </apex:outputPanel> </td>
+                          </tr>
+                          </apex:repeat>
+                         <!-- <tr>
+                            <td><span class="icon icon-priority icon-P2" data-name="P2"></span></td>
+                            <td class="center">0125623</td>
+                            <td><span class="data-subject">Part A3M5 replacement</span></td>
+                            <td>1 hr ago</td>
+                            <td class="center" data-name="New"><span class="status-new">New</span></td>
+                            <td><a href="javascript:;" class="icon icon-follow js-follow">Follow</a></td>
+                          </tr>
+                          <tr>
+                            <td><span class="icon icon-priority icon-P4" data-name="P4"></span></td>
+                            <td class="center">7888118</td>
+                            <td><span class="data-subject">GH43 security</span></td>
+                            <td>2 hrs ago</td>
+                            <td class="center" data-name="New"><span class="status-new">New</span></td>
+                            <td><a href="javascript:;" class="icon icon-follow js-follow">Follow</a></td>
+                          </tr>
+                          <tr>
+                            <td><span class="icon icon-priority icon-P1" data-name="P1"></span></td>
+                            <td class="center">0125639</td>
+                            <td><span class="data-subject">Rolling part replacement</span></td>
+                            <td>5 hrs ago</td>
+                            <td class="center" data-name="New"><span class="status-new">New</span></td>
+                            <td><a href="javascript:;" class="icon icon-follow js-follow">Follow</a></td>
+                          </tr>
+                          <tr>
+                            <td><span class="icon icon-priority icon-P4" data-name="P4"></span></td>
+                            <td class="center">0256348</td>
+                            <td><span class="data-subject">Part A244 replacement</span></td>
+                            <td>Yesterday</td>
+                            <td class="center" data-name="Attended">Attended</td>
+                            <td><a href="javascript:;" class="icon icon-follow js-follow">Follow</a></td>
+                          </tr>
+                          <tr class="closed">
+                            <td><span class="icon icon-priority icon-P4" data-name="P4"></span></td>
+                            <td class="center">0465726</td>
+                            <td><span class="data-subject">Overloaded motor</span></td>
+                            <td>2 months ago</td>
+                            <td class="center" data-name="Closed">Closed</td>
+                            <td><a href="javascript:;" class="icon icon-follow js-follow">Follow</a></td>
+                          </tr>-->
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <!-- Scrollbar -->
+                  <div class="bar-bottom clearfix">
+                    <div class="pull-left note">
+                      <dl>
+                        <dt class="pull-left">Priority</dt>
+                        <dd class="pull-left"><span class="icon icon-priority icon-P1">P1</span></dd>
+                        <dd class="pull-left"><span class="icon icon-priority icon-P2">P2</span></dd>
+                        <dd class="pull-left"><span class="icon icon-priority icon-P3">P3</span></dd>
+                        <dd class="pull-left"><span class="icon icon-priority icon-P4">P4</span></dd>
+                      </dl>
+                    </div>
+                    <!--/ .note -->
+                    <a href="{!$site.prefix}/apex/PredixCasesPage" class="pull-right btn btn-primary">View all cases</a>
+                  </div>
+                  <!--/ .bar-bottom -->
+                </div>
+                <!--/ .table-cases -->
+              </div>
+              <!--/ .expand-status -->
+              <div class="collapse-areas">
+                <div class="buttons-group">
+                  <div class="container-fluid">
+                    <div class="col-xs-6">
+                      <!--<a href="javascript:;" class="btn btn-success btn-block js-view-more">View recent cases</a>-->
+                       <apex:commandButton styleclass="btn btn-success btn-block js-view-more"  value="View recent cases"  onclick="showTableData();"  rerender="RecentcaseTable"/>
+                    </div>
+                    <div class="col-xs-6">
+                      <a href="{!$site.prefix}/apex/PredixCasesPage" class="btn btn-primary btn-block">View all cases</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--/ .collapse-status -->
+            </div>
+          </div>
+          <!--/ .panel -->
+        </div>
+        <div class="col-xs-4 section-document">
+          <div class="panel panel-feeds is-widget" data-value="feeds">
+            <div class="panel-heading">
+              <div class="collapse-status pull-right">
+                <a href="javascript:;" class="view-link js-view-more">View feed</a>
+              </div>
+              <div class="expand-status pull-right view-dropdown">
+              <!--  <span class="label">View:</span>-->
+                <div class="dropdown is-dropdown">
+                 <!-- <span class="icon">Cases</span>-->
+                </div>
+                <!--/ .dropdown -->
+              </div>
+              <h2 class="js-accordion">Feeds<span class="icon"></span></h2>
+            </div>
+            <!--/ .panel-heading -->
+            <div class="panel-body">
+              <div class="expand-areas">
+                <div class="is-auto-height">
+                  <ul class="media-list">
+                   <!-- <apex:actionPoller reRender="tableFeeds" action="{!ShowFeed_Comment}" interval="5"/> -->
+          <apex:outputPanel id="tableFeeds"> 
+                  <!--  <apex:repeat id="feedItem1"  value="{!feedItems}" var="fi">-->
+                   <apex:repeat value="{!display_feedItemList}" var="userFeed" id="tableFeed">
+                    <li class="media">
+                      <div class="media-left">
+                        <a href="javascript:;"><apex:image url="{!URLFOR($Resource.Predix_NewUI,'user-thumbnail-grey.png')}" width="40" height="40"/></a>
+                      </div>
+                      <div class="media-body">
+                        <p><a href="javascript:;" class="user">{!userFeed.feedItemObject.CreatedBy.Name}</a>  posted a feed in {!userFeed.feedItemObject.Parent.Type}  <a href="javascript:;">{!userFeed.feedItemObject.Body}</a><span class="icon icon-date">{!userFeed.dateTimeFeed}</span></p>
+                          <apex:repeat value="{!display_feedCommentsList}" var="commentInfo"  id="commenttable">
+                                       <!--  <apex:outputPanel rendered="{!IF(userFeed.feedItemObject.Id ==commentInfo.feedCommentObject.FeedItemId, true, false)}" >-->
+                                              
+                                      <apex:outputPanel rendered="{!IF(userFeed.feedItemObject.Id ==commentInfo.feedCommentObject.FeedItemId, true, false)}">
+                                       
+                                         <p>{!commentInfo.feedCommentObject.CommentBody}  </p>
+                                        
+                                        <span class="date"><apex:outputtext value="{!commentInfo.dateTimeFeed}"></apex:outputtext></span>  
+  
+                                      </apex:outputPanel>
+                                   </apex:repeat>
+                      </div>
+                    </li>
+                     </apex:repeat>    
+                    </apex:outputPanel>
+                    <!--/ .media -->
+                   <!-- <li class="media">
+                      <div class="media-left">
+                        <a href="javascript:;"><img class="thumb" src="i/user-thumbnail-grey.png" alt="User" /></a>
+                      </div>
+                      <div class="media-body">
+                        <p><a href="javascript:;">Case CH43 security</a> has been created by <a href="javascript:;" class="user">Sarah Tyler</a><span class="icon icon-date">5 mins ago</span></p>
+                      </div>
+                    </li>-->
+                    <!--/ .media -->
+                   <!-- <li class="media">
+                      <div class="media-left">
+                        <a href="javascript:;"><img class="thumb" src="i/user-thumbnail-grey.png" alt="User" /></a>
+                      </div>
+                      <div class="media-body">
+                        <p><a href="javascript:;">Case Rolling part replacement</a> has been resolved by <a href="javascript:;" class="user">David Tower</a><span class="icon icon-date">5 mins ago</span></p>
+                      </div>
+                    </li>-->
+                    <!--/ .media -->
+                  <!--  <li class="media">
+                      <div class="media-left">
+                        <a href="javascript:;"><img class="thumb" src="i/user-thumbnail-grey.png" alt="User" /></a>
+                      </div>
+                      <div class="media-body">
+                        <p><a href="javascript:;" class="user">Amanda Tower</a> posted a comment in case <a href="javascript:;">Part A244 replacement</a><span class="icon icon-date">1 min ago</span></p>
+                      </div>
+                    </li>-->
+                    <!--/ .media -->
+                   <!-- <li class="media">
+                      <div class="media-left">
+                        <a href="javascript:;"><img class="thumb" src="i/user-thumbnail-grey.png" alt="User" /></a>
+                      </div>
+                      <div class="media-body">
+                        <p><a href="javascript:;">Case Rolling part replacement</a> has been resolved by <a href="javascript:;" class="user">David Tower</a><span class="icon icon-date">5 mins ago</span></p>
+                      </div>
+                    </li>-->
+                    <!--/ .media -->
+                  </ul>
+                </div>
+              </div>
+              <!--/ .expand-status -->
+            </div>
+          </div>
+        </div>
+        <!--/ .col -->
+      </div>
+    </div>
+    <!--/ .section -->
+    <div class="section section-document margin-top3">
+      <h2 class="hide">Documentation</h2>
+      <div class="container-fluid">
+        <div class="col-xs-12">
+         <!-- <div class="panel panel-help is-widget" data-value="helpUsImprove">-->
+         <div class="panel panel-help is-widget" >
+            <div class="panel-heading">
+              <h2 class="js-accordion">Help Us Improve<span class="icon"></span></h2>
+            </div>
+            <!--/ .panel-heading -->
+            <div class="panel-body">
+              <div class="expand-areas">
+                <div class="is-auto-height" data-height="53" style="width: 1300px">
+                  <ul class="radio-group">
+                    <li style="width: 250px">
+                      <label class="custom-radio">
+                        <input type="radio" name="help" id="Kas"  value="Knowledge Article Suggestion" checked="false"/>
+                        <span class="icon"></span>Knowledge Article Suggestion
+                      </label>
+                    </li>
+                    <li style="width: 250px">
+                      <label class="custom-radio">
+                        <input type="radio" name="help"  id="Pm" value="Process Improvement"  checked="false" />
+                       <span class="icon"></span>Process Improvement
+                      </label>
+                    </li>
+                    <li style="width: 250px">
+                      <label class="custom-radio">
+                        <input type="radio" name="help" id="Er" value="Enhancement Request" checked="false"/>
+                        <span class="icon"></span>Enhancement Request
+                      </label>
+                    </li>
+                    <li style="width: 250px">
+                      <label class="custom-radio">
+                        <input type="radio" name="help" id="Lb" value="Log a Bug" checked="false"/>
+                        <span class="icon"></span>Log a Bug
+                      </label>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <!--/ .expand-status -->
+              <div class="buttons-group">
+                <a href="javascript:;" class="btn btn-primary btn-suggest js-modal disable js-expand" data-target="#suggestModal"  onclick="CallingRadioRecTypefunction()">Send your ideas</a>
+              </div>
+              <!--/ .submitter-entry -->
+            </div>
+          </div>
+          <!--/ .panel -->
+        </div>
+        <!--/ .col -->
+      </div>
+    </div>
+  </div>
+  <!--/ .main-container -->
+</div>
+<!--/ .wrapper -->
+<div class="flyout flyout-call icon" id="callFlyout">
+  <p>
+    Call Us!
+    <a href="javascript:;">1-888-477-3349</a>
+  </p>
+</div>
+
+<!--/ .flyout -->
+<div class="flyout flyout-new-case new-case-pop" id="newCaseFlyout">
+<!--- START DIV FOR NEW CASE BUTTON RECORD TYPE------------------------->
+
+
+  <div class="form-new-case is-form icon" id='RTDashTableId' style="display:none">
+    <h2><a href="javascript:;" class="icon icon-close"></a>Please Select Record Type</h2>
+    <div class="container-fluid">
+      <div class="col-xs-6">
+        <div class="form-group">
+          <label>Record Type</label>
+         <apex:selectList value="{!SelectedRecordType}" multiselect="false" size="1" styleClass="js-custom-select" >
+         <apex:selectOptions value="{!RecordTypes}"/>
+        <!-- <apex:actionsupport event="onclick" action="{!updateRecordType}" rerender="CaseNewtableOneId" />-->
+       </apex:selectList>
+         <!-- <input type="text" class="form-control default"  />-->
+        </div>
+      </div>
+      
+    
+    </div>
+    <!--/ .container -->
+    <div class="buttons-group">
+    <apex:commandButton styleclass="btn btn-success pull-right"  value="Submit"  action="{!updateRecordType}" reRender="NewCasetableId"  oncomplete="HideGoFormData()"/>
+     <!-- <a href="javascript:;" class="btn btn-success pull-right">Submit</a>-->
+    </div>
+    <!--/ .buttons-group -->
+  </div>
+  <!--/ .form-new-case -->
+
+
+<!--- END DIV FOR NEW CASE BUTTON RECORD TYPE -------------------------->
+  <apex:outputpanel id="NewCasetableId">
+  <div class="form-new-case is-form icon" id="CaseDashtableId" >
+    <h2><a href="javascript:;" class="icon icon-close"></a>new case</h2>
+    <div class="container-fluid">
+      <div class="col-xs-6">
+        <div class="form-group">
+          <label>Account name</label>
+          <apex:inputField value="{!CreateNewCase.AccountId}" required="false" id="accId" />
+         <!-- <input type="text" class="form-control default"  />-->
+        </div>
+      </div>
+      <div class="col-xs-6">
+        <div class="form-group">
+          <label>Contact name</label>
+          <apex:inputfield value="{!CreateNewCase.ContactId}" required="false" id="conId" />
+        <!--  <input type="text" class="form-control default" />-->
+        </div>
+      </div>
+      <div class="col-xs-12">
+        <div class="comments-group">
+          <div class="subject">
+<apex:inputField value="{!CreateNewCase.Subject}" styleclass="form-control default" html-placeholder="Subject" required="false"/>
+           <!-- <input type="text" class="form-control default" data-value="Subject" value="Subject" />-->
+          </div>
+          <!--/ .subject -->
+          <div class="desctiption">
+            <apex:inputField Value="{!CreateNewCase.Description}" Styleclass="form-control default" html-placeholder="Description" required="false" />
+           <!-- <textarea class="form-control default" data-value="Description">Description</textarea>-->
+          </div>
+          <!--/ .description -->
+        </div>
+        <!--/ .comments-group -->
+      </div>
+    </div>
+    <!--/ .container -->
+    <div class="buttons-group">
+      <apex:commandButton styleclass="btn btn-success pull-right" action="{!Submit}" value="Submit" onclick="return getValues();" />
+      <apex:commandLink styleclass="pull-right link-cancel js-close" action="{!Cancel}" value="Cancel" immediate="true"/>
+     <!-- <a href="javascript:;" class="btn btn-success pull-right">Submit</a>-->
+    </div>
+    <!--/ .buttons-group -->
+  </div>
+  </apex:outputpanel>
+  <!--/ .form-new-case -->
+</div>
+<!--/ .flyout -->
+<div class="flyout flyout-enhancements" id="enhancementsFlyout">
+  <div class="form-new-case is-form">
+    <h2>ENhancements</h2>
+    <div class="container-fluid">
+      <div class="col-xs-12">
+        <dl>
+          <dt class="pull-left">Account name:</dt>
+          <dd>AccountNameID</dd>
+          <dt class="pull-left">Contact name:</dt>
+          <dd>Emma Smith</dd>
+        </dl>
+      </div>
+      <div class="col-xs-12">
+        <div class="comments-group">
+          <div class="subject">
+            <input type="text" class="form-control default" data-value="Subject" value="Subject" />
+          </div>
+          <!--/ .subject -->
+          <div class="desctiption">
+            <textarea class="form-control default" data-value="Description">Description</textarea>
+          </div>
+          <!--/ .description -->
+          <div class="input-group js-file-upload">
+            <div class="drag-area">
+              <input type="text" class="form-control" readonly='' value="Attach file or drag & drop here" />
+              <input type="file" class="file-upload" />
+              <a href="javascript:;" class="icon icon-remove js-remove"></a>
+            </div>
+            <a href="javascript:;" class="input-group-addon icon icon-browser js-browser"></a>
+          </div>
+        </div>
+        <!--/ .comments-group -->
+      </div>
+      <div class="col-xs-6">
+        <div class="form-group">
+          <select class="js-custom-select">
+            <option>Case Type</option>
+            <option>Bug</option>
+            <option>Enhancement</option>
+            <option>Problem</option>
+            <option>Question</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-xs-6">
+        <div class="form-group">
+          <input type="text" class="form-control default" value="Product" data-value="Product" />
+        </div>
+      </div>
+    </div>
+    <!--/ .container -->
+    <div class="buttons-group">
+      <a href="javascript:;" class="btn btn-primary pull-right">Submit</a>
+      <a href="javascript:;" class="pull-right link-cancel js-close">Cancel</a>
+      <strong class="icon icon-rules">Assign using asign active rules</strong>
+    </div>
+    <!--/ .buttons-group -->
+  </div>
+  <!--/ .form-new-case -->
+</div>
+<!--/ .flyout -->
+<div class="flyout flyout-profile icon" id="profileFlyout">
+  <ul>
+   <!-- <li><a href="javascript:;" class="icon icon-user">View My Profile</a></li>
+    <li><a href="javascript:;" class="icon icon-settings">Settings</a></li>
+    <li><a href="javascript:;" class="icon icon-logout">Logout</a></li>-->
+      <li><apex:outputLink value="{!$Site.Prefix}/secur/logout.jsp" styleclass="icon icon-logout">Logout</apex:outputLink></li>
+  </ul>
+</div>
+<!--/ .flyout -->
+<div class="flyout flyout-config" id="configFlyout">
+  <div class="default">
+    <label class="custom-checkbox">
+      <input type="checkbox" name="defaultDashboard" />
+      <span class="icon"></span>
+      Default dashboard
+    </label>
+  </div>
+  <!--/ .default -->
+  <div class="custom">
+    <strong>Custom dashboard</strong>
+    <ul>
+      <li>
+        <label class="custom-radio">
+          <input type="checkbox" name="newsHighlights" />
+          <span class="icon"></span>News &amp; Highlights
+        </label>
+      </li>
+      <li>
+        <label class="custom-radio">
+          <input type="checkbox" name="whatnew" />
+          <span class="icon"></span>What’s new
+        </label>
+      </li>
+      <li>
+        <label class="custom-radio">
+          <input type="checkbox" name="cases" />
+          <span class="icon"></span>Cases 
+        </label>
+      </li>
+      <li>
+        <label class="custom-radio">
+          <input type="checkbox" name="feeds" />
+          <span class="icon"></span>Feeds
+        </label>
+      </li>
+      <li>
+        <label class="custom-radio">
+          <input type="checkbox" name="techSupport" />
+          <span class="icon"></span>Tech support
+        </label>
+      </li>
+      <li>
+        <label class="custom-radio">
+          <input type="checkbox" name="recentlyUpdateArticles" />
+          <span class="icon"></span>Recently updated articles
+        </label>
+      </li>
+      <li>
+        <label class="custom-radio">
+          <input type="checkbox" name="popularDocumentation" />
+          <span class="icon"></span>Popular documentation
+        </label>
+      </li>
+      <li>
+        <label class="custom-radio">
+          <input type="checkbox" name="faq" />
+          <span class="icon"></span>FAQ
+        </label>
+      </li>
+      <li>
+        <label class="custom-radio">
+          <input type="checkbox" name="helpUsImprove" />
+          <span class="icon"></span>Help us improve
+        </label>
+      </li>
+    </ul>
+  </div>
+  <!--/ .costom -->
+</div>
+<!--/ .flyout -->
+<div class="modal-backdrop"></div>
+<div class="modal">
+  <div class="modal-content" id="suggestModal">
+    <div class="modal-header">
+      <h2>SUGGEST YOUR IDEAS</h2>
+    </div>
+    <!--/ .modal-header -->
+    <div class="modal-body">
+    <!--- START DIV FOR NEW CASE BUTTON RECORD TYPE------------------------->
+
+ <div class="form-new-case is-form" id='RTNewRadioId' style="display: none;">
+      <h2><a href="javascript:;" class="icon"></a>Please Select Record Type</h2>
+    <div class="container-fluid">
+      <div class="col-xs-6">
+        <div class="form-group">
+          <label>Record Type</label>
+         <apex:selectList value="{!SelectedCaseRecordType}" multiselect="false" size="1" styleClass="js-custom-select" >
+         <apex:selectOptions value="{!CaseRecordTypes}"/>
+        <!-- <apex:actionsupport event="onclick" action="{!updateCaseRecordType}" rerender="CaseNewtableOneId" />-->
+       </apex:selectList>
+         <!-- <input type="text" class="form-control default"  />-->
+        </div>
+      </div>
+      
+    
+    </div>
+    <!--/ .container -->
+        <!--/ .container -->
+        <div class="buttons-group">
+          <apex:commandButton styleclass="btn btn-primary pull-right"  value="Submit"  action="{!updateCaseRecordType}" oncomplete="return onRadioSelectOption()"/>
+          <apex:commandLink styleclass="pull-right link-cancel js-close" action="{!Cancel}" value="Cancel" immediate="true"/>
+          
+         <!-- <a href="javascript:;" class="btn btn-primary pull-right js-close">Submit</a>
+          <a href="javascript:;" class="pull-right link-cancel js-close">Cancel</a>
+          <strong class="icon icon-rules">Assign using asign active rules</strong>-->
+        </div>
+        <!--/ .buttons-group -->
+      </div>
+      <!--/ .form-new-case -->
+    <!----END DIV FOR RADIO BUTTONS RECORD TYPE----------->
+      <!-- <apex:outputpanel id="RadioButtonTableId">-->
+      <div class="form-new-case is-form" id="NewRadioCaseId" style="display:none">
+        <div class="container-fluid">
+          <div class="col-xs-12">
+            <dl>
+              <dt class="pull-left">Account name:</dt>
+              <dd> <apex:inputField value="{!CreateCases.AccountId}"  /></dd>
+              <dt class="pull-left">Contact name:</dt>
+              <dd><apex:inputfield value="{!CreateCases.ContactId}"   /></dd>
+            </dl>
+          </div>
+          <div class="col-xs-12">
+            <div class="comments-group">
+              <div class="subject">
+               <!-- <input type="text" class="form-control default" value="Subject" data-value="Subject" />-->
+                <apex:inputField value="{!CreateCases.Subject}" styleclass="form-control default" required="false" html-placeholder="Subject" />
+              </div>
+              <!--/ .subject -->
+              <div class="desctiption">
+               <apex:inputField Value="{!CreateCases.Description}" Styleclass="form-control default" required="false"  html-placeholder="Description" />
+                <!--<textarea class="form-control default" value="Description" data-value="Description">Description</textarea>-->
+              </div>
+              <!--/ .description -->
+              <div class="input-group js-file-upload">
+              <!--  <div class="drag-area">
+                 <input type="text" class="form-control" readonly='' value="Attach file or drag & drop here" />
+                  <input type="file" class="file-upload" />
+                  <a href="javascript:;" class="icon icon-remove js-remove"></a>
+                </div>-->
+                <!--<a href="javascript:;" class="input-group-addon icon icon-browser js-browser"></a>-->
+              </div>
+            </div>
+            <!--/ .comments-group -->
+          </div>
+         <div class="col-xs-6">
+            <div class="form-group">
+            <label>Case Type</label>
+        <apex:selectList value="{!selectedEnhancOptions}" multiselect="true"  styleClass="js-custom-select" >
+            <apex:selectOptions value="{!EnhanceCaseTypeOptions}"/>
+        </apex:selectList>
+            <!--  <select class="js-custom-select">
+                <option>Case Type</option>
+                <option>Bug</option>
+                <option>Enhancement</option>
+                <option>Problem</option>
+                <option>Question</option>
+              </select>-->
+            </div>
+          </div>
+          <div class="col-xs-6">
+            <!--<div class="form-group">
+              <input type="text" class="form-control default" value="Product" data-value="Product" />
+            </div>-->
+          </div>
+        </div>
+        <!--/ .container -->
+        <div class="buttons-group">
+          <apex:commandButton styleclass="btn btn-primary pull-right js-close" action="{!Save}" value="Submit" onclick="return getValuesRadioCase('req');"/>
+          <apex:commandLink styleclass="pull-right link-cancel js-close" action="{!Cancel}" value="Cancel" immediate="true"/>
+          <!-- <strong ></strong>-->
+         <!-- <a href="javascript:;" class="btn btn-primary pull-right js-close">Submit</a>
+          <a href="javascript:;" class="pull-right link-cancel js-close">Cancel</a>
+          <strong class="icon icon-rules">Assign using asign active rules</strong>-->
+        </div>
+        <!--/ .buttons-group -->
+      </div>
+  <!--    </apex:outputpanel>-->
+      
+      <!--/ .form-new-case -->
+       <!---------------------->
+    
+            <div class="form-new-case is-form" id="BugRadioCaseId" style="display:none">
+        <div class="container-fluid">
+          <div class="col-xs-12">
+            <dl>
+              <dt class="pull-left">Account name:</dt>
+              <dd> <apex:inputField value="{!CreateCases.AccountId}"  /></dd>
+              <dt class="pull-left">Contact name:</dt>
+              <dd><apex:inputfield value="{!CreateCases.ContactId}"   /></dd>
+            </dl>
+          </div>
+          <div class="col-xs-12">
+            <div class="comments-group">
+              <div class="subject">
+               <!-- <input type="text" class="form-control default" value="Subject" data-value="Subject" />-->
+                <apex:inputField value="{!CreateCases.Subject}" styleclass="form-control default" required="false" html-placeholder="Subject" />
+              </div>
+              <!--/ .subject -->
+              <div class="desctiption">
+               <apex:inputField Value="{!CreateCases.Description}" Styleclass="form-control default" required="false"  html-placeholder="Description" />
+                <!--<textarea class="form-control default" value="Description" data-value="Description">Description</textarea>-->
+              </div>
+              <!--/ .description -->
+              <div class="input-group js-file-upload">
+              <!--  <div class="drag-area">
+                 <input type="text" class="form-control" readonly='' value="Attach file or drag & drop here" />
+                  <input type="file" class="file-upload" />
+                  <a href="javascript:;" class="icon icon-remove js-remove"></a>
+                </div>-->
+                <!--<a href="javascript:;" class="input-group-addon icon icon-browser js-browser"></a>-->
+              </div>
+            </div>
+            <!--/ .comments-group -->
+          </div>
+           <div class="col-xs-6">
+           <div class="form-group">
+        <label>Case Type</label>
+        <apex:selectList value="{!selectedBugOptions }" multiselect="true"  styleClass="js-custom-select" >
+            <apex:selectOptions value="{!BugCaseTypeOptions}"/>
+        </apex:selectList>
+        
+          <!--   <div class="form-group">
+              <select class="js-custom-select">
+                <option>Case Type</option>
+                <option>Bug</option>
+                <option>Enhancement</option>
+                <option>Problem</option>
+                <option>Question</option>
+              </select>-->
+            </div>
+          </div>
+          <div class="col-xs-6">
+            <!--<div class="form-group">
+              <input type="text" class="form-control default" value="Product" data-value="Product" />
+            </div>-->
+          </div>
+        </div>
+        <!--/ .container -->
+        <div class="buttons-group">
+          <apex:commandButton styleclass="btn btn-primary pull-right js-close" action="{!Save}" value="Submit" onclick="return getValuesRadioCase('bug')"/>
+          <apex:commandLink styleclass="pull-right link-cancel js-close" action="{!Cancel}" value="Cancel" immediate="true"/>
+          <!-- <strong ></strong>-->
+         <!-- <a href="javascript:;" class="btn btn-primary pull-right js-close">Submit</a>
+          <a href="javascript:;" class="pull-right link-cancel js-close">Cancel</a>
+          <strong class="icon icon-rules">Assign using asign active rules</strong>-->
+        </div>
+        <!--/ .buttons-group -->
+      </div>
+      <!---------------------->
+      <!--/ .form-new-case -->
+        <!---------SUgg--------------------------->
+      
+              <div class="form-new-case is-form" id="SuggRadioCaseId" style="display:none">
+        <div class="container-fluid">
+          <div class="col-xs-12">
+            <dl>
+              <dt class="pull-left">Account name:</dt>
+              <dd> <apex:inputField value="{!CreateCases.AccountId}"  /></dd>
+              <dt class="pull-left">Contact name:</dt>
+              <dd><apex:inputfield value="{!CreateCases.ContactId}"   /></dd>
+            </dl>
+          </div>
+          <div class="col-xs-12">
+            <div class="comments-group">
+              <div class="subject">
+               <!-- <input type="text" class="form-control default" value="Subject" data-value="Subject" />-->
+                <apex:inputField value="{!CreateCases.Subject}" styleclass="form-control default" required="false" html-placeholder="Subject" />
+              </div>
+              <!--/ .subject -->
+              <div class="desctiption">
+               <apex:inputField Value="{!CreateCases.Description}" Styleclass="form-control default" required="false"  html-placeholder="Description" />
+                <!--<textarea class="form-control default" value="Description" data-value="Description">Description</textarea>-->
+              </div>
+              <!--/ .description -->
+              <div class="input-group js-file-upload">
+              <!--  <div class="drag-area">
+                 <input type="text" class="form-control" readonly='' value="Attach file or drag & drop here" />
+                  <input type="file" class="file-upload" />
+                  <a href="javascript:;" class="icon icon-remove js-remove"></a>
+                </div>-->
+                <!--<a href="javascript:;" class="input-group-addon icon icon-browser js-browser"></a>-->
+              </div>
+            </div>
+            <!--/ .comments-group -->
+          </div>
+           <div class="col-xs-6">
+            <div class="form-group">
+        <label>Case Type</label>
+       <apex:selectList value="{!selectedSuggestOptions}" multiselect="true"  styleClass="js-custom-select">
+            <apex:selectOptions value="{!SuggestCaseTypeOptions}"/>
+        </apex:selectList>
+        
+          <!--   <div class="form-group">
+              <select class="js-custom-select">
+                <option>Case Type</option>
+                <option>Bug</option>
+                <option>Enhancement</option>
+                <option>Problem</option>
+                <option>Question</option>
+              </select>-->
+            </div>
+          </div>
+          <div class="col-xs-6">
+            <!--<div class="form-group">
+              <input type="text" class="form-control default" value="Product" data-value="Product" />
+            </div>-->
+          </div>
+        </div>
+        <!--/ .container -->
+        <div class="buttons-group">
+          <apex:commandButton styleclass="btn btn-primary pull-right js-close" action="{!Save}" value="Submit" onclick="return getValuesRadioCase('imp')"/>
+          <apex:commandLink styleclass="pull-right link-cancel js-close" action="{!Cancel}" value="Cancel" immediate="true"/>
+          <!-- <strong ></strong>-->
+         <!-- <a href="javascript:;" class="btn btn-primary pull-right js-close">Submit</a>
+          <a href="javascript:;" class="pull-right link-cancel js-close">Cancel</a>
+          <strong class="icon icon-rules">Assign using asign active rules</strong>-->
+        </div>
+        <!--/ .buttons-group -->
+      </div>
+      
+      <!---------Sugg----------------------------->
+    </div>
+    <!--/ .modal-content -->
+  </div>
+  <!-- / Modal -->
+  <div class="modal-content video-modal" id="videoModal">
+    <div class="modal-header">
+      <a href="javascript:;" class="pull-right icon icon-close js-close"></a>
+      <h2>QUICK TUTORIAL VIDEO</h2>
+    </div>
+    <!--/ .modal-header -->
+    <div class="modal-body">
+      <div class="video is-video">
+        <iframe id="player" class="videoEmbed" src="https://www.youtube.com/embed/uhpkRwDUBLg?enablejsapi=1" allowfullscreen=""></iframe>
+      </div>
+    </div>
+    <!--/ .modal-content -->
+  </div>
+  <!-- / Modal -->
+</div>
+<div class="live-chat-support">
+ <!-- <a href="javascript:;" class="icon">LIVE CHART SUPPORT</a>
+  <span class="chat-point"></span>-->
+<img id="liveagent_button_online_57312000000TNdX" style="display: none; border: 0px none; cursor: pointer" onclick="liveagent.startChat('57312000000TNdX')" src="https://geog.force.com/Predix/resource/1447979700000/LiveAgentOnlineImg" /><img id="liveagent_button_offline_57312000000TNdX" style="display: none; border: 0px none; " src="https://geog.force.com/Predix/resource/1447979700000/LiveAgentOfflineImg" />
+<script type="text/javascript">
+if (!window._laq) { window._laq = []; }
+window._laq.push(function(){liveagent.showWhenOnline('57312000000TNdX', document.getElementById('liveagent_button_online_57312000000TNdX'));
+liveagent.showWhenOffline('57312000000TNdX', document.getElementById('liveagent_button_offline_57312000000TNdX'));
+});</script>
+
+
+</div>
+<!--/ .live-chat-support -->
+<!--<div class="modal-fade-in hide"></div>
+<div class="live-chat-popover hide">
+  <div class="title">
+    <h3 class="icon">PERSONAL LIVE CHAT</h3>
+  </div>
+  <div class="chat-context">
+    <div class="save-chat">
+      <a href="javascript:;" class="btn-save">Save Chat</a>
+      <input type="text"/>
+      <a href="javascript:;" class="btn-end">End Chat</a>
+    </div>
+    <div class="chat-msgs">
+      <p>
+        <span class="user-name">Neha J :</span>Hello Mr. John, How can I help you?
+      </p>
+    </div>
+    <div class="chat-send">
+      <div class="chat-send-input">
+        <input type="text"/>
+      </div>
+      <a href="javascript:;" class="btn-send">Send</a>
+    </div>
+  </div>
+</div>-->
+<!--/ .live-chat-popover -->
+</apex:form>
+</body>
+</html>
+<script type='text/javascript' src='https://c.la3-c2-was.salesforceliveagent.com/content/g/js/35.0/deployment.js'></script>
+<script type='text/javascript'>
+liveagent.init('https://d.la3-c2-was.salesforceliveagent.com/chat', '57212000000TNVH', '00DA0000000QC05');
+</script>
+</apex:page>

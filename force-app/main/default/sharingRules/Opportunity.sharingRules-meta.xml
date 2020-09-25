@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>Confidential_Opportunity_Sharing_Rule</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Confidential Opportunity Sharing Rule</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>Sales_Member</roleAndSubordinatesInternal>
+        </sharedTo>
+        <criteriaItems>
+            <field>is_confidential_ge_og__c</field>
+            <operation>notEqual</operation>
+            <value>True</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Non_Confidential_Share_with_ServiceMax</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>This rule will give read/write access to the ServiceMax role structure for non confidential opportunities</description>
+        <label>Non Confidential Share with ServiceMax</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>SMax_Global_Admin</roleAndSubordinatesInternal>
+        </sharedTo>
+        <criteriaItems>
+            <field>is_confidential_ge_og__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Opportunity_ConfidentialEQUALSTrue</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Opportunity: ConfidentialEQUALSTrue</label>
+        <sharedTo>
+            <role>Sales_Leader</role>
+        </sharedTo>
+        <criteriaItems>
+            <field>is_confidential_ge_og__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+</SharingRules>

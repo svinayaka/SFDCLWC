@@ -1,0 +1,52 @@
+<apex:page standardcontroller="GE_PRM_Channel_Appointment__c"  extensions="GE_PRM_Channel_Appointment_Class" sidebar="true" showHeader="true" standardstylesheets="true" >  
+<apex:form >
+
+<apex:pageBlock title="Appointments">
+
+<apex:pageBlockSection columns="1">
+                <apex:outputPanel id="Prevactivityref"> 
+                <div class="fields">
+                    <table class="list fixed" border="0px">
+                        <colgroup>
+                            <col width="4000px"></col>
+                        <col width="4000px"></col>
+                    <col width="4000px"></col>
+                    <col width="4000px"></col>
+            </colgroup>
+            <thead>
+                <tr style="line-height: 20px;background: #333366;">                                                 
+                    <th class="alignLeft" style="padding-left: 2px;white-space: normal;text-align: Left; font-weight:700; width: 100px; color: white;vertical-align: middle;border: 0px;">Appointment Number </th>
+                    <th class="alignLeft" style="padding-left: 2px;white-space: normal;text-align: Left; font-weight:700; width: 100px;color: white;vertical-align: middle;border: 0px;">Last Modified By </th>
+                    <th class="alignLeft" style="padding-left: 2px;white-space: normal;text-align: Left; font-weight:700; width: 100px;color: white;vertical-align: middle;border: 0px;">Tier 2 </th>                            
+                    <th class="alignLeft" style="padding-left: 2px;white-space: normal;text-align: Left; font-weight:700; width: 100px;color: white;vertical-align: middle;border: 0px;"> Status </th>                            
+                </tr>
+            </thead>
+            <tbody>                                         
+                <apex:repeat value="{!tempList }" var="tmp">
+                    <tr>
+                        <td style="padding-left: 2px; padding-right: 2px; color:black;"><apex:outputLink value="/{!tmp.id}" styleclass="inp" style="height:50px;" target="_blank">{!tmp.name}</apex:outputLink></td> 
+                        <td style="padding-left: 2px; padding-right: 2px;color:black;"><apex:outputField value="{!tmp.LastModifiedById}" styleclass="inp" style="height:50px;"/></td> 
+                        <td style="padding-left: 2px; padding-right: 2px;color:black;"><apex:outputField value="{!tmp.GE_PRM_Tier_2_P_L__c }" styleclass="inp" style="height:50px;"/></td> 
+                        <td style="padding-left: 2px; padding-right: 2px;color:black;"><apex:outputField value="{!tmp.GE_PRM_Current_Status__c}" styleclass="inp" style="height:50px;"/></td> 
+                    </tr>     
+                </apex:repeat>      
+                <apex:repeat value="{!afaList }" var="afa">
+                    <tr>
+                        <td style="padding-left: 2px; padding-right: 2px;color:black;"><apex:outputLink value="/{!afa.id}" styleclass="inp" style="height:50px;" target="_blank">{!afa.name}</apex:outputLink></td> 
+                        <td style="padding-left: 2px; padding-right: 2px;color:black;"><apex:outputField value="{!afa.LastModifiedById}" styleclass="inp" style="height:50px;"/></td> 
+                        <td style="padding-left: 2px; padding-right: 2px;color:black;"><apex:outputField value="{!afa.GE_PRM_Tier_2__c }" styleclass="inp" style="height:50px;"/></td>
+                        <td style="padding-left: 2px; padding-right: 2px;color:black;"><apex:outputField value="{!afa.GE_PRM_Status__c}" styleclass="inp" style="height:50px;"/></td> 
+                    </tr>
+                </apex:repeat>
+
+            </tbody>
+        </table>
+        </div>
+    <apex:panelGrid columns="4">
+    <!--<apex:commandLink action="{!showmore}" target="_blank">Show More</apex:commandlink>-->
+    </apex:panelGrid>
+    </apex:outputPanel>                 
+</apex:pageBlockSection>
+</apex:pageBlock>
+</apex:form>
+</apex:page>

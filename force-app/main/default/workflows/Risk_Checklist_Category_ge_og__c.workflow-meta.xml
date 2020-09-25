@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Notifying_Risk_Reviewer_for_Risk_Checklist_Category</fullName>
+        <ccEmails>madhuri.sharma@ge.com</ccEmails>
+        <description>Notifying Risk Reviewer for Risk Checklist Category</description>
+        <protected>false</protected>
+        <recipients>
+            <field>rcl_reviewer_ge_og__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Risk_Process_Email_Templates/Notifying_Risk_Checklist_Reviewer</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_to_Reviewer_when_Supported_Risk_Module_is_recalled</fullName>
+        <description>Send to Reviewer when Supported Risk Module is recalled </description>
+        <protected>false</protected>
+        <recipients>
+            <field>Risk_Reviewer_Do_not_use_ge_og__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Risk_Process_Email_Templates/Send_to_Reviewer_when_Risk_Module_is_recalled</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Change_Status_to_Not_Supported</fullName>
+        <field>status_ge_og__c</field>
+        <literalValue>Not Supported</literalValue>
+        <name>Change Status to Not Supported</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Change_Status_to_Pending</fullName>
+        <field>status_ge_og__c</field>
+        <literalValue>Pending</literalValue>
+        <name>Change Status to Pending</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Change_Status_to_Submitted</fullName>
+        <field>status_ge_og__c</field>
+        <literalValue>Submitted</literalValue>
+        <name>Change Status to Submitted</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Change_Status_to_Supported</fullName>
+        <field>status_ge_og__c</field>
+        <literalValue>Supported</literalValue>
+        <name>Change Status to Supported</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Remove_Reviewer</fullName>
+        <field>rcl_reviewer_ge_og__c</field>
+        <name>Remove Reviewer</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Risk_Review_Submission_Date_To_Blank</fullName>
+        <field>submission_for_support_date_ge_og__c</field>
+        <name>Risk Review Submission Date To Blank</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Submitted_By_To_Blank</fullName>
+        <field>Submitted_By_ge_og__c</field>
+        <name>Submitted By To Blank</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Confirmation_for_Support_Date</fullName>
+        <field>confirmation_of_support_date__c</field>
+        <formula>TODAY()</formula>
+        <name>Update  Confirmation for Support Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Risk_Review_Submission_Date</fullName>
+        <field>submission_for_support_date_ge_og__c</field>
+        <formula>TODAY()</formula>
+        <name>Update Risk Review Submission Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Risk_Review_Support_Date</fullName>
+        <field>confirmation_of_support_date__c</field>
+        <formula>TODAY()</formula>
+        <name>Update Risk Review Support Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Submission_for_Support_Date</fullName>
+        <field>submission_for_support_date_ge_og__c</field>
+        <formula>Today()</formula>
+        <name>Update Submission for Support Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Supported_to_Yes</fullName>
+        <field>supported_ge_og__c</field>
+        <literalValue>Yes</literalValue>
+        <name>Update_Supported_to_Yes</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Updating_Reviewer_To_Blank</fullName>
+        <field>rcl_reviewer_ge_og__c</field>
+        <name>Updating Reviewer To Blank</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <rules>
+        <fullName>Change in Submit for Review</fullName>
+        <actions>
+            <name>Updating_Reviewer_To_Blank</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <formula>ISCHANGED( submit_review_ge_og__c )  &amp;&amp;  (PRIORVALUE(submit_review_ge_og__c ) = True)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Change in Supported</fullName>
+        <active>true</active>
+        <formula>ISCHANGED( status_ge_og__c )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Confirmation for Support Date</fullName>
+        <actions>
+            <name>Update_Confirmation_for_Support_Date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Risk_Checklist_Category_ge_og__c.supported_ge_og__c</field>
+            <operation>equals</operation>
+            <value>Yes</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Submission for Support Date</fullName>
+        <actions>
+            <name>Update_Submission_for_Support_Date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Risk_Checklist_Category_ge_og__c.submit_review_ge_og__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Supported when Max Deviation is 0</fullName>
+        <actions>
+            <name>Update_Supported_to_Yes</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Risk_Checklist_Category_ge_og__c.max_deviation_ge_og__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Risk_Checklist_Category_ge_og__c.submit_review_ge_og__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <description>Supported when Max Deviation is 0</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

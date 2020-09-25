@@ -1,0 +1,166 @@
+<apex:page StandardController="GE_Installed_Base__c" Extensions="SWIBcontroller1" sidebar="false" showHeader="false" action="{!callTwoMethods}" >
+ <!--readonly="{!IF(CONTAINS($Profile.Name,'GE_ES Developer'))}"-->
+ <style>
+table{
+    border-spacing: 0;
+    display: flex;
+
+    max-height: 87vh; 
+    overflow-y: auto; 
+    overflow-x: hidden;
+    table-layout: fixed;
+    width: 1250px;
+    border:1px solid gray;
+}
+
+thead{
+   background-color: #f2f3f3;
+   position: fixed !important;
+  <!-- position: fixed ;-->
+}
+
+th{
+   border-bottom: 1px solid #f2f3f3;
+    border-right: 1px solid #f2f3f3;
+}
+
+th,td{
+  <!-- font-weight: normal;
+  margin: 0;
+    max-width: 18.5vw; 
+    min-width: 8.5vw;-->
+ <!--   min-width: 8.5vw;-->
+ max-width: 99px; 
+    min-width: 99px;
+   <!-- word-wrap: break-word;-->
+    font-size: 11px;
+  <!--  height: 3.5vh !important;
+    padding: 4px;-->
+   border-right: 1px solid #c4c0c9;
+   border:1px solid #c4c0c9;
+}
+tr:nth-child(2n) {
+   background: none repeat scroll 0 0 white;
+}   
+</style>
+ <apex:form >
+
+  
+   <apex:outputPanel rendered="{!displayMessage}">
+<span style="font-size:15px" >No Event Records available for this Installed Base</span>
+</apex:outputPanel>
+ 
+    <apex:outputPanel id="read" rendered="{!mode='readOnly'}">
+   
+  <!-- <div style="overflow: auto;height: 80px; width: 100%;">-->
+  
+   <table>
+        <thead>
+            <tr>
+                <th>Event Record #</th>
+                    <th>Record Type</th>
+                    <th>Event Start Date</th>
+                    <th>Event End Date</th>
+                    <th>Event Type</th> 
+                    <th>Well Id</th>
+                    <th>Event Description</th>
+                    <th >Failure Mode</th>
+                    <th >Component Affect</th>
+                    <th >Component PN</th>
+                    <th >Component SN</th>
+                    <th> Notes</th>
+            </tr>   
+        </thead>
+        <tbody>
+            <!--!important -->
+            <tr>
+                <td colspan="11">&nbsp;</td>
+            </tr>
+            <apex:repeat id="ReadTable" value="{!lstGECombinedList}" var="a"  > 
+            <tr>
+                <td><apex:outputLink value="/{!a.RecordTypeID__c}" target="_blank</font>">{!LEFT(a.Event_Record_Number__c,11)}</apex:outputLink></td>
+    <td   ><apex:OutputField value="{!a.Record_Type__c}"/> </td>
+    <td   ><apex:OutputField value="{!a.Event_Start_Date__c}"/> </td>
+    <td  ><apex:OutputField value="{!a.Event_End_Date__c}"/> </td>
+    <td><apex:OutputField value="{!a.Event_Type__c}"/> </td>
+    <td >     <apex:OutputField value="{!a.Well_ID__c}"/> </td>
+    <td ><apex:OutputField value="{!a.Event_Description__c}"/> </td>
+   
+    <td  ><apex:OutputField value="{!a.Failure_Mode__c}" style="width:90px"/></td>
+    <td ><apex:OutputField value="{!a.Component_Affected__c}" style="width:90px" /></td>
+    <td  ><apex:OutputField value="{!a.Component_PN__c}" style="width:90px"/> </td>
+    <td  > <apex:OutputField value="{!a.Component_SN__c}" style="width:90px"/></td>
+    <td >     <apex:OutputField value="{!a.Notes__c}" style="width:90px"/></td>
+            </tr>
+            </apex:repeat>
+           
+        </tbody>
+    </table>
+ <!--<apex:commandButton id="saveBtn" value="Save" action="{!save}" rendered="{userProfileName!='GE_ES Developer'}" />-->
+
+   
+   </apex:outputPanel>
+   
+   
+   <apex:outputPanel rendered="{!mode='edit'}" id="edit">
+   
+  <!-- <div style="overflow: auto;height: 80px; width: 100%;">-->
+  
+   <table>
+        <thead>
+            <tr>
+                <th>Event Record #</th>
+                    <th>Record Type</th>
+                    <th>Event Start Date</th>
+                    <th>Event End Date</th>
+                    <th>Event Type</th> 
+                    <th>Well Id</th>
+                    <th>Event Description</th>
+                    <th >Failure Mode</th>
+                    <th >Component Affect</th>
+                    <th >Component PN</th>
+                    <th >Component SN</th>
+                    <th> Notes</th>
+            </tr>   
+        </thead>
+        <tbody>
+            <!--!important -->
+            <tr>
+                <td colspan="11">&nbsp;</td>
+            </tr>
+            <apex:repeat id="RecentcaseTable" value="{!lstGECombinedList}" var="a"  > 
+            <tr>
+                <td><apex:outputLink value="/{!a.RecordTypeID__c}" target="_blank</font>">{!LEFT(a.Event_Record_Number__c,11)}</apex:outputLink></td>
+    <td   ><apex:OutputField value="{!a.Record_Type__c}"/> </td>
+    <td   ><apex:OutputField value="{!a.Event_Start_Date__c}"/> </td>
+    <td  ><apex:OutputField value="{!a.Event_End_Date__c}"/> </td>
+    <td><apex:OutputField value="{!a.Event_Type__c}"/> </td>
+    <td >     <apex:OutputField value="{!a.Well_ID__c}"/> </td>
+    <td ><apex:OutputField value="{!a.Event_Description__c}"/> </td>
+   
+    <td  ><apex:inputField value="{!a.Failure_Mode__c}" style="width:90px"/></td>
+    <td ><apex:inputField value="{!a.Component_Affected__c}" style="width:90px" /></td>
+    <td  ><apex:inputField value="{!a.Component_PN__c}" style="width:90px"/> </td>
+    <td  > <apex:inputField value="{!a.Component_SN__c}" style="width:90px"/></td>
+    <td >     <apex:inputField value="{!a.Notes__c}" style="width:90px"/></td>
+            </tr>
+            </apex:repeat>
+           
+        </tbody>
+    </table>
+ <!--<apex:commandButton id="saveBtn" value="Save" action="{!save}" rendered="{userProfileName!='GE_ES Developer'}" />-->
+<center> <apex:commandButton id="saveBtn" value="Submit" action="{!save}"/ ></center>
+    
+   </apex:outputPanel>
+  
+    
+    
+<!--  <apex:commandButton id="saveBtn" value="Submit" action="{!save}" rendered="{!$Profile.Name == 'System Administrator'}" />-->
+  
+ <!-- <center> <apex:commandButton id="saveBtn" value="Submit" action="{!save}" rendered="{!IF($Profile.Name =='System Administrator'||$Profile.Name =='GE_OG_SS Com Ops'||$Profile.Name =='GE_Business Intelligence'||$Profile.Name =='GE_ES Developer', true , false)}" /> </center>-->
+
+
+  
+
+ </apex:form>
+</apex:page>

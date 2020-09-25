@@ -1,0 +1,26 @@
+<apex:page controller="GE_OG_GS_UploadDocumentController" showHeader="false">    
+    <script type="text/javascript">
+        if({!isAttachmentSaved}){
+            window.opener.location.href="/{!$CurrentPage.parameters.id}";
+            window.top.close();
+        }
+    </script>
+    <style>
+        .message{
+            margin: 0px !important;
+            margin-bottom: 15px !important;
+        }
+    </style>
+    <apex:form >
+        <div style="width: 400px;padding: 40px;">
+        <apex:pageMessages ></apex:pageMessages>
+        <apex:inputFile value="{!post.ContentData}" filename="{!post.ContentFileName}"></apex:inputFile>
+         <br/>
+         <br/>
+        <apex:actionregion >
+        <apex:commandButton action="{!upload}" value="Upload Document" />&nbsp;&nbsp;&nbsp;
+        <apex:commandButton value="Close" onclick="javascript:window.top.close();"/>
+        </apex:actionregion>
+        </div>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,3 @@
+<apex:page standardController="Project_ge_og__c" extensions="skuid.Redirects" action="{!redirect}&objecttype=Project_ge_og__c&actiontype=Clone">
+
+</apex:page>

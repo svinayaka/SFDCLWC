@@ -1,0 +1,46 @@
+<apex:page standardController="Account" extensions="AddNewHqRegionalController_GEOG">
+<apex:form >
+    <apex:pageBlock >
+    <apex:pageMessages id="showmsg"></apex:pageMessages>
+    <apex:pageBlockButtons >
+    <apex:commandButton value="Save" action="{!Save}"/>
+    <apex:commandButton value="Cancel" action="{!Cancel}"/>
+    </apex:pageBlockButtons>
+  
+ <apex:pageblockSection title="Account Edit">
+        <apex:inputField value="{!acc.name}"/>
+        <apex:inputField value="{!acc.Type}" Rendered="{!isEdit}"/>
+        <apex:inputField value="{!acc.Classification__c}" Rendered="{!isEdit}" />
+        <apex:inputField value="{!acc.GE_HQ_Gold_ID__c}" Rendered="{!isEdit}" />
+        <apex:actionRegion >
+        <apex:selectList title="PickList1" size="1" value="{!propPickValSelected}" styleClass="form-select" >
+        <apex:selectOptions value="{!PickLstValue}"/>
+         <apex:actionSupport event="onchange" reRender="ajaxrequest" />
+        <label for="idRegion" class="labelCol vfLabelColTextWrap" style="position: relative; margin-left: 128px;"><span class="assistiveText">*</span>Account Tier</label>
+        </apex:selectList>
+        </apex:actionRegion>
+        
+</apex:pageblockSection> 
+    
+    <apex:outputPanel id="ajaxrequest">   
+    <apex:pageBlockSection rendered="{!propPickValSelected=='Regional'}" >
+        <apex:inputField value="{!acc.Member_of_GE_OG__c}" required="true"/>
+        <apex:inputField value="{!acc.ParentId}" required="true"/>
+        <apex:inputField value="{!acc.Region_GEOG__c}" required="true"/>
+    </apex:pageblockSection> 
+    </apex:outputPanel> 
+    
+    <apex:pageblockSection title="Contact Edit" id="myContable">
+        <apex:inputField value="{!con.LastName}" required="true"/>
+        <apex:inputField value="{!con.firstName}" required="true"/>
+        <apex:inputField value="{!con.Title}"/>
+        <apex:inputField value="{!con.Phone}"/>
+        <apex:inputField value="{!con.Email}" required="true"/>
+        <apex:inputField value="{!con.MailingStreet}"/>
+        <apex:inputField value="{!con.MailingCity}"/>
+        <apex:inputField value="{!con.MailingState}"/>
+        <apex:inputField value="{!con.MailingCountry}"/>
+    </apex:pageblockSection>
+    </apex:pageBlock> 
+</apex:form>
+</apex:page>

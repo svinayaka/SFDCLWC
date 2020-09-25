@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>GE_SS_Assignment_Group_Email_Alert_Project</fullName>
+        <description>GE SS Assignment Group Email Alert - Project</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_SS_Assignment_Group__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_SS_SubSea/GE_SS_Project_Group_Change_Project</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>GE_SS_Set_Assignment_Group_Project</fullName>
+        <field>GE_SS_Assignment_Group__c</field>
+        <formula>GE_SS_Project_Region__r.GE_SS_Assignment_Group__c</formula>
+        <name>GE SS Set Assignment Group Project</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <rules>
+        <fullName>GE SS Project Region Changed</fullName>
+        <actions>
+            <name>GE_SS_Assignment_Group_Email_Alert_Project</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>GE_SS_Set_Assignment_Group_Project</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>if(AND(RecordType.Name  = &apos;SS Project&apos;,ISCHANGED(GE_SS_Project_Region__c)),true,false)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE SS Project Region New</fullName>
+        <actions>
+            <name>GE_SS_Set_Assignment_Group_Project</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>if(AND(RecordType.Name  = &apos;SS Project&apos;,Not(ISNULL(GE_SS_Project_Region__c))),true,false)</formula>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+</Workflow>

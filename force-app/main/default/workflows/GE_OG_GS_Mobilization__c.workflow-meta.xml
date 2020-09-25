@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>BHGE_GS_Complete_Inbound_Notify</fullName>
+        <ccEmails>tools_shipments@ge.com</ccEmails>
+        <description>BHGE GS Complete Inbound Notify</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>tms.dts.servicemax.admins@ge.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>GE_OG_GS_Email_Templates/BHGE_GS_Complete_Notification</template>
+    </alerts>
+    <alerts>
+        <fullName>BHGE_GS_MOBEQInbound_Alert</fullName>
+        <ccEmails>tools_shipments@ge.com</ccEmails>
+        <description>BHGE GS MOBEQInbound Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>tms.dts.servicemax.admins@ge.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>GE_OG_GS_Email_Templates/BHGE_GS_ShippingInbound_Alert</template>
+    </alerts>
+    <alerts>
+        <fullName>BHGE_GS_MOBEQ_Arrival_Notification</fullName>
+        <ccEmails>tools_shipments@ge.com</ccEmails>
+        <description>BHGE GS MOBEQ Arrival Notification</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>tms.dts.servicemax.admins@ge.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>GE_OG_GS_Email_Templates/BHGE_GS_Arrival_Notification_Template</template>
+    </alerts>
+    <alerts>
+        <fullName>BHGE_GS_Ready_To_PickUp_Alert</fullName>
+        <ccEmails>tools_shipments@ge.com</ccEmails>
+        <description>BHGE GS Ready To PickUp Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>tms.dts.servicemax.admins@ge.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>GE_OG_GS_Email_Templates/BHGE_GS_Ready_To_PickUp_Notify</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_Alert_to_Technician_when_Mob_checklist_Mobilization_Status_is_Approved</fullName>
+        <description>Email Alert to Technician when Mob checklist(Mobilization) Status is Approved</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/GE_DS_Mob_Approval_Email_Template_Approved_Status</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_DS_Email_alert_to_FSE_Status_FSE_Review</fullName>
+        <description>GE DS Email alert to FSE_Status FSE Review</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/GE_DS_FSE_Email_Template_Status_FSE_Review</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_OG_DS_Email_Alert_to_Admin_Mobilize</fullName>
+        <description>GE OG DS Email Alert to Admin Mobilize</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_OG_DS_Service_Team_Leader__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/GE_DS_Mobilize_Service_Leader_Email_Template</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>GE_OG_GS_Global_Algeria</fullName>
+        <field>OwnerId</field>
+        <lookupValue>sara.gandolfo@ge.com.ogprod</lookupValue>
+        <lookupValueType>User</lookupValueType>
+        <name>GE OG GS Global - Algeria</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_OG_GS_Global_Americas</fullName>
+        <field>OwnerId</field>
+        <lookupValue>silvia.virgili@ge.com.geclone5</lookupValue>
+        <lookupValueType>User</lookupValueType>
+        <name>GE OG GS Global - Americas</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_OG_GS_Global_Asia</fullName>
+        <field>OwnerId</field>
+        <lookupValue>angela.vergura@ge.com.geclone5</lookupValue>
+        <lookupValueType>User</lookupValueType>
+        <name>GE OG GS Global - Asia</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_OG_GS_Global_Europe</fullName>
+        <field>OwnerId</field>
+        <lookupValue>raffaella.fanello@bhge.com</lookupValue>
+        <lookupValueType>User</lookupValueType>
+        <name>GE OG GS Global - Europe</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_OG_GS_Global_MENAT</fullName>
+        <field>OwnerId</field>
+        <lookupValue>veronica.giesbrecht@ge.com</lookupValue>
+        <lookupValueType>User</lookupValueType>
+        <name>GE OG GS Global - MENAT</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_OG_GS_Global_SS_Africa</fullName>
+        <field>OwnerId</field>
+        <lookupValue>sara.gandolfo@ge.com.ogprod</lookupValue>
+        <lookupValueType>User</lookupValueType>
+        <name>GE OG GS Global - SS Africa</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_OG_GS_Mob_Owner_update</fullName>
+        <field>OwnerId</field>
+        <lookupValue>stefania.viviani@ge.com.ogprod</lookupValue>
+        <lookupValueType>User</lookupValueType>
+        <name>GE OG GS Mob Owner update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_OG_GS_Update_Base_End</fullName>
+        <field>GE_OG_GS_Base_Scheduled_End_Date__c</field>
+        <formula>GE_OG_GS_Work_Order_Scheduled_End_Date__c</formula>
+        <name>GE OG GS Update Base End</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_OG_GS_Update_Base_Start</fullName>
+        <field>GE_OG_GS_Base_Scheduled_Start_Date__c</field>
+        <formula>GE_OG_GS_Work_Order_Scheduled_Start_Date__c</formula>
+        <name>GE OG GS Update Base Start</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_OG_GS_Update_Date_Update</fullName>
+        <field>GE_OG_GS_Update_Base_Dates__c</field>
+        <literalValue>0</literalValue>
+        <name>GE OG GS Update Date Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <rules>
+        <fullName>BHGE_GS_InboundComplete_Notify</fullName>
+        <actions>
+            <name>BHGE_GS_Complete_Inbound_Notify</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>GE_OG_GS_Mobilization__c.GE_OG_GS_Mobilization_Status__c</field>
+            <operation>equals</operation>
+            <value>COMPLETED</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>GE_OG_GS_Mobilization__c.Record_Type_Name__c</field>
+            <operation>equals</operation>
+            <value>TPS Shipping</value>
+        </criteriaItems>
+        <description>R-34013</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>BHGE_GS_InboundShipping_Alert</fullName>
+        <actions>
+            <name>BHGE_GS_MOBEQ_Arrival_Notification</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>GE_OG_GS_Mobilization__c.GE_OG_GS_Mobilization_Status__c</field>
+            <operation>equals</operation>
+            <value>AT SITE</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>GE_OG_GS_Mobilization__c.Record_Type_Name__c</field>
+            <operation>equals</operation>
+            <value>TPS Shipping</value>
+        </criteriaItems>
+        <description>R-33995</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>BHGE_GS_MOBEQInbound_Alert</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>GE_OG_GS_Mobilization__c.BHGE_GS_Work_Order_CustomerEndDate__c</offsetFromField>
+            <timeLength>-5</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>BHGE_GS_ReadyToPickUp_Notify</fullName>
+        <actions>
+            <name>BHGE_GS_Ready_To_PickUp_Alert</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>GE_OG_GS_Mobilization__c.GE_OG_GS_Mobilization_Status__c</field>
+            <operation>equals</operation>
+            <value>INBOUND</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>GE_OG_GS_Mobilization__c.Record_Type_Name__c</field>
+            <operation>equals</operation>
+            <value>TPS Shipping</value>
+        </criteriaItems>
+        <description>R-34012</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE OG GS Global - Algeria</fullName>
+        <actions>
+            <name>GE_OG_GS_Global_Algeria</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>ISPICKVAL(GE_OG_GS_Technician__r.SVMXC__Service_Group__r.GE_OG_GS_Service_Team_Type__c ,&quot;Global&quot;)&amp;&amp; (GE_OG_GS_Work_Order_Region__c=&quot;MENAT&quot;)&amp;&amp;(GE_OG_GS_Country_fx__c= &quot;Algeria&quot;)</formula>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE OG GS Global - Americas</fullName>
+        <actions>
+            <name>GE_OG_GS_Global_Americas</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>ISPICKVAL(GE_OG_GS_Technician__r.SVMXC__Service_Group__r.GE_OG_GS_Service_Team_Type__c , &quot;Global&quot;) &amp;&amp; (GE_OG_GS_Work_Order_Region__c =&quot;AMERICAS&quot;)</formula>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE OG GS Global - Asia</fullName>
+        <actions>
+            <name>GE_OG_GS_Global_Asia</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>ISPICKVAL(GE_OG_GS_Technician__r.SVMXC__Service_Group__r.GE_OG_GS_Service_Team_Type__c , &quot;Global&quot;) &amp;&amp; 
+(GE_OG_GS_Work_Order_Region__c =&quot;APAC&quot;)</formula>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE OG GS Global - Europe</fullName>
+        <actions>
+            <name>GE_OG_GS_Global_Europe</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>ISPICKVAL(GE_OG_GS_Technician__r.SVMXC__Service_Group__r.GE_OG_GS_Service_Team_Type__c , &quot;Global&quot;) &amp;&amp; (GE_OG_GS_Work_Order_Region__c =&quot;EUROPE&quot;)</formula>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE OG GS Global - MENAT</fullName>
+        <actions>
+            <name>GE_OG_GS_Global_MENAT</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>ISPICKVAL(GE_OG_GS_Technician__r.SVMXC__Service_Group__r.GE_OG_GS_Service_Team_Type__c , &quot;Global&quot;) &amp;&amp; (GE_OG_GS_Work_Order_Region__c =&quot;MENAT&quot;)&amp;&amp; (GE_OG_GS_Country_fx__c!= &quot;Algeria&quot;)</formula>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE OG GS Global - SS Africa</fullName>
+        <actions>
+            <name>GE_OG_GS_Global_SS_Africa</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>ISPICKVAL(GE_OG_GS_Technician__r.SVMXC__Service_Group__r.GE_OG_GS_Service_Team_Type__c , &quot;Global&quot;) &amp;&amp; (GE_OG_GS_Work_Order_Region__c =&quot;S.S. AFRICA&quot;)</formula>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE OG GS Global -Special Services</fullName>
+        <actions>
+            <name>GE_OG_GS_Mob_Owner_update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>GE_OG_GS_Work_Order_ID__r.GE_OG_GS_Skill_Requirement__c= &quot;SPECIAL-SERVICES&quot;</formula>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE OG GS Update Base Dates</fullName>
+        <actions>
+            <name>GE_OG_GS_Update_Base_End</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>GE_OG_GS_Update_Base_Start</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>GE_OG_GS_Update_Date_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>GE_OG_GS_Mobilization__c.GE_OG_GS_Update_Base_Dates__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_OG_DS_Status change to Approved</fullName>
+        <actions>
+            <name>Email_Alert_to_Technician_when_Mob_checklist_Mobilization_Status_is_Approved</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula>AND( RecordType.DeveloperName =&apos;GE_DS_Drilling_Mobilization&apos;, ISPICKVAL( GE_OG_GS_Mobilization_Status__c , &apos;Approved&apos;) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_OG_DS_Status change to FSE Review</fullName>
+        <actions>
+            <name>GE_DS_Email_alert_to_FSE_Status_FSE_Review</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula>AND( RecordType.DeveloperName =&apos;GE_DS_Drilling_Mobilization&apos;, ISPICKVAL( GE_OG_GS_Mobilization_Status__c , &apos;FSE Review&apos;) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_OG_DS_Status change to Manager Review</fullName>
+        <actions>
+            <name>GE_OG_DS_Email_Alert_to_Admin_Mobilize</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula>AND( RecordType.DeveloperName =&apos;GE_DS_Drilling_Mobilization&apos;, ISPICKVAL( GE_OG_GS_Mobilization_Status__c , &apos;Manager Review&apos;) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

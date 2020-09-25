@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GE_OG_GS_Visa_Expiry__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(GE_OG_GS_Visa_Expiry_Date__c &gt; (TODAY()+180), 
+   IMAGE(&quot;/servlet/servlet.FileDownload?file=01512000003mz6Q&quot;,&quot;GREEN&quot;), 
+   IF (GE_OG_GS_Visa_Expiry_Date__c &gt; (TODAY()+90),
+       IMAGE(&quot;/servlet/servlet.FileDownload?file=01512000003mz6T&quot;, &quot;Yellow&quot;), 
+       IF (GE_OG_GS_Visa_Expiry_Date__c &gt;= TODAY(),
+           IMAGE(&quot;/servlet/servlet.FileDownload?file=01512000003mz6S&quot;, &quot;Red&quot;),
+           IMAGE(&quot;/servlet/servlet.FileDownload?file=01512000003mz6R&quot;, &quot;Purple&quot;)
+           ) 
+       ) 
+   )</formula>
+    <label>Visa Expiry</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,31 @@
+<apex:page standardController="account" >
+<script type="text/javascript">
+    var __sfdcSessionId = '{!GETSESSIONID()}';
+    </script>
+
+<script src="/soap/ajax/18.0/connection.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+try
+  {
+
+    var account = new sforce.SObject("Account");
+    var  timeVal = new Date();
+    account.Name = "my new account" + " " + timeVal.getHours() + ":" + timeVal.getMinutes() + ":" + timeVal.getSeconds() ;
+    var result = sforce.connection.create([account]);
+    if (result[0].getBoolean("success")) {
+        //alert("new account created with id " + result[0].id);
+        } 
+    else 
+        {
+        //  alert("failed to create account " + result[0]);
+        }  
+   }
+   catch(e){alert(e);} 
+window.parent.location.href="/a07/e?&retURL=a07&CF00NS0000000jqSk_lkid=" + result[0].id + "&CF00NS0000000jqSk=" + account.Name;
+</script>
+  <!-- Begin Default Content REMOVE THIS -->
+  <h1>Congratulations</h1>
+  This is your new Page: AccountRequestRedirection
+  <!-- End Default Content REMOVE THIS -->
+</apex:page>

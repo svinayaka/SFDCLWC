@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Notify_Regarding_merge_request_completed</fullName>
+        <description>DM Email Notifications - Commercial Account Merge Requests; Notify Regarding merge request completed; Email sent to Requester</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Merge_Requester_Name__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Commercial_Account_Merge_Request/Notify_CE_team_and_requester_about_merge_completed</template>
+    </alerts>
+    <alerts>
+        <fullName>Notify_Regarding_merge_request_rejected</fullName>
+        <description>DM Email Notifications - Commercial Account Merge Requests; Notify Regarding merge request rejected; Email sent to Requester</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Merge_Requester_Name__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Commercial_Account_Merge_Request/Notify_CE_team_and_requester_about_merge_request_rejected</template>
+    </alerts>
+    <alerts>
+        <fullName>Notify_Regarding_merge_request_submission</fullName>
+        <description>DM Email Notifications - Commercial Account Merge Requests; Notify Regarding merge request submission; Email sent to Requester</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Merge_Commercial_Account_Users</recipient>
+            <type>group</type>
+        </recipients>
+        <recipients>
+            <field>Merge_Requester_Name__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Commercial_Account_Merge_Request/Notify_CE_team_and_requester_about_merge_request_submission</template>
+    </alerts>
+</Workflow>

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>GE_OG_User_Deactivation_Reminder_1st_Alert</fullName>
+        <description>GE_OG_User_Deactivation_Reminder_1st_Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Email</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>itconfigurationteam@ge.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>All/Deactivation_1st_Reminder_Email_Template</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_OG_User_Deactivation_Reminder_2nd_Alert</fullName>
+        <description>GE_OG_User_Deactivation_Reminder_2nd_Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Email</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>ogitoopsteam@ge.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Deactivation_2nd_Reminder_Email_Template</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_OG_User_Deactivation_Reminder_3rd_Alert</fullName>
+        <description>GE_OG_User_Deactivation_Reminder_3rd_Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Email</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>ogitoopsteam@ge.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Deactivation_3rd_Reminder_Email_Template</template>
+    </alerts>
+    <alerts>
+        <fullName>System_Administrator_Profile_Alert</fullName>
+        <description>System Administrator Profile Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>latha.baburao@ge.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>venkatesh.ragothaman@ge.com.geclone5</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/System_Admin_Profile_Alert</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>GE_Date_Reactivated_Field_Update</fullName>
+        <field>GE_Date_Re_activated__c</field>
+        <formula>TODAY()</formula>
+        <name>GE Date Reactivated Field Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Temporary_access_foor_Bigmachine_User</fullName>
+        <field>IsActive</field>
+        <literalValue>0</literalValue>
+        <name>Temporary access foor Bigmachine User</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>UpdateMobileversionInUser</fullName>
+        <field>FX5__Mobile_Version__c</field>
+        <literalValue>Sync V4</literalValue>
+        <name>UpdateMobileversionInUser</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Standard_Country_Field</fullName>
+        <field>Country</field>
+        <formula>Text(GE_DS_Country__c)</formula>
+        <name>Update Standard Country Field</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <rules>
+        <fullName>GE User update of Date Reactivated</fullName>
+        <actions>
+            <name>GE_Date_Reactivated_Field_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND( PRIORVALUE(IsActive)==false , IsActive ==true )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_OG_User_Deactivation_Reminder1</fullName>
+        <actions>
+            <name>GE_OG_User_Deactivation_Reminder_1st_Alert</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <description>NOTE :-  Deactivate it in Dev/Sit as no email should be sent to users in these environments
+User gets the reminder for deactivation if Last Login &gt; 60 days</description>
+        <formula>And(   Is_DND__c = False,  Days_Since_Login__c &gt; 45,  Days_Since_Login__c &lt; 53)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>System Admin Profile Check</fullName>
+        <actions>
+            <name>System_Administrator_Profile_Alert</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <description>System Admin Profile Check</description>
+        <formula>OR(AND((ISCHANGED( ProfileId )),IsActive == TRUE, (OR( Profile.Name ==&apos;GE_ES System Administrator&apos;, Profile.Name ==&apos;GE_ES System Integration&apos;, Profile.Name ==&apos;System Administrator&apos;, Profile.Name ==&apos;System Administrator (Org Split Only - View/Edit All Field)&apos;))),AND((ISCHANGED( IsActive )),  IsActive == TRUE ,(OR( Profile.Name ==&apos;GE_ES System Administrator&apos;, Profile.Name ==&apos;GE_ES System Integration&apos;, Profile.Name ==&apos;System Administrator&apos;, Profile.Name ==&apos;System Administrator (Org Split Only - View/Edit All Field)&apos;))))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Temporary access for Bigmachine User</fullName>
+        <active>false</active>
+        <criteriaItems>
+            <field>User.Username</field>
+            <operation>equals</operation>
+            <value>oracle.temp@ge.com.geclone5</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Temporary_access_foor_Bigmachine_User</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <timeLength>72</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>Update Standard Country Field</fullName>
+        <actions>
+            <name>Update_Standard_Country_Field</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Update Standard Country Field with GE_DS_Country__c</description>
+        <formula>ISCHANGED( GE_DS_Country__c )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>UserRuletoUpdateMobileVersion</fullName>
+        <actions>
+            <name>UpdateMobileversionInUser</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>CONTAINS( Profile.Name ,&apos;Service Delivery&apos;)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

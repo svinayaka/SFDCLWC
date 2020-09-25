@@ -1,0 +1,3 @@
+<apex:page standardController="Re_Parenting_LE_Request__c" extensions="skuid.Redirects" action="{!redirect}&objecttype=Re_Parenting_LE_Request__c&actiontype=View">
+
+</apex:page>

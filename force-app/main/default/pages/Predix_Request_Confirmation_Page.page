@@ -1,0 +1,8 @@
+<apex:page >
+  Your Request for Predix Community Access has submitted succesfully. 
+  You will get a notification on approval of your access request
+  
+  <br/>
+   <br/>
+  <apex:outputLink value="{!$Label.Predix_Login_Page}" id="theLink">Back To Login Page</apex:outputLink>
+</apex:page>

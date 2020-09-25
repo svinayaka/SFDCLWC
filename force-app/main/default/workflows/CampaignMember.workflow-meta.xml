@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Notify_New_Campaign_member_Owner</fullName>
+        <description>LeadGen Email Notifications - Campaign Member; On CMR Owner change; Notify New Campaign member Owner</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Owner_ge_og__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Marketing_Templates/CampaignMember_Owner_assignment</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Set_CMR_Type_as_Contact</fullName>
+        <field>CMR_Type_ge_og__c</field>
+        <literalValue>Contact</literalValue>
+        <name>Set CMR Type as Contact</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_CMR_Type_as_Lead</fullName>
+        <field>CMR_Type_ge_og__c</field>
+        <literalValue>Lead</literalValue>
+        <name>Set CMR Type as Lead</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Campaign_Member_Description</fullName>
+        <field>Campaign_Member_Description__c</field>
+        <formula>IF(
+					BEGINS(Lead_contact_Id_ge_og__c , &apos;003&apos;) , 
+					Contact.Description , 
+					Lead.Description 
+	)</formula>
+        <name>Update Campaign Member Description</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <rules>
+        <fullName>Copy Lead Contact Description</fullName>
+        <actions>
+            <name>Update_Campaign_Member_Description</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>!ISNULL(campaign_member_id_ge_og__c)</formula>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Notify Campaign member owner if owner is changed and sales support%3DNo</fullName>
+        <actions>
+            <name>Notify_New_Campaign_member_Owner</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula>ISCHANGED(Owner_ge_og__c) &amp;&amp; !ISBLANK(Owner_ge_og__c)  &amp;&amp; ISPICKVAL(Campaign.Inside_sales_support_needed_ge_og__c , &apos;No&apos;)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Notify Campaign member owner if owner is changed and sales support%3DYes</fullName>
+        <actions>
+            <name>Notify_New_Campaign_member_Owner</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula>ISPICKVAL(Campaign.Inside_sales_support_needed_ge_og__c , &apos;Yes&apos;)  &amp;&amp; !ISBLANK(PRIORVALUE(Owner_ge_og__c)) &amp;&amp; ISCHANGED(Owner_ge_og__c)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Set CMR Type on Contact type CMR</fullName>
+        <actions>
+            <name>Set_CMR_Type_as_Contact</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>(ISNEW() &amp;&amp; BEGINS(Lead_contact_Id_ge_og__c , &apos;003&apos;))  ||  ISCHANGED(ContactId)  ||  (BEGINS(Lead_contact_Id_ge_og__c , &apos;003&apos;) &amp;&amp;  ISPICKVAL(CMR_Type_ge_og__c , &apos;Lead&apos;))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Set CMR Type on Lead type CMR</fullName>
+        <actions>
+            <name>Set_CMR_Type_as_Lead</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>(ISNEW() &amp;&amp; BEGINS(Lead_contact_Id_ge_og__c , &apos;00Q&apos;))  ||  ISCHANGED(LeadId)  ||  (BEGINS(Lead_contact_Id_ge_og__c , &apos;00Q&apos;) &amp;&amp;  ISPICKVAL(CMR_Type_ge_og__c , &apos;Contact&apos;))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

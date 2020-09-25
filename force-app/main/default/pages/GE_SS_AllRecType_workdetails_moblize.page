@@ -1,0 +1,91 @@
+<apex:page standardController="SVMXC__Service_Order__c"  extensions="GE_SS_AllRecType_workdetails_moblize"  >
+<apex:form >
+
+    <script>
+    function delRec(idvalue) {
+        var con = window.confirm('Are you sure');
+        if(con) {
+            callfunc(idvalue);
+        }     
+        
+    }
+    </script>
+
+    <apex:actionFunction name="callfunc" action="{!deleteRec}" reRender="pbt">
+    <apex:param name="name1" value="" assignTo="{!idval}"/>
+    </apex:actionFunction>
+   <apex:pageBlock id="pbt">
+       <apex:pageBlockTable value="{!lsttoolfrWD}" var="toolfore" >
+            
+          <apex:column headerValue="Action" >
+              <apex:outputlink target="_blank" value="/{!toolfore.Id}/e" >Edit</apex:outputlink> <!--|&nbsp;
+              <apex:commandLink value="Del" onclick="delRec('{!SiRCaM.Id}');" rerender="pbt"/>-->
+          </apex:column>
+           <apex:column headerValue="Line Number" Width="10%">
+               <apex:outputlink target="_blank" value="/{!toolfore.id}" >{!toolfore.Name}</apex:outputlink>
+           </apex:column>
+           
+           <apex:column headerValue="Record Type" width="7%" >
+               <apex:outputField value="{!toolfore.recordtype.name}" />
+           </apex:column>           
+           
+           <apex:column headerValue="IB Serial Number" width="11%">              
+               <apex:outputField value="{!toolfore.SVMXC__Serial_Number__r.Name}" />
+           </apex:column>
+           
+           <apex:column headerValue="Product Name" width="12%">
+               <apex:outputfield value="{!toolfore.GE_SS_Product_Name__c}"  rendered="{!If(toolfore.SVMXC__Serial_Number__r.Name <> '',True,false )}"></apex:outputfield>
+               <apex:outputfield value="{!toolfore.Tools_Product_Name__c}"  rendered="{!If(toolfore.SVMXC__Serial_Number__c == ''  ,True,false )}"></apex:outputfield>
+           </apex:column>
+           
+           <apex:column headerValue="Product Description" width="25%">
+               <apex:outputfield value="{!toolfore.GE_SS_Product_Description__c}"  rendered="{!If(toolfore.SVMXC__Serial_Number__r.Name <> '',True,false )}"></apex:outputfield>
+               <apex:outputfield value="{!toolfore.Tools_Product_Description__c}"  rendered="{!If(toolfore.SVMXC__Serial_Number__c ==  '' ,True,false )}"></apex:outputfield> 
+           </apex:column>
+           
+           <apex:column headerValue="Qty" width="3%">
+               <apex:outputfield value="{!toolfore.GE_SS_Quantity__c}"  rendered="{!If(toolfore.SVMXC__Serial_Number__r.Name <> '',True,false )}"></apex:outputfield>
+               <apex:outputText value="{!FLOOR(toolfore.SVMXC__Requested_Quantity2__c)}"  rendered="{!If(toolfore.SVMXC__Serial_Number__c == '' ,True,false )}"></apex:outputText>
+           </apex:column>
+           
+           <apex:column headerValue="Delivered?" width="3%">
+               <apex:outputfield value="{!toolfore.GE_SS_Delivered__c}" ></apex:outputfield>
+           </apex:column>
+           
+           <apex:column headerValue="Shipped Date To Cust" width="5%">
+               <apex:outputfield value="{!toolfore.GE_Shipped_Date_to_Customer__c}" ></apex:outputfield>
+           </apex:column>          
+           
+           <apex:column headerValue="Used" width="3%">
+            <apex:outputfield value="{!toolfore.GE_SS_Used__c}" ></apex:outputfield>
+           </apex:column>
+           
+           <apex:column headerValue="Backload?" width="3%">
+               <apex:outputfield value="{!toolfore.Backload__c}" ></apex:outputfield>
+           </apex:column>
+           
+           <apex:column headerValue="GE Return Date" width="5%">
+               <apex:outputfield value="{!toolfore.GE_Shipped_Date_to_GE__c}" ></apex:outputfield>
+           </apex:column>
+           
+           <apex:column headerValue="GE Return Address" width="13%">
+               <apex:outputfield value="{!toolfore.Delivered_To__c}" ></apex:outputfield>
+           </apex:column>                 
+           
+          
+           <!--Commenting below as part of  R-26631  
+          <apex:column headerValue="Additional Comments">
+               <apex:outputfield value="{!toolfore.GE_SS_Additional_Comments__c}" ></apex:outputfield>
+           </apex:column>-->
+           
+       </apex:pageBlockTable>
+       <apex:panelGrid columns="2">
+           <!--<apex:commandLink value="Show more"/>-->
+           <apex:outputPanel rendered="{!recordSize}">
+           <apex:outputlink target="_blank" value="/apex/GE_SS_AllRecType_workdetails_moblize?id={!Aid}&allRec=true" >Go To List ></apex:outputlink>
+           </apex:outputPanel>
+       </apex:panelGrid>
+   </apex:pageBlock>
+
+</apex:form>
+</apex:page>

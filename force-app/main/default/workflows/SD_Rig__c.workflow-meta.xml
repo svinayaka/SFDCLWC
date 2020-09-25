@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>SD_RigName_Update</fullName>
+        <field>Name</field>
+        <formula>SD_Contractor__c  &amp; &apos; Rig &apos;  &amp;  SD_Rig_Short_Name__c</formula>
+        <name>SD RigName Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <rules>
+        <fullName>SD_RigName_Update_Rule</fullName>
+        <actions>
+            <name>SD_RigName_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>True</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

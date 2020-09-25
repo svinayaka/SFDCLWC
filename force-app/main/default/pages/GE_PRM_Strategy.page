@@ -1,0 +1,28 @@
+<apex:page standardController="GE_HQ_Account_Plan__c" extensions="GE_PRM_Strategy" sidebar="false" tabstyle="GE_PRM_Strategy__tab">
+
+<Apex:pageblock title="Account Plans">
+<apex:pageMessages />
+
+    <table width="100%" align="Center">
+        <tr align="Center">
+            <td align="Center"></td>
+        </tr>
+    </table> <br/>
+<apex:pageBlockTable value="{!objAccountPlan}" var="ap" rendered="{! iAPsize <>0}">
+<!-- Commenting this as part of FEB release SIT bug 0000016227
+<apex:column headerValue="Edit"> <apex:outputLink value="/{!ap.Id}/e" title="edit">Edit</apex:outputLink>  </apex:column>
+-->
+<!--<apex:column outputlabel="{!ap.Name}"/> -->
+<apex:column headerValue="Account Plan Name">
+<apex:outputLink value="/{!ap.Id}" title="{!ap.name}">{!ap.name}</apex:outputLink>
+</apex:column>
+
+<apex:column value="{!ap.GE_PRM_Channel_Sales_Manager__c}"/>
+<!--<apex:column value="{!ap.GE_PRM_Completed_By__c}"/>-->
+<apex:column value="{!ap.GE_PRM_Status__c}"/>
+<apex:column value="{!ap.GE_PRM_Year__c}"/>
+
+</apex:pageBlockTable>    
+
+</Apex:pageblock>
+</apex:page>

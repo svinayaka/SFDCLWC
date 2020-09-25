@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Notify_Pre_Bid_Approver</fullName>
+        <ccEmails>madhuri.sharma@ge.com</ccEmails>
+        <description>Notify Pre Bid Approver</description>
+        <protected>false</protected>
+        <recipients>
+            <field>pre_bid_approver_ge_og__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Risk_Process_Email_Templates/Notify_Pre_Bid_Approver</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_to_Reviewer_when_PreBid_is_recalled</fullName>
+        <description>Send to Reviewer when PreBid is recalled</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Prebid_Approver_Do_not_use_ge_og__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Risk_Process_Email_Templates/Send_to_Reviewer_when_PreBid_is_recalled</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Change_Status_to_Approved</fullName>
+        <field>pre_bid_status_ge_og__c</field>
+        <literalValue>Approved</literalValue>
+        <name>Change Status to Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Change_Status_to_Pending</fullName>
+        <field>pre_bid_status_ge_og__c</field>
+        <literalValue>Pending</literalValue>
+        <name>Change Status to Pending</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Change_Status_to_Rejected</fullName>
+        <field>pre_bid_status_ge_og__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Change Status to Rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Pre_Bid_Evaluation_On_Oppty_to_true</fullName>
+        <field>pre_bid_evaluation_ge_og__c</field>
+        <literalValue>1</literalValue>
+        <name>Pre Bid Evaluation On Oppty to true</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <targetObject>pre_bid_opportunity_ge_og__c</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Pre_Bid_Evaluation_to_false</fullName>
+        <field>pre_bid_evaluation_ge_og__c</field>
+        <literalValue>0</literalValue>
+        <name>Pre-Bid Evaluation to false</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <targetObject>pre_bid_opportunity_ge_og__c</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Prebid_Submission_Date_To_Blank</fullName>
+        <field>prebid_submission_date_ge_og__c</field>
+        <name>Prebid_Submission_Date_To_Blank</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Remove_Prebid_Approver</fullName>
+        <field>pre_bid_approver_ge_og__c</field>
+        <name>Remove Prebid Approver</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Bid_No_BId_Approval_to_false</fullName>
+        <field>bid_no_bid_approval_ge_og__c</field>
+        <literalValue>0</literalValue>
+        <name>Update Bid/No BId Approval to false</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <targetObject>pre_bid_opportunity_ge_og__c</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Bid_No_BId_Approval_to_true</fullName>
+        <field>bid_no_bid_approval_ge_og__c</field>
+        <literalValue>1</literalValue>
+        <name>Update Bid/No BId Approval to true</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <targetObject>pre_bid_opportunity_ge_og__c</targetObject>
+    </fieldUpdates>
+    <rules>
+        <fullName>Bid No Bid Approval to false</fullName>
+        <actions>
+            <name>Update_Bid_No_BId_Approval_to_false</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Pre_Bid_ge_og__c.pre_bid_status_ge_og__c</field>
+            <operation>notEqual</operation>
+            <value>Approved</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Pre_Bid_ge_og__c.pre_bid_active_ge_og__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.tier_2_ge_og__c</field>
+            <operation>equals</operation>
+            <value>Oil Field Services</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Bid No Bid Approval to true</fullName>
+        <actions>
+            <name>Update_Bid_No_BId_Approval_to_true</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Pre_Bid_ge_og__c.pre_bid_status_ge_og__c</field>
+            <operation>equals</operation>
+            <value>Approved</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Pre_Bid_ge_og__c.pre_bid_active_ge_og__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.tier_2_ge_og__c</field>
+            <operation>equals</operation>
+            <value>Oil Field Services</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Bid%2F No Bid Approval to false</fullName>
+        <actions>
+            <name>Update_Bid_No_BId_Approval_to_false</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Pre_Bid_ge_og__c.pre_bid_status_ge_og__c</field>
+            <operation>notEqual</operation>
+            <value>Approved</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Pre_Bid_ge_og__c.pre_bid_active_ge_og__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Bid%2F No Bid Approval to true</fullName>
+        <actions>
+            <name>Update_Bid_No_BId_Approval_to_true</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Pre_Bid_ge_og__c.pre_bid_status_ge_og__c</field>
+            <operation>equals</operation>
+            <value>Approved</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Pre_Bid_ge_og__c.pre_bid_active_ge_og__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Pre-Bid Evaluation to false</fullName>
+        <actions>
+            <name>Pre_Bid_Evaluation_to_false</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(NOT(ISPICKVAL(pre_bid_status_ge_og__c, &apos;Submitted&apos;)) , NOT(ISPICKVAL(pre_bid_status_ge_og__c, &apos;Approved&apos;) ), pre_bid_active_ge_og__c == true)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Pre-Bid Evaluation to true</fullName>
+        <actions>
+            <name>Pre_Bid_Evaluation_On_Oppty_to_true</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>(1 OR 2) AND 3</booleanFilter>
+        <criteriaItems>
+            <field>Pre_Bid_ge_og__c.pre_bid_status_ge_og__c</field>
+            <operation>equals</operation>
+            <value>Submitted</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Pre_Bid_ge_og__c.pre_bid_status_ge_og__c</field>
+            <operation>equals</operation>
+            <value>Approved</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Pre_Bid_ge_og__c.pre_bid_active_ge_og__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

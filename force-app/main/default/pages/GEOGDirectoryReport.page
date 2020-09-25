@@ -1,0 +1,133 @@
+<!--
+Page Name              : GEOGDirectoryReport
+Used Where ?           : OG Directory
+Purpose/Overview       : This page is used to provide directory for oil & Gas by specific filters
+Functional Area        : Innovation 
+Author                 : Prasanth Nalle
+Created Date           : 14/03/2014
+
+Change History -
+
+Date Modified : Developer Name     : Method/Section Modified/Added : Purpose/Overview of Change
+
+-->
+<apex:page showHeader="False" Sidebar="False" standardController="user" extensions="GE_OG_Directory_Report" action="{!addCodeUtilization}">
+    <script src="{!URLFOR($Resource.GE_OG_RKP_JSgrouping, 'js/libs/jquery-1.9.1.js')}" type="text/javascript"></script>
+    <script src="{!URLFOR($Resource.GE_OG_RKP_JSgrouping, 'js/libs/jquery-ui-1.10.3.custom.js')}" type="text/javascript"></script>
+    <script src="{!URLFOR($Resource.GE_OG_RKP_JSgrouping, 'js/libs/jquery.dataTables.js')}" type="text/javascript"></script>
+    <script src="{!URLFOR($Resource.GE_OG_RKP_JSgrouping, 'js/libs/jquery.dataTables.rowGrouping.js')}"  type="text/javascript"></script>
+    <link  href="{!URLFOR($Resource.GE_OG_RKP_JSgrouping, 'css/smoothness/jquery-ui-1.10.3.custom.css')}"  rel="stylesheet" type="text/css" />
+    <apex:form id="frm">
+        <apex:sectionheader subtitle="{!Tier2}<{!Tier3}>-{!funct}-{!country}" title="Oil & Gas Directory"  /> 
+        <apex:pageBlock >
+            <center><td style="font-weight:bold;"><h1><font Size="4">Site Location :</font></h1>
+            <input  class="target" type="text" id="location" onkeyup="doSearch();"/>   
+                    </td></center>
+            <apex:actionFunction name="searchServer" action="{!Query}" rerender="results" oncomplete="searchRearrange();">
+                <apex:param name="location" value="" />
+            </apex:actionFunction>
+        </apex:pageBlock>
+        <script type="text/javascript">
+            $(document).ready(function(){
+            var checklistItemTable; 
+            var temp=$("#userDataTable");  
+            {
+            checklistItemTable = $("#userDataTable").dataTable( {
+                   "bJQueryUI": true,
+                   "bFilter": false,
+                   "bPaginate": false,
+                   "bRetrieve" : true,
+                   "bDestroy" : true,
+                   "bAutoWidth": true,
+                   "sPaginationType": "full_numbers",
+                   "aoColumns": [ { "bSortable": false},
+                                  { "bSortable": false},
+                                  { "bSortable": false},
+                                  { "bSortable": false},
+                                  { "bSortable": false},
+                                  { "bSortable": false},
+                                  { "bSortable": false}] } );
+            } 
+            $("#userDataTable").dataTable().rowGrouping();             
+            });
+         
+            function searchRearrange(){
+                var checklistItemTable; 
+                var temp=$("#userDataTable");   
+                {   
+                checklistItemTable = $("#userDataTable").dataTable( {
+                   "bJQueryUI": true,
+                   "bFilter": false,
+                   "bPaginate": false,
+                   "bRetrieve" : true,
+                   "bDestroy" : true,
+                   "bAutoWidth": true,
+                   "sPaginationType": "full_numbers",
+                   "aoColumns": [ { "bSortable": false},
+                                  { "bSortable": false},
+                                  { "bSortable": false},
+                                  { "bSortable": false},
+                                  { "bSortable": false},
+                                  { "bSortable": false},
+                                  { "bSortable": false}] } );
+                } 
+                $("#userDataTable").dataTable().rowGrouping();             
+                }
+       
+            function doSearch()
+            {
+           
+            searchServer(document.getElementById("location").value);
+            }
+      </script>
+ 
+        <apex:pageblock id="results">
+            <apex:pageblocksection columns="1">
+            <apex:Outputpanel rendered="{!IF(OGDirectoryList.size == 0 , false , true)}">   
+            <table class="list" width="100%" cellpadding="0" cellspacing="0" border="0" id="userDataTable"  >
+            <thead class="rich-table-thead">
+               <tr class="headerRow ">
+                <th ><div>Location</div>
+                </th>
+                 <th class="headerRow  " scope="col" colspan="1">
+                     <div><font size="4">Name</font></div>
+                 </th>
+                 <th class="headerRow  " scope="col" colspan="1">
+                     <div><font size="4">SSOID</font></div>
+                 </th>
+                 <th class="headerRow  " scope="col" colspan="1">
+                     <div><font size="4">Title</font></div>
+                 </th>
+                 <th class="headerRow  " scope="col" colspan="1">
+                     <div><font size="4">Phone</font></div>
+                 </th>
+                 <th class="headerRow  " scope="col" colspan="1">
+                     <div><font size="4">Email</font></div>
+                 </th>
+                 <th class="headerRow  " scope="col" colspan="1">
+                     <div><font size="4">Chatter Link</font></div>
+                  </th>
+                </tr>
+            </thead>
+            <tbody>
+              <apex:repeat value="{!OGDirectoryList}" var="OGD" id="repeat" >
+               <tr>
+                <td><b style="color:white"><center style="background-color:DeepSkyBlue"><font size="5"><apex:outputText value="{!OGD.Site_Location__c}"></apex:outputText></font></center></b></td>
+                <td><font size="4"><apex:outputText value="{!OGD.Name}" /></font></td>
+                <td><font size="4"><apex:outputText value="{!OGD.GE_HQ_SSO_ID__c}" /></font></td>
+                <td><font size="4"><apex:outputText value="{!OGD.Title}" /></font></td>
+                <td style="white-space: nowrap;"><font size="4"><apex:outputText value="{!OGD.Phone}" /></font></td>
+                <td><a href="mailto:{!OGD.Email}" target="_top"><font size="4"><apex:outputText value="{!OGD.Email}" /></font></a></td>
+                <td><apex:commandLink timeout="3000" action="{!getUserDetail}" target="_blank"><apex:image value="{!OGD.SmallPhotoUrl}"/><apex:param name="id1" value="{!OGD.Id}"/></apex:commandLink></td>
+               </tr>
+            </apex:repeat>
+            </tbody>
+            </table>
+            </apex:Outputpanel>
+            <apex:Outputpanel rendered="{!IF(OGDirectoryList.size == 0 , true , false)}">
+                    No Records found for the country you have selected.
+            </apex:Outputpanel>
+            </apex:pageblocksection>
+        </apex:pageblock>
+    </apex:form>
+</apex:page>

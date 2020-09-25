@@ -1,0 +1,14 @@
+<!--
+Page Name: GE_ES_Quote_Info
+Used Where ? : Used for displaying Quote Information
+Purpose/Overview : To display the TRS Compliance information 
+Functional Area : Quick Quotes
+Author: Prasad Yadala 
+Created Date:3/31/2011 
+-->
+
+<apex:page standardController="Quote">
+  <!-- Page Messages to display  messages  -->
+  <apex:pageMessage severity="info" strength="2" summary="The following Opportunity Line Items are not added as Quote Line Items as they are not in compliance with TRS {!Quote.GE_ES_Quote_Line_Info__c}" rendered="{!Quote.GE_ES_Quote_Line_Info__c != '' && Quote.GE_ES_Quote_Line_Info__c != null}"></apex:pageMessage>
+  <apex:pageMessage severity="info" strength="2" summary="All opportunity products will be added as quote line items." rendered="{!Quote.GE_ES_Quote_Line_Info__c = '' || Quote.GE_ES_Quote_Line_Info__c = null}"></apex:pageMessage>
+</apex:page>

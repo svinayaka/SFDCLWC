@@ -1,0 +1,23 @@
+<apex:page standardController="User" sidebar="false" showHeader="false" extensions="OG_PackageLicenseExt">
+   
+   <apex:pageBlock >
+        <apex:pageBlockSection columns="1">
+            <apex:pageblocktable value="{!licenseRecords}" var="a" id="pbTable">
+                <apex:column headerValue="License Details">
+                    <!--<apex:outputLink value="/{!a.ID}">-->
+                    <apex:outputLink value="/{!a.Id}" target="_blank">{!a.Name}</apex:outputLink>
+                        <!--<apex:outputText value="{!left(a.name,25)}"/>
+                    </apex:outputLink> -->
+                </apex:column>
+                <apex:column value="{!a.Package__r.Name}"/>
+                <apex:column value="{!a.Active_License__c}"/>
+                <apex:column value="{!a.Package_License_Type__c}"/>
+                <apex:column value="{!a.SFDC_License_Type__c}"/>
+                <apex:column value="{!a.CreatedDate}"/> 
+                <apex:column value="{!a.LastModifiedDate}"/>   
+            </apex:pageblocktable>
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+    
+    
+</apex:page>

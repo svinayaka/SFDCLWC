@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Notify_CE_team_and_requester_about_the_request_Approval</fullName>
+        <description>DM Email Notifications - Commercial Account Requests; Notify CE team and requester about the request Approval; Email sent to Commercial Account Request Approvers, Record creator</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial_Account_Request_Approvers</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Commercial_Account_Request_Templates/Notify_CE_team_and_requester_about_the_request_Approval</template>
+    </alerts>
+    <alerts>
+        <fullName>Notify_CE_team_and_requester_about_the_request_Rejection</fullName>
+        <description>DM Email Notifications - Commercial Account Requests; Notify CE team and requester about the request Rejection; Email sent to Commercial Account Request Approvers, Record creator</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <recipients>
+            <recipient>Commercial_Account_Request_Approvers</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Commercial_Account_Request_Templates/Notify_CE_team_and_requester_about_the_request_rejection</template>
+    </alerts>
+    <alerts>
+        <fullName>Notify_CE_team_and_requester_about_the_request_submission</fullName>
+        <description>DM Email Notifications - Commercial Account Requests; Notify CE team and requester about the request submission; Email sent to Commercial Account Request Approvers, Record owner</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Commercial_Account_Request_Approvers</recipient>
+            <type>group</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Commercial_Account_Request_Templates/Notify_CE_team_and_requester_about_the_request_submission_New</template>
+    </alerts>
+    <rules>
+        <fullName>Send Email notification when Commercial Account Request is Approved</fullName>
+        <actions>
+            <name>Notify_CE_team_and_requester_about_the_request_Approval</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Commercial_Account_Request_GEOG__c.Request_Status__c</field>
+            <operation>equals</operation>
+            <value>Approved</value>
+        </criteriaItems>
+        <description>Notify the requester and CE team whenever status is changed to &apos;Approved&apos;.</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Send Email notification when Commercial Account Request is Rejected</fullName>
+        <actions>
+            <name>Notify_CE_team_and_requester_about_the_request_Rejection</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Commercial_Account_Request_GEOG__c.Request_Status__c</field>
+            <operation>equals</operation>
+            <value>Rejected</value>
+        </criteriaItems>
+        <description>Notify the requester and CE team whenever status is changed to &apos;Rejected&apos;.</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Send Email when Commercial Account Request is created</fullName>
+        <actions>
+            <name>Notify_CE_team_and_requester_about_the_request_submission</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Commercial_Account_Request_GEOG__c.Request_Status__c</field>
+            <operation>equals</operation>
+            <value>Pending Review</value>
+        </criteriaItems>
+        <description>Whenever a Commercial Account Request is created with Pending Review status, send an email notification to the CE Team and the requester.</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+</Workflow>

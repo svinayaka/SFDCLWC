@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Rotation__c</fullName>
+    <externalId>false</externalId>
+    <label>Rotation</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Clockwise</fullName>
+                <default>false</default>
+                <label>Clockwise</label>
+            </value>
+            <value>
+                <fullName>Counter-Clockwise</fullName>
+                <default>false</default>
+                <label>Counter-Clockwise</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

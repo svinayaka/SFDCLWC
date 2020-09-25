@@ -1,0 +1,27 @@
+<apex:page sidebar="false" showHeader="false" controller="GE_OG_Mapa_ExpertiseExtn" action="{!getSkillInfo}">
+<apex:pageBlock >
+<apex:pageblocktable value="{!sMaxEventList}" var="event">
+    <apex:column headerValue="Related Event Subject">
+      <apex:outputtext value="{!event.Name}"/>
+    </apex:column>
+    <apex:column headerValue="Related Work Order">
+      <apex:outputtext value="{!event.SVMXC__Service_Order__r.Name}"/>
+    </apex:column>
+    <apex:column headerValue="Start Date">
+      <c:MFSI_FormatDateTime date_Timevalue="{!event.SVMXC__StartDateTime__c}"/>
+    </apex:column>
+        <apex:column headerValue="End Date">
+      <c:MFSI_FormatDateTime date_Timevalue="{!event.SVMXC__EndDateTime__c}"/>
+    </apex:column>
+</apex:pageblocktable>
+<br></br>
+<apex:pageBlockTable value="{!sMaxExpertiseList}" var="exp">
+    <apex:column headerValue="Skills">
+      <apex:outputText value="{!exp.Name}"/>
+    </apex:column>
+    <apex:column headerValue="Skill Level">
+      <apex:outputText value="{!exp.GE_OG_GS_Official_Certification_Level__c}"/>
+    </apex:column>
+</apex:pageBlockTable>
+</apex:pageBlock>
+</apex:page>

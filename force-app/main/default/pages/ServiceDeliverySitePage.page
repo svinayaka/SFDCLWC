@@ -1,0 +1,89 @@
+<apex:page standardController="FX5__Crew_Planning__c" extensions="SD_ServiceDeliverySite" showHeader="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
+    <apex:slds />
+ <div class="slds-scope"/>
+    <head> 
+  <style>
+  .tdr {
+text-align:right;
+}
+</style>
+    </head>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+        <apex:form >
+                <apex:pageBlock id="pg">
+                     <apex:pageBlockSection title="Current Job record Name is : {!obcps.FX5__Job__r.Name}" collapsible="false">
+                                          <!-- apex:outputField value="{!obcps.Name }"/> 
+                                          <apex:outputField value="{!obcps.FX5__Job__r.SD_Job_Summary_New__c}"/> 
+                                           <apex:outputField value="{!obcps.FX5__Job__r.SD_Job_Summary__c}"/>                               
+                                          <apex:outputField value="{!obcps.FX5__Job__r.SD_Multi_Phase_Parent_Job__c}"/> 
+                                          --->
+                                                 
+                                           
+                                           
+
+                                           <apex:pageblockSectionItem > Please confirm that you have reviewed your travel itinerary
+                                            <apex:inputCheckbox id="chk1" required="true"  value="{!option}">
+                                            <apex:actionsupport event="onclick" action="{!change}" reRender="pg"/>
+                                            </apex:inputCheckbox>
+                                          </apex:pageblockSectionItem>
+                                           
+                                        
+                                                 <apex:pageblockSectionItem rendered="{!bool}" >Please Select Your Response
+                                                 <apex:selectRadio id="radios"  value="{!radioValue}" layout="pageDirection" style="margin-top: -10px;" onChange="show(this);" >
+                                                          <apex:selectOption itemLabel="Yes, I understand and accept this job" itemValue="0"/> <br></br>
+                                                          <apex:selectOption itemLabel="No, I do NOT accept this job. " itemValue="1"/>
+                                                      </apex:selectRadio> 
+                                            </apex:pageblockSectionItem>
+                                            <br></br>
+                                           <div> 
+                                           <apex:pageBlockSectionItem > 
+                                             <apex:outputText value="Detailed reason for not accepting this job" id="defaultcost1" style="display:none;"/>
+                                             <apex:Inputfield id="differcost" value="{!obcps.SD_Reason_of_Rejection__c}" style="display:none;"/> 
+                                           </apex:pageBlockSectionItem>
+                                         </div>
+                                           <br></br>
+                                             
+                        </apex:pageBlockSection>
+                       <div align="center" draggable="false" >
+                               <apex:commandButton value="Submit" action="{!saveResponse}"/>      
+                            </div>
+                </apex:pageBlock>
+              
+             
+          </apex:form>
+          
+          <script  type="text/javascript">
+          
+function show(t)
+{
+    if ( $(t).val() == 0 ){
+
+        $('[id$="defaultcost1"]').hide();
+        $('[id$="differcost"]').hide();
+    }
+    else{
+       $('[id$="defaultcost1"]').show();
+       $('[id$="differcost"]').show();
+
+    }     
+}
+</script>
+<script  type="text/javascript">
+
+function termsAccepted() { 
+
+alert($(c).val());
+
+        if (document.getElementById('chk1').checked) {
+        
+            chkcheck = true;
+        } else {
+            alert("You did not Reviewed Travel itinerary.");
+            chkcheck = false;
+        }
+    }
+</script>
+
+          
+       
+</apex:page>

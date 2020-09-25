@@ -1,0 +1,8 @@
+<aura:event type="COMPONENT">    
+    <aura:attribute name="refresh" type="String" default="false"/>
+    <aura:attribute name="assistedMACreation" type="Boolean" default="false"/>
+    <aura:attribute name="isQA" type="Boolean" default="false"/>
+    <aura:attribute name="isAccount" type="Boolean" default="false"/>
+    <aura:attribute name="QADataFromChildComponent" type="Object" />
+    <aura:attribute name="isRecordCreated" type="Boolean" default="false" />
+</aura:event>

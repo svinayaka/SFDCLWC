@@ -1,0 +1,66 @@
+<apex:page standardController="Lead" showHeader="false" sidebar="false" tabStyle="Lead">
+
+<style type="text/css">
+
+.headingText{font-family:Arial,Helvetica,sans-serif;font-size:100%}
+.bold{font-weight: bold;}
+.underline{text-decoration: underline;}
+.textfont{font-family:Arial,Helvetica,sans-serif;font-size:50%}
+
+</style>
+
+<apex:pageBlock >
+
+<apex:form >
+<apex:outputText styleClass="headingText bold underline" value="IMPORTANT"></apex:outputText>
+<br></br><br></br>
+<apex:outputText styleClass="headingText bold" value="When Converting Leads to a Contact ONLY Commercial Relationship Accounts (format <COMPANY NAME> / HQ or 
+                        <COMPANY NAME> / <REGION> or <COMPANY NAME> / <COUNTRY> should be selected.  You can use the Search filter 
+                        to filter only Relationship accounts."> </apex:outputText>
+<br></br><br></br>
+<apex:outputText styleClass="headingText bold" value="If the correct Relationship Account is not found you should go to Deal Machine 
+                            and CREATE a new COUNTRY level Relationship account for your Lead and then perform the conversion.">
+</apex:outputText>
+<br></br><br></br>
+
+<apex:outputText styleClass="headingText" value="Full instructions on Lead Conversion follow:"></apex:outputText>
+<br></br><br></br>
+
+<apex:outputText styleClass="headingText bold" value="Convert a Lead to a new Contact (no associated opportunity)"></apex:outputText>
+<ol type="a">
+<li styleClass="textfont">Ensure there is a First Name, Last Name and an email address entered in the fields.</li>
+<li styleClass="textfont" >Click on the “convert” button to initiate the conversion. Please note that the system will run a validation check to see if the email already exists. If the email exists, an error message will be shown to ask the user to select the contact associated to the email.
+</li>
+<li styleClass="textfont">In the new page opened, select the record owner for the lead from the lookup table.</li>
+<li styleClass="textfont">Select account name (Commercial account is to be selected and not LE account) from the lookup table.</li>
+<li styleClass="textfont">Select the “Do not create opportunity flag” to disable opportunity creation trigger.</li>
+<li styleClass="textfont">Complete the following mandatory fields “converted status”, “Subject”, “Status” and “Priority”</li>
+<li styleClass="textfont">the lead will be converted to a contact associated with the selected Relationship Account.</li>
+</ol>
+
+<apex:outputText styleClass="headingText bold" value="Convert a Lead to a new Contact with an associated Opportunity"></apex:outputText>
+<ol type="a">
+<li styleClass="textfont">Ensure there is a First Name, Last Name and an email address entered in the fields.</li>
+<li styleClass="textfont">Complete the following mandatory fields;
+<ol type="i">
+<li>Tier 2 P&amp;L </li>
+<li>Tier 3 P&amp;L </li>
+<li>Tier 4 P&amp;L </li>
+<li>Sales Region</li>
+<li>Lead Currency</li>
+<li>Estimated Amount</li>
+</ol>
+</li>
+<li styleClass="textfont">Click on the “convert” button to initiate the conversion. Please note that the system will run a validation check to see if the email already exists. If the email exists, an error message will be shown to ask the user to select the contact associated to the email.
+</li>
+<li styleClass="textfont">In the new page opened, select the record owner for the lead from the lookup table.</li>
+<li styleClass="textfont">Select Relationship account name from the lookup table.</li>
+<li styleClass="textfont">Update the defaulted Opportunity Name if you wish</li>
+<li styleClass="textfont">Complete the following mandatory fields “converted status”, “Subject”, “Status” and “Priority”</li>
+<li styleClass="textfont">Once the information is saved, the lead will be converted to a new contact associated with the selected Relationship Account together with a new opportunity.</li>
+</ol>
+
+</apex:form>
+</apex:pageBlock>
+
+</apex:page>

@@ -1,0 +1,2625 @@
+<apex:page standardStylesheets="false" showHeader="false" controller="PredixCaseSearchController">
+<apex:stylesheet value="{!URLFOR($Resource.Predix_NewUI, 'fonts.css')}"/>
+<apex:stylesheet value="{!URLFOR($Resource.Predix_NewUI, 'bootstrap.css')}"/>
+<apex:stylesheet value="{!URLFOR($Resource.Predix_NewUI, 'screen.css')}"/>
+<apex:includeScript value="{!URLFOR($Resource.Predix_NewUI, 'jquery-2.1.4.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.Predix_NewUI, 'jquery-ui.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.Predix_NewUI, 'jquery.mousewheel.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.Predix_NewUI, 'jquery.mCustomScrollbar.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.Predix_NewUI, 'js.cookie.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.Predix_NewUI, 'casescript.js')}"/>
+<!--<apex:includeScript value="{!URLFOR($Resource.Predix_NewUI, 'script.js')}"/-->
+<!--<apex:includeScript value="{!URLFOR($Resource.Predix_files, 'ad_status.js')}"/>-->
+<apex:includeScript value="{!URLFOR($Resource.Predix_NewUI, 'c3.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.Predix_NewUI, 'd3.js')}"/>
+<html>
+<head>
+<title>GE Oil and Gas - CaseSearch</title>
+<script>
+
+ 
+   var profileName = "{!$Profile.Name}";
+  // alert(profileName);
+   if(profileName == 'II Partner Community UO'){
+    // alert('system admmin---'+profileName);   
+      includeCSSfile('/Predix/resource/1448367194000/Predix_NewUI/conocoscreen.css');   
+      document.getElementById('dashB').style.display ="none";
+      document.getElementById('concoB').style.display ="block";      
+     
+   }else if(profileName == 'II Partner Community IPS'){
+    includeCSSfile('/Predix/resource/1448367194000/Predix_NewUI/columbiascreen.css'); 
+   }
+   else if(profileName == 'System Administrator'|| profileName == 'GE_ES Developer'|| profileName == 'GE OG Predix Agent' ){
+  //  alert('Normal user---'+profileName);
+    var url = window.location.href;
+  //  alert(url);
+  //  alert(url.indexOf('/Predix/'));
+   if(url.indexOf('/Predix/')!= -1)
+   {
+     includeCSSfile('/Predix/resource/1448367194000/Predix_NewUI/AdminScreen.css');
+     }
+else{
+        includeCSSfile('/resource/1448367194000/Predix_NewUI/screen.css');
+    }
+           
+   }
+    
+     
+ 
+function includeCSSfile(href) {
+    //alert(href);
+    var head_node = document.getElementsByTagName('head')[0];
+    var link_tag = document.createElement('link');
+    link_tag.setAttribute('rel', 'stylesheet');
+    link_tag.setAttribute('type', 'text/css');
+    link_tag.setAttribute('href', href);
+    head_node.appendChild(link_tag);
+}
+
+</script>
+</head>
+
+<body>
+<script>
+function CallingRunningCaseSearch(){
+    var getSubject = document.getElementById('subject').value;
+    var  getStatus= document.getElementById('status').value;
+    var  getOwner= document.getElementById('owner').value;
+   // alert(getSubject +  getOwner+getStatus);
+    RunningCaseSearch(getSubject,getStatus,getOwner);
+    
+}
+</script>
+ <script type="text/javascript" language="javascript">
+     function tryPriorityAlert(){
+     <!--    alert("hi");-->
+         reRenderCountPanel();
+         reRenderPagesPanel();
+     }
+ </script>
+<Script>
+
+function Reset () {
+    
+  document.getElementById('One').reset();
+document.getElementById('two').reset();
+document.getElementById('three').reset();
+document.getElementById('four').reset();
+
+        }
+
+
+var PreviousContributor='';
+function CallingmethodTwoInJavascript(CaseNumber,FirstUser,SecUser,ThirdUser,FourthUser){
+
+if(PreviousContributor!=''){
+        $('#tr'+PreviousContributor).hide(1000);
+    }
+    if($("#tr"+CaseNumber).is(":visible")) {
+     $('#tr'+CaseNumber).hide(1000);
+    }else
+    {
+        $('#tr'+CaseNumber).show(1000);
+        $('.user-list .js-tip').tooltip();
+    }
+PreviousContributor = CaseNumber;
+    }
+    
+        $('html').click(function (e) {
+    //alert(e.target.id);
+    if (e.target.id == 'spanPriority' || e.target.id == 'spanStatus' || e.target.id == 'spanDateTime') {
+        //do something
+        //alert('My div');
+    } else {
+        //alert('outside');
+        //do something
+        $("#idPriority").hide(); 
+        $("#idStatus").hide();
+        $("#idDateTime").hide();  
+    }
+});
+function CallPriorities(){
+   $("#idPriority").show(); 
+   $("#idStatus").hide();
+$("#idDateTime").hide();   
+}
+function CallStatus(){
+   $("#idStatus").show(); 
+   $("#idPriority").hide();
+$("#idDateTime").hide(); 
+}
+function CallDateTime(){
+   $("#idDateTime").show(); 
+   $("#idPriority").hide();
+$("#idStatus").hide(); 
+}
+function CallingmethodThreeInJavascript(repeatName){
+ $("#idStatus").hide(); 
+ $("#idDateTime").hide(); 
+    $('#spanPriority').html(repeatName);
+    
+    var getSubject = document.getElementById('subject').value;
+    var  getStatus= document.getElementById('status').value;
+    var  getOwner= document.getElementById('owner').value;
+    if(getSubject == '' && getStatus == '' && getOwner == '')
+    { 
+        alert('Enter atleast one criteria in Advanced Search and click search!') ;
+        $('#spanPriority').html('All priorities');
+    }
+    else {methodThreeInJavascript(repeatName);}
+    
+    $("#idPriority").hide(); 
+    
+} 
+function CallingmethodStatusInJavascript(repeatName){
+   $("#idDateTime").hide(); 
+    $("#idPriority").hide();
+     $('#spanStatus').html(repeatName);
+     
+    var getSubject = document.getElementById('subject').value;
+    var  getStatus= document.getElementById('status').value;
+    var  getOwner= document.getElementById('owner').value;
+    if(getSubject == '' && getStatus == '' && getOwner == '')
+    { 
+        $('#spanStatus').html('Status');
+         alert('Enter atleast one criteria in Advanced Search and click search!') ;
+         
+    }    
+    else 
+    {
+        methodStatusInJavascript(repeatName);
+    }
+       
+
+    $("#idStatus").hide(); 
+} 
+function CallingmethodDateTimeInJavascript(repeatName){
+    $("#idPriority").hide();
+    $("#idStatus").hide();
+    $('#spanDateTime').html(repeatName);
+     
+    var getSubject = document.getElementById('subject').value;
+    var  getStatus= document.getElementById('status').value;
+    var  getOwner= document.getElementById('owner').value;
+    if(getSubject == '' && getStatus == '' && getOwner == '')
+    { 
+         alert('Enter atleast one criteria in Advanced Search and click search!') ; 
+        $('#spanDateTime').html('Any time');
+    }    
+    else   { methodDateTimeInJavascript(repeatName);}
+        
+       
+
+    $("#idDateTime").hide(); 
+} 
+
+function CallingRecordTypeCaseFunction(){
+        var recCount= {!recordTypeCount};
+        
+        if (recCount> 1) {
+       document.getElementById('RecordTypeNewCaseId').style.display= "block";
+       
+       document.getElementById('CasetableOnSearchPgId').style.display ="none";
+    } else {
+        document.getElementById('RecordTypeNewCaseId').style.display= "none";
+         document.getElementById('CasetableOnSearchPgId').style.display ="block";
+    }
+       
+    }
+
+        function HideGoGoFormData(){
+            
+            document.getElementById('RecordTypeNewCaseId').style.display ="none";
+            document.getElementById('CasetableOnSearchPgId').style.display ="block";       
+    }
+    
+    function OnSubmitNullCase(){
+         //alert('hi');
+         var accId = $('#j_id0:j_id1180:accId').val(); 
+         var conId = $('#j_id0:j_id1182:conId').val();
+         var subId =$('#j_id0:j_id1184').val(); 
+         var Description = $('#j_id0:j_id1186').val();
+         //alert(conId);
+         //alert(accId);
+         //alert(subId);
+         //alert(Description);
+         
+         if(accId == undefined && conId == undefined && subId == undefined && Description ==undefined){
+            alert('Please select both Account and Contact fields to create the case.');
+            return false;
+         }
+            if(accId == '' && conId == '' )
+    { 
+        alert('Please select both Account and Contact fields to create the case') ;     
+    }   
+  }
+      
+getValuesCaseSearch = function() {
+        //var newCaseSubject = document.getElementById('j_id0:j_id13:j_id111').value;
+        var accId = document.getElementById('j_id0:frm:j_id1179');
+        var conId = document.getElementById('j_id0:frm:j_id1181');
+        if((accId === null || accId.value == '') || (conId === null || conId.value == '')) {
+            alert('Please enter account/contact name');
+            return false;
+        }
+        return true;
+        //alert(newCaseSubject);
+        //alert(accId);
+    }
+    
+</Script>
+<Script>
+function paginationFont()
+{
+   <!-- alert('hello');-->
+   
+    RunningNextPage();
+    
+    
+}
+function paginationFirst()
+{
+   <!-- alert('ok...');-->
+    runningFirstPage();
+}
+function paginationPrevious()
+{
+       <!-- alert('prev...');-->
+        runningPreviousPage();
+}
+function paginationLast()
+{
+       <!-- alert('last...');-->
+        runningLastPage();
+}
+</script>
+<script type="text/javascript">
+    var __sfdcSessionId = '{!GETSESSIONID()}';
+   
+    </script>
+    <script src="../../soap/ajax/34.0/connection.js" type="text/javascript"></script>
+    <script type="text/javascript">    
+    var writtenHTML = '';
+   
+    
+    
+    function setupPage() {
+      //function contains all code to execute after page is rendered
+      var searchKey = $('#idglobalsearch').val();
+      console.log(searchKey);
+      if(searchKey =='')
+      {
+         $('#idULsuggestedcases').html('');
+         $('#idULsuggestedcases').Hide(); 
+          return;
+      }
+      writtenHTML = '<ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content" id="ui-id-1" tabindex="0" style="display: block; position: relative; top: 0px; left: 1px; width: 1258px;"><li class="ui-menu-category">cases</li>';
+     
+      var resultCases =  sforce.connection.query("Select Id, Subject,CaseNumber,RecordType.Name From Case where  (Subject like '"+searchKey+"%' and Subject !=null) OR (CaseNumber like '"+searchKey+"%' and CaseNumber !=null) limit 10");
+      //console.log(resultCases.size);
+      var resultKnowledge = sforce.connection.query(
+          "SELECT Summary,Title,UrlName, Language, PublishStatus, KnowledgeArticleId FROM KnowledgeArticleVersion where Title like '"+searchKey+"%' and PublishStatus ='Online' and Language='en_US' and Title !=null limit 10");
+         
+    if (resultCases.size > 0) {
+      //get the records array
+      var records = resultCases.getArray('records');
+      //loop through the records and construct html string
+      for (var i = 0; i < records.length; i++) {
+        var cases = records[i];
+       
+       writtenHTML +=  '<li aria-label="Case : '+cases.CaseNumber +':'+ cases.Subject +'" class="ui-menu-item" id="ui-id-'+cases.Id+'" tabindex="-1"><a href="#top">' +cases.CaseNumber +':'+ cases.Subject+'</a></li>';
+      }
+    
+    }
+    else{
+        writtenHTML +=  '<li aria-label="Case : No data" class="ui-menu-item" id="ui-id-255" tabindex="-1"><a href="#top">No data</a>  </li>';
+    }
+    
+    //console.log(resultKnowledge.size);
+    writtenHTML +='<li class="ui-menu-category">knowledge</li>';
+    if(resultKnowledge.size > 0){
+       var records = resultKnowledge.getArray('records');
+       
+ 
+      //loop through the records and construct html string
+      for (var i = 0; i < records.length; i++) {
+        var knowledge = records[i];
+ 
+        writtenHTML +=  '<li aria-label="Knowledge : '+knowledge.Summary +'" class="ui-menu-item" id="ui-id-255" tabindex="-1"><a href="#top">' + knowledge.Summary+'</a> </li>';
+       
+      }
+      
+      }
+      else{
+         writtenHTML +=  '<li aria-label="Knowledge : No data" class="ui-menu-item" id="ui-id-255" tabindex="-1"><a href="#top">No data</a> </li>';
+      }
+      if(resultCases.size > 0 || resultKnowledge.size > 0){
+            writtenHTML+='</ul>';  
+            $('#idULsuggestedcases').html(writtenHTML);  
+            $('#idULsuggestedcases').Show();  
+      }
+     /* else
+      {
+        $('#idULsuggestedcases').html('');   
+      }
+      */
+     
+    //render the generated html string
+   
+    
+  }
+ 
+  function queryFailed(error, source) {
+    source.output.innerHTML = "An error has occurred: " + error;
+  }
+ 
+  </script>
+<apex:form id="frm">
+<aside>
+<apex:actionFunction action="{!runSearch}" name="RunningCaseSearch" rerender="tableDetails,foundCases,PagecountOuputPanel"  status="loadstatus">
+            <apex:param name="firstParam" assignTo="{!strSubject}" value="" />
+             <apex:param name="SecParam" assignTo="{!strStatus}" value="" />
+            <apex:param name="ThirdParam" assignTo="{!strOwnerName}" value="" />
+             <apex:param name="FourthParam" assignTo="{!CurrentPage}" value="1" />
+            <apex:param name="FifthParam" assignTo="{!OffsetSize}" value="0" />
+            
+</apex:actionFunction>
+
+<apex:actionFunction action="{!next}" name="RunningNextPage" rerender="PagecountOuputPanel"  status="loadstatus"/>
+<apex:actionFunction action="{!previous}" name="runningPreviousPage" rerender="PagecountOuputPanel"  status="loadstatus"/>
+<apex:actionFunction action="{!FirstPage}" name="runningFirstPage" rerender="PagecountOuputPanel"  status="loadstatus"/>
+<apex:actionFunction action="{!LastPage}" name="runningLastPage" rerender="PagecountOuputPanel"  status="loadstatus"/>
+
+  <apex:actionFunction action="{!ShowPriorityCases}" name="methodThreeInJavascript" status="loadStatus" rerender="tableDetails" oncomplete="tryPriorityAlert();">
+                <apex:param name="firstParam" assignTo="{!renderedAllTable}" value="" />
+  </apex:actionFunction>                      
+            
+   <apex:actionFunction action="{!ShowStatusCases}" name="methodStatusInJavascript" status="loadStatus" rerender="tableDetails" oncomplete="tryPriorityAlert();">
+                <apex:param name="firstParam" assignTo="{!renderedAllTable}" value="" />
+   </apex:actionFunction>       
+<apex:actionFunction action="{!ShowDateTimeCases}" name="methodDateTimeInJavascript" status="loadStatus" rerender="tableDetails" oncomplete="tryPriorityAlert();">
+                <apex:param name="firstParam" assignTo="{!renderedAllTable}" value="" />
+   </apex:actionFunction> 
+  <h1><a class="external-link" href="http://www.ge.com">GE Oil and Gas</a></h1>
+  <!--/ Logo -->
+  <nav>
+    <ul>
+      <li class="icon link-new-case js-flyout" data-target="#newCaseFlyout" data-distance="44" data-role="nav"><a href="javascript:;" class="icon" onclick="CallingRecordTypeCaseFunction()">New case</a></li>
+      <li class="icon"><a href="{!$site.prefix}/apex/predixdashboardpage"><span class="icon icon-dashboard"></span>Dashboard</a></li>
+      <li class="icon active"><a href="{!$site.prefix}/apex/predixcasespage"><span class="icon icon-cases"></span>Cases</a></li>
+      <!--<li class="icon js-flyout" data-target="#enhancementsFlyout" data-distance="232" data-role="nav"><a href="javascript:;"><span class="icon icon-enhancements"></span>Enhancements</a></li>
+      <li class="icon"><a href="Knowledge.html"><span class="icon icon-knowledge"></span>Knowledge</a></li>-->
+    </ul>
+  </nav>
+  <!--/ Nav -->
+</aside>
+<!--/ Aside -->
+<div class="wrapper">
+  <header>
+    <div class="top-bar">
+      <div class="expand-side">
+        <div class="widget pull-left widget-search">
+          <div class="icon icon-search">
+             <input type="text" class="js-autocomplete" id="idglobalsearch" placeholder="Find cases, articles, documentation" onKeyup="setupPage()"/>
+            <a href="javascript:;" class="icon search-btn"></a>
+          </div>
+          <div id='idULsuggestedcases' style='overflow:auto; ' >
+        </div>
+        </div>
+        <!--/ .widget-search -->
+        <div class="widget widget-user pull-right js-flyout" data-target="#profileFlyout" data-left="137" data-width="full" data-role="header">
+          <a href="javascript:;" class="icon icon-drop">
+          <apex:image url="{!URLFOR($Resource.Predix_files,'user-thumbnail.png')}" width="50" height="50"/>
+          {!$User.FirstName} {!$User.LastName}
+          </a>
+        </div>
+        <!--/ .widget-user -->
+      </div>
+      <div class="widget widget-fullsize pull-right disabled">
+        <a href="javascript:;" class="icon icon-fullsize"></a>
+      </div>
+      <!--/ .widget-config -->
+      <div class="widget widget-config pull-right js-flyout disabled hide" data-target="#configFlyout" data-left="137" data-role="header">
+        <a href="javascript:;" class="icon icon-config"></a>
+      </div>
+      <!--/ .widget-config -->
+    </div>
+    <!--/ .top-bar -->
+  </header>
+  <!--/ Header -->
+  <div class="main-container configure-table">
+    <div class="section">
+      <div class="container-fluid">
+        <div class="col-xs-12">
+          <div class="panel panel-cases blue panel-cases-search is-search-cases">
+            <div class="panel-heading">
+              <div class="pull-right bar-options">
+                <div class="pull-left filter">
+                  <span class="label">View:</span>
+                  <div class="dropdown is-dropdown js-dropdown-priorities">
+                   <span class="icon" id="spanPriority" onclick="CallPriorities();">All priorities</span>
+                    <ul id="idPriority" style="display:none;">
+                    <li onclick='CallingmethodThreeInJavascript("All Priority")'>All</li>
+                    <li onclick='CallingmethodThreeInJavascript("P1")'>P1</li>
+                     <li onclick='CallingmethodThreeInJavascript("P2")'>P2</li>
+                       <li onclick='CallingmethodThreeInJavascript("P3")'>P3</li>
+                         <li onclick='CallingmethodThreeInJavascript("P4")'>P4</li>
+                   <!--   <li> <a href="#" onclick='CallingmethodThreeInJavascript("P3PriorityCases")'>P3</a></li>
+                       <li> <a href="#" onclick='CallingmethodThreeInJavascript("P4PriorityCases")'>P4</a></li>-->
+                       </ul>
+                  </div>
+                  <!--/ .dropdown -->
+                  <span class="label">Filter by:</span>
+                  <div class="dropdown is-dropdown js-dropdown-status">
+                    <span class="icon" id="spanStatus" onclick="CallStatus();">Status</span>
+                    <ul id="idStatus" style="display:none;">
+                    
+                     <li onclick='CallingmethodStatusInJavascript("All")'>All</li>
+                  
+                    <li onclick='CallingmethodStatusInJavascript("New")'>New</li>
+                     <li onclick='CallingmethodStatusInJavascript("Acknowledged")'>Acknowledged</li>
+                       <li onclick='CallingmethodStatusInJavascript("Working")'>Working</li>
+                       <li onclick='CallingmethodStatusInJavascript("Resolved")'>Resolved</li>
+                         <li onclick='CallingmethodStatusInJavascript("Closed")'>Closed</li>
+                      
+                       </ul>
+                  </div>
+                  <!--/ .dropdown -->
+                  <span class="label">Date:</span>
+                  <div class="dropdown is-dropdown js-dropdown-date">
+                     <span class="icon" id="spanDateTime" onclick="CallDateTime();">Any time</span>
+                    <ul id="idDateTime" style="display:none;">
+                     <li onclick='CallingmethodDateTimeInJavascript("Any time")'>Any time</li>
+                        <li onclick='CallingmethodDateTimeInJavascript("5 hrs ago")'>5 hrs ago</li>
+                        <li onclick='CallingmethodDateTimeInJavascript("Yesterday")'>Yesterday</li>
+                        <li onclick='CallingmethodDateTimeInJavascript("Last month")'>Last month</li>
+                     </ul>
+                  </div>
+                  <!--/ .dropdown -->
+                </div>
+                <!--/ .filter -->
+                <a href="javascript:;" class="pull-left icon icon-search active"></a>
+                <a href="javascript:;" class="pull-left icon icon-settings js-flyout disabled" data-target="#configColumns"></a>
+              </div>
+              <!--/ .bar-actions -->
+              <h2>Cases</h2>
+            </div>
+            <!--/ .panel-heading -->
+            <div class="panel-body">
+              <div class="well-search">
+                <div class="sidebar">
+                  <div class="inner-sidebar">
+                    <a href="{!$Site.prefix}/apex/Predixcasespage" class="icon icon-back">Go back</a>
+                  <!--  <form>-->
+                  
+                      <h3>Advanced search</h3>
+                      <div class="form-group" id="one">
+                        <input type="text" name="subject" id="subject" class="form-control" placeholder="Subject name"  />
+                      </div>
+                      <!--/ .form-group -->
+                      <div class="form-group" id="two">
+                        <input type="text" name="owner" Id="owner" class="form-control" placeholder="Case owner is" />
+                      </div>
+                      <!--/ .form-group -->
+                      <div class="form-group" id="three">
+                        <input type="text" name="status" id="status" class="form-control" placeholder="Status" />
+                      </div>
+                      <!--/ .form-group -->
+                      <div class="custom-checkbox large" id="four">
+                        <label>
+                          <!--<input type="checkbox" />-->
+                          <apex:inputCheckbox value="{!hasAttachment}"/>
+
+                          <span class="icon"></span>
+                          Has attached file
+                        </label>
+                      </div>
+                      <!--/ .checkbox -->
+                      
+                   <!-- </form>-->
+                    <!--/ Form -->
+                    <div class="form-footer">
+                      <a href="javascript:;" onclick="CallingRunningCaseSearch()" class="btn btn-primary btn-block js-search-cases">Search</a>
+                     <!-- <a href="javascript:;" class="link js-restore">Restore settings</a>-->
+                       <apex:outputLink onclick="reset()" styleclass="link js-restore">Restore settings </apex:outputLink>
+                    </div>
+                    <!--/ .form-footer -->
+                  </div>
+                </div>
+                <!--/ .sidebar -->
+                <div class="container-results">
+                  <div class="context-empty is-empty">
+                    <p class="icon is-no-context">There are no search result to display</p>
+                  </div>
+                  <!--/ .context-empty -->
+                  <div class="progress-bar">
+                    <div class="progress-inner">
+                        <div class="progress"></div>
+                    </div>
+                  </div>
+                  <div class="context-results js-tabs is-results">
+                    <div class="results-heading">
+                      <ul class="pull-right view-list">
+                        <li class="pull-left"><a href="javascript:;" class="icon icon-table is-tab active" data-target="tableView">Table</a></li>
+                     <!--   <li class="pull-left"><a href="javascript:;" class="icon icon-chart is-tab" data-target="chartView">Chart</a></li>-->
+                      </ul>
+                      <!--/ .list-view -->
+                      <div class="result-counts">
+                       <!-- <span class="found">575 cases</span> <strong>FOUND</strong> (<span class="key is-key">Lorem Ipsum, Fred Jones, Replacement</span>)-->
+                       <apex:actionFunction name="reRenderCountPanel" id="CasesCountOutputPanel" rerender="foundCases">
+                     </apex:actionFunction>
+                     <apex:outputPanel id="foundCases" styleClass="found" >{!Casessize} cases </apex:outputPanel> <strong>FOUND</strong>(<span class="key is-key">Subject, owner, status</span>) 
+                      </div>
+                    </div>
+                    <!--/ .results-heading -->
+                    <div class="results-context">
+                      <div class="view tabs-content" id="tableView">
+                        <div class="well-table is-expandable">
+                          <apex:outputPanel id="tableDetails">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th class="col-priority" data-name="priority"></th>
+                                <th class="center col-number" data-name="case_number">Case number</th>
+                                <th data-name="subject">Subject</th>
+                                <th data-name="date">Date</th>
+                                <th class="center" data-name="status">Status</th>
+                                <th class="col-action"></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                                  <apex:repeat value="{!lstWrapcases}" var="allCs" id="table" rendered="{!renderedAllTable='AllCases'}" >
+             
+                      <tr  onClick="CallingmethodTwoInJavascript('{!allCs.caseObject.CaseNumber}', '{!allCs.firstUser}', '{!allCs.secUser}', '{!allCs.thirdUser}', '{!allCs.fourthUser}')">
+                            <!--  <tr>-->
+                            
+                            <td><table><tr>
+                               <td><apex:outputPanel rendered="{!IF(allCs.caseObject.Priority == 'P1–Level 1–Catastrophic service failure',true,false)}" style="display: table-cell;" ><span class="icon icon-priority icon-P1"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(allCs.caseObject.Priority == 'P2–Level 2–Service failure',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P2"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(allCs.caseObject.Priority == 'P3–Level 3–Limited loss of service',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P3"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(allCs.caseObject.Priority == 'P4–Level 4–No impact to service',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P4"></span></apex:outputPanel></td>
+                               <td> <td>
+                                
+                         <apex:outputPanel rendered="{!IF(allCs.hasAttachment == true,true,false)}">
+                            <apex:image url="{!$Resource.Fileclip}" width="10" height="20" title="Case has a File Attachment"/>
+                         </apex:outputPanel>
+                            </td> </td></tr></table></td>
+                                <td class="center" data-name="case_number"><span class="case-number">{!allCs.caseObject.Casenumber}</span></td>
+                                
+                                <td data-name="subject"><span class="pull-left file">{!allCs.caseObject.subject}</span><!--<a href="javascript:;" class="icon icon-attachment"></a>--></td>
+                                 
+                                 <td data-name="date"><span> <apex:outputText value="{0,date,MM/dd/yyyy  hh:mm a}"> <apex:param value="{!allCs.caseObject.createddate}" /> </apex:outputText></span></td>
+                                <!--<td class="center" data-name="status"><span class="status-new">{!allCs.caseObject.Status}</span></td>-->
+                                <td class="center" data-name="status"> <apex:outputpanel rendered="{!IF(allCs.caseObject.Status== 'New',true,false)}"><span class="status-new">{!allCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(allCs.caseObject.Status== 'Acknowledged',true,false)}"><span>{!allCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(allCs.caseObject.Status== 'Working',true,false)}"><span>{!allCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(allCs.caseObject.Status== 'Resolved',true,false)}"><span>{!allCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(allCs.caseObject.Status== 'Closed',true,false)}"><span class="closed is-hidden">{!allCs.caseObject.Status}</span></apex:outputpanel></td>
+                             <!--   <td><span class="icon icon-arrow"></span></td>-->
+                             <td>
+                          <apex:outputpanel styleClass="icon icon-arrow"></apex:outputpanel>
+                          </td>
+                              </tr>
+                              
+                               <!-----START---------------------------------ADDED CONTRIBUTOR TABLE FOR ALL CASES ----------->
+                       <!-- <div id="{!allCs.caseObject.CaseNumber}" style="display:block;">-->
+                        <tr name="tr{!allCs.caseObject.CaseNumber}" id="tr{!allCs.caseObject.CaseNumber}" class="expand" style="display:none">
+                        <td colspan="6"><div class="row-expand clearfix on" id="div{!allCs.caseObject.CaseNumber}" style="">
+                            <div class="pull-left bar-progress">
+                            <span class="forward">Case progress</span>
+                            <div class="progress">
+                             <!-- <div class="percents"></div>
+                              <span>1 of 5 steps</span> -->
+                              
+                              <apex:outputPanel rendered="{!IF(allCs.caseObject.status == 'New',true,false)}"><div class="percents"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(allCs.caseObject.status == 'New',true,false)}"><span>1 of 5 steps</span></apex:outputPanel>
+
+                <apex:outputPanel rendered="{!IF(allCs.caseObject.status == 'Acknowledged',true,false)}"><div class="percents40"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(allCs.caseObject.status == 'Acknowledged',true,false)}"><span>2 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(allCs.caseObject.status == 'Working',true,false)}"><div class="percents60"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(allCs.caseObject.status == 'Working',true,false)}"><span>3 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(allCs.caseObject.status == 'Resolved',true,false)}"><div class="percents80"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(allCs.caseObject.status == 'Resolved',true,false)}"><span>4 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(allCs.caseObject.status == 'Closed',true,false)}"><div class="percents100"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(allCs.caseObject.status == 'Closed',true,false)}"><span>5 of 5 steps</span></apex:outputPanel>
+                              
+                              
+                              
+                            </div>
+                            
+                          </div>
+                          
+                          <div class="pull-left bar-contributor">
+                            <span class="forward">Contributor</span>
+                            <ul class="user-list clearfix">
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(allCs.firstUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!allCs.firstUser}" href="javascript:;" >
+                                    <apex:image alt="{!allCs.firstUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" />
+                                </a>
+                                </apex:outputPanel>
+                              </li> 
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(allCs.secUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!allCs.secUser}" href="javascript:;"><apex:image alt="{!allCs.secUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(allCs.thirdUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!allCs.thirdUser}" href="javascript:;"><apex:image alt="{!allCs.thirdUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(allCs.fourthUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!allCs.fourthUser}" href="javascript:;"><apex:image alt="{!allCs.fourthUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                            </ul>
+                          </div>
+                          
+                          <div class="pull-right button-group">
+                            <a class="btn btn-primary" href="{!$Site.prefix}/apex/PredixCasedetailPage?Id={!allCs.caseObject.Id}" target="_blank">Show details</a>
+                          </div>
+                          
+                        </div></td></tr>
+                        <!-----END---------------------------------ADDED CONTRIBUTOR TABLE FOR ALL CASES ----------->
+                              </apex:repeat> 
+                              
+                     <!--Adding Code for all Cases-->
+                     
+                     <apex:repeat value="{!AllStatusCasesDisplay}" var="allCases" id="tableAll" rendered="{!renderedAllTable='All'}" >
+                      <tr  onClick="CallingmethodTwoInJavascript('{!allCases.caseObject.CaseNumber}', '{!allCases.firstUser}', '{!allCases.secUser}', '{!allCases.thirdUser}', '{!allCases.fourthUser}')">
+                            <!--  <tr>-->
+                            <td><table><tr>
+                               <td><apex:outputPanel rendered="{!IF(allCases.caseObject.Priority == 'P1–Level 1–Catastrophic service failure',true,false)}" style="display: table-cell;" ><span class="icon icon-priority icon-P1"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(allCases.caseObject.Priority == 'P2–Level 2–Service failure',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P2"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(allCases.caseObject.Priority == 'P3–Level 3–Limited loss of service',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P3"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(allCases.caseObject.Priority == 'P4–Level 4–No impact to service',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P4"></span></apex:outputPanel></td>
+                                  <td> <td>
+                                
+                         <apex:outputPanel rendered="{!IF(allCases.hasAttachment == true,true,false)}">
+                            <apex:image url="{!$Resource.Fileclip}" width="10" height="20" title="Case has a File Attachment"/>
+                         </apex:outputPanel>
+                            </td> </td></tr></table></td>
+                                
+                                <td class="center" data-name="case_number"><span class="case-number">{!allCases.caseObject.Casenumber}</span></td>
+                                <td data-name="subject"><span class="pull-left file">{!allCases.caseObject.subject}</span><!--<a href="javascript:;" class="icon icon-attachment"></a>--></td>
+                                 <td data-name="date"><span> <apex:outputText value="{0,date,MM/dd/yyyy  hh:mm a}"> <apex:param value="{!allCases.caseObject.createddate}" /> </apex:outputText></span></td>
+                                <!--<td class="center" data-name="status"><span class="status-new">{!allCases.caseObject.Status}</span></td>-->
+                                <td class="center" data-name="status"> <apex:outputpanel rendered="{!IF(allCases.caseObject.Status== 'New',true,false)}"><span class="status-new">{!allCases.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(allCases.caseObject.Status== 'Acknowledged',true,false)}"><span>{!allCases.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(allCases.caseObject.Status== 'Working',true,false)}"><span>{!allCases.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(allCases.caseObject.Status== 'Resolved',true,false)}"><span>{!allCases.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(allCases.caseObject.Status== 'Closed',true,false)}"><span class="closed is-hidden">{!allCases.caseObject.Status}</span></apex:outputpanel></td>
+                             <!--   <td><span class="icon icon-arrow"></span></td>-->
+                             <td>
+                          <apex:outputpanel styleClass="icon icon-arrow"></apex:outputpanel>
+                          </td>
+                              </tr>
+                              
+                               <!-----START---------------------------------ADDED CONTRIBUTOR TABLE FOR ALL CASES ----------->
+                       <!-- <div id="{!allCases.caseObject.CaseNumber}" style="display:block;">-->
+                        <tr name="tr{!allCases.caseObject.CaseNumber}" id="tr{!allCases.caseObject.CaseNumber}" class="expand" style="display:none">
+                        <td colspan="6"><div class="row-expand clearfix on" id="div{!allCases.caseObject.CaseNumber}" style="">
+                            <div class="pull-left bar-progress">
+                            <span class="forward">Case progress</span>
+                            <div class="progress">
+                             <!-- <div class="percents"></div>
+                              <span>1 of 5 steps</span> -->
+                              
+                              <apex:outputPanel rendered="{!IF(allCases.caseObject.status == 'New',true,false)}"><div class="percents"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(allCases.caseObject.status == 'New',true,false)}"><span>1 of 5 steps</span></apex:outputPanel>
+
+                <apex:outputPanel rendered="{!IF(allCases.caseObject.status == 'Acknowledged',true,false)}"><div class="percents40"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(allCases.caseObject.status == 'Acknowledged',true,false)}"><span>2 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(allCases.caseObject.status == 'Working',true,false)}"><div class="percents60"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(allCases.caseObject.status == 'Working',true,false)}"><span>3 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(allCases.caseObject.status == 'Resolved',true,false)}"><div class="percents80"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(allCases.caseObject.status == 'Resolved',true,false)}"><span>4 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(allCases.caseObject.status == 'Closed',true,false)}"><div class="percents100"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(allCases.caseObject.status == 'Closed',true,false)}"><span>5 of 5 steps</span></apex:outputPanel>
+                              
+                              
+                              
+                            </div>
+                            
+                          </div>
+                          
+                          <div class="pull-left bar-contributor">
+                            <span class="forward">Contributor</span>
+                            <ul class="user-list clearfix">
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(allCases.firstUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!allCases.firstUser}" href="javascript:;" >
+                                    <apex:image alt="{!allCases.firstUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" />
+                                </a>
+                                </apex:outputPanel>
+                              </li> 
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(allCases.secUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!allCases.secUser}" href="javascript:;"> <apex:image alt="{!allCases.secUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(allCases.thirdUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!allCases.thirdUser}" href="javascript:;"><apex:image alt="{!allCases.thirdUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(allCases.fourthUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!allCases.fourthUser}" href="javascript:;"><apex:image alt="{!allCases.fourthUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                            </ul>
+                          </div>
+                          
+                          <div class="pull-right button-group">
+                            <a class="btn btn-primary" href="{!$Site.prefix}/apex/PredixCasedetailPage?Id={!allCases.caseObject.Id}" target="_blank">Show details</a>
+                          </div>
+                          
+                        </div></td></tr>
+                        <!-----END---------------------------------ADDED CONTRIBUTOR TABLE FOR ALL CASES ----------->
+                              </apex:repeat>
+                              
+                     <!----Code Ends for All status--->
+                              
+                     <!---Code starts for All Priority---->      
+                     
+                      <apex:repeat value="{!AllPriorityCasesDisplay}" var="allCases" id="tableAllPriority" rendered="{!renderedAllTable='All Priority'}" >
+                      <tr  onClick="CallingmethodTwoInJavascript('{!allCases.caseObject.CaseNumber}', '{!allCases.firstUser}', '{!allCases.secUser}', '{!allCases.thirdUser}', '{!allCases.fourthUser}')">
+                            <!--  <tr>-->
+                             <td><table><tr>
+                               <td><apex:outputPanel rendered="{!IF(allCases.caseObject.Priority == 'P1–Level 1–Catastrophic service failure',true,false)}" style="display: table-cell;" ><span class="icon icon-priority icon-P1"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(allCases.caseObject.Priority == 'P2–Level 2–Service failure',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P2"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(allCases.caseObject.Priority == 'P3–Level 3–Limited loss of service',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P3"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(allCases.caseObject.Priority == 'P4–Level 4–No impact to service',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P4"></span></apex:outputPanel></td>
+                              <td> <td>
+                                
+                         <apex:outputPanel rendered="{!IF(allCases.hasAttachment == true,true,false)}">
+                            <apex:image url="{!$Resource.Fileclip}" width="10" height="20" title="Case has a File Attachment"/>
+                         </apex:outputPanel>
+                            </td> </td></tr></table></td>
+
+
+
+                             <td class="center" data-name="case_number"><span class="case-number">{!allCases.caseObject.Casenumber}</span></td>
+                                <td data-name="subject"><span class="pull-left file">{!allCases.caseObject.subject}</span><!--<a href="javascript:;" class="icon icon-attachment"></a>--></td>
+                                 <td data-name="date"><span> <apex:outputText value="{0,date,MM/dd/yyyy  hh:mm a}"> <apex:param value="{!allCases.caseObject.createddate}" /> </apex:outputText></span></td>
+                                <!--<td class="center" data-name="status"><span class="status-new">{!allCases.caseObject.Status}</span></td>-->
+                                <td class="center" data-name="status"> <apex:outputpanel rendered="{!IF(allCases.caseObject.Status== 'New',true,false)}"><span class="status-new">{!allCases.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(allCases.caseObject.Status== 'Acknowledged',true,false)}"><span>{!allCases.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(allCases.caseObject.Status== 'Working',true,false)}"><span>{!allCases.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(allCases.caseObject.Status== 'Resolved',true,false)}"><span>{!allCases.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(allCases.caseObject.Status== 'Closed',true,false)}"><span class="closed is-hidden">{!allCases.caseObject.Status}</span></apex:outputpanel></td>
+                             <!--   <td><span class="icon icon-arrow"></span></td>-->
+                             <td>
+                          <apex:outputpanel styleClass="icon icon-arrow"></apex:outputpanel>
+                          </td>
+                              </tr>
+                              
+                               <!-----START---------------------------------ADDED CONTRIBUTOR TABLE FOR ALL CASES ----------->
+                       <!-- <div id="{!allCases.caseObject.CaseNumber}" style="display:block;">-->
+                        <tr name="tr{!allCases.caseObject.CaseNumber}" id="tr{!allCases.caseObject.CaseNumber}" class="expand" style="display:none">
+                        <td colspan="6"><div class="row-expand clearfix on" id="div{!allCases.caseObject.CaseNumber}" style="">
+                            <div class="pull-left bar-progress">
+                            <span class="forward">Case progress</span>
+                            <div class="progress">
+                             <!-- <div class="percents"></div>
+                              <span>1 of 5 steps</span> -->
+                              
+                              <apex:outputPanel rendered="{!IF(allCases.caseObject.status == 'New',true,false)}"><div class="percents"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(allCases.caseObject.status == 'New',true,false)}"><span>1 of 5 steps</span></apex:outputPanel>
+
+                <apex:outputPanel rendered="{!IF(allCases.caseObject.status == 'Acknowledged',true,false)}"><div class="percents40"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(allCases.caseObject.status == 'Acknowledged',true,false)}"><span>2 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(allCases.caseObject.status == 'Working',true,false)}"><div class="percents60"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(allCases.caseObject.status == 'Working',true,false)}"><span>3 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(allCases.caseObject.status == 'Resolved',true,false)}"><div class="percents80"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(allCases.caseObject.status == 'Resolved',true,false)}"><span>4 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(allCases.caseObject.status == 'Closed',true,false)}"><div class="percents100"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(allCases.caseObject.status == 'Closed',true,false)}"><span>5 of 5 steps</span></apex:outputPanel>
+                              
+                              
+                              
+                            </div>
+                            
+                          </div>
+                          
+                          <div class="pull-left bar-contributor">
+                            <span class="forward">Contributor</span>
+                            <ul class="user-list clearfix">
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(allCases.firstUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!allCases.firstUser}" href="javascript:;" >
+                                    <apex:image alt="{!allCases.firstUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" />
+                                </a>
+                                </apex:outputPanel>
+                              </li> 
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(allCases.secUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!allCases.secUser}" href="javascript:;"><apex:image alt="{!allCases.secUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(allCases.thirdUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!allCases.thirdUser}" href="javascript:;"><apex:image alt="{!allCases.thirdUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(allCases.fourthUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!allCases.fourthUser}" href="javascript:;"><apex:image alt="{!allCases.fourthUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                            </ul>
+                          </div>
+                          
+                          <div class="pull-right button-group">
+                            <a class="btn btn-primary" href="{!$Site.prefix}/apex/PredixCasedetailPage?Id={!allCases.caseObject.Id}" target="_blank">Show details</a>
+                          </div>
+                          
+                        </div></td></tr>
+                        <!-----END---------------------------------ADDED CONTRIBUTOR TABLE FOR ALL CASES ----------->
+                              </apex:repeat>
+                        
+                     <!--End Code for all Priority-->
+                    
+                    
+                     <apex:repeat value="{!P1PriorityCasesDisplay}" var="P1priorCs" id="P1priorCs" rendered="{!renderedAllTable='P1'}"  >
+                      <tr  onClick="CallingmethodTwoInJavascript('{!P1priorCs.caseObject.CaseNumber}', '{!P1priorCs.firstUser}', '{!P1priorCs.secUser}', '{!P1priorCs.thirdUser}', '{!P1priorCs.fourthUser}')">
+                    
+                            <!--  <tr>-->
+                             <td><table><tr>
+                               <td><apex:outputPanel rendered="{!IF(P1priorCs.caseObject.Priority == 'P1–Level 1–Catastrophic service failure',true,false)}" style="display: table-cell;" ><span class="icon icon-priority icon-P1"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(P1priorCs.caseObject.Priority == 'P2–Level 2–Service failure',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P2"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(P1priorCs.caseObject.Priority == 'P3–Level 3–Limited loss of service',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P3"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(P1priorCs.caseObject.Priority == 'P4–Level 4–No impact to service',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P4"></span></apex:outputPanel></td>
+                               <td> <td>
+                                
+                         <apex:outputPanel rendered="{!IF(P1priorCs.hasAttachment == true,true,false)}">
+                            <apex:image url="{!$Resource.Fileclip}" width="10" height="20" title="Case has a File Attachment"/>
+                         </apex:outputPanel>
+                            </td> </td></tr></table></td>
+ 
+
+                               <td class="center" data-name="case_number"><span class="case-number">{!P1priorCs.caseObject.Casenumber}</span></td>
+                                <td data-name="subject"><span class="pull-left file">{!P1priorCs.caseObject.subject}</span><!--<a href="javascript:;" class="icon icon-attachment"></a>--></td>
+                                <td data-name="date"><span> <apex:outputText value="{0,date,MM/dd/yyyy  hh:mm a}"> <apex:param value="{!P1priorCs.caseObject.createddate}" /> </apex:outputText></span></td>
+                                <!--<td class="center" data-name="status"><span class="status-new">{!allCs.caseObject.Status}</span></td>-->
+                                <td class="center" data-name="status"> <apex:outputpanel rendered="{!IF(P1priorCs.caseObject.Status== 'New',true,false)}"><span class="status-new">{!P1priorCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(P1priorCs.caseObject.Status== 'Acknowledged',true,false)}"><span>{!P1priorCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(P1priorCs.caseObject.Status== 'Working',true,false)}"><span>{!P1priorCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(P1priorCs.caseObject.Status== 'Resolved',true,false)}"><span>{!P1priorCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(P1priorCs.caseObject.Status== 'Closed',true,false)}"><span class="closed is-hidden">{!P1priorCs.caseObject.Status}</span></apex:outputpanel></td>
+                             <!--   <td><span class="icon icon-arrow"></span></td>-->
+                             <td>
+                          <apex:outputpanel styleClass="icon icon-arrow"></apex:outputpanel>
+                          </td>
+                              </tr>
+                              
+                               <!-----START---------------------------------ADDED CONTRIBUTOR TABLE FOR P1 CASE STATUS ----------->
+                       <!-- <div id="{!P1priorCs.caseObject.CaseNumber}" style="display:block;">-->
+                        <tr name="tr{!P1priorCs.caseObject.CaseNumber}" id="tr{!P1priorCs.caseObject.CaseNumber}" class="expand" style="display:none">
+                        <td colspan="6"><div class="row-expand clearfix on" id="div{!P1priorCs.caseObject.CaseNumber}" style="">
+                            <div class="pull-left bar-progress">
+                            <span class="forward">Case progress</span>
+                            <div class="progress">
+                             <!-- <div class="percents"></div>
+                              <span>1 of 5 steps</span> -->
+                              
+                              <apex:outputPanel rendered="{!IF(P1priorCs.caseObject.status == 'New',true,false)}"><div class="percents"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(P1priorCs.caseObject.status == 'New',true,false)}"><span>1 of 5 steps</span></apex:outputPanel>
+
+                <apex:outputPanel rendered="{!IF(P1priorCs.caseObject.status == 'Acknowledged',true,false)}"><div class="percents40"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(P1priorCs.caseObject.status == 'Acknowledged',true,false)}"><span>2 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(P1priorCs.caseObject.status == 'Working',true,false)}"><div class="percents60"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(P1priorCs.caseObject.status == 'Working',true,false)}"><span>3 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(P1priorCs.caseObject.status == 'Resolved',true,false)}"><div class="percents80"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(P1priorCs.caseObject.status == 'Resolved',true,false)}"><span>4 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(P1priorCs.caseObject.status == 'Closed',true,false)}"><div class="percents100"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(P1priorCs.caseObject.status == 'Closed',true,false)}"><span>5 of 5 steps</span></apex:outputPanel>
+                              
+                              
+                              
+                            </div>
+                            
+                          </div>
+                          
+                          <div class="pull-left bar-contributor">
+                            <span class="forward">Contributor</span>
+                            <ul class="user-list clearfix">
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(P1priorCs.firstUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!P1priorCs.firstUser}" href="javascript:;" >
+                                     <apex:image alt="{!P1priorCs.firstUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" />
+                                </a>
+                                </apex:outputPanel>
+                              </li> 
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(P1priorCs.secUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!P1priorCs.secUser}" href="javascript:;"> <apex:image alt="{!P1priorCs.secUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(P1priorCs.thirdUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!P1priorCs.thirdUser}" href="javascript:;"><apex:image alt="{!P1priorCs.thirdUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(P1priorCs.fourthUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!P1priorCs.fourthUser}" href="javascript:;"><apex:image alt="{!P1priorCs.fourthUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                            </ul>
+                          </div>
+                          
+                          <div class="pull-right button-group">
+                            <a class="btn btn-primary" href="{!$Site.prefix}/apex/PredixCasedetailPage?Id={!P1priorCs.caseObject.Id}" target="_blank">Show details</a>
+                          </div>
+                          
+                        </div></td></tr>
+                        <!-----END---------------------------------ADDED CONTRIBUTOR TABLE FOR  P1 CASE STATUS ----------->
+                        
+                    </apex:repeat>  
+                    
+                    <apex:repeat value="{!P2PriorityCasesDisplay}" var="P2priorCs" id="P2priorCs" rendered="{!renderedAllTable='P2'}"  >
+                     <tr  onClick="CallingmethodTwoInJavascript('{!P2priorCs.caseObject.CaseNumber}', '{!P2priorCs.firstUser}', '{!P2priorCs.secUser}', '{!P2priorCs.thirdUser}', '{!P2priorCs.fourthUser}')">
+                    
+                             
+                               <td><table><tr>
+                               <td><apex:outputPanel rendered="{!IF(P2priorCs.caseObject.Priority == 'P1–Level 1–Catastrophic service failure',true,false)}" style="display: table-cell;" ><span class="icon icon-priority icon-P1"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(P2priorCs.caseObject.Priority == 'P2–Level 2–Service failure',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P2"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(P2priorCs.caseObject.Priority == 'P3–Level 3–Limited loss of service',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P3"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(P2priorCs.caseObject.Priority == 'P4–Level 4–No impact to service',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P4"></span></apex:outputPanel></td>
+                                <td><td>
+                                <apex:outputPanel rendered="{!IF(P2priorCs.hasAttachment == true,true,false)}">
+                            <apex:image url="{!$Resource.Fileclip}" width="10" height="20" title="Case has a File Attachment"/>
+                         </apex:outputPanel>
+                            </td> </td></tr></table></td>
+
+                                <td class="center" data-name="case_number"><span class="case-number">{!P2priorCs.caseObject.Casenumber}</span></td>
+                                <td data-name="subject"><span class="pull-left file">{!P2priorCs.caseObject.subject}</span><!--<a href="javascript:;" class="icon icon-attachment"></a>--></td>
+                                <td data-name="date"><span> <apex:outputText value="{0,date,MM/dd/yyyy  hh:mm a}"> <apex:param value="{!P2priorCs.caseObject.createddate}" /> </apex:outputText></span></td>
+                                <!--<td class="center" data-name="status"><span class="status-new">{!allCs.caseObject.Status}</span></td>-->
+                                <td class="center" data-name="status"> <apex:outputpanel rendered="{!IF(P2priorCs.caseObject.Status== 'New',true,false)}"><span class="status-new">{!P2priorCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(P2priorCs.caseObject.Status== 'Acknowledged',true,false)}"><span>{!P2priorCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(P2priorCs.caseObject.Status== 'Working',true,false)}"><span>{!P2priorCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(P2priorCs.caseObject.Status== 'Resolved',true,false)}"><span>{!P2priorCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(P2priorCs.caseObject.Status== 'Closed',true,false)}"><span class="closed is-hidden">{!P2priorCs.caseObject.Status}</span></apex:outputpanel></td>
+                             <!--   <td><span class="icon icon-arrow"></span></td>-->
+                             <td>
+                          <apex:outputpanel styleClass="icon icon-arrow"></apex:outputpanel>
+                          </td>
+                              </tr>
+                              
+                              
+                               <!-----START---------------------------------ADDED CONTRIBUTOR TABLE FOR P2 CASE STATUS ----------->
+                       <!-- <div id="{!P2priorCs.caseObject.CaseNumber}" style="display:block;">-->
+                        <tr name="tr{!P2priorCs.caseObject.CaseNumber}" id="tr{!P2priorCs.caseObject.CaseNumber}" class="expand" style="display:none">
+                        <td colspan="6"><div class="row-expand clearfix on" id="div{!P2priorCs.caseObject.CaseNumber}" style="">
+                            <div class="pull-left bar-progress">
+                            <span class="forward">Case progress</span>
+                            <div class="progress">
+                             <!-- <div class="percents"></div>
+                              <span>1 of 5 steps</span> -->
+                              
+                              <apex:outputPanel rendered="{!IF(P2priorCs.caseObject.status == 'New',true,false)}"><div class="percents"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(P2priorCs.caseObject.status == 'New',true,false)}"><span>1 of 5 steps</span></apex:outputPanel>
+
+                <apex:outputPanel rendered="{!IF(P2priorCs.caseObject.status == 'Acknowledged',true,false)}"><div class="percents40"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(P2priorCs.caseObject.status == 'Acknowledged',true,false)}"><span>2 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(P2priorCs.caseObject.status == 'Working',true,false)}"><div class="percents60"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(P2priorCs.caseObject.status == 'Working',true,false)}"><span>3 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(P2priorCs.caseObject.status == 'Resolved',true,false)}"><div class="percents80"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(P2priorCs.caseObject.status == 'Resolved',true,false)}"><span>4 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(P2priorCs.caseObject.status == 'Closed',true,false)}"><div class="percents100"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(P2priorCs.caseObject.status == 'Closed',true,false)}"><span>5 of 5 steps</span></apex:outputPanel>
+                              
+                              
+                              
+                            </div>
+                            
+                          </div>
+                          
+                          <div class="pull-left bar-contributor">
+                            <span class="forward">Contributor</span>
+                            <ul class="user-list clearfix">
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(P2priorCs.firstUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!P2priorCs.firstUser}" href="javascript:;" >
+                                     <apex:image alt="{!P2priorCs.firstUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" />
+                                </a>
+                                </apex:outputPanel>
+                              </li> 
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(P2priorCs.secUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!P2priorCs.secUser}" href="javascript:;"><apex:image alt="{!P2priorCs.secUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(P2priorCs.thirdUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!P2priorCs.thirdUser}" href="javascript:;"><apex:image alt="{!P2priorCs.thirdUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(P2priorCs.fourthUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!P2priorCs.fourthUser}" href="javascript:;"><apex:image alt="{!P2priorCs.fourthUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                            </ul>
+                          </div>
+                          
+                          <div class="pull-right button-group">
+                            <a class="btn btn-primary" href="{!$Site.prefix}/apex/PredixCasedetailPage?Id={!P2priorCs.caseObject.Id}" target="_blank">Show details</a>
+                          </div>
+                          
+                        </div></td></tr>
+                        <!-----END---------------------------------ADDED CONTRIBUTOR TABLE FOR  P2 CASE STATUS ----------->
+                              
+                    </apex:repeat>  
+                    
+                    <apex:repeat value="{!P3PriorityCasesDisplay}" var="P3priorCs" id="P3priorCs" rendered="{!renderedAllTable='P3'}"  >
+                      <tr  onClick="CallingmethodTwoInJavascript('{!P3priorCs.caseObject.CaseNumber}', '{!P3priorCs.firstUser}', '{!P3priorCs.secUser}', '{!P3priorCs.thirdUser}', '{!P3priorCs.fourthUser}')">
+                    <td><table><tr>
+                            
+                               <td><apex:outputPanel rendered="{!IF(P3priorCs.caseObject.Priority == 'P1–Level 1–Catastrophic service failure',true,false)}" style="display: table-cell;" ><span class="icon icon-priority icon-P1"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(P3priorCs.caseObject.Priority == 'P2–Level 2–Service failure',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P2"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(P3priorCs.caseObject.Priority == 'P3–Level 3–Limited loss of service',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P3"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(P3priorCs.caseObject.Priority == 'P4–Level 4–No impact to service',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P4"></span></apex:outputPanel></td>
+                                <td><td>
+                                <apex:outputPanel rendered="{!IF(P3priorCs.hasAttachment == true,true,false)}">
+                            <apex:image url="{!$Resource.Fileclip}" width="10" height="20" title="Case has a File Attachment"/>
+                         </apex:outputPanel>
+                            </td> </td></tr></table></td>
+
+                                
+                                <td class="center" data-name="case_number"><span class="case-number">{!P3priorCs.caseObject.Casenumber}</span></td>
+                                <td data-name="subject"><span class="pull-left file">{!P3priorCs.caseObject.subject}</span><!--<a href="javascript:;" class="icon icon-attachment"></a>--></td>
+                                 <td data-name="date"><span> <apex:outputText value="{0,date,MM/dd/yyyy  hh:mm a}"> <apex:param value="{!P3priorCs.caseObject.createddate}" /> </apex:outputText></span></td>
+                                <!--<td class="center" data-name="status"><span class="status-new">{!allCs.caseObject.Status}</span></td>-->
+                                <td class="center" data-name="status"> <apex:outputpanel rendered="{!IF(P3priorCs.caseObject.Status== 'New',true,false)}"><span class="status-new">{!P3priorCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(P3priorCs.caseObject.Status== 'Acknowledged',true,false)}"><span>{!P3priorCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(P3priorCs.caseObject.Status== 'Working',true,false)}"><span>{!P3priorCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(P3priorCs.caseObject.Status== 'Resolved',true,false)}"><span>{!P3priorCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(P3priorCs.caseObject.Status== 'Closed',true,false)}"><span class="closed is-hidden">{!P3priorCs.caseObject.Status}</span></apex:outputpanel></td>
+                             <!--   <td><span class="icon icon-arrow"></span></td>-->
+                             <td>
+                          <apex:outputpanel styleClass="icon icon-arrow"></apex:outputpanel>
+                          </td>
+                              </tr>
+                              
+                                           <!-----START---------------------------------ADDED CONTRIBUTOR TABLE FOR P3 CASE STATUS ----------->
+                       <!-- <div id="{!P3priorCs.caseObject.CaseNumber}" style="display:block;">-->
+                        <tr name="tr{!P3priorCs.caseObject.CaseNumber}" id="tr{!P3priorCs.caseObject.CaseNumber}" class="expand" style="display:none">
+                        <td colspan="6"><div class="row-expand clearfix on" id="div{!P3priorCs.caseObject.CaseNumber}" style="">
+                            <div class="pull-left bar-progress">
+                            <span class="forward">Case progress</span>
+                            <div class="progress">
+                             <!-- <div class="percents"></div>
+                              <span>1 of 5 steps</span> -->
+                              
+                              <apex:outputPanel rendered="{!IF(P3priorCs.caseObject.status == 'New',true,false)}"><div class="percents"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(P3priorCs.caseObject.status == 'New',true,false)}"><span>1 of 5 steps</span></apex:outputPanel>
+
+                <apex:outputPanel rendered="{!IF(P3priorCs.caseObject.status == 'Acknowledged',true,false)}"><div class="percents40"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(P3priorCs.caseObject.status == 'Acknowledged',true,false)}"><span>2 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(P3priorCs.caseObject.status == 'Working',true,false)}"><div class="percents60"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(P3priorCs.caseObject.status == 'Working',true,false)}"><span>3 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(P3priorCs.caseObject.status == 'Resolved',true,false)}"><div class="percents80"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(P3priorCs.caseObject.status == 'Resolved',true,false)}"><span>4 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(P3priorCs.caseObject.status == 'Closed',true,false)}"><div class="percents100"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(P3priorCs.caseObject.status == 'Closed',true,false)}"><span>5 of 5 steps</span></apex:outputPanel>
+                              
+                              
+                              
+                            </div>
+                            
+                          </div>
+                          
+                          <div class="pull-left bar-contributor">
+                            <span class="forward">Contributor</span>
+                            <ul class="user-list clearfix">
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(P3priorCs.firstUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!P3priorCs.firstUser}" href="javascript:;" >
+                                     <apex:image alt="{!P3priorCs.firstUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" />
+                                </a>
+                                </apex:outputPanel>
+                              </li> 
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(P3priorCs.secUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!P3priorCs.secUser}" href="javascript:;"><apex:image alt="{!P3priorCs.secUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(P3priorCs.thirdUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!P3priorCs.thirdUser}" href="javascript:;"><apex:image alt="{!P3priorCs.thirdUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(P3priorCs.fourthUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!P3priorCs.fourthUser}" href="javascript:;"><apex:image alt="{!P3priorCs.fourthUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                            </ul>
+                          </div>
+                          
+                          <div class="pull-right button-group">
+                            <a class="btn btn-primary" href="{!$Site.prefix}/apex/PredixCasedetailPage?Id={!P3priorCs.caseObject.Id}" target="_blank">Show details</a>
+                          </div>
+                          
+                        </div></td></tr>
+                        <!-----END---------------------------------ADDED CONTRIBUTOR TABLE FOR  P3 CASE STATUS ----------->
+                        
+                    </apex:repeat>  
+                    <apex:repeat value="{!P4PriorityCasesDisplay}" var="P4priorCs" id="P4priorCs" rendered="{!renderedAllTable='P4'}"  >
+                     <tr  onClick="CallingmethodTwoInJavascript('{!P4priorCs.caseObject.CaseNumber}', '{!P4priorCs.firstUser}', '{!P4priorCs.secUser}', '{!P4priorCs.thirdUser}', '{!P4priorCs.fourthUser}')">
+                     <td><table><tr>
+                            
+                               <td><apex:outputPanel rendered="{!IF(P4priorCs.caseObject.Priority == 'P1–Level 1–Catastrophic service failure',true,false)}" style="display: table-cell;" ><span class="icon icon-priority icon-P1"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(P4priorCs.caseObject.Priority == 'P2–Level 2–Service failure',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P2"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(P4priorCs.caseObject.Priority == 'P3–Level 3–Limited loss of service',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P3"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(P4priorCs.caseObject.Priority == 'P4–Level 4–No impact to service',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P4"></span></apex:outputPanel></td>
+                                <td><td>
+                                        <apex:outputPanel rendered="{!IF(P4priorCs.hasAttachment == true,true,false)}">
+                            <apex:image url="{!$Resource.Fileclip}" width="10" height="20" title="Case has a File Attachment"/>
+                         </apex:outputPanel>
+                            </td> </td></tr></table></td>
+                                <td class="center" data-name="case_number"><span class="case-number">{!P4priorCs.caseObject.Casenumber}</span></td>
+                                <td data-name="subject"><span class="pull-left file">{!P4priorCs.caseObject.subject}</span><!--<a href="javascript:;" class="icon icon-attachment"></a>--></td>
+                                 <td data-name="date"><span> <apex:outputText value="{0,date,MM/dd/yyyy  hh:mm a}"> <apex:param value="{!P4priorCs.caseObject.createddate}" /> </apex:outputText></span></td>
+                                <!--<td class="center" data-name="status"><span class="status-new">{!allCs.caseObject.Status}</span></td>-->
+                                <td class="center" data-name="status"> <apex:outputpanel rendered="{!IF(P4priorCs.caseObject.Status== 'New',true,false)}"><span class="status-new">{!P4priorCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(P4priorCs.caseObject.Status== 'Acknowledged',true,false)}"><span>{!P4priorCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(P4priorCs.caseObject.Status== 'Working',true,false)}"><span>{!P4priorCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(P4priorCs.caseObject.Status== 'Resolved',true,false)}"><span>{!P4priorCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(P4priorCs.caseObject.Status== 'Closed',true,false)}"><span class="closed is-hidden">{!P4priorCs.caseObject.Status}</span></apex:outputpanel></td>
+                             <!--   <td><span class="icon icon-arrow"></span></td>-->
+                             <td>
+                          <apex:outputpanel styleClass="icon icon-arrow"></apex:outputpanel>
+                          </td>
+                              </tr>
+                              
+                                                    <!-----START---------------------------------ADDED CONTRIBUTOR TABLE FOR P4 CASE STATUS ----------->
+                       <!-- <div id="{!P3priorCs.caseObject.CaseNumber}" style="display:block;">-->
+                        <tr name="tr{!P4priorCs.caseObject.CaseNumber}" id="tr{!P4priorCs.caseObject.CaseNumber}" class="expand" style="display:none">
+                        <td colspan="6"><div class="row-expand clearfix on" id="div{!P4priorCs.caseObject.CaseNumber}" style="">
+                            <div class="pull-left bar-progress">
+                            <span class="forward">Case progress</span>
+                            <div class="progress">
+                             <!-- <div class="percents"></div>
+                              <span>1 of 5 steps</span> -->
+                              
+                              <apex:outputPanel rendered="{!IF(P4priorCs.caseObject.status == 'New',true,false)}"><div class="percents"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(P4priorCs.caseObject.status == 'New',true,false)}"><span>1 of 5 steps</span></apex:outputPanel>
+
+                <apex:outputPanel rendered="{!IF(P4priorCs.caseObject.status == 'Acknowledged',true,false)}"><div class="percents40"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(P4priorCs.caseObject.status == 'Acknowledged',true,false)}"><span>2 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(P4priorCs.caseObject.status == 'Working',true,false)}"><div class="percents60"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(P4priorCs.caseObject.status == 'Working',true,false)}"><span>3 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(P4priorCs.caseObject.status == 'Resolved',true,false)}"><div class="percents80"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(P4priorCs.caseObject.status == 'Resolved',true,false)}"><span>4 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(P4priorCs.caseObject.status == 'Closed',true,false)}"><div class="percents100"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(P4priorCs.caseObject.status == 'Closed',true,false)}"><span>5 of 5 steps</span></apex:outputPanel>
+                              
+                              
+                              
+                            </div>
+                            
+                          </div>
+                          
+                          <div class="pull-left bar-contributor">
+                            <span class="forward">Contributor</span>
+                            <ul class="user-list clearfix">
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(P4priorCs.firstUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!P4priorCs.firstUser}" href="javascript:;" >
+                                     <apex:image alt="{!P4priorCs.firstUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" />
+                                </a>
+                                </apex:outputPanel>
+                              </li> 
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(P4priorCs.secUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!P4priorCs.secUser}" href="javascript:;"><apex:image alt="{!P4priorCs.secUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(P4priorCs.thirdUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!P4priorCs.thirdUser}" href="javascript:;"><apex:image alt="{!P4priorCs.thirdUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(P4priorCs.fourthUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!P4priorCs.fourthUser}" href="javascript:;"><apex:image alt="{!P4priorCs.fourthUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                            </ul>
+                          </div>
+                          
+                          <div class="pull-right button-group">
+                            <a class="btn btn-primary" href="{!$Site.prefix}/apex/PredixCasedetailPage?Id={!P4priorCs.caseObject.Id}" target="_blank">Show details</a>
+                          </div>
+                          
+                        </div></td></tr>
+                        <!-----END---------------------------------ADDED CONTRIBUTOR TABLE FOR  P4 CASE STATUS ----------->
+                     
+                    </apex:repeat>  
+                    
+                    
+                     <apex:repeat value="{!NewCasesDisplay}" var="NewStatusCs" id="NewStatusCs" rendered="{!renderedAllTable='New'}"  >
+                      <tr  onClick="CallingmethodTwoInJavascript('{!NewStatusCs.caseObject.CaseNumber}', '{!NewStatusCs.firstUser}', '{!NewStatusCs.secUser}', '{!NewStatusCs.thirdUser}', '{!NewStatusCs.fourthUser}')">
+                    <td><table><tr>
+                            
+                               <td><apex:outputPanel rendered="{!IF(NewStatusCs.caseObject.Priority == 'P1–Level 1–Catastrophic service failure',true,false)}" style="display: table-cell;" ><span class="icon icon-priority icon-P1"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(NewStatusCs.caseObject.Priority == 'P2–Level 2–Service failure',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P2"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(NewStatusCs.caseObject.Priority == 'P3–Level 3–Limited loss of service',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P3"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(NewStatusCs.caseObject.Priority == 'P4–Level 4–No impact to service',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P4"></span></apex:outputPanel></td>
+                                
+                                <td> <td>
+                                
+                         <apex:outputPanel rendered="{!IF(NewStatusCs.hasAttachment == true,true,false)}">
+                            <apex:image url="{!$Resource.Fileclip}" width="10" height="20" title="Case has a File Attachment"/>
+                         </apex:outputPanel>
+                            </td> </td></tr></table></td>
+                                <td class="center" data-name="case_number"><span class="case-number">{!NewStatusCs.caseObject.Casenumber}</span></td>
+                                
+                                <td data-name="subject"><span class="pull-left file">{!NewStatusCs.caseObject.subject}</span><!--<a href="javascript:;" class="icon icon-attachment"></a>--></td>
+                                        
+                                <td data-name="date"><span> <apex:outputText value="{0,date,MM/dd/yyyy  hh:mm a}"> <apex:param value="{!NewStatusCs.caseObject.createddate}" /> </apex:outputText></span></td>
+                                <!--<td class="center" data-name="status"><span class="status-new">{!allCs.caseObject.Status}</span></td>-->
+                                <td class="center" data-name="status"> <apex:outputpanel rendered="{!IF(NewStatusCs.caseObject.Status== 'New',true,false)}"><span class="status-new">{!NewStatusCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(NewStatusCs.caseObject.Status== 'Acknowledged',true,false)}"><span>{!NewStatusCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(NewStatusCs.caseObject.Status== 'Working',true,false)}"><span>{!NewStatusCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(NewStatusCs.caseObject.Status== 'Resolved',true,false)}"><span>{!NewStatusCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(NewStatusCs.caseObject.Status== 'Closed',true,false)}"><span class="closed is-hidden">{!NewStatusCs.caseObject.Status}</span></apex:outputpanel></td>
+                             <!--   <td><span class="icon icon-arrow"></span></td>-->
+                             <td>
+                          <apex:outputpanel styleClass="icon icon-arrow"></apex:outputpanel>
+                          </td>
+                              </tr>
+                 <!-----START---------------------------------ADDED CONTRIBUTOR TABLE FOR NEW CASE STATUS ----------->
+                       <!-- <div id="{!P3priorCs.caseObject.CaseNumber}" style="display:block;">-->
+                        <tr name="tr{!NewStatusCs.caseObject.CaseNumber}" id="tr{!NewStatusCs.caseObject.CaseNumber}" class="expand" style="display:none">
+                        <td colspan="6"><div class="row-expand clearfix on" id="div{!NewStatusCs.caseObject.CaseNumber}" style="">
+                            <div class="pull-left bar-progress">
+                            <span class="forward">Case progress</span>
+                            <div class="progress">
+                             <!-- <div class="percents"></div>
+                              <span>1 of 5 steps</span> -->
+                              
+                              <apex:outputPanel rendered="{!IF(NewStatusCs.caseObject.status == 'New',true,false)}"><div class="percents"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(NewStatusCs.caseObject.status == 'New',true,false)}"><span>1 of 5 steps</span></apex:outputPanel>
+
+                <apex:outputPanel rendered="{!IF(NewStatusCs.caseObject.status == 'Acknowledged',true,false)}"><div class="percents40"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(NewStatusCs.caseObject.status == 'Acknowledged',true,false)}"><span>2 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(NewStatusCs.caseObject.status == 'Working',true,false)}"><div class="percents60"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(NewStatusCs.caseObject.status == 'Working',true,false)}"><span>3 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(NewStatusCs.caseObject.status == 'Resolved',true,false)}"><div class="percents80"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(NewStatusCs.caseObject.status == 'Resolved',true,false)}"><span>4 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(NewStatusCs.caseObject.status == 'Closed',true,false)}"><div class="percents100"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(NewStatusCs.caseObject.status == 'Closed',true,false)}"><span>5 of 5 steps</span></apex:outputPanel>
+                              
+                              
+                              
+                            </div>
+                            
+                          </div>
+                          
+                          <div class="pull-left bar-contributor">
+                            <span class="forward">Contributor</span>
+                            <ul class="user-list clearfix">
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(NewStatusCs.firstUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!NewStatusCs.firstUser}" href="javascript:;" >
+                                     <apex:image alt="{!NewStatusCs.firstUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" />
+                                </a>
+                                </apex:outputPanel>
+                              </li> 
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(NewStatusCs.secUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!NewStatusCs.secUser}" href="javascript:;">   <apex:image alt="{!NewStatusCs.secUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(NewStatusCs.thirdUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!NewStatusCs.thirdUser}" href="javascript:;"><apex:image alt="{!NewStatusCs.thirdUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(NewStatusCs.fourthUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!NewStatusCs.fourthUser}" href="javascript:;"><apex:image alt="{!NewStatusCs.fourthUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                            </ul>
+                          </div>
+                          
+                          <div class="pull-right button-group">
+                            <a class="btn btn-primary" href="{!$Site.prefix}/apex/PredixCasedetailPage?Id={!NewStatusCs.caseObject.Id}" target="_blank">Show details</a>
+                          </div>
+                          
+                        </div></td></tr>
+                        <!-----END---------------------------------ADDED CONTRIBUTOR TABLE FOR  NEW CASE STATUS ----------->
+                     
+                    </apex:repeat>  
+                    
+                    <apex:repeat value="{!AckCasesDisplay}" var="AckStatusCs" id="AckStatusCs" rendered="{!renderedAllTable='Acknowledged'}"  >
+                     <tr  onClick="CallingmethodTwoInJavascript('{!AckStatusCs.caseObject.CaseNumber}', '{!AckStatusCs.firstUser}', '{!AckStatusCs.secUser}', '{!AckStatusCs.thirdUser}', '{!AckStatusCs.fourthUser}')">
+                    
+                             <td><table><tr>
+                               <td><apex:outputPanel rendered="{!IF(AckStatusCs.caseObject.Priority == 'P1–Level 1–Catastrophic service failure',true,false)}" style="display: table-cell;" ><span class="icon icon-priority icon-P1"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(AckStatusCs.caseObject.Priority == 'P2–Level 2–Service failure',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P2"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(AckStatusCs.caseObject.Priority == 'P3–Level 3–Limited loss of service',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P3"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(AckStatusCs.caseObject.Priority == 'P4–Level 4–No impact to service',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P4"></span></apex:outputPanel></td>
+                                <td> <td>
+                            <apex:outputPanel rendered="{!IF(AckStatusCs.hasAttachment == true,true,false)}">
+                            <apex:image url="{!$Resource.Fileclip}" width="10" height="20" title="Case has a File Attachment"/>
+                         </apex:outputPanel>
+                            </td> </td></tr></table></td>
+                               <td class="center" data-name="case_number"><span class="case-number">{!AckStatusCs.caseObject.Casenumber}</span></td>
+                                <td data-name="subject"><span class="pull-left file">{!AckStatusCs.caseObject.subject}</span><!--<a href="javascript:;" class="icon icon-attachment"></a>--></td>
+                                 <td data-name="date"><span> <apex:outputText value="{0,date,MM/dd/yyyy  hh:mm a}"> <apex:param value="{!AckStatusCs.caseObject.createddate}" /> </apex:outputText></span></td>
+                                <!--<td class="center" data-name="status"><span class="status-new">{!allCs.caseObject.Status}</span></td>-->
+                                <td class="center" data-name="status"> <apex:outputpanel rendered="{!IF(AckStatusCs.caseObject.Status== 'New',true,false)}"><span class="status-new">{!AckStatusCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(AckStatusCs.caseObject.Status== 'Acknowledged',true,false)}"><span>{!AckStatusCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(AckStatusCs.caseObject.Status== 'Working',true,false)}"><span>{!AckStatusCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(AckStatusCs.caseObject.Status== 'Resolved',true,false)}"><span>{!AckStatusCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(AckStatusCs.caseObject.Status== 'Closed',true,false)}"><span class="closed is-hidden">{!AckStatusCs.caseObject.Status}</span></apex:outputpanel></td>
+                             <!--   <td><span class="icon icon-arrow"></span></td>-->
+                             <td>
+                          <apex:outputpanel styleClass="icon icon-arrow"></apex:outputpanel>
+                          </td>
+                              </tr>
+                              
+                               <!-----START---------------------------------ADDED CONTRIBUTOR TABLE FOR ACK CASE STATUS ----------->
+                       <!-- <div id="{!P3priorCs.caseObject.CaseNumber}" style="display:block;">-->
+                        <tr name="tr{!AckStatusCs.caseObject.CaseNumber}" id="tr{!AckStatusCs.caseObject.CaseNumber}" class="expand" style="display:none">
+                        <td colspan="6"><div class="row-expand clearfix on" id="div{!AckStatusCs.caseObject.CaseNumber}" style="">
+                            <div class="pull-left bar-progress">
+                            <span class="forward">Case progress</span>
+                            <div class="progress">
+                             <!-- <div class="percents"></div>
+                              <span>1 of 5 steps</span> -->
+                              
+                              <apex:outputPanel rendered="{!IF(AckStatusCs.caseObject.status == 'New',true,false)}"><div class="percents"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(AckStatusCs.caseObject.status == 'New',true,false)}"><span>1 of 5 steps</span></apex:outputPanel>
+
+                <apex:outputPanel rendered="{!IF(AckStatusCs.caseObject.status == 'Acknowledged',true,false)}"><div class="percents40"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(AckStatusCs.caseObject.status == 'Acknowledged',true,false)}"><span>2 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(AckStatusCs.caseObject.status == 'Working',true,false)}"><div class="percents60"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(AckStatusCs.caseObject.status == 'Working',true,false)}"><span>3 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(AckStatusCs.caseObject.status == 'Resolved',true,false)}"><div class="percents80"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(AckStatusCs.caseObject.status == 'Resolved',true,false)}"><span>4 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(AckStatusCs.caseObject.status == 'Closed',true,false)}"><div class="percents100"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(AckStatusCs.caseObject.status == 'Closed',true,false)}"><span>5 of 5 steps</span></apex:outputPanel>
+                              
+                              
+                              
+                            </div>
+                            
+                          </div>
+                          
+                          <div class="pull-left bar-contributor">
+                            <span class="forward">Contributor</span>
+                            <ul class="user-list clearfix">
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(AckStatusCs.firstUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!AckStatusCs.firstUser}" href="javascript:;" >
+                                     <apex:image alt="{!AckStatusCs.firstUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" />
+                                </a>
+                                </apex:outputPanel>
+                              </li> 
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(AckStatusCs.secUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!AckStatusCs.secUser}" href="javascript:;"> <apex:image alt="{!AckStatusCs.secUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(AckStatusCs.thirdUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!AckStatusCs.thirdUser}" href="javascript:;"><apex:image alt="{!AckStatusCs.thirdUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(AckStatusCs.fourthUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!AckStatusCs.fourthUser}" href="javascript:;"><apex:image alt="{!AckStatusCs.fourthUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                            </ul>
+                          </div>
+                          
+                          <div class="pull-right button-group">
+                            <a class="btn btn-primary" href="{!$Site.prefix}/apex/PredixCasedetailPage?Id={!AckStatusCs.caseObject.Id}" target="_blank">Show details</a>
+                          </div>
+                          
+                        </div></td></tr>
+                        <!-----END---------------------------------ADDED CONTRIBUTOR TABLE FOR  ACK CASE STATUS ----------->
+                
+                    </apex:repeat> 
+                    
+                    <apex:repeat value="{!WorkingCasesDisplay}" var="WorkStatusCs" id="WorkStatusCs" rendered="{!renderedAllTable='Working'}"  >
+                      <tr  onClick="CallingmethodTwoInJavascript('{!WorkStatusCs.caseObject.CaseNumber}', '{!WorkStatusCs.firstUser}', '{!WorkStatusCs.secUser}', '{!WorkStatusCs.thirdUser}', '{!WorkStatusCs.fourthUser}')">
+                     <td><table><tr>
+                            
+                               <td><apex:outputPanel rendered="{!IF(WorkStatusCs.caseObject.Priority == 'P1–Level 1–Catastrophic service failure',true,false)}" style="display: table-cell;" ><span class="icon icon-priority icon-P1"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(WorkStatusCs.caseObject.Priority == 'P2–Level 2–Service failure',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P2"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(WorkStatusCs.caseObject.Priority == 'P3–Level 3–Limited loss of service',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P3"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(WorkStatusCs.caseObject.Priority == 'P4–Level 4–No impact to service',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P4"></span></apex:outputPanel></td>
+                               <td> <td>
+                                
+                         <apex:outputPanel rendered="{!IF(WorkStatusCs.hasAttachment == true,true,false)}">
+                            <apex:image url="{!$Resource.Fileclip}" width="10" height="20" title="Case has a File Attachment"/>
+                         </apex:outputPanel>
+                            </td> </td></tr></table></td>
+
+
+                               <td class="center" data-name="case_number"><span class="case-number">{!WorkStatusCs.caseObject.Casenumber}</span></td>
+                                <td data-name="subject"><span class="pull-left file">{!WorkStatusCs.caseObject.subject}</span><!--<a href="javascript:;" class="icon icon-attachment"></a>--></td>
+                                <td data-name="date"><span> <apex:outputText value="{0,date,MM/dd/yyyy  hh:mm a}"> <apex:param value="{!WorkStatusCs.caseObject.createddate}" /> </apex:outputText></span></td>
+                                <!--<td class="center" data-name="status"><span class="status-new">{!allCs.caseObject.Status}</span></td>-->
+                                <td class="center" data-name="status"> <apex:outputpanel rendered="{!IF(WorkStatusCs.caseObject.Status== 'New',true,false)}"><span class="status-new">{!WorkStatusCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(WorkStatusCs.caseObject.Status== 'Acknowledged',true,false)}"><span>{!WorkStatusCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(WorkStatusCs.caseObject.Status== 'Working',true,false)}"><span>{!WorkStatusCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(WorkStatusCs.caseObject.Status== 'Resolved',true,false)}"><span>{!WorkStatusCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(WorkStatusCs.caseObject.Status== 'Closed',true,false)}"><span class="closed is-hidden">{!WorkStatusCs.caseObject.Status}</span></apex:outputpanel></td>
+                             <!--   <td><span class="icon icon-arrow"></span></td>-->
+                             <td>
+                          <apex:outputpanel styleClass="icon icon-arrow"></apex:outputpanel>
+                          </td>
+                              </tr>
+                              
+                                 <!-----START---------------------------------ADDED CONTRIBUTOR TABLE FOR WORKING CASE STATUS ----------->
+                       <!-- <div id="{!P3priorCs.caseObject.CaseNumber}" style="display:block;">-->
+                        <tr name="tr{!WorkStatusCs.caseObject.CaseNumber}" id="tr{!WorkStatusCs.caseObject.CaseNumber}" class="expand" style="display:none">
+                        <td colspan="6"><div class="row-expand clearfix on" id="div{!WorkStatusCs.caseObject.CaseNumber}" style="">
+                            <div class="pull-left bar-progress">
+                            <span class="forward">Case progress</span>
+                            <div class="progress">
+                             <!-- <div class="percents"></div>
+                              <span>1 of 5 steps</span> -->
+                              
+                              <apex:outputPanel rendered="{!IF(WorkStatusCs.caseObject.status == 'New',true,false)}"><div class="percents"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(WorkStatusCs.caseObject.status == 'New',true,false)}"><span>1 of 5 steps</span></apex:outputPanel>
+
+                <apex:outputPanel rendered="{!IF(WorkStatusCs.caseObject.status == 'Acknowledged',true,false)}"><div class="percents40"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(WorkStatusCs.caseObject.status == 'Acknowledged',true,false)}"><span>2 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(WorkStatusCs.caseObject.status == 'Working',true,false)}"><div class="percents60"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(WorkStatusCs.caseObject.status == 'Working',true,false)}"><span>3 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(WorkStatusCs.caseObject.status == 'Resolved',true,false)}"><div class="percents80"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(WorkStatusCs.caseObject.status == 'Resolved',true,false)}"><span>4 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(WorkStatusCs.caseObject.status == 'Closed',true,false)}"><div class="percents100"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(WorkStatusCs.caseObject.status == 'Closed',true,false)}"><span>5 of 5 steps</span></apex:outputPanel>
+                              
+                              
+                              
+                            </div>
+                            
+                          </div>
+                          
+                          <div class="pull-left bar-contributor">
+                            <span class="forward">Contributor</span>
+                            <ul class="user-list clearfix">
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(WorkStatusCs.firstUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!WorkStatusCs.firstUser}" href="javascript:;" >
+                                     <apex:image alt="{!WorkStatusCs.firstUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" />
+                                </a>
+                                </apex:outputPanel>
+                              </li> 
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(WorkStatusCs.secUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!WorkStatusCs.secUser}" href="javascript:;"><apex:image alt="{!WorkStatusCs.secUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(WorkStatusCs.thirdUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!WorkStatusCs.thirdUser}" href="javascript:;"><apex:image alt="{!WorkStatusCs.thirdUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(WorkStatusCs.fourthUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!WorkStatusCs.fourthUser}" href="javascript:;"><apex:image alt="{!WorkStatusCs.fourthUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                            </ul>
+                          </div>
+                          
+                          <div class="pull-right button-group">
+                            <a class="btn btn-primary" href="{!$Site.prefix}/apex/PredixCasedetailPage?Id={!WorkStatusCs.caseObject.Id}" target="_blank">Show details</a>
+                          </div>
+                          
+                        </div></td></tr>
+                        <!-----END---------------------------------ADDED CONTRIBUTOR TABLE FOR  WORKING CASE STATUS ----------->
+                
+                    </apex:repeat>  
+                    
+                    <apex:repeat value="{!ResolvedCasesDisplay}" var="ResolvedCs" id="ResolvedCs" rendered="{!renderedAllTable='Resolved'}"  >
+                      <tr  onClick="CallingmethodTwoInJavascript('{!ResolvedCs.caseObject.CaseNumber}', '{!ResolvedCs.firstUser}', '{!ResolvedCs.secUser}', '{!ResolvedCs.thirdUser}', '{!ResolvedCs.fourthUser}')">
+                     <td><table><tr>
+                            
+                               <td><apex:outputPanel rendered="{!IF(ResolvedCs.caseObject.Priority == 'P1–Level 1–Catastrophic service failure',true,false)}" style="display: table-cell;" ><span class="icon icon-priority icon-P1"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(ResolvedCs.caseObject.Priority == 'P2–Level 2–Service failure',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P2"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(ResolvedCs.caseObject.Priority == 'P3–Level 3–Limited loss of service',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P3"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(ResolvedCs.caseObject.Priority == 'P4–Level 4–No impact to service',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P4"></span></apex:outputPanel></td>
+                                <td> <td>
+                                
+                         <apex:outputPanel rendered="{!IF(ResolvedCs.hasAttachment == true,true,false)}">
+                            <apex:image url="{!$Resource.Fileclip}" width="10" height="20" title="Case has a File Attachment"/>
+                         </apex:outputPanel>
+                            </td> </td></tr></table></td>
+
+                               <td class="center" data-name="case_number"><span class="case-number">{!ResolvedCs.caseObject.Casenumber}</span></td>
+                                <td data-name="subject"><span class="pull-left file">{!ResolvedCs.caseObject.subject}</span><!--<a href="javascript:;" class="icon icon-attachment"></a>--></td>
+                                <td data-name="date"><span> <apex:outputText value="{0,date,MM/dd/yyyy  hh:mm a}"> <apex:param value="{!ResolvedCs.caseObject.createddate}" /> </apex:outputText></span></td>
+                                <!--<td class="center" data-name="status"><span class="status-new">{!allCs.caseObject.Status}</span></td>-->
+                                <td class="center" data-name="status"> <apex:outputpanel rendered="{!IF(ResolvedCs.caseObject.Status== 'New',true,false)}"><span class="status-new">{!ResolvedCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(ResolvedCs.caseObject.Status== 'Acknowledged',true,false)}"><span>{!ResolvedCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(ResolvedCs.caseObject.Status== 'Working',true,false)}"><span>{!ResolvedCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(ResolvedCs.caseObject.Status== 'Resolved',true,false)}"><span>{!ResolvedCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(ResolvedCs.caseObject.Status== 'Closed',true,false)}"><span class="closed is-hidden">{!ResolvedCs.caseObject.Status}</span></apex:outputpanel></td>
+                             <!--   <td><span class="icon icon-arrow"></span></td>-->
+                             <td>
+                          <apex:outputpanel styleClass="icon icon-arrow"></apex:outputpanel>
+                          </td>
+                              </tr>
+                              
+                                 <!-----START---------------------------------ADDED CONTRIBUTOR TABLE FOR RESOLVED CASE STATUS ----------->
+                       <!-- <div id="{!P3priorCs.caseObject.CaseNumber}" style="display:block;">-->
+                        <tr name="tr{!ResolvedCs.caseObject.CaseNumber}" id="tr{!ResolvedCs.caseObject.CaseNumber}" class="expand" style="display:none">
+                        <td colspan="6"><div class="row-expand clearfix on" id="div{!ResolvedCs.caseObject.CaseNumber}" style="">
+                            <div class="pull-left bar-progress">
+                            <span class="forward">Case progress</span>
+                            <div class="progress">
+                             <!-- <div class="percents"></div>
+                              <span>1 of 5 steps</span> -->
+                              
+                              <apex:outputPanel rendered="{!IF(ResolvedCs.caseObject.status == 'New',true,false)}"><div class="percents"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(ResolvedCs.caseObject.status == 'New',true,false)}"><span>1 of 5 steps</span></apex:outputPanel>
+
+                <apex:outputPanel rendered="{!IF(ResolvedCs.caseObject.status == 'Acknowledged',true,false)}"><div class="percents40"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(ResolvedCs.caseObject.status == 'Acknowledged',true,false)}"><span>2 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(ResolvedCs.caseObject.status == 'Working',true,false)}"><div class="percents60"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(ResolvedCs.caseObject.status == 'Working',true,false)}"><span>3 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(ResolvedCs.caseObject.status == 'Resolved',true,false)}"><div class="percents80"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(ResolvedCs.caseObject.status == 'Resolved',true,false)}"><span>4 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(ResolvedCs.caseObject.status == 'Closed',true,false)}"><div class="percents100"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(ResolvedCs.caseObject.status == 'Closed',true,false)}"><span>5 of 5 steps</span></apex:outputPanel>
+                              
+                              
+                              
+                            </div>
+                            
+                          </div>
+                          
+                          <div class="pull-left bar-contributor">
+                            <span class="forward">Contributor</span>
+                            <ul class="user-list clearfix">
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(ResolvedCs.firstUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!ResolvedCs.firstUser}" href="javascript:;" >
+                                     <apex:image alt="{!ResolvedCs.firstUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" />
+                                </a>
+                                </apex:outputPanel>
+                              </li> 
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(ResolvedCs.secUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!ResolvedCs.secUser}" href="javascript:;"><apex:image alt="{!ResolvedCs.secUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(ResolvedCs.thirdUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!ResolvedCs.thirdUser}" href="javascript:;"><apex:image alt="{!ResolvedCs.thirdUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(ResolvedCs.fourthUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!ResolvedCs.fourthUser}" href="javascript:;"><apex:image alt="{!ResolvedCs.fourthUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                            </ul>
+                          </div>
+                          
+                          <div class="pull-right button-group">
+                            <a class="btn btn-primary" href="{!$Site.prefix}/apex/PredixCasedetailPage?Id={!ResolvedCs.caseObject.Id}" target="_blank">Show details</a>
+                          </div>
+                          
+                        </div></td></tr>
+                        <!-----END---------------------------------ADDED CONTRIBUTOR TABLE FOR  RESOLVED CASE STATUS ----------->
+                
+                    </apex:repeat>
+                    <apex:repeat value="{!ClosedCasesDisplay}" var="ClosedStatusCs" id="ClosedStatusCs" rendered="{!renderedAllTable='Closed'}"  >
+                     <tr onClick="CallingmethodTwoInJavascript('{!ClosedStatusCs.caseObject.CaseNumber}', '{!ClosedStatusCs.firstUser}', '{!ClosedStatusCs.secUser}', '{!ClosedStatusCs.thirdUser}', '{!ClosedStatusCs.fourthUser}')">
+                    
+                             <td><table><tr>
+                               <td><apex:outputPanel rendered="{!IF(ClosedStatusCs.caseObject.Priority == 'P1–Level 1–Catastrophic service failure',true,false)}" style="display: table-cell;" ><span class="icon icon-priority icon-P1"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(ClosedStatusCs.caseObject.Priority == 'P2–Level 2–Service failure',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P2"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(ClosedStatusCs.caseObject.Priority == 'P3–Level 3–Limited loss of service',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P3"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(ClosedStatusCs.caseObject.Priority == 'P4–Level 4–No impact to service',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P4"></span></apex:outputPanel></td>
+                                  <td> <td>
+                                
+                         <apex:outputPanel rendered="{!IF(ClosedStatusCs.hasAttachment == true,true,false)}">
+                            <apex:image url="{!$Resource.Fileclip}" width="10" height="20" title="Case has a File Attachment"/>
+                         </apex:outputPanel>
+                            </td> </td></tr></table></td>
+                                
+                                <td class="center" data-name="case_number"><span class="case-number">{!ClosedStatusCs.caseObject.Casenumber}</span></td>
+                                <td data-name="subject"><span class="pull-left file">{!ClosedStatusCs.caseObject.subject}</span><!--<a href="javascript:;" class="icon icon-attachment"></a>--></td>
+                                <td data-name="date"><span> <apex:outputText value="{0,date,MM/dd/yyyy  hh:mm a}"> <apex:param value="{!ClosedStatusCs.caseObject.createddate}" /> </apex:outputText></span></td>
+                                <!--<td class="center" data-name="status"><span class="status-new">{!allCs.caseObject.Status}</span></td>-->
+                                <td class="center" data-name="status"> <apex:outputpanel rendered="{!IF(ClosedStatusCs.caseObject.Status== 'New',true,false)}"><span class="status-new">{!ClosedStatusCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(ClosedStatusCs.caseObject.Status== 'Acknowledged',true,false)}"><span>{!ClosedStatusCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(ClosedStatusCs.caseObject.Status== 'Working',true,false)}"><span>{!ClosedStatusCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(ClosedStatusCs.caseObject.Status== 'Resolved',true,false)}"><span>{!ClosedStatusCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(ClosedStatusCs.caseObject.Status== 'Closed',true,false)}"><span class="closed is-hidden">{!ClosedStatusCs.caseObject.Status}</span></apex:outputpanel></td>
+                             <!--   <td><span class="icon icon-arrow"></span></td>-->
+                             <td>
+                          <apex:outputpanel styleClass="icon icon-arrow"></apex:outputpanel>
+                          </td>
+                              </tr>
+                              
+                               <!-----START---------------------------------ADDED CONTRIBUTOR TABLE FOR CLOSED CASE STATUS ----------->
+                       <!-- <div id="{!P3priorCs.caseObject.CaseNumber}" style="display:block;">-->
+                        <tr name="tr{!ClosedStatusCs.caseObject.CaseNumber}" id="tr{!ClosedStatusCs.caseObject.CaseNumber}" class="expand" style="display:none">
+                        <td colspan="6"><div class="row-expand clearfix on" id="div{!ClosedStatusCs.caseObject.CaseNumber}" style="">
+                            <div class="pull-left bar-progress">
+                            <span class="forward">Case progress</span>
+                            <div class="progress">
+                             <!-- <div class="percents"></div>
+                              <span>1 of 5 steps</span> -->
+                              
+                              <apex:outputPanel rendered="{!IF(ClosedStatusCs.caseObject.status == 'New',true,false)}"><div class="percents"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(ClosedStatusCs.caseObject.status == 'New',true,false)}"><span>1 of 5 steps</span></apex:outputPanel>
+
+                <apex:outputPanel rendered="{!IF(ClosedStatusCs.caseObject.status == 'Acknowledged',true,false)}"><div class="percents40"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(ClosedStatusCs.caseObject.status == 'Acknowledged',true,false)}"><span>2 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(ClosedStatusCs.caseObject.status == 'Working',true,false)}"><div class="percents60"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(ClosedStatusCs.caseObject.status == 'Working',true,false)}"><span>3 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(ClosedStatusCs.caseObject.status == 'Resolved',true,false)}"><div class="percents80"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(ClosedStatusCs.caseObject.status == 'Resolved',true,false)}"><span>4 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(ClosedStatusCs.caseObject.status == 'Closed',true,false)}"><div class="percents100"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(ClosedStatusCs.caseObject.status == 'Closed',true,false)}"><span>5 of 5 steps</span></apex:outputPanel>
+                              
+                              
+                              
+                            </div>
+                            
+                          </div>
+                          
+                          <div class="pull-left bar-contributor">
+                            <span class="forward">Contributor</span>
+                            <ul class="user-list clearfix">
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(ClosedStatusCs.firstUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!ClosedStatusCs.firstUser}" href="javascript:;" >
+                                     <apex:image alt="{!ClosedStatusCs.firstUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" />
+                                </a>
+                                </apex:outputPanel>
+                              </li> 
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(ClosedStatusCs.secUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!ClosedStatusCs.secUser}" href="javascript:;"><apex:image alt="{!ClosedStatusCs.secUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(ClosedStatusCs.thirdUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!ClosedStatusCs.thirdUser}" href="javascript:;"><apex:image alt="{!ClosedStatusCs.thirdUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(ClosedStatusCs.fourthUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!ClosedStatusCs.fourthUser}" href="javascript:;"><apex:image alt="{!ClosedStatusCs.fourthUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                            </ul>
+                          </div>
+                          
+                          <div class="pull-right button-group">
+                            <a class="btn btn-primary" href="{!$Site.prefix}/apex/PredixCasedetailPage?Id={!ClosedStatusCs.caseObject.Id}" target="_blank">Show details</a>
+                          </div>
+                          
+                        </div></td></tr>
+                        <!-----END---------------------------------ADDED CONTRIBUTOR TABLE FOR  CLOSED CASE STATUS ----------->
+                
+                    </apex:repeat>
+                    
+                    
+                     <!---------START----------Any Time DATE CASES--------------------------------->
+                    
+                    <apex:repeat value="{!AllDateTimeCasesDisplay}" var="AnyDateTimeCs" id="AnyDateTimeCs" rendered="{!renderedAllTable='Any time'}"  >
+                      <tr  onClick="CallingmethodTwoInJavascript('{!AnyDateTimeCs.caseObject.CaseNumber}', '{!AnyDateTimeCs.firstUser}', '{!AnyDateTimeCs.secUser}', '{!AnyDateTimeCs.thirdUser}', '{!AnyDateTimeCs.fourthUser}')">
+                    
+                         
+                             <td><table><tr>
+                               <td><apex:outputPanel rendered="{!IF(AnyDateTimeCs.caseObject.Priority == 'P1–Level 1–Catastrophic service failure',true,false)}" style="display: table-cell;" ><span class="icon icon-priority icon-P1"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(AnyDateTimeCs.caseObject.Priority == 'P2–Level 2–Service failure',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P2"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(AnyDateTimeCs.caseObject.Priority == 'P3–Level 3–Limited loss of service',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P3"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(AnyDateTimeCs.caseObject.Priority == 'P4–Level 4–No impact to service',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P4"></span></apex:outputPanel></td>
+                                
+                                  <td> <td>
+                                
+                         <apex:outputPanel rendered="{!IF(AnyDateTimeCs.hasAttachment == true,true,false)}">
+                            <apex:image url="{!$Resource.Fileclip}" width="10" height="20" title="Case has a File Attachment"/>
+                         </apex:outputPanel>
+                            </td> </td></tr></table></td>
+                                <td class="center" data-name="case_number"><span class="case-number">{!AnyDateTimeCs.caseObject.Casenumber}</span></td>
+                                <td data-name="subject"><span class="pull-left file">{!AnyDateTimeCs.caseObject.subject}</span><!--<a href="javascript:;" class="icon icon-attachment"></a>--></td>
+                                 <td data-name="date"><span> <apex:outputText value="{0,date,MM/dd/yyyy  hh:mm a}"> <apex:param value="{!AnyDateTimeCs.caseObject.createddate}" /> </apex:outputText></span></td>
+                                <!--<td class="center" data-name="status"><span class="status-new">{!allCs.caseObject.Status}</span></td>-->
+                                <td class="center" data-name="status"> <apex:outputpanel rendered="{!IF(AnyDateTimeCs.caseObject.Status== 'New',true,false)}"><span class="status-new">{!AnyDateTimeCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(AnyDateTimeCs.caseObject.Status== 'Acknowledged',true,false)}"><span>{!AnyDateTimeCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(AnyDateTimeCs.caseObject.Status== 'Working',true,false)}"><span>{!AnyDateTimeCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(AnyDateTimeCs.caseObject.Status== 'Resolved',true,false)}"><span>{!AnyDateTimeCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(AnyDateTimeCs.caseObject.Status== 'Closed',true,false)}"><span class="closed is-hidden">{!AnyDateTimeCs.caseObject.Status}</span></apex:outputpanel></td>
+                             <!--   <td><span class="icon icon-arrow"></span></td>-->
+                             <td>
+                          <apex:outputpanel styleClass="icon icon-arrow"></apex:outputpanel>
+                          </td>
+                              </tr>
+                              
+                   <!-----START---------------------------------ADDED CONTRIBUTOR TABLE FOR FIVE HOUR DATE  CASE STATUS ----------->
+                       <!-- <div id="{!P3priorCs.caseObject.CaseNumber}" style="display:block;">-->
+                        <tr name="tr{!AnyDateTimeCs.caseObject.CaseNumber}" id="tr{!AnyDateTimeCs.caseObject.CaseNumber}" class="expand" style="display:none">
+                        <td colspan="6"><div class="row-expand clearfix on" id="div{!AnyDateTimeCs.caseObject.CaseNumber}" style="">
+                            <div class="pull-left bar-progress">
+                            <span class="forward">Case progress</span>
+                            <div class="progress">
+                             <!-- <div class="percents"></div>
+                              <span>1 of 5 steps</span> -->
+                              
+                              <apex:outputPanel rendered="{!IF(AnyDateTimeCs.caseObject.status == 'New',true,false)}"><div class="percents"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(AnyDateTimeCs.caseObject.status == 'New',true,false)}"><span>1 of 5 steps</span></apex:outputPanel>
+
+                <apex:outputPanel rendered="{!IF(AnyDateTimeCs.caseObject.status == 'Acknowledged',true,false)}"><div class="percents40"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(AnyDateTimeCs.caseObject.status == 'Acknowledged',true,false)}"><span>2 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(AnyDateTimeCs.caseObject.status == 'Working',true,false)}"><div class="percents60"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(AnyDateTimeCs.caseObject.status == 'Working',true,false)}"><span>3 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(AnyDateTimeCs.caseObject.status == 'Resolved',true,false)}"><div class="percents80"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(AnyDateTimeCs.caseObject.status == 'Resolved',true,false)}"><span>4 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(AnyDateTimeCs.caseObject.status == 'Closed',true,false)}"><div class="percents100"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(AnyDateTimeCs.caseObject.status == 'Closed',true,false)}"><span>5 of 5 steps</span></apex:outputPanel>
+                              
+                              
+                              
+                            </div>
+                            
+                          </div>
+                          
+                          <div class="pull-left bar-contributor">
+                            <span class="forward">Contributor</span>
+                            <ul class="user-list clearfix">
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(AnyDateTimeCs.firstUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!AnyDateTimeCs.firstUser}" href="javascript:;" >
+                                    <apex:image alt="{!AnyDateTimeCs.fourthUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" />
+                                </a>
+                                </apex:outputPanel>
+                              </li> 
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(AnyDateTimeCs.secUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!AnyDateTimeCs.secUser}" href="javascript:;"><apex:image alt="{!AnyDateTimeCs.secUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(AnyDateTimeCs.thirdUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!AnyDateTimeCs.thirdUser}" href="javascript:;"><apex:image alt="{!AnyDateTimeCs.thirdUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(AnyDateTimeCs.fourthUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!AnyDateTimeCs.fourthUser}" href="javascript:;"><apex:image alt="{!AnyDateTimeCs.fourthUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                            </ul>
+                          </div>
+                          
+                          <div class="pull-right button-group">
+                            <a class="btn btn-primary" href="{!$Site.prefix}/apex/PredixCasedetailPage?Id={!AnyDateTimeCs.caseObject.Id}" target="_blank">Show details</a>
+                          </div>
+                          
+                        </div></td></tr>
+              <!--------END--------------ADDED CONTRIBUTOR TABLE FOR  FIVE HOUR DATE CASE STATUS --------------------------------->
+                              
+                    </apex:repeat>
+                    <!---------START----------FIVE HOUR DATE STATUS--------------------------------->
+                    
+                    <apex:repeat value="{!FiveHrsCasesDisplay}" var="FiveHrsDateTimeCs" id="FiveHrsDateTimeCs" rendered="{!renderedAllTable='5 hrs ago'}"  >
+                      <tr  onClick="CallingmethodTwoInJavascript('{!FiveHrsDateTimeCs.caseObject.CaseNumber}', '{!FiveHrsDateTimeCs.firstUser}', '{!FiveHrsDateTimeCs.secUser}', '{!FiveHrsDateTimeCs.thirdUser}', '{!FiveHrsDateTimeCs.fourthUser}')">
+                    
+                         
+                           <td><table><tr>  
+                               <td><apex:outputPanel rendered="{!IF(FiveHrsDateTimeCs.caseObject.Priority == 'P1–Level 1–Catastrophic service failure',true,false)}" style="display: table-cell;" ><span class="icon icon-priority icon-P1"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(FiveHrsDateTimeCs.caseObject.Priority == 'P2–Level 2–Service failure',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P2"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(FiveHrsDateTimeCs.caseObject.Priority == 'P3–Level 3–Limited loss of service',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P3"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(FiveHrsDateTimeCs.caseObject.Priority == 'P4–Level 4–No impact to service',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P4"></span></apex:outputPanel></td>
+                                 <td> <td>
+                                
+                         <apex:outputPanel rendered="{!IF(FiveHrsDateTimeCs.hasAttachment == true,true,false)}">
+                            <apex:image url="{!$Resource.Fileclip}" width="10" height="20" title="Case has a File Attachment"/>
+                         </apex:outputPanel>
+                            </td> </td></tr></table></td>
+
+                               <td class="center" data-name="case_number"><span class="case-number">{!FiveHrsDateTimeCs.caseObject.Casenumber}</span></td>
+                                <td data-name="subject"><span class="pull-left file">{!FiveHrsDateTimeCs.caseObject.subject}</span><!--<a href="javascript:;" class="icon icon-attachment"></a>--></td>
+                                 <td data-name="date"><span> <apex:outputText value="{0,date,MM/dd/yyyy  hh:mm a}"> <apex:param value="{!FiveHrsDateTimeCs.caseObject.createddate}" /> </apex:outputText></span></td>
+                                <!--<td class="center" data-name="status"><span class="status-new">{!allCs.caseObject.Status}</span></td>-->
+                                <td class="center" data-name="status"> <apex:outputpanel rendered="{!IF(FiveHrsDateTimeCs.caseObject.Status== 'New',true,false)}"><span class="status-new">{!FiveHrsDateTimeCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(FiveHrsDateTimeCs.caseObject.Status== 'Acknowledged',true,false)}"><span>{!FiveHrsDateTimeCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(FiveHrsDateTimeCs.caseObject.Status== 'Working',true,false)}"><span>{!FiveHrsDateTimeCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(FiveHrsDateTimeCs.caseObject.Status== 'Resolved',true,false)}"><span>{!FiveHrsDateTimeCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(FiveHrsDateTimeCs.caseObject.Status== 'Closed',true,false)}"><span class="closed is-hidden">{!FiveHrsDateTimeCs.caseObject.Status}</span></apex:outputpanel></td>
+                             <!--   <td><span class="icon icon-arrow"></span></td>-->
+                             <td>
+                          <apex:outputpanel styleClass="icon icon-arrow"></apex:outputpanel>
+                          </td>
+                              </tr>
+                              
+                   <!-----START---------------------------------ADDED CONTRIBUTOR TABLE FOR FIVE HOUR DATE  CASE STATUS ----------->
+                       <!-- <div id="{!P3priorCs.caseObject.CaseNumber}" style="display:block;">-->
+                        <tr name="tr{!FiveHrsDateTimeCs.caseObject.CaseNumber}" id="tr{!FiveHrsDateTimeCs.caseObject.CaseNumber}" class="expand" style="display:none">
+                        <td colspan="6"><div class="row-expand clearfix on" id="div{!FiveHrsDateTimeCs.caseObject.CaseNumber}" style="">
+                            <div class="pull-left bar-progress">
+                            <span class="forward">Case progress</span>
+                            <div class="progress">
+                             <!-- <div class="percents"></div>
+                              <span>1 of 5 steps</span> -->
+                              
+                              <apex:outputPanel rendered="{!IF(FiveHrsDateTimeCs.caseObject.status == 'New',true,false)}"><div class="percents"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(FiveHrsDateTimeCs.caseObject.status == 'New',true,false)}"><span>1 of 5 steps</span></apex:outputPanel>
+
+                <apex:outputPanel rendered="{!IF(FiveHrsDateTimeCs.caseObject.status == 'Acknowledged',true,false)}"><div class="percents40"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(FiveHrsDateTimeCs.caseObject.status == 'Acknowledged',true,false)}"><span>2 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(FiveHrsDateTimeCs.caseObject.status == 'Working',true,false)}"><div class="percents60"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(FiveHrsDateTimeCs.caseObject.status == 'Working',true,false)}"><span>3 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(FiveHrsDateTimeCs.caseObject.status == 'Resolved',true,false)}"><div class="percents80"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(FiveHrsDateTimeCs.caseObject.status == 'Resolved',true,false)}"><span>4 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(FiveHrsDateTimeCs.caseObject.status == 'Closed',true,false)}"><div class="percents100"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(FiveHrsDateTimeCs.caseObject.status == 'Closed',true,false)}"><span>5 of 5 steps</span></apex:outputPanel>
+                              
+                              
+                              
+                            </div>
+                            
+                          </div>
+                          
+                          <div class="pull-left bar-contributor">
+                            <span class="forward">Contributor</span>
+                            <ul class="user-list clearfix">
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(FiveHrsDateTimeCs.firstUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!FiveHrsDateTimeCs.firstUser}" href="javascript:;" >
+                                     <apex:image alt="{!FiveHrsDateTimeCs.firstUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" />
+                                </a>
+                                </apex:outputPanel>
+                              </li> 
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(FiveHrsDateTimeCs.secUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!FiveHrsDateTimeCs.secUser}" href="javascript:;"><apex:image alt="{!FiveHrsDateTimeCs.secUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(FiveHrsDateTimeCs.thirdUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!FiveHrsDateTimeCs.thirdUser}" href="javascript:;"><apex:image alt="{!FiveHrsDateTimeCs.thirdUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(FiveHrsDateTimeCs.fourthUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!FiveHrsDateTimeCs.fourthUser}" href="javascript:;"><apex:image alt="{!FiveHrsDateTimeCs.fourthUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                            </ul>
+                          </div>
+                          
+                          <div class="pull-right button-group">
+                            <a class="btn btn-primary" href="{!$Site.prefix}/apex/PredixCasedetailPage?Id={!FiveHrsDateTimeCs.caseObject.Id}" target="_blank">Show details</a>
+                          </div>
+                          
+                        </div></td></tr>
+              <!--------END--------------ADDED CONTRIBUTOR TABLE FOR  FIVE HOUR DATE CASE STATUS --------------------------------->
+                              
+                    </apex:repeat>
+                    
+                    
+                     <apex:repeat value="{!YesterdayCasesDisplay}" var="YesterdayDateTimeCs" id="YesterdayDateTimeCs" rendered="{!renderedAllTable='Yesterday'}"  >
+                      <tr class="new" onClick="CallingmethodTwoInJavascript('{!YesterdayDateTimeCs.caseObject.CaseNumber}', '{!YesterdayDateTimeCs.firstUser}', '{!YesterdayDateTimeCs.secUser}', '{!YesterdayDateTimeCs.thirdUser}', '{!YesterdayDateTimeCs.fourthUser}')">
+                    
+                           <td><table><tr>
+                            
+                               <td><apex:outputPanel rendered="{!IF(YesterdayDateTimeCs.caseObject.Priority == 'P1–Level 1–Catastrophic service failure',true,false)}" style="display: table-cell;" ><span class="icon icon-priority icon-P1"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(YesterdayDateTimeCs.caseObject.Priority == 'P2–Level 2–Service failure',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P2"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(YesterdayDateTimeCs.caseObject.Priority == 'P3–Level 3–Limited loss of service',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P3"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(YesterdayDateTimeCs.caseObject.Priority == 'P4–Level 4–No impact to service',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P4"></span></apex:outputPanel></td>
+                                           <td> <td>
+                                
+                         <apex:outputPanel rendered="{!IF(YesterdayDateTimeCs.hasAttachment == true,true,false)}">
+                            <apex:image url="{!$Resource.Fileclip}" width="10" height="20" title="Case has a File Attachment"/>
+                         </apex:outputPanel>
+                            </td> </td></tr></table></td>
+
+                              <td class="center" data-name="case_number"><span class="case-number">{!YesterdayDateTimeCs.caseObject.Casenumber}</span></td>
+                                <td data-name="subject"><span class="pull-left file">{!YesterdayDateTimeCs.caseObject.subject}</span><!--<a href="javascript:;" class="icon icon-attachment"></a>--></td>
+                                <td data-name="date"><span> <apex:outputText value="{0,date,MM/dd/yyyy  hh:mm a}"> <apex:param value="{!YesterdayDateTimeCs.caseObject.createddate}" /> </apex:outputText></span></td>
+                                <!--<td class="center" data-name="status"><span class="status-new">{!allCs.caseObject.Status}</span></td>-->
+                                <td class="center" data-name="status"> <apex:outputpanel rendered="{!IF(YesterdayDateTimeCs.caseObject.Status== 'New',true,false)}"><span class="status-new">{!YesterdayDateTimeCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(YesterdayDateTimeCs.caseObject.Status== 'Acknowledged',true,false)}"><span>{!YesterdayDateTimeCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(YesterdayDateTimeCs.caseObject.Status== 'Working',true,false)}"><span>{!YesterdayDateTimeCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(YesterdayDateTimeCs.caseObject.Status== 'Resolved',true,false)}"><span>{!YesterdayDateTimeCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(YesterdayDateTimeCs.caseObject.Status== 'Closed',true,false)}"><span class="closed is-hidden">{!YesterdayDateTimeCs.caseObject.Status}</span></apex:outputpanel></td>
+                             <!--   <td><span class="icon icon-arrow"></span></td>-->
+                             <td>
+                          <apex:outputpanel styleClass="icon icon-arrow"></apex:outputpanel>
+                          </td>
+                              </tr>
+                              
+                              
+                               <!--------START--------------ADDED CONTRIBUTOR TABLE FOR  YESTERDAY CASE STATUS --------------------------------->
+                               <tr name="tr{!YesterdayDateTimeCs.caseObject.CaseNumber}" id="tr{!YesterdayDateTimeCs.caseObject.CaseNumber}" class="expand" style="display:none">
+                        <td colspan="6"><div class="row-expand clearfix on" id="div{!YesterdayDateTimeCs.caseObject.CaseNumber}" style="">
+                            <div class="pull-left bar-progress">
+                            <span class="forward">Case progress</span>
+                            <div class="progress">
+                             <!-- <div class="percents"></div>
+                              <span>1 of 5 steps</span> -->
+                              
+                              <apex:outputPanel rendered="{!IF(YesterdayDateTimeCs.caseObject.status == 'New',true,false)}"><div class="percents"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(YesterdayDateTimeCs.caseObject.status == 'New',true,false)}"><span>1 of 5 steps</span></apex:outputPanel>
+
+                <apex:outputPanel rendered="{!IF(YesterdayDateTimeCs.caseObject.status == 'Acknowledged',true,false)}"><div class="percents40"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(YesterdayDateTimeCs.caseObject.status == 'Acknowledged',true,false)}"><span>2 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(YesterdayDateTimeCs.caseObject.status == 'Working',true,false)}"><div class="percents60"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(YesterdayDateTimeCs.caseObject.status == 'Working',true,false)}"><span>3 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(YesterdayDateTimeCs.caseObject.status == 'Resolved',true,false)}"><div class="percents80"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(YesterdayDateTimeCs.caseObject.status == 'Resolved',true,false)}"><span>4 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(YesterdayDateTimeCs.caseObject.status == 'Closed',true,false)}"><div class="percents100"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(YesterdayDateTimeCs.caseObject.status == 'Closed',true,false)}"><span>5 of 5 steps</span></apex:outputPanel>
+                              
+                              
+                              
+                            </div>
+                            
+                          </div>
+                          
+                          <div class="pull-left bar-contributor">
+                            <span class="forward">Contributor</span>
+                            <ul class="user-list clearfix">
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(YesterdayDateTimeCs.firstUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!YesterdayDateTimeCs.firstUser}" href="javascript:;" >
+                                     <apex:image alt="{!YesterdayDateTimeCs.firstUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" />
+                                </a>
+                                </apex:outputPanel>
+                              </li> 
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(YesterdayDateTimeCs.secUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!YesterdayDateTimeCs.secUser}" href="javascript:;"> <apex:image alt="{!YesterdayDateTimeCs.secUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(YesterdayDateTimeCs.thirdUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!YesterdayDateTimeCs.thirdUser}" href="javascript:;"><apex:image alt="{!YesterdayDateTimeCs.thirdUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(YesterdayDateTimeCs.fourthUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!YesterdayDateTimeCs.fourthUser}" href="javascript:;"><apex:image alt="{!YesterdayDateTimeCs.fourthUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                            </ul>
+                          </div>
+                          
+                          <div class="pull-right button-group">
+                            <a class="btn btn-primary" href="{!$Site.prefix}/apex/PredixCasedetailPage?Id={!YesterdayDateTimeCs.caseObject.Id}" target="_blank">Show details</a>
+                          </div>
+                          
+                        </div></td></tr>
+                                <!--------END--------------ADDED CONTRIBUTOR TABLE FOR  YESTERDAY CASE STATUS --------------------------------->
+                    </apex:repeat>
+                     
+                    
+                    
+                    <apex:repeat value="{!LastMonthCasesDisplay}" var="LastMonthDateTimeCs" id="LastMonthDateTimeCs" rendered="{!renderedAllTable='Last month'}"  >
+                      <tr class="new" onClick="CallingmethodTwoInJavascript('{!LastMonthDateTimeCs.caseObject.CaseNumber}', '{!LastMonthDateTimeCs.firstUser}', '{!LastMonthDateTimeCs.secUser}', '{!LastMonthDateTimeCs.thirdUser}', '{!LastMonthDateTimeCs.fourthUser}')">
+                    
+                             <td><table><tr>
+                               <td><apex:outputPanel rendered="{!IF(LastMonthDateTimeCs.caseObject.Priority == 'P1–Level 1–Catastrophic service failure',true,false)}" style="display: table-cell;" ><span class="icon icon-priority icon-P1"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(LastMonthDateTimeCs.caseObject.Priority == 'P2–Level 2–Service failure',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P2"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(LastMonthDateTimeCs.caseObject.Priority == 'P3–Level 3–Limited loss of service',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P3"></span></apex:outputPanel>
+                         <apex:outputPanel rendered="{!IF(LastMonthDateTimeCs.caseObject.Priority == 'P4–Level 4–No impact to service',true,false)}" style="display: table-cell;"> <span class="icon icon-priority icon-P4"></span></apex:outputPanel></td>
+                                                    <td> <td>
+                                
+                         <apex:outputPanel rendered="{!IF(LastMonthDateTimeCs.hasAttachment == true,true,false)}">
+                            <apex:image url="{!$Resource.Fileclip}" width="10" height="20" title="Case has a File Attachment"/>
+                         </apex:outputPanel>
+                            </td> </td></tr></table></td>
+                                
+                                <td class="center" data-name="case_number"><span class="case-number">{!LastMonthDateTimeCs.caseObject.Casenumber}</span></td>
+                                <td data-name="subject"><span class="pull-left file">{!LastMonthDateTimeCs.caseObject.subject}</span><!--<a href="javascript:;" class="icon icon-attachment"></a>--></td>
+                                <td data-name="date"><span> <apex:outputText value="{0,date,MM/dd/yyyy  hh:mm a}"> <apex:param value="{!LastMonthDateTimeCs.caseObject.createddate}" /> </apex:outputText></span></td>
+                                <!--<td class="center" data-name="status"><span class="status-new">{!allCs.caseObject.Status}</span></td>-->
+                                <td class="center" data-name="status"> <apex:outputpanel rendered="{!IF(LastMonthDateTimeCs.caseObject.Status== 'New',true,false)}"><span class="status-new">{!LastMonthDateTimeCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(LastMonthDateTimeCs.caseObject.Status== 'Acknowledged',true,false)}"><span>{!LastMonthDateTimeCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(LastMonthDateTimeCs.caseObject.Status== 'Working',true,false)}"><span>{!LastMonthDateTimeCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(LastMonthDateTimeCs.caseObject.Status== 'Resolved',true,false)}"><span>{!LastMonthDateTimeCs.caseObject.Status}</span></apex:outputpanel>
+                         <apex:outputpanel rendered="{!IF(LastMonthDateTimeCs.caseObject.Status== 'Closed',true,false)}"><span class="closed is-hidden">{!LastMonthDateTimeCs.caseObject.Status}</span></apex:outputpanel></td>
+                             <!--   <td><span class="icon icon-arrow"></span></td>-->
+                             <td>
+                          <apex:outputpanel styleClass="icon icon-arrow"></apex:outputpanel>
+                          </td>
+                              </tr>
+                              
+                               <!--------START--------------ADDED CONTRIBUTOR TABLE FOR  LAST MONTH CASE STATUS --------------------------------->
+                               <tr name="tr{!LastMonthDateTimeCs.caseObject.CaseNumber}" id="tr{!LastMonthDateTimeCs.caseObject.CaseNumber}" class="expand" style="display:none">
+                        <td colspan="6"><div class="row-expand clearfix on" id="div{!LastMonthDateTimeCs.caseObject.CaseNumber}" style="">
+                            <div class="pull-left bar-progress">
+                            <span class="forward">Case progress</span>
+                            <div class="progress">
+                             <!-- <div class="percents"></div>
+                              <span>1 of 5 steps</span> -->
+                              
+                              <apex:outputPanel rendered="{!IF(LastMonthDateTimeCs.caseObject.status == 'New',true,false)}"><div class="percents"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(LastMonthDateTimeCs.caseObject.status == 'New',true,false)}"><span>1 of 5 steps</span></apex:outputPanel>
+
+                <apex:outputPanel rendered="{!IF(LastMonthDateTimeCs.caseObject.status == 'Acknowledged',true,false)}"><div class="percents40"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(LastMonthDateTimeCs.caseObject.status == 'Acknowledged',true,false)}"><span>2 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(LastMonthDateTimeCs.caseObject.status == 'Working',true,false)}"><div class="percents60"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(LastMonthDateTimeCs.caseObject.status == 'Working',true,false)}"><span>3 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(LastMonthDateTimeCs.caseObject.status == 'Resolved',true,false)}"><div class="percents80"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(LastMonthDateTimeCs.caseObject.status == 'Resolved',true,false)}"><span>4 of 5 steps</span></apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IF(LastMonthDateTimeCs.caseObject.status == 'Closed',true,false)}"><div class="percents100"></div></apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(LastMonthDateTimeCs.caseObject.status == 'Closed',true,false)}"><span>5 of 5 steps</span></apex:outputPanel>
+                              
+                              
+                              
+                            </div>
+                            
+                          </div>
+                          
+                          <div class="pull-left bar-contributor">
+                            <span class="forward">Contributor</span>
+                            <ul class="user-list clearfix">
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(LastMonthDateTimeCs.firstUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!LastMonthDateTimeCs.firstUser}" href="javascript:;" >
+                                    <apex:image alt="{!LastMonthDateTimeCs.firstUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" />
+                                </a>
+                                </apex:outputPanel>
+                              </li> 
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(LastMonthDateTimeCs.secUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!LastMonthDateTimeCs.secUser}" href="javascript:;"> <apex:image alt="{!LastMonthDateTimeCs.secUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(LastMonthDateTimeCs.thirdUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!LastMonthDateTimeCs.thirdUser}" href="javascript:;"><apex:image alt="{!LastMonthDateTimeCs.thirdUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                              <li class="pull-left">
+                               <apex:outputPanel rendered="{!if(LastMonthDateTimeCs.fourthUser!='No User', true, false)}">
+                                <a class="js-tip" data-name="{!LastMonthDateTimeCs.fourthUser}" href="javascript:;"><apex:image alt="{!LastMonthDateTimeCs.fourthUser}"  url="{!$Resource.Predix_ProfilePhoto}" width="20" height="20" /></a>
+                                </apex:outputPanel>
+                              </li>
+                            </ul>
+                          </div>
+                          
+                          <div class="pull-right button-group">
+                            <a class="btn btn-primary" href="{!$Site.prefix}/apex/PredixCasedetailPage?Id={!LastMonthDateTimeCs.caseObject.Id}" target="_blank">Show details</a>
+                          </div>
+                          
+                        </div></td></tr>
+                                <!--------END--------------ADDED CONTRIBUTOR TABLE FOR  LAST MONTH CASE STATUS --------------------------------->
+                    </apex:repeat>
+                    
+                    
+                     
+                            </tbody>
+                          </table>
+                           </apex:outputPanel>
+                          <!--/ Table -->
+                        </div>
+                        <div class="bar-bottom clearfix">
+                          <div class="pull-left note">
+                            <dl>
+                              <dt class="pull-left">Priority</dt>
+                              <dd class="pull-left"><span class="icon icon-priority icon-P1">P1</span></dd>
+                              <dd class="pull-left"><span class="icon icon-priority icon-P2">P2</span></dd>
+                              <dd class="pull-left"><span class="icon icon-priority icon-P3">P3</span></dd>
+                              <dd class="pull-left"><span class="icon icon-priority icon-P4">P4</span></dd>
+                            </dl>
+                          </div>
+                          <!--/ .note -->
+                           <ul class="pull-right pagination">
+                            <li>
+                            <apex:commandlink rerender="tableDetails" action="{!FirstPage}" styleclass="icon icon-first" onclick="paginationFirst()"/>
+
+                            <!--<a href="javascript:;" class="icon icon-first"></a>-->
+                            </li>
+                            <li>
+                              <apex:commandlink rerender="tableDetails" action="{!previous}" styleclass="icon icon-previous" onclick="paginationPrevious()"/>
+
+                            <!--<a href="javascript:;" class="icon icon-previous"></a>-->
+                            </li>
+                          <!--  <li>
+                           <apex:commandlink value="1" rerender="tableDetails" action="{!next}"/>
+
+                            <!--<a href="javascript:;">1</a>-->
+                            <!--</li>
+                            <li>
+                            <apex:commandlink value="2" rerender="tableDetails" action="{!next}"/>
+                            <!--<a href="javascript:;">2</a>-->
+                            <!--</li>
+                            <li>
+                            <apex:commandlink value="3" rerender="tableDetails" action="{!next}"/>
+                            
+                        <!-------<a href="javascript:;">3</a>----->
+                           <!-- </li>
+                            <li>
+                             <apex:commandlink value="4" rerender="tableDetails" action="{!next}"/>
+                            <!--<a href="javascript:;">...</a>-->
+                           <!-- </li>
+                            <li>
+                              <apex:commandlink value="5" rerender="tableDetails" action="{!next}"/>
+                            <!--<a href="javascript:;">20</a>-->
+                            <!--</li>-->
+                             <li> <apex:actionFunction name="reRenderPagesPanel" id="PagesCountOutputPanel" rerender="PagecountOuputPanel">
+                           </apex:actionFunction>
+                           <apex:outputPanel id="PagecountOuputPanel" style="color:  #1FB0F3;font-weight: bold; padding-top:5px;">Pages: {!currentpage} - {!PageCount} </apex:outputPanel>
+                           </li>
+                            <li>
+                               <apex:commandlink rerender="tableDetails" action="{!next}" styleclass="icon icon-next" onclick="paginationFont()"/>
+                            <!--<a href="javascript:;" class="icon icon-next"></a>-->
+                            </li>
+                            <li>
+                             <apex:commandlink rerender="tableDetails" action="{!LastPage}" styleclass="icon icon-last" onClick="paginationLast()"/>
+                            <!--<a href="javascript:;" class="icon icon-last"></a>-->
+                            </li>
+                          </ul>
+                          <!--/ .pagination -->
+                        </div>
+                        <!--/ .bar-bottom -->
+                      </div>
+                      <!--/ .view -->
+                      <div class="view tabs-content" id="chartView">
+                        <div class="clearfix">
+                          <div class="pull-left widget-chart">
+                            <h3>status</h3>
+                            <div class="chart chartStatus"></div>
+                          </div>
+                          <div class="pull-left widget-chart last">
+                            <h3>Priority</h3>
+                            <div class="chart chartPriority"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--/ .view -->
+                    </div>
+                    <!--/ .results-context -->
+                  </div>
+                  <!--/ .context-results -->
+                </div>
+                <!--/ .context-results -->
+              </div>
+              <!--/ .well-search -->
+            </div>
+            <!--/ .panel-body -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/ .section-case-details -->
+  </div>
+  <!--/ .main-container -->
+</div>
+<!--/ .wrapper -->
+<div class="flyout flyout-call icon" id="callFlyout">
+  <p>
+    Call Us!
+    <a href="javascript:;">1-888-477-3349</a>
+  </p>
+</div>
+<!--/ .flyout -->
+<div class="flyout flyout-new-case new-case-pop" id="newCaseFlyout">
+<!--- START DIV FOR NEW CASE BUTTON RECORD TYPE------------------------->
+
+
+  <div class="form-new-case is-form icon" id='RecordTypeNewCaseId' style="display:none">
+    <h2><a href="javascript:;" class="icon icon-close"></a>Please Select Record Type</h2>
+    <div class="container-fluid">
+      <div class="col-xs-6">
+        <div class="form-group">
+          <label>Record Type</label>
+         <apex:selectList value="{!SelectedRecordType}" multiselect="false" size="1" styleClass="js-custom-select" >
+         <apex:selectOptions value="{!RecordTypes}"/>
+        <!-- <apex:actionsupport event="onclick" action="{!updateRecordType}" rerender="CaseNewtableOneId" />-->
+       </apex:selectList>
+         <!-- <input type="text" class="form-control default"  />-->
+        </div>
+      </div>
+      
+    
+    </div>
+    <!--/ .container -->
+    <div class="buttons-group">
+    <apex:commandButton styleclass="btn btn-success pull-right"  value="Submit"  action="{!updateRecordType}" reRender="NewCaseSearchtableId"  oncomplete="HideGoGoFormData()"/>
+     <!-- <a href="javascript:;" class="btn btn-success pull-right">Submit</a>-->
+    </div>
+    <!--/ .buttons-group -->
+  </div>
+  <!--/ .form-new-case -->
+
+
+<!--- END DIV FOR NEW CASE BUTTON RECORD TYPE -------------------------->
+ <apex:outputpanel id="NewCaseSearchtableId">
+  <div class="form-new-case is-form icon" id="CasetableOnSearchPgId" >
+    <h2><a href="javascript:;" class="icon icon-close"></a>new case</h2>
+    <div class="container-fluid">
+      <div class="col-xs-6">
+        <div class="form-group">
+          <label>Account name</label>
+          <apex:inputField value="{!CreateNewCase.AccountId}" />
+         <!-- <input type="text" class="form-control default"  />-->
+        </div>
+      </div>
+      <div class="col-xs-6">
+        <div class="form-group">
+          <label>Contact name</label>
+          <apex:inputfield value="{!CreateNewCase.ContactId}" />
+        <!--  <input type="text" class="form-control default" />-->
+        </div>
+      </div>
+      <div class="col-xs-12">
+        <div class="comments-group">
+          <div class="subject">
+<apex:inputField value="{!CreateNewCase.Subject}" styleclass="form-control default" html-placeholder="Subject"/>
+           <!-- <input type="text" class="form-control default" data-value="Subject" value="Subject" />-->
+          </div>
+          <!--/ .subject -->
+          <div class="desctiption">
+            <apex:inputField Value="{!CreateNewCase.Description}" Styleclass="form-control default" html-placeholder="Description" />
+           <!-- <textarea class="form-control default" data-value="Description">Description</textarea>-->
+          </div>
+          <!--/ .description -->
+        </div>
+        <!--/ .comments-group -->
+      </div>
+    </div>
+    <!--/ .container -->
+    <div class="buttons-group">
+      <apex:commandButton styleclass="btn btn-success pull-right" action="{!Submit}" value="Submit" onclick="return getValuesCaseSearch();"/>
+     <!-- <a href="javascript:;" class="btn btn-success pull-right">Submit</a>-->
+    </div>
+    <!--/ .buttons-group -->
+  </div>
+  </apex:outputpanel>
+  <!--/ .form-new-case -->
+</div>
+<!--/ .flyout -->
+<div class="flyout flyout-enhancements" id="enhancementsFlyout">
+  <div class="form-new-case is-form">
+    <h2>ENhancements</h2>
+    <div class="container-fluid">
+      <div class="col-xs-12">
+        <dl>
+          <dt class="pull-left">Account name:</dt>
+          <dd>AccountNameID</dd>
+          <dt class="pull-left">Contact name:</dt>
+          <dd>Emma Smith</dd>
+        </dl>
+      </div>
+      <div class="col-xs-12">
+        <div class="comments-group">
+          <div class="subject">
+            <input type="text" class="form-control default" data-value="Subject" value="Subject" />
+          </div>
+          <!--/ .subject -->
+          <div class="desctiption">
+            <textarea class="form-control default" data-value="Description">Description</textarea>
+          </div>
+          <!--/ .description -->
+          <div class="input-group js-file-upload">
+            <div class="drag-area">
+              <input type="text" class="form-control" readonly='' value="Attach file or drag & drop here" />
+              <input type="file" class="file-upload" />
+              <a href="javascript:;" class="icon icon-remove js-remove"></a>
+            </div>
+            <a href="javascript:;" class="input-group-addon icon icon-browser js-browser"></a>
+          </div>
+        </div>
+        <!--/ .comments-group -->
+      </div>
+      <div class="col-xs-6">
+        <div class="form-group">
+          <select class="js-custom-select">
+            <option>Case Type</option>
+            <option>Bug</option>
+            <option>Enhancement</option>
+            <option>Problem</option>
+            <option>Question</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-xs-6">
+        <div class="form-group">
+          <input type="text" class="form-control default" value="Product" data-value="Product" />
+        </div>
+      </div>
+    </div>
+    <!--/ .container -->
+    <div class="buttons-group">
+      <a href="javascript:;" class="btn btn-primary pull-right">Submit</a>
+      <a href="javascript:;" class="pull-right link-cancel js-close">Cancel</a>
+      <strong class="icon icon-rules">Assign using asign active rules</strong>
+    </div>
+    <!--/ .buttons-group -->
+  </div>
+  <!--/ .form-new-case -->
+</div>
+<!--/ .flyout -->
+<div class="flyout flyout-profile icon location" id="profileFlyout">
+  <ul>
+   <!-- <li><a href="javascript:;" class="icon icon-user">View My Profile</a></li>
+    <li><a href="javascript:;" class="icon icon-settings">Settings</a></li>
+    <li><a href="javascript:;" class="icon icon-logout">Logout</a></li>-->
+     <li><apex:outputLink value="{!$Site.Prefix}/secur/logout.jsp" styleclass="icon icon-logout">Logout</apex:outputLink></li>
+  </ul>
+</div>
+<!--/ .flyout -->
+<div class="flyout flyout-config" id="configFlyout">
+  <div class="default">
+    <label class="custom-checkbox">
+      <input type="checkbox" name="defaultDashboard" />
+      <span class="icon"></span>
+      Default dashboard
+    </label>
+  </div>
+  <!--/ .default -->
+  <div class="custom">
+    <strong>Custom dashboard</strong>
+    <ul>
+      <li>
+        <label class="custom-radio">
+          <input type="checkbox" name="newsHighlights" />
+          <span class="icon"></span>News &amp; Highlights
+        </label>
+      </li>
+      <li>
+        <label class="custom-radio">
+          <input type="checkbox" name="whatnew" />
+          <span class="icon"></span>What’s new
+        </label>
+      </li>
+      <li>
+        <label class="custom-radio">
+          <input type="checkbox" name="cases" />
+          <span class="icon"></span>Cases 
+        </label>
+      </li>
+      <li>
+        <label class="custom-radio">
+          <input type="checkbox" name="feeds" />
+          <span class="icon"></span>Feeds
+        </label>
+      </li>
+      <li>
+        <label class="custom-radio">
+          <input type="checkbox" name="techSupport" />
+          <span class="icon"></span>Tech support
+        </label>
+      </li>
+      <li>
+        <label class="custom-radio">
+          <input type="checkbox" name="recentlyUpdateArticles" />
+          <span class="icon"></span>Recently updated articles
+        </label>
+      </li>
+      <li>
+        <label class="custom-radio">
+          <input type="checkbox" name="popularDocumentation" />
+          <span class="icon"></span>Popular documentation
+        </label>
+      </li>
+      <li>
+        <label class="custom-radio">
+          <input type="checkbox" name="faq" />
+          <span class="icon"></span>FAQ
+        </label>
+      </li>
+      <li>
+        <label class="custom-radio">
+          <input type="checkbox" name="helpUsImprove" />
+          <span class="icon"></span>Help us improve
+        </label>
+      </li>
+    </ul>
+  </div>
+  <!--/ .costom -->
+</div>
+<!--/ .flyout -->
+<div class="flyout flyout-config-columns" id="configColumns" data-role="configColumn">
+  <div class="custom">
+    <ul>
+      <li>
+        <label class="custom-radio">
+          <input type="checkbox" name="case_number" />
+          <span class="icon"></span>Case number
+        </label>
+      </li>
+      <li>
+        <label class="custom-radio">
+          <input type="checkbox" name="subject" />
+          <span class="icon"></span>Subject
+        </label>
+      </li>
+      <li>
+        <label class="custom-radio">
+          <input type="checkbox" name="description" />
+          <span class="icon"></span>Description 
+        </label>
+      </li>
+      <li>
+        <label class="custom-radio">
+          <input type="checkbox" name="date" />
+          <span class="icon"></span>Date
+        </label>
+      </li>
+      <li>
+        <label class="custom-radio">
+          <input type="checkbox" name="status" />
+          <span class="icon"></span>Status
+        </label>
+      </li>
+      <li>
+        <label class="custom-radio">
+          <input type="checkbox" name="priority" />
+          <span class="icon"></span>Priority
+        </label>
+      </li>
+      <li>
+        <label class="custom-radio">
+          <input type="checkbox" name="customer" />
+          <span class="icon"></span>Customer
+        </label>
+      </li>
+      <li>
+        <label class="custom-radio">
+          <input type="checkbox" name="user" />
+          <span class="icon"></span>User
+        </label>
+      </li>
+      <li>
+        <label class="custom-radio">
+          <input type="checkbox" name="case_owner" />
+          <span class="icon"></span>Case owner
+        </label>
+      </li>
+    </ul>
+  </div>
+  <!--/ .costom -->
+</div>
+<!--/ .flyout -->
+<div class="row-expand is-for-search clearfix">
+    <div class="pull-left bar-progress">
+    <span class="forward">Case progress</span>
+    <div class="progress">
+      <div class="percents"></div>
+      <span>1 of 5 steps</span>
+    </div>
+    <!--/ .progress -->
+  </div>
+  <!--/ .bar-progress -->
+  <div class="pull-left bar-contributor">
+    <span class="forward">Contributor</span>
+    <ul class="user-list clearfix">
+      <li class="pull-left">
+        <a href="javascript:;" class="js-tip" data-name="Randy West"><img src="i/user-thumbnail-blue.jpg" alt="Randy West" /></a>
+      </li> 
+      <li class="pull-left">
+        <a href="javascript:;" class="js-tip" data-name="Wood West"><img src="i/user-thumbnail-blue.jpg" alt="Wood West" /></a>
+      </li>
+      <li class="pull-left">
+        <a href="javascript:;" class="js-tip" data-name="Jhon West"><img src="i/user-thumbnail-blue.jpg" alt="Jhon West" /></a>
+      </li>
+      <li class="pull-left">
+        <a href="javascript:;" class="js-tip" data-name="Well West"><img src="i/user-thumbnail-blue.jpg" alt="Well West" /></a>
+      </li>
+    </ul>
+  </div>
+  <!--/ .bar-contributor -->
+  <div class="pull-right button-group">
+    <a href="Case-Details.html" class="btn btn-primary">Show details</a>
+  </div>
+  <!-- .button-group -->
+</div>
+<!--/ .row-expand -->
+<div class="live-chat-support">
+ <!-- <a href="javascript:;" class="icon">LIVE CHART SUPPORT</a>
+  <span class="chat-point"></span>-->
+ <img id="liveagent_button_online_57312000000TNdX" style="display: none; border: 0px none; cursor: pointer" onclick="liveagent.startChat('57312000000TNdX')" src="https://geog.force.com/Predix/resource/1447979700000/LiveAgentOnlineImg" /><img id="liveagent_button_offline_57312000000TNdX" style="display: none; border: 0px none; " src="https://geog.force.com/Predix/resource/1447979700000/LiveAgentOfflineImg" />
+<script type="text/javascript">
+if (!window._laq) { window._laq = []; }
+window._laq.push(function(){liveagent.showWhenOnline('57312000000TNdX', document.getElementById('liveagent_button_online_57312000000TNdX'));
+liveagent.showWhenOffline('57312000000TNdX', document.getElementById('liveagent_button_offline_57312000000TNdX'));
+});</script>
+
+
+
+</div>
+
+<!--/ .live-chat-support -->
+<!--<div class="modal-fade-in hide"></div>
+<div class="live-chat-popover hide">
+  <div class="title">
+    <h3 class="icon">PERSONAL LIVE CHAT</h3>
+  </div>
+  <div class="chat-context">
+    <div class="save-chat">
+      <a href="javascript:;" class="btn-save">Save Chat</a>
+      <input type="text"/>
+      <a href="javascript:;" class="btn-end">End Chat</a>
+    </div>
+    <div class="chat-msgs">
+      <p>
+        <span class="user-name">Neha J :</span>Hello Mr. John, How can I help you?
+      </p>
+    </div>
+    <div class="chat-send">
+      <div class="chat-send-input">
+        <input type="text"/>
+      </div>
+      <a href="javascript:;" class="btn-send">Send</a>
+    </div>
+  </div>
+</div>-->
+<!--/ .live-chat-popover -->
+</apex:form>
+</body>
+</html>
+<script type='text/javascript' src='https://c.la3-c2-was.salesforceliveagent.com/content/g/js/35.0/deployment.js'></script>
+<script type='text/javascript'>
+liveagent.init('https://d.la3-c2-was.salesforceliveagent.com/chat', '57212000000TNVH', '00DA0000000QC05');
+</script>
+</apex:page>

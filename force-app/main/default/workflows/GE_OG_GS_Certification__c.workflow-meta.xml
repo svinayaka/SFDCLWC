@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>GE_OG_GS_Certification_Expiry_1_Day</fullName>
+        <description>GE OG GS Certification Expiry 1 Day</description>
+        <protected>false</protected>
+        <recipients>
+            <field>BHGE_GS_Certification_Alert__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>tms.dts.servicemax.admins@ge.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>GE_OG_GS_Email_Templates/GE_OG_GS_Certification_Expiring_1_Day</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_OG_GS_Certification_Expiry_30Days</fullName>
+        <description>GE OG GS Certification Expiry 30 Days</description>
+        <protected>false</protected>
+        <recipients>
+            <field>BHGE_GS_Certification_Alert__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>tms.dts.servicemax.admins@ge.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>GE_OG_GS_Email_Templates/GE_OG_GS_Certification_Expiry30Days</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_OG_GS_Certification_Expiry_60Days</fullName>
+        <description>GE OG GS Certification Expiry 60 Days</description>
+        <protected>false</protected>
+        <recipients>
+            <field>BHGE_GS_Certification_Alert__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>tms.dts.servicemax.admins@ge.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>GE_OG_GS_Email_Templates/GE_OG_GS_Certification_Expiry60Days</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>GE_OG_GS_Cert_expired</fullName>
+        <field>GE_OG_GS_Status__c</field>
+        <literalValue>Expired</literalValue>
+        <name>GE_OG_GS_Cert expired</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_LastCallibrationDate_On_TEquip</fullName>
+        <description>R-30201</description>
+        <field>GE_DTS_Last_Calibration_Date__c</field>
+        <formula>GE_OG_GS_Acquired_Date__c</formula>
+        <name>Update LastCallibrationDate On TEquip</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <targetObject>GE_OG_GS_Cert_Technician__c</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_NxtCallibrationDate</fullName>
+        <description>R-30201</description>
+        <field>GE_DTS_Next_Calibration_Date__c</field>
+        <formula>GE_OG_GS_Cert_Expiry_Date__c</formula>
+        <name>Update NxtCallibrationDate</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <targetObject>GE_OG_GS_Cert_Technician__c</targetObject>
+    </fieldUpdates>
+    <rules>
+        <fullName>GE_OG_GS_Certification_Expiry - 1 Day</fullName>
+        <active>true</active>
+        <description>R-33785</description>
+        <formula>AND(GE_OG_GS_Cert_Expiry_Date__c  &gt; TODAY(),    GE_OG_GS_Cert_Technician__r.SVMXC__Active__c  = True,  RecordType.Name = &quot;TPS - Equipment&quot;)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>GE_OG_GS_Certification_Expiry_1_Day</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>GE_OG_GS_Certification__c.GE_OG_GS_Cert_Expiry_Date__c</offsetFromField>
+            <timeLength>-1</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>GE_OG_GS_Certification_Expiry - 30 Days</fullName>
+        <active>true</active>
+        <description>R-33785</description>
+        <formula>AND(GE_OG_GS_Cert_Expiry_Date__c  &gt;=  TODAY()+ 30, GE_OG_GS_Cert_Technician__r.SVMXC__Active__c = True, RecordType.Name = &quot;TPS - Equipment&quot;)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>GE_OG_GS_Certification_Expiry_30Days</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>GE_OG_GS_Certification__c.GE_OG_GS_Cert_Expiry_Date__c</offsetFromField>
+            <timeLength>-30</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>GE_OG_GS_Certification_Expiry - 60 Days</fullName>
+        <active>true</active>
+        <description>R-33785</description>
+        <formula>AND(GE_OG_GS_Cert_Expiry_Date__c   &gt;=  TODAY()+60  , GE_OG_GS_Cert_Technician__r.SVMXC__Active__c = True, RecordType.Name = &quot;TPS - Equipment&quot;)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>GE_OG_GS_Certification_Expiry_60Days</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>GE_OG_GS_Certification__c.GE_OG_GS_Cert_Expiry_Date__c</offsetFromField>
+            <timeLength>-60</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>GE_OG_GS_Set_Cert_Status_to_Expired</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>GE_OG_GS_Certification__c.GE_OG_GS_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Replaced</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>GE_OG_GS_Certification__c.GE_OG_GS_Cert_Expiry_Date__c</field>
+            <operation>lessThan</operation>
+            <value>TODAY</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>GE_OG_GS_Cert_expired</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <offsetFromField>GE_OG_GS_Certification__c.GE_OG_GS_Cert_Expiry_Date__c</offsetFromField>
+            <timeLength>1</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>Update Callibration Date Fields On Technician Equipment</fullName>
+        <actions>
+            <name>Update_LastCallibrationDate_On_TEquip</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_NxtCallibrationDate</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>R-30201</description>
+        <formula>RecordType.DeveloperName = &apos;TPS_Equipment&apos;</formula>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+</Workflow>

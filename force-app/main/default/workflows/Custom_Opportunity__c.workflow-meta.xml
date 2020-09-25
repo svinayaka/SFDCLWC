@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Email_alert_to_notify_Service_Team_Leader</fullName>
+        <description>Email alert to notify Service Team Leader</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_OG_ServiceTeam_Leader__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/Email_Alert_Notify_ServiceTeam_Leader</template>
+    </alerts>
+    <alerts>
+        <fullName>Notify_User_when_failed_to_create_new_Oppty_from_Smax_Offline_Oppty</fullName>
+        <description>Email Notification when failed to create new Opportunity from Smax Offline Opportunity</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>SVMXC__ServiceMaxEmailTemplates/GE_OG_Offline_Opportynity_Status</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>GE_OG_OpptynotActive</fullName>
+        <field>GE_OG_Oppty_NotActive__c</field>
+        <literalValue>1</literalValue>
+        <name>GE OG OpptynotActive</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <rules>
+        <fullName>GE OG Opportunity Inactive</fullName>
+        <actions>
+            <name>GE_OG_OpptynotActive</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Custom_Opportunity__c.GE_OG_Stage__c</field>
+            <operation>equals</operation>
+            <value>Closed Won,Closed Lost,Cancelled</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <offsetFromField>Custom_Opportunity__c.LastModifiedDate</offsetFromField>
+            <timeLength>15</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>SendEmail_Offline_Oppty_Status_failed</fullName>
+        <actions>
+            <name>Notify_User_when_failed_to_create_new_Oppty_from_Smax_Offline_Oppty</name>
+            <type>Alert</type>
+        </actions>
+        <active>false</active>
+        <formula>ISPICKVAL(GE_OG_Opportunity_Creation_Status__c  , &apos;Failure, Parent Relation Account not found&apos;) &amp;&amp;  ISNEW() &amp;&amp;  (GE_OG_FromSmax__c=true)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Workflow to Notify ServiceTeam Leader</fullName>
+        <actions>
+            <name>Email_alert_to_notify_Service_Team_Leader</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Custom_Opportunity__c.GE_OG_ServiceTeam_Leader__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>User.ProfileId</field>
+            <operation>equals</operation>
+            <value>GE_SS Field Service Engineer/Technician</value>
+        </criteriaItems>
+        <description>Workflow rule to send email alert to ServiceTeam Leader.</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+</Workflow>

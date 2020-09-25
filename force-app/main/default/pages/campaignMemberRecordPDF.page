@@ -1,0 +1,280 @@
+<apex:page StandardController="CampaignMember" renderAs="pdf" extensions="CampaignMemberDetailAsPDF">
+ <!-- <apex:detail subject="{!CampaignMember.Id}" relatedList="false" title="false"/> -->
+
+ <h2> Lead </h2>
+
+ <h3> Basic Details </h3>
+ <table cellspacing="10" style="border-top: 5px solid black">
+    <tr>
+    <td><span style="font-weight:bold">Name</span></td>
+    <td>{!leadName}</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td><span style="font-weight:bold">Title</span></td>
+    <td>{!CampaignMember.Title}</td>
+    </tr>
+    <tr>
+    <td><span style="font-weight:bold">Email</span></td>
+    <td>{!CampaignMember.Email}</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td><span style="font-weight:bold">Phone</span></td>
+    <td>{!CampaignMember.Phone}</td>
+    </tr>
+    <tr>
+    <td><span style="font-weight:bold">Opt in</span></td>
+    <td><apex:outputField value="{!CampaignMember.Opt_In_ge_og__c}"/></td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td><span style="font-weight:bold">Email Opt Out</span></td>
+    <td><apex:outputField value="{!CampaignMember.HasOptedOutOfEmail}"/></td>
+    </tr>
+    <tr>
+    <td><span style="font-weight:bold">Area of Interest</span></td>
+    <td>{!CampaignMember.Area_of_Interest_ge_og__c}</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td><span style="font-weight:bold">Inquiry Type</span></td>
+    <td>{!CampaignMember.Inquiry_Type_ge_og__c}</td>
+    </tr>
+    <tr>
+    <td><span style="font-weight:bold">Lead Description</span></td>
+    <td>{!CampaignMember.Description}</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td><span style="font-weight:bold">Region</span></td>
+    <td>{!CampaignMember.Region_ge_og__c}</td>
+    </tr>
+    <tr>
+    <td><span style="font-weight:bold">Country</span></td>
+    <td>{!CampaignMember.Country}</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td><span style="font-weight:bold">Website</span></td>
+    <td>{!website}</td>
+    </tr>
+    <tr>
+    <td><span style="font-weight:bold">Comments</span></td>
+    <td>{!CampaignMember.Comments_ge_og__c}</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td><span style="font-weight:bold">Stage</span></td>
+    <td>{!CampaignMember.Status}</td>
+    </tr>
+    <tr>
+    <td><span style="font-weight:bold">Type</span></td>
+    <td>{!CampaignMember.CMR_Type_ge_og__c}</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td><span style="font-weight:bold"></span></td>
+    <td></td>
+    </tr>
+    <tr>
+    <td><span style="font-weight:bold"></span></td>
+    <td></td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td><span style="font-weight:bold"></span></td>
+    <td></td>
+    </tr>
+    <tr>
+    <td><span style="font-weight:bold"></span></td>
+    <td></td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td><span style="font-weight:bold"></span></td>
+    <td></td>
+    </tr>
+ </table>
+ <h3> Campaign Details </h3>
+ <table cellspacing="10" style="border-top: 5px solid black">
+    <tr>
+    <td><span style="font-weight:bold"> Campaign Name</span></td>
+    <td>{!CampaignMember.Campaign.Name}</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td><span style="font-weight:bold">Description</span></td>
+    <td>{!CampaignMember.Campaign.Description}</td>
+    </tr>
+    <tr>
+    <td><span style="font-weight:bold">Tier 2</span></td>
+    <td>{!CampaignMember.Campaign.tier2_ge_og__c}</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td><span style="font-weight:bold">Tier 3</span></td>
+    <td>{!CampaignMember.Campaign.tier3_ge_og__c}</td>
+    </tr>
+    <tr>
+    <td><span style="font-weight:bold">Primary Target Industry</span></td>
+    <td><apex:outputField value="{!CampaignMember.Campaign.Primary_Target_Industry_ge_og__c}"/></td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td><span style="font-weight:bold">Material link</span></td>
+    <td><apex:outputField value="{!CampaignMember.Campaign.Material_Documentation_link_ge_og__c}"/></td>
+    </tr>
+ </table>
+ <h3> Conversion Details</h3>
+ <table cellspacing="10" style="border-top: 5px solid black">
+    <tr>
+    <td><span style="font-weight:bold"> Opportunity Name</span></td>
+    <td> {!CampaignMember.Opportunity_Name__c}</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td><span style="font-weight:bold"></span></td>
+    <td></td>
+    </tr>
+ </table>
+ <h3> Account Details </h3>
+ <!--<div style="{!IF(isContact,'display:block', 'display:none')}"> -->
+ <table cellspacing="10" style="border-top: 5px solid black">
+    <tr>
+    <td><span style="font-weight:bold"> Lead Contact Company</span></td>
+    <td> {!leadContactCompany}</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td><span style="font-weight:bold">Lead Company Address</span></td>
+    <td>{!leadCompanyAddress}</td>
+    </tr>
+    <tr>
+    <td><span style="font-weight:bold"> Account Name</span></td>
+    <td> {!accName}</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td><span style="font-weight:bold">Account Classification</span></td>
+    <td> {!accClassification}</td>
+    </tr>
+    <tr>
+    <td><span style="font-weight:bold"> Account Type</span></td>
+    <td> {!accType}</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td><span style="font-weight:bold">Region</span></td>
+    <td> {!region}</td>
+    </tr>
+    <tr>
+    <td><span style="font-weight:bold"> Country</span></td>
+    <td> {!country}</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td><span style="font-weight:bold"></span></td>
+    <td> </td>
+    </tr>
+    </table>
+<h3> Audit Trail </h3>
+ <table cellspacing="10" style="border-top: 5px solid black">
+    <tr>
+    <td><span style="font-weight:bold"> Lead Owner</span></td>
+    <td> {!CampaignMember.Owner_ge_og__r.Name}</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td><span style="font-weight:bold">Last Modified Date</span></td>
+    <td><apex:outputField value="{!CampaignMember.LastModifiedDate}"/></td>
+    </tr>
+    <tr>
+    <td><span style="font-weight:bold"> Last Modified By</span></td>
+    <td> {!CampaignMember.LastModifiedBy.Name}</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td><span style="font-weight:bold">Created Date</span></td>
+    <td><apex:outputField value="{!CampaignMember.CreatedDate}"/></td>
+    </tr>
+    <tr>
+    <td><span style="font-weight:bold"> Disposition Reason</span></td>
+    <td> {!CampaignMember.Dispostion_Reason_ge_og__c}</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td><span style="font-weight:bold"></span></td>
+    <td></td>
+    </tr>
+ </table>   
+</apex:page>

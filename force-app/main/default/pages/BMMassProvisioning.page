@@ -1,0 +1,76 @@
+<apex:page id="massProvisioningPage" standardController="BMUserSecurity__c" extensions="BMMassProvisioning" tabStyle="BMMassProvisioning__tab">
+    <apex:form id="frmMassProvisioning">
+        <apex:pageblock id="BMSecurityFieldBlock" title="Configuration Details">
+            <apex:outputPanel id="errorPanel">
+                <apex:pageMessages />
+            </apex:outputPanel>
+            <apex:pageBlockButtons location="top">
+                <apex:commandButton value="New" action="{!newConfig}" immediate="true" rerender="relatedListPanel,configDetails,errorPanel"/>
+                <apex:commandButton value="Save" action="{!saveConfig}" rerender="relatedListPanel,configDetails,errorPanel"/>
+                <apex:commandButton value="Delete" action="{!deleteConfig}" rerender="relatedListPanel,configDetails,errorPanel"/>
+            </apex:pageBlockButtons>
+            <apex:outputPanel id="configDetails">
+               <apex:pageblockSection columns="1" id="BMSecurityFieldBlockSection">
+                    <apex:inputField id="apiUserName" value="{!security.APIUserName__c}"/>   
+                    <apex:inputField id="apiUserPassword" value="{!security.APIUserPassword__c}"/>   
+                    <apex:inputField id="subDomain" value="{!security.APISubDomain__c}"/>
+                    <apex:inputField id="apiAdminEmail" value="{!security.AdminEmail__c}"/>
+                    <apex:inputField id="sslRequired" value="{!security.BMSSLRequired__c}"/>        
+                    <apex:inputField id="isActive" value="{!security.isActive__c}"/>        
+                </apex:pageblockSection>
+            </apex:outputPanel>         
+        </apex:pageBlock>
+
+        <apex:pageBlock id="relatedListBlock" title="Configuration Records">
+                <apex:outputPanel id="relatedListPanel">
+            <apex:pageBlockSection id="relatedListSection" columns="1">         
+            <apex:pageBlockTable value="{!lSecurities}" var="s" id="relatedListTable">                          
+                <apex:column >
+                    <apex:facet name="header">BM User Configuration</apex:facet>
+                    <apex:commandLink action="{!selectConfig}" rerender="configDetails,errorPanel" value="{!s.Name}" immediate="true">                                              
+                        <apex:param value="{!s.Id}" assignTo="{!currentlySelectedConfigId}" name="sid"/>
+                    </apex:commandLink>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header">Admin Email Address</apex:facet>
+                    <apex:outputField value="{!s.AdminEmail__c}"/>                  
+                </apex:column>              
+                <apex:column >
+                    <apex:facet name="header">Active</apex:facet>
+                    <apex:outputField value="{!s.isActive__c}"/>                    
+                </apex:column>
+                
+            </apex:pageBlockTable>
+            </apex:pageBlockSection>
+                    </apex:outputPanel>
+        </apex:pageBlock>
+        <apex:pageBlock id="massProvision" title="Mass Provisioning Tool">
+        <apex:outputPanel id="provisioningPanel">
+            <table border="0" width="44%">
+                    <tr>
+                        <td align="center">
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                        <apex:commandButton id="provisionUsers" disabled="{!disableMassProvisioningButton}" rerender="errorPanel,provisioningPanel" action="{!provisionUsers}" value="Provision Users"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            <apex:outputLabel value="Current number of users to Provision = " for="numberOfUsersToProvision"/>      
+                            <apex:outputLabel id="numberOfUsersToProvision" value="{!UsersToProvision}"/>       
+                        </td>
+                    </tr>
+                </table>
+            </apex:outputPanel>
+        </apex:pageBlock>
+
+    </apex:form>
+</apex:page>

@@ -1,0 +1,262 @@
+<apex:page standardcontroller="GE_PRM_Commercial_line__c" extensions="GE_PRM_Commercial_Lines_Class" sidebar="false" showHeader="true"  standardstylesheets="true" id="page1">
+     <apex:stylesheet value="{!URLFOR($Resource.PRM_CA_UX_CSS,'PRM_UX_CSS/PRM_UX.css')}"/> 
+   
+    <script> 
+    var $j = jQuery.noConflict();    
+    $j(document).ready(function(){
+        $j("[id$=mlktp]").hide();
+    });    
+    </script>    
+    <style>
+        .AddrowButton 
+        {
+        background: #A9A9A9;
+        border: 1px solid #8BA446;
+        display: inline-block;
+        padding: 5px 10px 5px;
+        border-radius: 2px 2px 2px 2px;
+        box-shadow: 0px 1px 2px 0px rgb(173, 173, 173);
+        font-family: Arial;
+        vertical-align: middle;
+        text-decoration: none;
+        background-image:none;
+        color:white;
+        font-size: 1em;
+        }
+    </style>  
+    
+     <apex:outputPanel id="javascrp">
+      <script>
+      function showmessage() 
+      {
+           var value=document.getElementById('page1:frm:pageblock:commlinePBS1:theHiddenInput').value;
+           if(value=="true")
+           {
+              var r = window.confirm('The Channel Appointment will go back to Draft stage');
+              
+              if(r==true)
+              {
+                  Callsavenotes();
+              }
+              if(r==false)
+              {
+                  BacktoCLview();
+                  document.getElementById('page1:frm:pageblock:commlinePBS1:theHiddenInput').value = "false";
+              }
+              
+            }
+           
+              
+          }
+    </script>
+</apex:outputPanel>
+    
+    
+      
+    <script>
+    
+    
+    function JS_ontypeChange(v){
+        idtype = v.id;        
+        picktypeid = idtype.replace("idType","idPicktype");
+        if(v.value == 'Sales Representative'){ 
+        <!--     document.getElementById(picktypeid).value= '--None--'; -->
+            document.getElementById(picktypeid).disabled = true;
+        } 
+        else{
+            document.getElementById(picktypeid).disabled = false;
+        }       
+    }
+    function JS_onpricingtypechange(u){
+        pricingtypeid = u.id;         
+        schedulemaxpricingid= pricingtypeid.replace("idpricingtype","idschedulemaxpricing");
+        scheduleminpricingid= pricingtypeid.replace("idpricingtype","idscheduleminpricing");
+        flatpricingid= pricingtypeid.replace("idpricingtype","idflatpricing");       
+        if(u.value == 'Flat'){             
+            document.getElementById(schedulemaxpricingid).value= "";
+            document.getElementById(scheduleminpricingid).value= "";
+            document.getElementById(flatpricingid).disabled = false;
+            document.getElementById(schedulemaxpricingid).disabled = true; 
+            document.getElementById(scheduleminpricingid).disabled = true; 
+        } 
+        else if(u.value == 'Schedule'){             
+            document.getElementById(schedulemaxpricingid).disabled = false;
+            document.getElementById(scheduleminpricingid).disabled = false;
+            document.getElementById(flatpricingid).value= ""; 
+            document.getElementById(flatpricingid).disabled = true; 
+                      
+        }  
+
+            else if(u.value == 'Case by Case/PO-PO') {         
+                document.getElementById(schedulemaxpricingid).disabled = true;
+                document.getElementById(scheduleminpricingid).disabled = true;
+                document.getElementById(flatpricingid).disabled = true;
+                document.getElementById(schedulemaxpricingid).value= "";
+                document.getElementById(scheduleminpricingid).value= "";
+                document.getElementById(flatpricingid).value= "";                
+            }   
+            else {         
+                document.getElementById(schedulemaxpricingid).disabled = false;
+                document.getElementById(scheduleminpricingid).disabled = false;
+                document.getElementById(flatpricingid).disabled = false;
+                document.getElementById(schedulemaxpricingid).value= "";
+                document.getElementById(scheduleminpricingid).value= "";
+                document.getElementById(flatpricingid).value= "";                
+            }                 
+    }  
+    </script>
+    <apex:pageMessages />
+
+
+
+
+    <apex:form id="frm">
+    <apex:actionFunction name="Callsavenotes" action="{!savenotes}" />
+    <apex:actionFunction name="BacktoCLview" action="{!BacktoCLview}" />
+        <apex:pageBlock title="Commercial Line Details" mode="edit" id="pageblock">
+            <apex:pageBlockButtons location="top" >
+                <apex:commandButton value="Back" action="{!backToChApp}"/>
+                 <apex:commandButton value="Edit" action="{!EditCommLine}" rendered="{!AND(NOT(Notestocontract),NOT(Editfieldenable),NOT(CLunderrenew))}"/>
+                 <apex:commandButton value="Save" action="{!Checkstatus}" oncomplete="showmessage();" reRender="frm,javascrp,commlinePBS1,theHiddenInput,commlinePBS2" rendered="{!OR((Notestocontract),(Editfieldenable))}"/>
+            </apex:pageBlockButtons>
+            
+            <apex:pageBlockSection columns="1" id="commlinePBS2" rendered="{!NOT(Editfieldenable)}" > 
+                 
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Status__c}" id="Status"/>
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Relationship_expiry_date__c}"/>
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Tier_1__c}"/> 
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Tier_2__c}"/>
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Tier_3__c}"/>
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Tier_4__c}"/>
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Tier_5__c}"/>
+               <!-- <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Comments_New_acquisition__c}"/> -->
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Type__c}"/>   
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Sales_Manager__c}"/>
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Non_Standrd_Indefnte_Discnt_r_Com__c}" />
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_If_Services_pick_type__c}"/>
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Authorized_Countries_1__c}"/>
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Authorized_Countries_2__c}"/>
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_State_Province_Region__c}"/>
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Industries__c}"/>
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Buyers__c}"/>       
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Pricing__c}"/>
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Pricing_Type__c}"/>
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_If_schedule_Max_pricing__c}"/>
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_If_schedule_Min_pricing__c}"/>
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_If_flat_pricing__c}"/>
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Term__c}"/>
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Current_year_target__c}"/>
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Next_year_target__c}"/>
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Is_this_linked_to_project_oppty__c}"/>
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_If_yes_provide_Opporty_Project_Id__c}"/>       
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Nuclear_use_Add_comment__c}"/>    
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Military_use_Add_comment__c}"/>     
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Inclusions_exclusions_Add_comment__c}"/>  
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Any_Exclusions__c}"/>
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRIf_Sales_Rep_sales_to_US_Government__c}"/>  
+                </apex:pageBlockSection>
+               <apex:pageBlockSection columns="1" rendered="{!AND(NOT(Notestocontract),NOT(Editfieldenable))}">                 
+                    <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_if_Yes_provide_comments_SlaesRep__c}"/>
+                    <apex:outputField value="{!GE_PRM_Commercial_line__c.ERP_Contact__c}"/>
+                </apex:pageBlockSection>
+                
+               <!--<div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Commercial_line__c.Fields.GE_PRM_if_Yes_provide_comments_SlaesRep__c.label}</div>
+                                <div class="field" id="test2"><apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_if_Yes_provide_comments_SlaesRep__c}" style="width:640px"/></div>
+                 </div>  -->             
+                   <apex:pageBlockSection columns="1" rendered="{!Notestocontract}">   
+                   
+                    {!$ObjectType.GE_PRM_Commercial_line__c.Fields.GE_PRM_if_Yes_provide_comments_SlaesRep__c.label} <apex:inputField label="" value="{!GE_PRM_Commercial_line__c.GE_PRM_if_Yes_provide_comments_SlaesRep__c}" style="width:640px"/> 
+                     {!$ObjectType.GE_PRM_Commercial_line__c.Fields.ERP_Contact__c.label} <apex:inputField label="" value="{!GE_PRM_Commercial_line__c.ERP_Contact__c}" style="width:640px"/> 
+                    </apex:pageBlockSection>
+                    
+                    
+                    
+                    <apex:pageBlockSection columns="1" id="commlinePBS1" rendered="{!Editfieldenable}"> 
+                 <apex:inputHidden value="{!inputValue}" id="theHiddenInput"/>
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Status__c}" id="Status"/>
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Relationship_expiry_date__c}"/>
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Tier_1__c}"/> 
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Tier_2__c}"/>
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Tier_3__c}"/>
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Tier_4__c}"/>
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Tier_5__c}"/>  
+               <!-- <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Comments_New_acquisition__c}"/>  -->         
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Sales_Manager__c}"/>               
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Type__c}" id="idType"  onchange="JS_ontypeChange(this)" required="true"/>          
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_If_Services_pick_type__c}" id="idPicktype" />
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Authorized_Countries_1__c}" />
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Authorized_Countries_2__c}" />               
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_State_Province_Region__c}" style="width:640px"/>
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Industries__c}"/>
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Buyers__c}"/>
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Non_Standrd_Indefnte_Discnt_r_Com__c}" required="true"/>               
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Pricing_Type__c}" id="idpricingtype" onchange="JS_onpricingtypechange(this)" />
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_If_schedule_Max_pricing__c}" id="idschedulemaxpricing"/><script>document.getElementById('{!$Component.idschedulemaxpricing}').disabled = {!maxpricing}; </script>
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_If_schedule_Min_pricing__c}" id="idscheduleminpricing"/><script>document.getElementById('{!$Component.idscheduleminpricing}').disabled = {!minpricing}; </script>
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_If_flat_pricing__c}" id="idflatpricing"/><script>document.getElementById('{!$Component.idflatpricing}').disabled = {!flatpricing}; </script>
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Term__c}" required="true"/>
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Current_year_target__c}"/>
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Next_year_target__c}"/>
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Is_this_linked_to_project_oppty__c}"/>
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_If_yes_provide_Opporty_Project_Id__c}"/> 
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Nuclear_use_Add_comment__c}"/>   
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Military_use_Add_comment__c}"/>      
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Inclusions_exclusions_Add_comment__c}"/>     
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Any_Exclusions__c}"/>  
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRIf_Sales_Rep_sales_to_US_Government__c}"/>    
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_if_Yes_provide_comments_SlaesRep__c}" style="width:640px"/> 
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.ERP_Contact__c}"/>
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Channel_Appointment__c}" rendered="false"/>     
+            </apex:pageBlockSection>
+                    
+                    
+                    
+                    
+                    
+                </apex:pageBlock>
+                 <br />  
+               <apex:pageBlock mode="edit" title="Non-Renewal/Termination Details" rendered="{!NOT(OR(GE_PRM_Commercial_line__c.GE_PRM_Status__c == 'New',GE_PRM_Commercial_line__c.GE_PRM_Status__c == 'Renewal'))}">
+                 <apex:pageblocksection columns="1" >
+                 <apex:outputField value="{!GE_PRM_Commercial_line__c.Adverse_country_risk__c}" />
+                 <apex:outputfield value="{!GE_PRM_Commercial_line__c.GE_PRM_Non_Renewal_or_Termination__c}" />
+                 <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Future_market_coverage__c}"/>
+                 <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Proposed_effective_date__c}" label="Proposed effective date of Non-Renewal or Termination?"/>
+                 <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Due_To_Compliance_Issue__c}" label="Non-Renewal or Termination due to Compliance issue ?" />
+                 <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_If_due_to_Compliance_issue_Yes1__c}" label="if Yes, please provide name of Compliance owner and provide rationale below"/>
+                 <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Is_there_contracts_T_C_risk__c}" label="Is there contracts T&C's risk related to ending GE 's relationship with this Partner?" />
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_If_Is_there_contracts_T_C_Yes1__c}" label="if Yes, please provide name of Legal owner, Also reference the contract & action plan in rationale below"/>
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_outstanding_receivables__c}" label="Are there outstanding receivables with this Partner?"/>
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_If_outstanding_receivable_Yes1__c}" label="if Yes, provide the name of the Finance owner, Also provide the amount and action plan in rationale below"/>
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Outstanding_Payments__c}" label="Are there outstanding payments due to this Partner?"/>
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_If_Outstanding_Payments_Yes1__c}" label="if Yes, provide the name of the Finance owner, Also provide the amount and action plan in rationale below"/>
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_any_GE_equipment_to_return__c}" label="Does the Partner have any GE equipment to return ?"/>
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_If_GE_Equipment_to_return_Yes1__c}" label="if Yes, provide the name of the Finance owner, Also provide the amount and action plan in rationale below"/>
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Authorized_to_sell_other__c}" label="Is the Partner authorized to sell other GE product lines?" />
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_If_authorized_to_sell_other_Yes1__c}" label="if Yes, provide the name of Sales owner, Also Provide the comments in rationale below"/>
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.Non_renewal_Termination_Rationale__c}"   />
+                </apex:pageblocksection>
+                
+         </apex:pageBlock>    
+         
+         
+        
+         
+         
+            
+            
+       
+    </apex:form>
+    
+    <apex:pageBlock title="Commercial  Line  History"  rendered="{!NOT(Editfieldenable)}">
+        <apex:pageBlockTable value="{!GE_PRM_Commercial_line__c.Histories}" var="c">
+            <apex:column value="{!c.CreatedByID}"/> 
+            <apex:column value="{!c.CreatedDate}"/>
+            <apex:column value="{!c.field}"/>
+            <apex:column value="{!c.OldValue}"/>
+            <apex:column value="{!c.NewValue}"/>
+        </apex:pageBlockTable>
+    </apex:pageBlock>
+    
+    
+</apex:page>

@@ -1,0 +1,75 @@
+<apex:page standardController="SVMXC__Service_Order__c"  extensions="GE_SS_NPT_Cases_Mobilize"  >
+<apex:form >
+
+    <script>
+    function delRec(idvalue) {
+        var con = window.confirm('Are you sure');
+        if(con) {
+            callfunc(idvalue);
+        }     
+        
+    }
+    </script>
+
+    <apex:actionFunction name="callfunc" action="{!deleteRec}" reRender="pbt">
+    <apex:param name="name1" value="" assignTo="{!idval}"/>
+    </apex:actionFunction>
+   <apex:pageBlock id="pbt">
+       <apex:pageBlockTable value="{!lstNPTCase}" var="NPTCase" >
+            
+          <apex:column headerValue="Action" >
+              <apex:outputlink target="_blank" value="/{!NPTCase.Id}/e" >Edit</apex:outputlink><!-- |&nbsp;-->
+              <!--<apex:commandLink value="Del" onclick="delRec('{!NPTCase.Id}');" rerender="pbt"/>-->
+          </apex:column>
+           <apex:column headerValue="Case Number" Width="10%">
+               <apex:outputlink target="_blank" value="/{!NPTCase.id}" >{!NPTCase.CaseNumber}</apex:outputlink>
+           </apex:column>
+           
+           <apex:column headerValue="Status" >
+               <apex:outputField value="{!NPTCase.Status}" />
+           </apex:column>
+           
+           <apex:column >
+            <apex:facet name="header">Near Miss <br/>Event</apex:facet>
+               <apex:outputfield value="{!NPTCase.GE_NPT_Near_Miss_Event__c}" ></apex:outputfield>
+           </apex:column>
+           
+           <apex:column >
+               <apex:facet name="header">Downtime <br/>(hours)</apex:facet>
+               <apex:outputField value="{!NPTCase.GE_NPT_Downtime_hours__c}" />
+           </apex:column>
+
+            <apex:column >
+            <apex:facet name="header">Primary <br/>Failure Classification</apex:facet>
+               <apex:outputfield value="{!NPTCase.GE_NPT_Primary_Failure_Classification__c}" ></apex:outputfield>
+           </apex:column>
+           
+            <apex:column >
+            <apex:facet name="header">Secondary <br/>Failure Classification</apex:facet>
+               <apex:outputfield value="{!NPTCase.Secondary_Failure_Classification__c}" ></apex:outputfield>
+           </apex:column>
+           
+         <apex:column >
+            <apex:facet name="header">Tertiary <br/>Failure Classification</apex:facet>
+               <apex:outputfield value="{!NPTCase.Tertiary_Failure_Classification__c}" ></apex:outputfield>
+           </apex:column>
+           
+           <apex:column headerValue="Subject" >
+               <apex:outputfield value="{!NPTCase.Subject}" ></apex:outputfield>
+           </apex:column>
+           
+           <apex:column headerValue="Description" >
+               <apex:outputfield value="{!NPTCase.Description}" ></apex:outputfield>
+           </apex:column>
+           
+       </apex:pageBlockTable>
+       <apex:panelGrid columns="2">
+           <!--<apex:commandLink value="Show more"/>-->
+           <apex:outputPanel rendered="{!recordSize}">
+           <apex:outputlink target="_blank" value="/apex/GE_SS_NPT_Cases_Mobilize?id={!Aid}&allRec=true" >Go To List ></apex:outputlink>
+           </apex:outputPanel>
+       </apex:panelGrid>
+   </apex:pageBlock>
+
+</apex:form>
+</apex:page>

@@ -1,0 +1,177 @@
+<apex:page id="Page" controller="GE_OG_Mobilization_Detail">
+   
+<apex:sectionHeader subtitle="O&G Mobilization Portal"/> 
+<a style="float:right;" href="/500/e?retURL=%2F500%2Fo&RecordType=012A0000000oBfj&ent=Case" target="_blank"><b>Open a specific case</b></a>
+
+<a  href="/_ui/core/chatter/groups/GroupProfilePage?g=0F9A0000000DH9g" target="_blank"><b>Ask Support</b></a> <br></br><br></br>
+
+  <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script> 
+  <script type="text/javascript"> 
+var country = [];
+var bounds;
+var geocoder;
+var marker;
+
+
+$(document).ready(function()
+{
+    $("select[id*='countryList']").find("option").each(function () {        
+        country.push([$(this).val(), $(this).text().replace("KOREA, REPUBLIC OF","REPUBLIC OF KOREA").replace("BOLIVIA, PLURINATIONAL STATE OF","PLURINATIONAL STATE OF BOLIVIA")]);
+        //alert(country);
+    });
+    
+  
+  var myOptions = {zoom:2,center: new google.maps.LatLng(38.747012,0.512694)}
+  var map;
+  var geocoder = new google.maps.Geocoder();
+  map = new google.maps.Map(document.getElementById("map"), myOptions);
+  google.maps.event.addListener(map, 'click', function(e) {
+     placeMarker(e.latLng, map);
+     var str = e.latLng.toString() ;
+     var rest = str.split(',');
+     var vrlat = rest[0].substring(1,rest[0].length);
+     var vrlng = rest[1].substring(0,rest[1].length -1 );
+     var latlng = new google.maps.LatLng(vrlat,vrlng );
+     geocoder.geocode({'latLng': latlng}, function(results, status) {
+     if (status == google.maps.GeocoderStatus.OK)
+     {
+       if (results.length > 0 ) 
+       {
+           country = results[(results.length)-1].address_components[0].short_name;
+           
+           //alert(country);
+           jsregionalkeyplayercall();               
+       } 
+       else 
+       {
+         alert('No results found');
+       }
+     } 
+     else 
+     {
+       alert('Geocoder failed due to: ' + status);
+     }
+    });
+  }); 
+initialize();
+var infowindow = new google.maps.InfoWindow({
+      content: data
+    });
+  function getCountry(country, countryTotal, theMap) {
+    //alert(country);
+    geocoder.geocode( { 'address': country }, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+            var marker = new google.maps.Marker({
+                map: theMap,
+                icon: "{!$Resource.beachflag}",
+                animation: google.maps.Animation.DROP,
+                title: ""+country,
+                position: new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng())
+            });
+            //marker.setIcon('https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld='+countryTotal+'|B22222|FFFFFF') ;
+            google.maps.event.addListener(marker, 'click', toggleBounce);
+            google.maps.event.addDomListener(marker, 'click', function () {
+                // Zoom into the bounds of the country that has been clicked on...
+            });
+            
+            bounds.extend(new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng()));
+            theMap.fitBounds(bounds);
+
+        } else if(status === google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
+            setTimeout(function() {
+                getCountry(country, countryTotal, theMap)
+            }, 10);
+        }
+    });
+}
+function toggleBounce() {
+infowindow.open(map,marker);
+  if (marker.getAnimation() != null) {
+    marker.setAnimation(null);
+  } else {
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+  }
+}
+function initialize() {
+    bounds = new google.maps.LatLngBounds();
+    geocoder = new google.maps.Geocoder();
+    var mapOptions = {
+        //scrollwheel: false,
+    }
+    //var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    for (var i = 0; i < country.length; i++) {
+        var countries = country[i];
+        getCountry(countries[1], countries[0], map);
+    }
+}
+
+  function resizeIframe() 
+  {
+     var me = window.name;
+     if (me) 
+     {
+       var iframes = parent.document.getElementsByName(me);
+       if (iframes && iframes.length == 1) 
+       {
+         height = document.body.offsetHeight;
+         iframes[0].style.height = height + "px";
+       }
+     }
+   }
+});
+
+   function placeMarker(position, map) 
+   {
+    'https://maps.googleapis.com/maps/api/geocode/json?latlng='+position+'&sensor=false';
+   }
+  </script>
+  <style>
+  .pagination ul > li > a:hover{
+    background-color: #3b73b9;
+    border-color: #3b73b9;
+    color: white;
+    }
+
+    .pagination ul > .disabled > a:hover{
+    color: #bfc2c5;
+    background-color: transparent;
+    cursor: default;
+    border-color: #e1e2e5;
+    }
+  #map 
+  {
+     font-family: Arial;
+     font-size:12px;
+     line-height:normal !important;
+     height:600px;
+     background:transparent;
+   }
+</style>
+<script type="text/javascript"> 
+function getReport()
+    {
+    //alert(country);
+                window.open('/apex/GE_OG_Mobilization_Detail?countrys='+country,'','height=800,width=1000,resizable=yes,scrollbars=yes,toolbar=yes,menubar=yes,location=yes' );
+     }
+</script>
+<div id="map"></div> 
+
+<apex:form id="frm">
+
+<apex:actionFunction action="{!regionKeyPlayerCall}"  name="jsregionalkeyplayercall" rerender="frm" oncomplete="getReport();" >
+</apex:actionFunction>
+
+
+</apex:form>
+
+<apex:form >
+<apex:selectList value="{!selectedCntryId}" size="1" multiselect="false" id="countryList" style="visibility:hidden;">
+  <apex:selectOptions value="{!ListOfCntrs1}" />
+</apex:selectList>
+</apex:form>
+<apex:image url="{!$Resource.beachflag}"/> denotes data available for that country
+<div id="map" style="width: 968px; height: 750px;"></div>
+
+
+</apex:page>

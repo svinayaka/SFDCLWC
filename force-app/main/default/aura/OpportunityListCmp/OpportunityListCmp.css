@@ -1,0 +1,67 @@
+/*.THIS .slds-tabs_default__nav{
+    background-image: linear-gradient(white, #1797C0);
+    border-radius: 90px;
+} */
+
+
+.THIS .slds-is-active {
+  background-image: linear-gradient(#0767d1, #0535ab) !important;
+  color: white !important;   
+}
+.THIS .slds-tabs_default__item{
+  color: white !important;
+  background-image: linear-gradient(white, #1797C0);
+  font-style: Open Sans;
+  font-size: 12;
+}    
+.THIS .slds-tabs_default__link {
+    color: white !important;
+    /* background-image: linear-gradient(white, #1797C0);   */   
+    font-style: Open Sans;
+    font-size: 12;
+    text-decoration: none;
+}
+.THIS .slds-has-focus{
+  /* text-decoration: none; */
+}
+.THIS .slds-th__action{
+/* background-color: #6DBED7; */
+/* background-image: linear-gradient(#004AFC, #0536AC) !important; */
+background-image: linear-gradient(#3D83F1, #EAEEEE) !important;
+/* border-radius: 10px; */
+font-family: 'Open Sans'!important;
+/* font-size: 18px; */
+color:#FFFFFF;       
+font-style: normal;
+}
+
+.THIS .slds-hyphenate{
+  /* background-image: linear-gradient(#FFFFFF, #FFFFFF) !important; */
+  background-color:linear-gradient(#FFFFFF, #FFFFFF) !important; ;
+  font-family: 'Open Sans' !important;
+  /* font-size: 14px; */
+  color:#000000;
+}
+.THIS .slds-form-element__label {
+  font-style: Open Sans;
+  font-size: 16;
+  font-family: Semibold;
+}
+.THIS .slds-input.slds-combobox__input {
+  border-radius: 35px;
+  font-style: "Open Sans";
+  font-size: 18;
+  font-family: "Regular";
+  color: #000000;
+  text-align: center;
+}
+.THIS .slds-listbox.slds-listbox_vertical {
+  border-radius: 5px;
+}
+.THIS .slds-listbox__item {
+}
+.THIS .slds-button {
+  border-radius: 15px;
+  font-size: 15px;
+  font-family: Semibold;
+}

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>BH_MCS_Unique_SmaxIB_Name_Field</fullName>
+        <field>BH_MCS_Name__c</field>
+        <formula>Name</formula>
+        <name>Unique_SmaxIB_Name_Field</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <rules>
+        <fullName>Check_Uniqueness_Of_NameIBField</fullName>
+        <actions>
+            <name>BH_MCS_Unique_SmaxIB_Name_Field</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>BH_MCS_MCIB__c.Name</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

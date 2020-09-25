@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MUT__c</fullName>
+    <externalId>false</externalId>
+    <label>Motor UT Shaft Rot</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Smooth</fullName>
+                <default>false</default>
+                <label>Smooth</label>
+            </value>
+            <value>
+                <fullName>Stiff</fullName>
+                <default>false</default>
+                <label>Stiff</label>
+            </value>
+            <value>
+                <fullName>Locked</fullName>
+                <default>false</default>
+                <label>Locked</label>
+            </value>
+            <value>
+                <fullName>Twisted</fullName>
+                <default>false</default>
+                <label>Twisted</label>
+            </value>
+            <value>
+                <fullName>Side Play</fullName>
+                <default>false</default>
+                <label>Side Play</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

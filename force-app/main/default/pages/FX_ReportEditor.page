@@ -1,0 +1,49 @@
+<apex:page standardcontroller="FX5__Report_Template__c" extensions="FX5.UtilityGetNamespace" docType="html-5.0" applyHtmlTag="false" applyBodyTag="false" showChat="false"
+
+showHeader="false" showQuickActionVfHeader="false" sidebar="false" standardStylesheets="false">
+
+<html>
+
+<head>
+
+<title>FX - PDF Report Template Editor</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css"/>
+
+<script src="https://cdn.fieldfx.com/{!$Api.Session_ID}/{!namespaceWithoutUnderscores}/pte/build/xmllint.js"></script>
+
+<script type="text/javascript">
+
+var salesforce = {
+
+accessToken: '{!$Api.Session_ID}',
+
+organizationId: '{!$Organization.Id}',
+
+userId: '{!$User.Id}',
+
+resource_path: 'https://cdn.fieldfx.com/{!$Api.Session_ID}/{!namespaceWithoutUnderscores}/pte/build/'
+
+};
+
+var script = document.createElement('script');
+
+script.src = salesforce.resource_path + 'loader.js';
+
+script.async = false;
+
+document.head.appendChild(script);
+
+</script>
+
+</head>
+
+<body>
+
+<div id="fx"></div>
+
+</body>
+
+</html>
+
+</apex:page>

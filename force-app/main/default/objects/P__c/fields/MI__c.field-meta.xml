@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MI__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <label>Motor CT Serial #</label>
+    <referenceTo>SVMXC__Installed_Product__c</referenceTo>
+    <relationshipLabel>Pulls (Motor CT Serial #)</relationshipLabel>
+    <relationshipName>Pulls_Motor_CT</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

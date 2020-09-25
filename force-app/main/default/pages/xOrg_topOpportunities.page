@@ -1,0 +1,33 @@
+<!--Modified by Rekha to remove hard coded values with Custom Labels-->
+<apex:page standardController="Account">
+
+<html>
+    <head>
+        <script type="text/javascript">
+        var resourceURL = '{!URLFOR($Resource.xOrg_Resources)}/';
+        </script>
+        <script type="text/javascript" src="{!URLFOR($Resource.xOrg_Resources,'cross-org-collaboration.js')}"></script>
+    </head>
+    <body>
+        <div id="table-wrapper">
+            <div id="table-container"></div>
+        </div>
+        <script type="text/javascript">
+                document.ready = function() {
+                    xOrg.initialize({
+                        <!--baseURLForInstance: 'https://geog--ogdev.cs9.my.salesforce.com',-->
+                        baseURLForInstance: '{!$Label.Xorg_BaseInstanceUrl}',
+                        page:               'xOrg_topOpportunities',
+                        SSO:                {!$User.GE_HQ_SSO_ID__c},
+                        <!--orgID:              '00DA0000000QC05',-->
+                        orgID:              '{!$Label.Xorg_OrgID}',
+                        accID:              '{!account.id}',
+                        sessionID:          '{!GETSESSIONID()}',
+                        rows:               3
+                    });
+
+                };
+        </script>
+    </body>
+</html> 
+</apex:page>

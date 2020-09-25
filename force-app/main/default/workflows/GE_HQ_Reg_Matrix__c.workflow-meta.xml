@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>GE_HQ_Update_Ext_IDRM</fullName>
+        <description>Updates the field &apos;External ID&apos; field of &apos;Matrix Object&apos; object after creation of record.</description>
+        <field>GE_HQ_External_ID__c</field>
+        <formula>GE_HQ_External_ID_Fm__c</formula>
+        <name>GE_HQ_Update_Ext_IDRM</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <rules>
+        <fullName>GE_HQ_Update_External_IDONRM</fullName>
+        <actions>
+            <name>GE_HQ_Update_Ext_IDRM</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>GE_HQ_Reg_Matrix__c.GE_HQ_Status__c</field>
+            <operation>equals</operation>
+            <value>Active</value>
+        </criteriaItems>
+        <description>Updates the field &apos;External ID&apos; field of &apos;Region Matrix&apos; object after updating any record with the formula filed &apos;External ID fm&apos; value to avoid duplicity</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

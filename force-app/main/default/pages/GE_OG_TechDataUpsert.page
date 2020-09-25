@@ -1,0 +1,768 @@
+<apex:page controller="GE_OG_TechDataUpsertContrl" sidebar="false" docType="html-5.0">
+   <apex:form >
+    <apex:outputPanel id="idop1">
+            <apex:pageMessages id="msg1"/>
+        </apex:outputPanel>
+        <apex:commandButton value="Back" action="{!goback}"/> 
+<apex:pageBlock id="Expertise" rendered="{!showExpertise}">
+    <apex:pageBlock >
+  <h1><U>Technician/Equipment Details:</U></h1><BR/><BR/>
+    
+  <table border ='0'>
+      <tr>
+          <td><B><apex:outputText value="Technician Name:"/></B></td>
+          <td><apex:outputText value="{!technician.Name}"/></td>
+          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>          
+          <td><B><apex:outputText value="Service Team:"/></B></td>
+          <td><apex:outputText value="{!technician.SVMXC__Service_Group__r.Name}"/></td>
+      </tr>
+  </table>
+  <!-- <table border ='0'>
+      <tr>
+     
+         <td><b>Skill Category </b></td>
+          <td><apex:selectList id="ListCatogery" value="{!category}" size="1"> <!-- onchange="rerenderSkillGroup(this.value)" -->
+         <!--       <apex:selectOptions value="{!categorylist}"></apex:selectOptions>
+                <apex:actionSupport event="onchange" action="{!getgroupList}" rerender="ListGroup"/>
+                </apex:selectList>
+          </td>
+         
+          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>          
+          <td><b>Skill Group </b></td>
+          <td><apex:selectList id="ListGroup" value="{!skillGroup}" size="1">
+                <apex:selectOptions value="{!skillGroupOptions}"></apex:selectOptions>
+                </apex:selectList>
+          </td>
+           <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>    
+           <td> <apex:commandButton value="GO" action="{!Go}" reRender="pbs1,pbs2,pbs2,pbs3,idop1,editexper"/></td>
+      </tr>
+  </table> -->
+  
+  <apex:actionStatus id="myStatus" startText="Processing..." stopText="" />
+  
+  </apex:pageBlock>
+   <div align="center">
+          <apex:commandButton value="Edit Expertise" action="{!editExpertMethod}" disabled="{!disablebButton}" status="myStatus" /> 
+          <apex:commandButton value="Add Expertise" action="{!showRecords}" disabled="{!disablebButton}" />                
+    </div>
+  <apex:pageBlock id="viewExprtPB" rendered="{!expertDisplayBlock}">
+  
+  <apex:pageBlockSection id="pbs1" title="Expertise" showheader="true" collapsible="True" columns="1" > 
+ <apex:pageBlockTable id="editexper" value="{!lstExpertiseBeans}" var="expertise"  >
+  
+   
+   <apex:column headerValue="Skill Category" value="{!expertise.skillCategory}"/>   
+   <apex:column headerValue="Skill Group" value="{!expertise.skillGroup}"/> 
+   <apex:column headerValue="Skill" value="{!expertise.skill}"/> 
+   <apex:column headerValue="Skill Description" value="{!expertise.skillDescription}"/> 
+   <apex:column headerValue="Skill Level" value="{!expertise.skillLevel}"/>
+   <apex:column >
+   <apex:facet name="header">
+            Current<BR/>Target Level
+        </apex:facet> 
+    <apex:outputText value="{!expertise.currentTargetLevel}"/> 
+    </apex:column>
+   <apex:column >
+   <apex:facet name="header">
+            Next<BR/>Target Level
+        </apex:facet> 
+    <apex:outputText value="{!expertise.nextTargetLevel}"/> 
+    </apex:column>    
+   <apex:column headerValue="Expertise Level" value="{!expertise.expertiseLevel}"/>
+    <apex:column headerValue="Primary Skill"> 
+    <apex:inputCheckbox value="{!expertise.primarySkill}" disabled="true" />
+    </apex:column> 
+   <apex:column >
+       <apex:facet name="header">
+            Work Orders<br/>Completed
+        </apex:facet> 
+    <apex:outputText value="{!expertise.workOrdersCompleted}"/> 
+    </apex:column>
+   <apex:column >
+       <apex:facet name="header">
+            Last Completed <br/>Work Order
+        </apex:facet> 
+    <apex:outputText value="{!expertise.lastCompletedWorkOrder}"/>
+    </apex:column>
+    <apex:column headerValue="Sign Off" >
+    <apex:inputCheckbox Value="{!expertise.signOff}" id="signOff" disabled="true" />
+   </apex:column>  
+  </apex:pageBlockTable>
+  </apex:pageBlockSection>       
+  </apex:PageBlock>
+  
+  <apex:outputPanel id="idpan">    
+  <apex:pageBlock id="exprt" rendered="{!editExpertBlock}" >
+  
+    <div align="center">
+          <apex:commandButton value="Save Edits" action="{!saveExpertise}" /> 
+          <apex:commandButton value="Cancel" action="{!Cancelexpt}"/>                
+    </div>
+     
+  <apex:pageBlockSection id="pbs1" title="Expertise" showheader="true" collapsible="True" columns="1" > 
+ <apex:pageBlockTable id="editexper" value="{!lstExpertiseBeans}" var="expertise"  >
+  <apex:column ><br/>
+       <!--<apex:facet name="header"><apex:inputCheckbox onClick="checkAll(this);"/></apex:facet> -->
+       <Apex:inputCheckbox Value="{!expertise.isSelectExprt}" id="checkedone" />
+  </apex:column>
+   
+   <apex:column headerValue="Skill Category" value="{!expertise.skillCategory}"/>   
+   <apex:column headerValue="Skill Group" value="{!expertise.skillGroup}"/> 
+   <apex:column headerValue="Skill" value="{!expertise.skill}"/> 
+   <apex:column headerValue="Skill Description" value="{!expertise.skillDescription}"/> 
+   <apex:column headerValue="Skill Level" value="{!expertise.skillLevel}"/>
+   <apex:column >
+   <apex:facet name="header">
+            Current<BR/>Target Level
+        </apex:facet> 
+    <apex:outputText value="{!expertise.currentTargetLevel}"/> 
+    </apex:column>
+   <apex:column >
+   <apex:facet name="header">
+            Next<BR/>Target Level
+        </apex:facet> 
+    <apex:outputText value="{!expertise.nextTargetLevel}"/> 
+    </apex:column>    
+   <apex:column headerValue="Expertise Level">          
+     <apex:selectList id="Listlevel" value="{!expertise.expertiseLevel}" size="1">
+            <apex:selectOptions value="{!Level}"></apex:selectOptions>       
+        </apex:selectList>
+    </apex:column> 
+    <apex:column headerValue="Primary Skill">
+        <apex:inputCheckbox value="{!expertise.primarySkill}" />
+    </apex:column>             
+   <apex:column >
+       <apex:facet name="header">
+            Work Orders<br/>Completed
+        </apex:facet> 
+    <apex:outputText value="{!expertise.workOrdersCompleted}"/> 
+    </apex:column>
+   <apex:column >
+       <apex:facet name="header">
+            Last Completed <br/>Work Order
+        </apex:facet> 
+    <apex:outputText value="{!expertise.lastCompletedWorkOrder}"/>
+    </apex:column>    
+  <apex:column headerValue="Sign Off"> 
+       <apex:inputCheckbox Value="{!expertise.signOff}" id="signOff" disabled="true" />
+   </apex:column>
+   
+  </apex:pageBlockTable>
+     </apex:pageBlockSection>       
+  </apex:PageBlock>
+  </apex:OutputPanel>
+  
+  <apex:PageBlock id="PBSkills" rendered="{!showEditpanel}" >
+   <div align="center">
+        <apex:commandButton style="float:centre;" value="Save Expertise" action="{!addExpertise}" />
+         <apex:commandButton value="Cancel" action="{!Cancelexpt}" status="myStatus"  />
+   </div> 
+   <table border ='0'>
+      <tr>
+     
+         <td><b>Skill Category </b></td>
+          <td><apex:selectList id="ListCatogery" value="{!category}" size="1"> <!-- onchange="rerenderSkillGroup(this.value)" -->
+                <apex:selectOptions value="{!categorylist}"></apex:selectOptions>
+                <apex:actionSupport event="onchange" action="{!getgroupList}" rerender="ListGroup"/>
+                </apex:selectList>
+          </td>
+         
+          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>          
+          <td><b>Skill Group </b></td>
+          <td><apex:selectList id="ListGroup" value="{!skillGroup}" size="1">
+                <apex:selectOptions value="{!skillGroupOptions}"></apex:selectOptions>
+                </apex:selectList>
+          </td>
+           <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>    
+           <td> <apex:commandButton value="GO" action="{!Go}" reRender="pbs1,pbs2,pbs2,pbs3,idop1,editexper"/></td>
+      </tr>
+  </table>
+  
+  <apex:pageBlockSection id="pbs3" title="Skills" showheader="true" collapsible="True" columns="1">  
+                    <apex:pageBlocktable id="pbTable3" value="{!skillwrprList}" var="a" columnswidth="50px,50px" cellpadding="4" border="3" rendered="{!(skillLst.size != 0)}">
+                        <apex:column style="width:5%"><br/>
+                           <!-- <apex:facet name="header"><apex:inputCheckbox onClick="checkAll(this);"/></apex:facet> -->
+                            <apex:inputCheckbox Value="{!a.isSelectSkill}" id="checkedone" /> 
+                        </apex:column>
+                        
+                        <apex:column style="width:10%">
+                            <apex:facet name="header">Skill Id</apex:facet>
+                            {!a.objSkill.GE_OG_DS_FSCC_EX_ID__c}
+                        </apex:column>
+                        
+                        <apex:column style="width:20%">
+                            <apex:facet name="header">Skill Name</apex:facet>
+                            <apex:outputLink value="/{!a.objSkill.id}" target="_blank">{!a.objSkill.Name}
+                            </apex:outputLink>
+                        </apex:column>
+                        
+                        <apex:column style="width:30%">
+                            <apex:facet name="header">Skill Description</apex:facet>
+                            {!a.objSkill.SVMXC__Description__c}
+                        </apex:column>
+
+
+                        <apex:column style="width:20%">
+                            <apex:facet name="header">Skill Category</apex:facet>
+                            {!a.objSkill.GE_DRL_Skill_Category__c}
+                        </apex:column>
+                        
+                        <apex:column style="width:20%">
+                            <apex:facet name="header">Skill Group</apex:facet>
+                            {!a.objSkill.GE_OG_DS_Product_Group__c}
+                        </apex:column>
+                        
+                        
+                    </apex:pageBlocktable>
+                </apex:pageBlockSection>
+  </apex:pageBlock>
+  
+  </apex:PageBlock>
+  
+  <apex:pageBlock id="courseAsgn" rendered="{!showCourses}">
+  
+  
+  <div align="center">
+      <apex:commandButton value="Edit Course Assignments" action="{!editCourseMethod}" disabled="{!disablebButton}"/>
+      <apex:commandButton value="Add Course" action="{!ShowCourseMethod}" disabled="{!disablebButton}" rendered="{!OR($Profile.Name=='GE_SS Field Service Engineer/Technician',$Profile.Name=='GE_PC_Super Technician',$Profile.Name=='GE_AL_FS Technician')}"/> 
+      
+  </div> 
+  
+   <!-- <apex:pageBlock id="CPB2" rendered="{!ShowCourseBlock}">
+  
+  <div align="center">
+      <apex:commandButton value="Save Course" action="{!addCourse}"  />
+      <apex:commandButton value="Cancel" action="{!cancelCour}" reRender="msg1,Pb1"/>
+      
+      </div>
+      <apex:pageBlockSection >
+      <apex:pageblockSectionItem >
+      <apex:outputLabel value="Course Source ">
+      <apex:inputText value="{!courseCode}" /></apex:outputLabel>
+      </apex:pageblockSectionItem>
+      
+      <apex:pageblockSectionItem >
+      <apex:outputLabel value="Course Code ">
+      <apex:inputText value="{!courseCode}" /></apex:outputLabel>
+      </apex:pageblockSectionItem>
+      
+      <apex:pageBlockSectionItem >   
+    <apex:outputLabel value="Course Name ">      
+      <apex:selectList id="ListcourName" value="{!courseName}" multiselect="false" size="1">
+            <apex:selectOptions value="{!CourName}"></apex:selectOptions>
+    </apex:selectList>
+    </apex:outputLabel>
+    </apex:pageBlockSectionItem>   
+     <apex:pageblockSectionItem >
+    <apex:outputLabel value="Course Status ">      
+      <apex:selectList id="ListcourStatus" value="{!courseStatus}" multiselect="false" size="1">
+            <apex:selectOptions value="{!CourStatus}"></apex:selectOptions>
+    </apex:selectList>
+    </apex:outputLabel>
+    </apex:pageBlockSectionItem> 
+      
+    <apex:pageBlockSectionItem >   
+    <apex:outputLabel value="Course Category ">      
+      <apex:selectList id="ListcourCategory" value="{!courseCategory}" multiselect="true">
+            <apex:selectOptions value="{!CourCategory}"></apex:selectOptions>
+    </apex:selectList>
+    </apex:outputLabel>
+    </apex:pageBlockSectionItem>
+    
+    <apex:pageBlockSectionItem >   
+    <apex:outputLabel value="Course Criticality ">      
+      <apex:selectList id="ListcourCriticality" value="{!courseCriticality}" multiselect="false" size="1">
+            <apex:selectOptions value="{!CourCriticality}"></apex:selectOptions>
+    </apex:selectList>
+    </apex:outputLabel>
+    </apex:pageBlockSectionItem>    
+   
+    
+      <apex:pageblockSectionItem >      
+      <apex:outputLabel value="Attended Date ">
+      <apex:input type="date" value="{!attendedDate}" /></apex:outputLabel>
+      </apex:pageblockSectionItem>
+      
+      <apex:pageblockSectionItem >
+      <apex:outputLabel value="Passed Date ">
+      <apex:input type="date" value="{!passedDate}" /></apex:outputLabel>
+      </apex:pageblockSectionItem>
+      
+      <apex:pageblockSectionItem >      
+    <apex:outputLabel value="Target Level ">      
+      <apex:selectList id="Listcourlevel" value="{!courseTargetLevel}" multiselect="false" size="1">
+            <apex:selectOptions value="{!CourTargetLevel}"></apex:selectOptions>
+    </apex:selectList>
+    </apex:outputLabel>
+       </apex:pageBlockSectionItem>       
+   
+   </apex:PageBlockSection>
+   </apex:PageBlock> -->
+   <apex:pageBlock id="viewCoursePB1" rendered="{!courseDisplayBlock}">
+  <h><b>Course Assignments</b></h>
+  
+  <apex:pageBlockTable id="ViewPb" value="{!lstCourseAssignmentBeans}" var="courseAsgn" >
+  
+   <apex:column headerValue="Course Code" Value="{!courseAsgn.courseCode}" style="width:10%"/>
+   <apex:column headerValue="Course Name" value="{!courseAsgn.courseNameAll}" rendered="{!OR($Profile.Name=='GE_SS Field Service Engineer/Technician',$Profile.Name=='GE_PC_Super Technician',$Profile.Name=='GE_AL_FS Technician')}" /> 
+   <apex:column headerValue="Course Name" Value="{!courseAsgn.courseName}" rendered="{!$Profile.Name=='GE_DS_FS Technician'}"/> 
+   <apex:column headerValue="Course Category" Value="{!courseAsgn.courseCategory}"/> 
+   <apex:column headerValue="Course Source" value="{!courseAsgn.courseSource}"/> 
+   <apex:column headerValue="Criticality" value="{!courseAsgn.criticality}"/> 
+   <apex:column headerValue="Course Status" value="{!courseAsgn.courseStatus}"/>  
+   <apex:column headerValue="Current Level" value="{!courseAsgn.currentLevel}"/>  
+   <apex:column headerValue="Target Level" value="{!courseAsgn.targetLevel}" />  
+   <apex:column headerValue="Score" value="{!courseAsgn.score}"/>
+   <apex:column headerValue="Training Path" value="{!courseAsgn.trainingPath}"/>    
+   <apex:column headerValue="Attended Date" value=" {!courseAsgn.attendedDate}" />      
+   <apex:column headerValue="Passed Date" value=" {!courseAsgn.passedDate}" /> 
+   <apex:column >
+       <apex:facet name="header">Course<BR/>Expiry </apex:facet>
+    <apex:outputText escape="false" Value="{!courseAsgn.courseExpiry}"/>
+   </apex:column>   
+   
+    </apex:pageBlockTable>
+    </apex:pageBlock>
+
+  <apex:pageBlock id="editCoursePB1" rendered="{!editCourseBlock}"> 
+  <div align="center">
+      <apex:commandButton value="Save Edits" action="{!saveCourse}" />
+       <apex:commandButton value="Cancel" action="{!cancelCour}"/>
+  </div>  
+  <apex:pageBlockTable id="Pb1" value="{!lstCourseAssignmentBeans}" var="courseAsgn" >
+  
+   <apex:column ><br/>
+      <!-- <apex:facet name="header"><apex:inputCheckbox onClick="checkAll(this);"/></apex:facet> -->
+       <Apex:inputCheckbox Value="{!courseAsgn.isSelectCourse}" id="checkedone" />
+  </apex:column> 
+   <apex:column headerValue="Course Code" Value="{!courseAsgn.courseCode}" style="width:10%"/>   
+   <apex:column headerValue="Course Name" value="{!courseAsgn.courseNameAll}" rendered="{!OR($Profile.Name=='GE_SS Field Service Engineer/Technician',$Profile.Name=='GE_PC_Super Technician',$Profile.Name=='GE_AL_FS Technician')}" /> 
+   <apex:column headerValue="Course Name" Value="{!courseAsgn.courseName}" rendered="{!$Profile.Name=='GE_DS_FS Technician'}"/> 
+   <apex:column headerValue="Course Category" Value="{!courseAsgn.courseCategory}"/> 
+   <apex:column headerValue="Course Source" value="{!courseAsgn.courseSource}"/> 
+   <apex:column headerValue="Criticality" value="{!courseAsgn.criticality}"/> 
+   <apex:column headerValue="Course Status" >
+   <apex:selectList id="ListcourStatus" value="{!courseAsgn.courseStatus}" multiselect="false" size="1">
+            <apex:selectOptions value="{!CourStatus}"></apex:selectOptions>
+    </apex:selectList>
+    </apex:column> 
+   <apex:column headerValue="Current Level" value="{!courseAsgn.currentLevel}">
+   <!--<apex:selectList id="Listcurrentlevel" value="{!courseAsgn.currentLevel}" multiselect="false" size="1">
+            <apex:selectOptions value="{!CourCurrentLevl}"></apex:selectOptions>
+    </apex:selectList> -->
+    </apex:column>  
+   <apex:column headerValue="Target Level" value="{!courseAsgn.targetLevel}" >
+   <!-- <apex:selectList id="Listcourlevel" value="{!courseAsgn.targetLevel}" multiselect="false" size="1">
+            <apex:selectOptions value="{!CourTargetLevel}"></apex:selectOptions>
+    </apex:selectList> -->
+    </apex:column> 
+    <apex:column headerValue="Score">
+    <apex:input type="number" value="{!courseAsgn.score}"/>
+    </apex:column>
+   <apex:column headerValue="Training Path" value="{!courseAsgn.trainingPath}">
+ <!--  <apex:selectList id="Listpath" value="{!courseAsgn.trainingPath}" multiselect="false" size="1">
+            <apex:selectOptions value="{!CourTrainingPath}"></apex:selectOptions>
+    </apex:selectList> -->
+    </apex:column>      
+    
+     <apex:column headerValue="Attended Date" >    
+    <apex:input type="date" value="{!courseAsgn.attendedDate}" /> 
+    </apex:column>
+    
+   <apex:column headerValue="Passed Date" >
+   <apex:input type="date" value="{!courseAsgn.passedDate}" />  
+   </apex:column> 
+   <apex:column >
+       <apex:facet name="header">Course<BR/>Expiry </apex:facet>
+    <apex:outputText escape="false" Value="{!courseAsgn.courseExpiry}"/>
+   </apex:column>  
+      </apex:pageBlockTable>
+    </apex:pageBlock>
+
+
+  <apex:pageBlock id="CPB2" rendered="{!ShowCourseBlock}">
+  
+  <h><b>Courses</b></h>
+  <div align="center">  
+  <apex:commandButton value="Save Course" action="{!addCourse}"/>
+  <apex:commandButton value="Cancel" action="{!cancelCour}"/>
+  </div>
+   <table border ='0'>
+      <tr>
+     
+         <td><b>Course Name </b></td>
+          <td><apex:input type="text" value="{!courseSearch}"/>
+          </td>         
+          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>   
+          
+           <td> <apex:commandButton value="Search" action="{!courseSearch}" /></td>
+      </tr>
+  </table>
+  <apex:pageBlockTable id="Pb2" value="{!cwrprList}" var="course" rendered="{!ShowCourseBlock}" >
+  
+   <apex:column ><br/>
+      <!-- <apex:facet name="header"><apex:inputCheckbox onClick="checkAll(this);"/></apex:facet> -->
+       <Apex:inputCheckbox Value="{!course.isSelectCour}" id="checkedone" />
+  </apex:column>
+   <apex:column headerValue="Course Code" Value="{!course.objCourse.GE_OG_SS_Course_ID__c}" style="width:10%"/>   
+   <apex:column headerValue="Course Name" >
+   <apex:outputLink value="/{!course.objCourse.id}" target="_blank">{!course.objCourse.Name}</apex:outputLink>
+   </apex:column>
+   <apex:column headerValue="Course Category" Value="{!course.objCourse.GE_OG_SS_Course_Category__c}"/> 
+   <apex:column headerValue="Course Source" value="{!course.objCourse.GE_OG_SS_Course_Source__c}"/> 
+   <apex:column headerValue="Renewal Freqency" value="{!course.objCourse.Renewal_Frequency__c}"/>
+   
+      </apex:pageBlockTable>
+    </apex:pageBlock>
+  </apex:PageBlock>
+ 
+    <apex:PageBlock id="Certification" rendered="{!showCertification}" >
+<div align="center">
+      <apex:commandButton value="Edit Certification" action="{!editCertsMethod}" disabled="{!disablebButton}" />
+       <apex:commandButton value="Add Certification" action="{!ShowBlockMethod}" disabled="{!disablebButton}"  rendered="{!OR($Profile.Name=='GE_SS Field Service Engineer/Technician',$Profile.Name=='GE_PC_Super Technician',$Profile.Name=='GE_AL_FS Technician')}" />
+      </div>
+      
+      <apex:OutputPanel id="Panel1">
+      <apex:pageBlock id="certPB" rendered="{!ShowpageBlock}">
+      <div align="center">
+      <apex:commandButton value="Save Certification" action="{!addCerts}"  />
+      <apex:commandButton value="Cancel" action="{!cancelCerts}" />
+      </div>
+       
+      <apex:pageBlockSection >  
+      
+      <apex:pageBlockSectionItem >  
+      <apex:outputLabel value="Category ">             
+      <apex:selectList id="certCateg" value="{!certCategory}" size="1" >
+            <apex:selectOptions value="{!Certscategory}"/>
+           <apex:actionSupport event="onchange" action="{!getCertsName}" rerender="ListcertName"/>
+    </apex:selectList></apex:outputLabel>
+    </apex:pageBlockSectionItem>
+     <apex:pageblockSectionItem >
+      <apex:outputLabel value="Aquired Date ">
+      <apex:input type="date" value="{!aquiredDate}"/></apex:outputLabel>
+      </apex:pageblockSectionItem>
+    <!--<apex:pageblockSectionItem >
+      <apex:outputLabel value="Legacy Id ">
+      <apex:inputText value="{!legacyId}" /></apex:outputLabel>
+      </apex:pageblockSectionItem>     -->    
+      
+       <apex:pageBlockSectionItem >   
+    <apex:outputLabel value="Certification Name ">      
+      <apex:selectList id="ListcertName" value="{!certName}" size="1">
+            <apex:selectOptions value="{!certNamesList}"></apex:selectOptions>
+    </apex:selectList>
+    </apex:outputLabel>
+    </apex:pageBlockSectionItem>
+       
+    <apex:pageblockSectionItem >
+      <apex:outputLabel value="Expiry Date ">
+      <apex:input type="date" value="{!expiryDate}" /></apex:outputLabel>
+      </apex:pageblockSectionItem>
+      
+    <apex:pageBlockSectionItem >   
+    <apex:outputLabel value="Certificate Type ">      
+      <apex:selectList id="certStatus" value="{!certType}" size="1">
+            <apex:selectOptions value="{!certTypeList}"></apex:selectOptions>
+    </apex:selectList>
+    </apex:outputLabel>
+    </apex:pageBlockSectionItem>    
+    
+      <apex:pageblockSectionItem >
+      <apex:outputLabel value="Target Date ">
+      <apex:input type="date" value="{!TargetDate}"/></apex:outputLabel>
+      </apex:pageblockSectionItem>
+       
+    <apex:pageBlockSectionItem >   
+    <apex:outputLabel value="Status ">      
+      <apex:selectList id="certStatus" value="{!certStatus}" size="1">
+            <apex:selectOptions value="{!certStatusList}"></apex:selectOptions>
+    </apex:selectList>
+    </apex:outputLabel>
+    </apex:pageBlockSectionItem>   
+     
+      
+      <apex:pageblockSectionItem >
+      <apex:outputLabel value="Additional Information ">
+      <apex:inputTextarea value="{!additionalInfo}" /></apex:outputLabel>
+      </apex:pageblockSectionItem>
+      
+      </apex:pageBlockSection>      
+      </apex:pageBlock>
+      </apex:OutputPanel>
+     <apex:pageBlock id="viewCertsPB" rendered="{!certsDisplayBlock}" >
+   
+    <h><b>Certifications</b></h>
+    
+      <apex:pageBlockTable id="Certlist" value="{!lstCertificationBeans}" var="certi" >      
+       <apex:column headerValue="Certification Name" Value="{!certi.certificationName}"/> 
+       <apex:column headerValue="Category" Value="{!certi.category}"/>
+       <apex:column headerValue="Certificate Type" value="{!certi.certificateType}"/>
+       <apex:column headerValue="Status" value="{!certi.status}"/>
+       <apex:column headerValue="Target Date" value=" {!certi.targetDate}"/> 
+       <apex:column headerValue="Acquired Date" value=" {!certi.acquiredDate}"/> 
+       <apex:column headerValue="Expiry Date" value=" {!certi.expiryDate }"/>  
+       <apex:column headerValue="Additional Information" Value="{!certi.additionalInfo}"/>      
+      </apex:pageBlockTable>        
+       
+      </apex:pageBlock>  
+    <apex:pageBlock id="editCertsPB" rendered="{!editCertsBlock}" >
+    <div align="center">
+       <apex:commandButton value="Save Edits" action="{!updateCerts}"/>
+       <apex:commandButton value="Cancel" action="{!cancelCerts}" />
+      </div>
+      <apex:pageBlockTable id="Certlist" value="{!lstCertificationBeans}" var="certi" >
+       
+      <apex:column ><br/>
+      <!-- <apex:facet name="header"><apex:inputCheckbox onClick="checkAll(this);"/></apex:facet> -->
+       <Apex:inputCheckbox Value="{!certi.isSelectCerts}" id="checkedone" />
+      </apex:column>
+       <apex:column headerValue="Certification Name" Value="{!certi.certificationName}"/> 
+       <apex:column headerValue="Category" Value="{!certi.category}"/>
+       <apex:column headerValue="Certificate Type">
+        <apex:selectList id="certtype" value="{!certi.certificateType}" size="1">
+            <apex:selectOptions value="{!certTypeList}"></apex:selectOptions>
+        </apex:selectList>
+        </apex:column>
+       <apex:column headerValue="Status" >
+           <apex:selectList id="certStatus" value="{!certi.status}" size="1">
+            <apex:selectOptions value="{!certStatusList}"></apex:selectOptions>
+            </apex:selectList>
+       </apex:column> 
+       <apex:column headerValue="Target Date">
+       <apex:input type="date" value="{!certi.targetDate}"/> 
+       </apex:column>
+       <apex:column headerValue="Acquired Date">
+       <apex:input type="date" value="{!certi.acquiredDate}"/> 
+       </apex:column>
+       <apex:column headerValue="Expiry Date">
+       <apex:input type="date" value="{!certi.expiryDate }"/>  
+       </apex:column>
+       <apex:column >
+       <apex:facet name="header">
+                Additional<BR/>Information
+       </apex:facet>
+       <apex:outputText Value="{!certi.additionalInfo}"/>
+       </apex:column>
+      <!-- <apex:column headerValue="Legacy Id" value=" {!certi.legacyId}"/>  -->
+      </apex:pageBlockTable>        
+       
+      </apex:pageBlock>  
+      </apex:PageBlock>
+      
+   <apex:PageBlock id="Visa" rendered="{!showVisa}" >
+      <div align="center">
+      <apex:commandButton value="Edit Visa" action="{!editVisaMethod}" disabled="{!disablebButton}" />
+      <apex:commandButton value="Add Visa" action="{!ShowVisaMethod}" disabled="{!disablebButton}" />
+  </div>
+  <apex:PageBlock rendered="{!ShowVisaBlock}">
+  <div align="center"> 
+  
+      <apex:commandButton value="Save Visa" action="{!addVisa}" />
+      <apex:commandButton value="Cancel" action="{!cancelVisa}" />
+      </div>
+      
+      <apex:pageblockSection >
+      <apex:pageblockSectionItem >
+      <apex:outputLabel value="Passport ">   
+      <apex:selectList value="{!passportA}" size="1">
+            <apex:selectOptions value="{!Passports}"></apex:selectOptions>
+    </apex:selectList>
+    </apex:outputLabel>
+    </apex:pageblockSectionItem>
+    <apex:pageBlockSectionItem >
+  <apex:outputLabel value="Visa Country ">   
+      <apex:selectList value="{!visaCountryA}" size="1">
+            <apex:selectOptions value="{!Visacountry}"></apex:selectOptions>
+    </apex:selectList>
+    </apex:outputLabel>
+    </apex:pageBlockSectionItem>
+     <apex:pageBlockSectionItem >
+    <apex:outputLabel value="Visa For ">   
+      <apex:selectList value="{!visaforA}" size="1">
+            <apex:selectOptions value="{!Visafor}"></apex:selectOptions>
+    </apex:selectList>
+    </apex:outputLabel>   
+   </apex:pageBlockSectionItem>
+   
+    <apex:pageBlockSectionItem >
+    <apex:outputLabel value="Visa Issue Date ">
+    <apex:input type="date" value="{!issueDateA}"/>
+    </apex:outputLabel>
+    </apex:pageBlockSectionItem> 
+    
+    <apex:pageBlockSectionItem >
+    <apex:outputLabel value="Visa Status ">   
+      <apex:selectList value="{!visaStatusA}" size="1">
+            <apex:selectOptions value="{!VisaStatus}"></apex:selectOptions>
+    </apex:selectList>
+    </apex:outputLabel>   
+   </apex:pageBlockSectionItem>
+     <apex:pageBlockSectionItem >
+    <apex:outputLabel value="Visa Expiry Date ">
+    <apex:input type="date" value="{!expiryDateA}"/>
+    </apex:outputLabel>
+    </apex:pageBlockSectionItem>
+    </apex:PageblockSection>
+    
+  </apex:PageBlock>
+  <apex:pageBlock id="visaViewPB" rendered="{!visaDisplayBlock}" >
+  <h2><b><u>Visas:</U></b></h2>
+  
+  <apex:pageBlockTable Id="VisaList" value="{!lstVisaBeans}" var="visa" >     
+
+    <apex:column headerValue="Passport" Value="{!visa.passport}"/>
+   <apex:column headerValue="Passport Expiry">
+   <apex:outputText escape="false"  Value="{!visa.passportExpiry}"/> </apex:column>
+    <apex:column headerValue="Visa Status" value="{!visa.visaStatus}" />    
+   <apex:column headerValue="Visa Expiry Date"  value=" {!visa.visaExpiryDate}"/>   
+   <apex:column headerValue="Visa Country" value="{!visa.visaCountry}"/>  
+   <apex:column headerValue="Visa For" value="{!visa.visaFor}"/>  
+    <apex:column headerValue="Visa Expiry">
+    <apex:outputText escape="false" Value="{!visa.visaExpiry}"/>
+    </apex:column>   
+  </apex:pageBlockTable>  
+  </apex:pageBlock>
+  
+  <apex:pageBlock id="editvisaPB" rendered="{!editVisaBlock}">
+   <div align="center">
+      <apex:commandButton value="Save Edits" action="{!saveVisa}" />
+      <apex:commandButton value="Cancel" action="{!cancelVisa}"/>
+  </div>
+  <apex:pageBlockTable Id="VisaList" value="{!lstVisaBeans}" var="visa" >    
+   <apex:column ><br/>
+      <!-- <apex:facet name="header"><apex:inputCheckbox onClick="checkAll(this);"/></apex:facet>-->
+       <Apex:inputCheckbox Value="{!visa.isSelectVisa}" id="checkedone" />
+  </apex:column>
+
+    <apex:column headerValue="Passport" Value="{!visa.passport}"/>
+   <apex:column headerValue="Passport Expiry">
+   <apex:outputText escape="false" Value="{!visa.passportExpiry}"/>
+    </apex:column>
+    <apex:column headerValue="Visa Status">
+    <apex:selectList id="visaStatus" value="{!visa.visaStatus}" size="1" >
+            <apex:selectOptions value="{!VisaStatus}"></apex:selectOptions>
+    </apex:selectList>
+    </apex:column>  
+   <apex:column headerValue="Visa Expiry Date" >
+   <apex:input type="date" value="{!visa.visaExpiryDate}"/>
+   </apex:column>  
+   <apex:column headerValue="Visa Country" value="{!visa.visaCountry}"/>  
+   <apex:column headerValue="Visa For" value="{!visa.visaFor}"/>  
+    <apex:column headerValue="Visa Expiry">
+    <apex:outputText escape="false" Value="{!visa.visaExpiry}"/>
+    </apex:column>   
+  </apex:pageBlockTable>   
+ 
+  </apex:pageBlock>
+   </apex:PageBlock>  
+   
+   <apex:PageBlock id="Passport" rendered="{!showPassport}">
+    
+  <div align="center">
+      <apex:commandButton value="Edit Passport" action="{!editpassportMethod}" disabled="{!disablebButton}"/> <!-- reRender="msg1,PassportList"/> -->
+      <apex:commandButton value="Add Passport" action="{!ShowpassportMethod}" disabled="{!disablebButton}"/>
+  </div>
+  <apex:outputPanel id="Opanel">
+  <apex:PageBlock id="pb" rendered="{!ShowpassportBlock}">
+  <div align="center">
+      <apex:commandButton value="Save Passport" action="{!addPassport}"/>
+      <apex:commandButton value="Cancel" action="{!CancelPassport}"/>
+  </div>
+  <apex:pageBlockSection id="pBS1" >
+   <apex:pageblockSectionItem >
+    <apex:outputLabel value="Passport Number "> 
+    <apex:inputText value="{!passportNumberA}" />
+    </apex:outputLabel>
+    </apex:pageblockSectionItem>
+   <apex:pageblockSectionItem >
+    <apex:outputLabel value="Passport Type "> 
+    <apex:selectList id="pastype" value="{!passportTypeA}" size="1" >
+            <apex:selectOptions value="{!passportTypelst}"></apex:selectOptions>
+    </apex:selectList>
+    </apex:outputLabel>
+    </apex:pageblockSectionItem>
+     <apex:pageblockSectionItem >
+    <apex:outputLabel value="Passport Status "> 
+    <apex:selectList id="pasStatus" value="{!passportStatusA}" size="1" >
+            <apex:selectOptions value="{!passportStatuslst}"></apex:selectOptions>
+    </apex:selectList>
+    </apex:outputLabel>
+    </apex:pageblockSectionItem>
+    <apex:pageblockSectionItem >
+    <apex:outputLabel value="Passport Country "> 
+    <apex:selectList id="pascoun" value="{!passportCountryA}" size="1" >
+            <apex:selectOptions value="{!passportCountrylst}"></apex:selectOptions>
+    </apex:selectList>
+    </apex:outputLabel>
+    </apex:pageblockSectionItem>
+    <apex:pageblockSectionItem >
+    <apex:outputLabel value="Issue Date "> 
+    <apex:input type="date" value="{!passportIssueDateA}" />
+    </apex:outputLabel>
+    </apex:pageblockSectionItem>
+    <apex:pageblockSectionItem >
+    <apex:outputLabel value="Expiry Date "> 
+    <apex:input type="date" value="{!passportExpiryDateA}" />
+    </apex:outputLabel>
+    </apex:pageblockSectionItem>
+    <apex:pageblockSectionItem >
+    <apex:outputLabel value="Remaining Pages ">     
+   <apex:input type="text" value="{!passportremainingPagesA}"/>
+   </apex:outputLabel>
+    </apex:pageblockSectionItem>
+ 
+  </apex:pageBlockSection>
+  </apex:PageBlock>
+  </apex:outputPanel>
+  
+  <apex:pageBlock id="passport" rendered="{!passportDisplayBlock}">
+  <h2><b><u>Passports:</U></b></h2>
+  <apex:pageBlockTable id="PassportList" value="{!lstPassportBeans}" var="passprt" >     
+   <apex:column headerValue="Passport Name" Value="{!passprt.passportName}"/> 
+   <apex:column headerValue="Passport Number" Value="{!passprt.passportNumber}"/>
+   <apex:column headerValue="Passport Status" value="{!passprt.passportStatus}" />
+   <apex:column headerValue="Passport Expiry Date" value=" {!passprt.passportExpiryDate}"/>
+   <apex:column headerValue="Passport Type" value="{!passprt.passportType}"/> 
+   <apex:column headerValue="Passport Country" value="{!passprt.passportCountry}"/>
+   <apex:column headerValue="Remaining Pages" value="{!passprt.remainingPages}"/>
+   <apex:column headerValue="Passport Expiry">
+    <apex:outputText escape="false" Value="{!passprt.passportExpiry}"/>
+    </apex:column>  
+  </apex:pageBlockTable>   
+  </apex:PageBlock>      
+  
+  
+  <apex:pageBlock id="editPassport" rendered="{!editPassportBlock}">
+  <div align="center">
+   <apex:commandButton value="Save Edits" action="{!savePassport}"/>
+   <apex:commandButton value="Cancel" action="{!CancelPassport}"/>
+  </div>
+  <apex:pageBlockTable id="editPassportList" value="{!lstPassportBeans}" var="passprt" >   
+   <apex:column ><br/>
+      <!-- <apex:facet name="header"><apex:inputCheckbox onClick="checkAll(this);"/></apex:facet> -->
+       <Apex:inputCheckbox Value="{!passprt.isSelectPassport}" id="checkedone" />
+  </apex:column>
+   <apex:column headerValue="Passport Name" Value="{!passprt.passportName}"/> 
+   <apex:column headerValue="Passport Number" Value="{!passprt.passportNumber}"/>
+   <apex:column headerValue="Passport Status" >
+   <apex:selectList id="pasStatus" value="{!passprt.passportStatus}" size="1" >
+            <apex:selectOptions value="{!passportStatuslst}"></apex:selectOptions>
+    </apex:selectList>
+    </apex:column>    
+   <apex:column headerValue="Passport Expiry Date" >
+   <apex:input type="date" value="{!passprt.passportExpiryDate}"/> 
+   </apex:column>
+   <apex:column headerValue="Passport Type" value="{!passprt.passportType}"/> 
+   <apex:column headerValue="Passport Country" value="{!passprt.passportCountry}"/>
+   <apex:column headerValue="Remaining Pages"> 
+   <apex:input type="text" value="{!passprt.remainingPages}"/>
+   </apex:column>
+   <apex:column headerValue="Passport Expiry">
+    <apex:outputText escape="false" Value="{!passprt.passportExpiry}"/>
+    </apex:column>  
+  </apex:pageBlockTable>   
+  </apex:PageBlock>      
+  </apex:pageBlock> 
+    </apex:form> 
+</apex:page>

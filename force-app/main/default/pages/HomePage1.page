@@ -1,0 +1,48 @@
+<apex:page sidebar="false" showHeader="false" docType="html-5.0" language="en-US" applyHTMLTag="false" >
+    <html lang="en">
+        <head>
+            
+            <!--adding viewport meta tag, to ensure proper rendering and touch zooming-->
+            <meta charset="utf-8"></meta>
+            <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"></meta>
+            <title>Banner</title>
+            
+            <!--adding CSS-->
+            <link href="{!URLFOR($Resource.Bootstrap, 'css/bootstrap.min.css')}" rel="stylesheet" />
+        </head>
+        <body>
+            <div ng-app="angular" class="bs">
+              <div ng-controller="CarouselDemoCtrl">
+                  <div style="height: 305px">
+                    <carousel interval="myInterval">
+                      <slide ng-repeat="slide in slides" active="slide.active">
+                        <a target="_blank" href="{{slide.url}}">
+                          <img ng-src="{{slide.image}}" style="margin:auto;" />
+                        </a>
+                      </slide>
+                    </carousel>
+                  </div>
+                </div>
+            </div>
+            <!--adding scripts-->
+            <script src="{!URLFOR($Resource.AngularJS, 'angular.min.js')}" />
+            <script src="{!URLFOR($Resource.AngularJS, 'ui-bootstrap-tpls-0.11.0.min.js')}" />
+            <script >
+            angular.module('angular', ['ui.bootstrap'])
+            .controller('CarouselDemoCtrl', function ($scope) {
+              $scope.myInterval = 5000;
+              var slides = $scope.slides = [];
+              slides.push({
+                            image: "{!$Resource.priceconcessionbannersmall}",                            
+                            url: '/500/e?nooverride=1&RecordType=012120000019DkE&retURL=%2F500%2Fo '                                                    
+                         });
+              slides.push({
+                           image: "{!$Resource.usrussiawarning}",
+                           url: '/apex/USRussiaSanctionsAlert'
+                      }); 
+                 });
+            </script >
+        </body>
+    </html>
+</apex:page>

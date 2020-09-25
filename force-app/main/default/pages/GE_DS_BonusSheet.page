@@ -1,0 +1,127 @@
+<apex:page controller="GE_DS_BonusSheetController" contenttype="pdf#contractQuote_{!tech.Name}.pdf" renderAs="pdf" >
+    <head>
+        <style type="text/css"> 
+            .h1 { 
+                color: black; 
+                font-family:Arial, sans-serif; 
+                font-style: normal; 
+                font-weight: normal; 
+                text-decoration: none; 
+                font-size: 20pt; 
+                text-align: center;
+            }
+            .s1 { 
+                color: black; 
+                font-family:Arial, sans-serif; 
+                font-style: normal; 
+                font-weight: bold; 
+                text-decoration: none; 
+                font-size: 10pt; 
+            }
+            .s2 { 
+                color: black; 
+                font-family:Arial, sans-serif; 
+                font-style: normal; 
+                font-weight: normal; 
+                text-decoration: none; 
+                font-size: 10pt; 
+            }
+            .s3 { 
+                color: black; 
+                font-family:Arial, sans-serif; 
+                font-style: normal; 
+                font-weight: normal; 
+                text-decoration: none; 
+                font-size: 9pt; 
+            }
+            td>p {
+                display: inline; 
+            }
+            
+            @page { 
+                size:letter;
+                margin-top: 1in;
+                margin-bottom: .50in;
+                margin-left: .5in;
+                margin-right: .5in;
+            }
+        </style>
+    </head>
+    <body style="">
+        <div class="h1">Service Hand Bonus Sheet</div>
+        
+        <table style="border-collapse:collapse;width:7in;align:center" cellspacing="10">
+            <tr>
+                <td class="s1" style="text-align: right;width:25%">Employee Name:</td>
+                <td class="s2" style="text-align:left;width:25%" >{!tech.Name}</td>
+                <td class="s1" style="text-align: right;width:25%">Manager:</td>
+                <td class="s2" style="text-align:left;width:25%" >{!tech.GE_OG_DS_Supervisor_Name__c}</td>
+            </tr>
+            <tr>
+                <td class="s1" style="text-align: right;width:25%">Employee Number:</td>
+                <td class="s2" style="text-align:left;width:25%" >{!tech.GE_OG_DS_FSCC_EX_ID__c}</td>
+                <td class="s1" style="text-align: right;width:25%">Date:</td>
+                <td class="s2" style="text-align:left;width:25%" ><apex:outputField value="{!ts.End_Date__c}" /></td>
+            </tr>
+            <tr>
+                <td class="s1" style="text-align: right;width:25%">Cost Center:</td>
+                <td class="s2" style="text-align:left;width:25%" >&nbsp;</td>
+                <td class="s1" style="text-align: right;width:25%">Approval:</td>
+                <td class="s2" style="text-align:left;width:25%" >&nbsp;</td>
+            </tr>
+            <tr>
+                <td class="s1" style="text-align: right;width:25%">SSO Number:</td>
+                <td class="s2" style="text-align:left;width:25%" >{!tech.GE_SM_HQ_SSO_ID__c}</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+        </table>
+        <br/>
+        <table style="border-collapse:collapse;width:7in;align:center" cellspacing="10">
+            <tr>
+                <td class="s1" style="width=3in;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt;text-align:center;" bgcolor="#D0CECE">
+                    Date
+                </td>
+                <td class="s1" style="width=.75in;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt;text-align:center;" bgcolor="#D0CECE">
+                    Number of Days
+                </td>
+                <td class="s1" style="width=1in;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt;text-align:center;" bgcolor="#D0CECE">
+                    Base Rate
+                </td>
+                <td class="s1" style="width=1in;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt;text-align:center;" bgcolor="#D0CECE">
+                    Premium/ Holiday Addition
+                </td>
+                <td class="s1" style="width=1.25in;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt;text-align:center;" bgcolor="#D0CECE">
+                    Total Bonus
+                </td>
+            </tr>
+            <apex:repeat value="{!entryList}" var="entry" >
+            <tr>
+                <td class="s3" style="border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt;text-align: right;">
+                    <apex:outputField value="{!entry.GE_DS_Date__c}" />
+                </td>
+                <td class="s3" style="border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt;text-align: right;">
+                    &nbsp;<apex:outputField value="{!entry.GE_DS_Bonus_Day__c}" />
+                </td>
+                <td class="s3" style="border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt;text-align: right;">
+                    &nbsp;<apex:outputField value="{!entry.GE_DS_Bonus_Rate__c}" />
+                </td>
+                <td class="s3" style="border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt;text-align: right;">
+                    &nbsp;<apex:outputField value="{!entry.GE_DS_Premium_Holiday_Bonus__c}" />
+                </td>
+                <td class="s3" style="border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt;text-align: right;">
+                    &nbsp;<apex:outputField value="{!entry.GE_DS_Bonus_Amount__c}" />
+                </td>
+            </tr>
+            </apex:repeat>
+            <tr>
+                <td class="s2" colspan="4" style="border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt;text-align: right;">
+                    TOTAL AMOUNT
+                </td>
+                <td class="s2" style="border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt;text-align: right;">
+                    <apex:outputField value="{!total.GE_DS_Bonus_Rate__c}" />
+                </td>
+            </tr>
+        </table>
+    </body>
+</apex:page>

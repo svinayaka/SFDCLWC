@@ -1,0 +1,10 @@
+<apex:page standardcontroller="Account" >
+<!-- extensions="GE_PRM_Application"
+    <script>
+        var url = '{!sRedirectUrl}';/*CheckMarx False Positive Stored XSS*/
+        if(url != '')
+        window.location = url;
+    </script>
+<apex:relatedList list="Appointment__r"/>   
+-->
+</apex:page>

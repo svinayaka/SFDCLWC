@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>GE_PRM_CVA_Additional_Information_Provided</fullName>
+        <ccEmails>compass.tester@ge.com</ccEmails>
+        <description>GE_PRM_CVA_Additional_Information_Provided</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_PRM_Approver_1__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GR_PRM_CVA_Additional_Info_Provided</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PRM_Commercial_Vetting_Application_Approved</fullName>
+        <description>Commercial Vetting Application: Approved</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PRM_CV_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PRM_Commercial_Vetting_Application_Rejected</fullName>
+        <description>Commercial Vetting Application:Rejected</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PRM_CV_Rejected</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>GE_PRM_Abandoned_to_In_Process</fullName>
+        <description>Record type Abandoned to In Process</description>
+        <field>RecordTypeId</field>
+        <lookupValue>GE_PRM_Commercial_Vetting_In_Progress</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Record type Abandoned to In Process</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Approved_Rejected_Date_Update</fullName>
+        <field>GE_PRM_Approved_Date__c</field>
+        <formula>NOW()</formula>
+        <name>Approved/Rejected Date Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Modify_NMI</fullName>
+        <field>GE_PRM_Status__c</field>
+        <literalValue>Submitted</literalValue>
+        <name>GE_PRM_Modify_NMI</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_RecordType_to_Approved_Rejected</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>GE_PRM_Commercial_Approved_Rejected</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>RecordType Update to Approved/Rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Status_Approved</fullName>
+        <field>GE_PRM_Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>Status Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Status_Rejected</fullName>
+        <field>GE_PRM_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Status Rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Update_CV_Record_type_Submitted</fullName>
+        <description>Update CV record type to Submitted when Additional Info is provided</description>
+        <field>RecordTypeId</field>
+        <lookupValue>GE_PRM_Commercial_Vetting_Submitted</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Update CV Record type Submitted</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Update_CV_Record_type_to_NMI</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>GE_PRM_Commercial_Vetting_Need_more_info</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Update CV Record type to NMI</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Update_CV_status</fullName>
+        <field>GE_PRM_Status__c</field>
+        <literalValue>Need More Info</literalValue>
+        <name>Update CV status</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Update_CV_status_to_Submitted</fullName>
+        <description>Update CV status  to Submitted when Additional Info is provided</description>
+        <field>GE_PRM_Status__c</field>
+        <literalValue>Submitted</literalValue>
+        <name>Update CV status to Submitted</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_I_Certify_CV_Recordtype_Submitted</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>GE_PRM_Commercial_Vetting_Submitted</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Update I Certify CV Recordtype Submitted</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_I_Certify_CV_status_to_Submitted</fullName>
+        <field>GE_PRM_Status__c</field>
+        <literalValue>Submitted</literalValue>
+        <name>Update I Certify CV status to Submitted</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+</Workflow>

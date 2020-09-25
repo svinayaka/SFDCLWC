@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GE_OG_GS_Upload_Document</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>Upload Document</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <url>popupCenter(&apos;/apex/GE_OG_GS_UploadDocument?id={!GE_OG_GS_Technician_Attachment__c.Id}&apos;,&apos;xtf&apos;,&apos;500&apos;,&apos;200&apos;);
+
+function popupCenter(url, title, w, h) {
+    // Fixes dual-screen position                         Most browsers      Firefox
+    var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
+    var dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;
+
+    width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+    height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+
+    var left = ((width / 2) - (w / 2)) + dualScreenLeft;
+    var top = ((height / 2) - (h / 2)) + dualScreenTop;
+    var newWindow = window.open(url, title, &apos;scrollbars=yes, width=&apos; + w + &apos;, height=&apos; + h + &apos;, top=&apos; + top + &apos;, left=&apos; + left);
+
+    // Puts focus on the newWindow
+    if (window.focus) {
+        newWindow.focus();
+    }
+
+}</url>
+</WebLink>

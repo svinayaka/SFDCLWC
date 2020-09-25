@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Role xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseAccessLevel>None</caseAccessLevel>
+    <contactAccessLevel>Edit</contactAccessLevel>
+    <description>GE SS Admin - GLOBAL</description>
+    <mayForecastManagerShare>false</mayForecastManagerShare>
+    <name>GE SS Admin - GLOBAL</name>
+    <opportunityAccessLevel>Edit</opportunityAccessLevel>
+    <parentRole>Roles_To_Be_Deleted</parentRole>
+</Role>

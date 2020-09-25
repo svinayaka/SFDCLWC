@@ -1,0 +1,7 @@
+<aura:event type="COMPONENT" description="Event template">
+    <aura:attribute name="userObj" type="User"/>
+    <aura:attribute name="isUser" type="boolean" />
+    <aura:attribute name="isDelete" type="boolean" />
+    <aura:attribute name="idToDelete" type="Id"/>
+    <aura:attribute name="User_Role" type="String"/>
+</aura:event>

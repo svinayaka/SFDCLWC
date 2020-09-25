@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>populate_the_question_field_for_sorting</fullName>
+        <field>Question_Sort_ge_og__c</field>
+        <formula>TRIM(LEFT( question_ge_og__c , 255))</formula>
+        <name>populate the question field for sorting</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <rules>
+        <fullName>populate question sort field</fullName>
+        <actions>
+            <name>populate_the_question_field_for_sorting</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Checklist_ge_og__c.Name</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

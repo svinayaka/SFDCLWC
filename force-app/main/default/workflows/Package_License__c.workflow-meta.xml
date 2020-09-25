@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>Update_Unique_Key</fullName>
+        <description>Update unique key on the Package License object</description>
+        <field>UniqueKey__c</field>
+        <formula>CASESAFEID(User__r.Id)  &amp; Package__r.Name</formula>
+        <name>Update Unique Key</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <rules>
+        <fullName>Populate Unique Key field on Package License</fullName>
+        <actions>
+            <name>Update_Unique_Key</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>NOT(ISNULL(Name) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GE_OG_Forecast__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Commit to Commit (90%) 
+Commit at Risk – Commit at risk (75%) 
+Upside – Upside Opportunity (&lt;75%)</inlineHelpText>
+    <label>Forecast</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Closed</fullName>
+                <default>false</default>
+                <label>Closed</label>
+            </value>
+            <value>
+                <fullName>Commit</fullName>
+                <default>false</default>
+                <label>Commit</label>
+            </value>
+            <value>
+                <fullName>Commit at Risk</fullName>
+                <default>false</default>
+                <label>Commit at Risk</label>
+            </value>
+            <value>
+                <fullName>Omit</fullName>
+                <default>false</default>
+                <label>Omit</label>
+            </value>
+            <value>
+                <fullName>Upside</fullName>
+                <default>true</default>
+                <label>Upside</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

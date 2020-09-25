@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>Set_BGU_Unique_Identifier_c_field</fullName>
+        <field>BGU_Unique_Identifier__c</field>
+        <formula>BHGE_Goals__c+&quot;_&quot;+Goal_User_Employee__c</formula>
+        <name>Set_BGU_Unique_Identifier_c_field</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <rules>
+        <fullName>BHGE Goal User workflow_To_set_BGU_Unique_Identifier_field</fullName>
+        <actions>
+            <name>Set_BGU_Unique_Identifier_c_field</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>BHGE_Goals__c!=&apos;&apos;&amp;&amp;   Goal_User_Employee__c!=&apos;&apos;</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

@@ -1,0 +1,612 @@
+<apex:page controller="GE_HQ_TechnicianResumeController" applyHtmlTag="false" showHeader="false" renderAs="pdf">
+<head>
+<style type="text/CSS" media="print">
+
+
+@page {
+    size: 12.5in 10in;
+    margin: 8%;
+    
+    @bottom-left {
+            font-size:9px;
+            content: "CONFIDENTIAL";
+        }
+        @bottom-center {
+            font-size:12px;
+            content: "page "  counter(page)  " of " counter(pages);           
+        }
+        @bottom-right {
+            font-size:12px;
+            content: "<apex:outputText value="{0,date,MM'/'dd'/'yyyy}" ><apex:param value="{!Today}" /></apex:outputText>";
+        }
+        
+        @top-center {
+            content: element(header);
+        }
+
+    
+}
+
+@
+bottom-right {
+    content: "Page " counter(page) "of " counter(pages);
+}
+
+@
+bottom-left {
+    content: "Service Report";
+}
+
+}
+
+
+ div.headerlogo {
+      position: running(header);
+    }
+    
+    
+table.gridtable {
+    border-collapse: collapse;
+    border-spacing: 0;
+    font-family: "GE Inspira", "GE Inspira", Sans-Serif;
+    font-size: 8px;
+    page-break-before: always;
+
+    
+}
+
+table.gridtable th {
+    font-family: GE Inspira, sans-serif;
+    font-size: 13px;
+    font-weight: normal;
+    padding: 10px 5px;
+    border-style: solid;
+    border-width: 0px;
+    overflow: hidden;
+    word-break: normal;
+    border-color: #FBFBEF;
+    color: #FBFBEF;
+}
+
+table.gridtable td {
+    font-family: GE Inspira, sans-serif;
+    font-size: 14px;
+    font-weight:bold
+    border-style: solid;
+    border-width: 0px;
+    overflow: hidden;
+    word-break: normal;
+    border-color: #FBFBEF;
+    color: #FBFBEF;
+    text-decoration:underline;
+    
+    
+    
+}
+.infohead {
+    font-size: 120%;
+    font-weight: bold;
+    text-align: center;
+    color: #003300;
+    vertical-align: middle;
+}
+
+.infoheadsec {
+    font-size: 100%;
+    font-weight: bold;
+    text-align: center;
+    color: #003300;
+    vertical-align: middle;
+}
+
+.center {
+    text-align: center;
+}
+
+.table-bordered {
+     border-collapse: collapse;
+    border-spacing: 0;
+    font-family: "GE Inspira", "GE Inspira", Sans-Serif;
+    font-size: 8px;
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+    
+   }
+   
+   .table-bordered1 {
+      
+    font-family: "GE Inspira", "GE Inspira", Sans-Serif;
+    font-size: 8px;
+    bgcolor="#FBFBEF"
+    
+   }
+   
+   
+   .table-bordered2 {
+      
+   border-collapse: collapse;
+    border-spacing: 0;
+    font-family: "GE Inspira", "GE Inspira", Sans-Serif;
+    font-size: 8px;
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: left;
+    
+    
+   }
+   
+   .right-align {
+    text-align: right;
+}
+
+ .left-align {
+    text-align: left;
+}
+
+
+
+.table-bordered4 {
+     border-collapse: collapse;
+    border-spacing: 0;
+    font-family: "GE Inspira", "GE Inspira", Sans-Serif;
+    font-size: 8px;
+    border: 0.1px solid #000000;
+    border-collapse: collapse;
+    
+   }
+   
+   
+thead>tr>th {
+    vertical-align: middle;
+    border: 0.1px solid #FBFBEF;
+    border-spacing: 0;
+    text-align: center;
+    
+   
+   font-family: "GE Inspira", "GE Inspira", Sans-Serif;
+    font-size: 16px;
+    border-style: solid ;
+    overflow: hidden;
+    word-break: normal;
+    background-color: #CEECF5;
+    border-collapse: collapse;
+    background: #CEECF5;
+    
+}
+
+td {
+font-family: "GE Inspira", "GE Inspira", Sans-Serif;
+    font-size: 14px;
+    border-style: solid;
+    overflow: hidden;
+    word-break: normal;
+    border-color: #FBFBEF;
+    color: #000000;
+        
+    
+    
+    vertical-align: middle;
+    border: 0.1px solid #FBFBEF;
+    border-spacing: 0;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.header>td {
+    font-weight: bold;
+    background: #FBFBEF;
+}
+
+.echoArea>td {
+    padding: 10px;
+}
+
+.float-left {
+    float: left;
+    width: 400px;
+    //
+    or
+    33%
+    for
+    equal
+    width
+    independent
+    of
+    parent
+    width
+}
+
+.float-roght {
+    float: right;
+    width: 100px;
+    //
+    or
+    33%
+    for
+    equal
+    width
+    independent
+    of
+    parent
+    width
+}
+
+div.container {
+    background-color: #FBFBEF;
+    margin: auto;
+    width: 304px;
+}
+
+.alignleft {
+    float: left;
+}
+
+.alignright {
+    float: right;
+}
+
+.alignleft1 {
+    float: left;
+}
+
+.alignright1 {
+    float: right;
+}
+
+
+
+</style>
+
+
+<style type="text/css" media="print">
+@page {
+@top-center {
+content: element(header);
+}
+@bottom-left {
+ content: element(footer);
+}
+}
+ 
+div.header {
+padding: 10px;
+position: running(header);
+}
+div.footer {
+display: block;
+padding: 5px;
+position: running(footer);
+}
+ 
+.pagenumber:before {
+content: counter(page);
+}
+.pagecount:before {
+content: counter(pages);
+}
+</style>
+</head>
+ <body>
+         <div class="header" align="center"><b><apex:outputText value="{!Technician.Name}" /><br/>General Electric International, Inc.</b></div>
+ <br/>
+    <div class="footer">
+        <table border="0" width="100%">
+            <tbody>
+                <tr>
+                    <td align="left" style="text-align: left;">
+                        &nbsp;&nbsp;<span>CONFIDENTIAL</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <br />
+ <br/>
+  <table border="1" style="text-align: center;font-weight: bold;font-size: 10px;" width="100%">
+         <tbody>
+             <tr style="background-color: rgb(220,230,421);">
+                 <td colspan="4" style="text-align: center;color: block;font-size: 15px;">
+                 <strong>Technician Information</strong></td>
+             </tr>
+             <tr>
+                  <td width="15%">
+                     <strong>Business Unit:</strong></td>
+                  <td width="35%">
+                      {!Technician.GE_SM_HQ_Business_Unit__c}</td>
+                      <td width="15%">
+                       <strong>Email:</strong></td>
+                  <td width="35%">
+                      {!Technician.SVMXC__Email__c}</td>
+             </tr>
+             <tr >
+                 <td>
+                 <strong>Project Region:</strong></td>
+                 <td>
+                {!Technician.GE_SS_Project_Region__r.Name}</td>
+                 <td>
+                 <strong>Career Track Level:</strong></td>
+                 <td>
+                  {!Technician.GE_DS_Career_Track_Level__c}</td>
+              </tr>
+              <tr>
+                  <td>
+                   <strong>Management Country:</strong></td>
+                 <td>
+                  {!Technician.Management_Country__c}</td>
+                  <td>
+                  <strong>Supervisor Name:</strong></td>
+                  <td>
+                  {!Technician.GE_OG_DS_Supervisor_Name__c}</td>
+               </tr>
+         
+          </tbody>
+     </table>
+  <br/>
+  <br/>
+  
+  
+  <DIV align="left">
+           <table width="100%" class="table-bordered2">
+                <thead>
+                    <tr>
+                       <th class="left-align">Expertise</th>
+                    </tr>
+                </thead>                                         
+           </table>
+      </DIV>
+                
+        <table width="100%" class="table-bordered">
+            <thead>
+                <tr>
+                    <th class="left-align">Skill Category</th>
+                    <th class="left-align">Skill Group</th>
+                    <th class="left-align">Skill</th>
+                    <th class="left-align">Expertise Level </th> 
+                </tr>                   
+            </thead>
+            <tbody>
+            <apex:repeat value="{!lstExpertiseBeans}" var="expertise" >
+                   <tr>
+                        <td class="left-align" >{!expertise.skillCategory}</td>
+                        <td class="left-align" >{!expertise.skillGroup}</td>
+                        <td class="left-align" >{!expertise.skill}</td>
+                        <td class="left-align" >{!expertise.expertiseLevel}</td>
+                        
+                    </tr>
+            </apex:repeat>  
+            </tbody>
+        </table>    
+           <br/>
+          <br/>
+          <DIV align="left">
+           <table width="100%" class="table-bordered2">
+                <thead>
+                    <tr>
+                       <th class="left-align">Course Assignments</th>
+                    </tr>
+                </thead>  
+                                       
+
+           </table>
+      </DIV>
+        <table width="100%" class="table-bordered">
+            <thead>
+                <tr>
+                    
+                    <th class="left-align">Course Name</th>
+                    <th class="left-align">Course Status</th>
+                    <th class="left-align">Target Level </th> 
+                    <th class="left-align">Attended Date</th> 
+                    <th class="left-align">Passed Date </th> 
+                    
+                    <th class="left-align">Course Source</th> 
+                    <th class="left-align">Course Category</th>
+                    
+                </tr>                   
+            </thead>
+            <tbody>
+            <apex:repeat value="{!lstCourseAssignmentBeans }" var="courseAsgn" >
+                   <tr>
+                        
+                        <td class="left-align" >{!courseAsgn.courseNameAll }</td>
+                        <td class="left-align" >{!courseAsgn.courseStatus}</td>
+                        <td class="left-align" >{!courseAsgn.targetLevel}</td>
+                        <td class="left-align" >
+                        <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                              <apex:param value="{!courseAsgn.attendedDate}" />
+                        </apex:outputText></td>
+                        <td class="left-align" >
+                        <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                              <apex:param value="{!courseAsgn.passedDate}" />
+                        </apex:outputText></td>
+                        
+                        <td class="left-align" >{!courseAsgn.courseSource}</td>
+                        <td class="left-align" >{!courseAsgn.courseCategory}</td>
+                    </tr>
+            </apex:repeat>  
+            </tbody>
+        </table>   
+          <br/>
+  <br/>
+  <DIV align="left">
+           <table width="100%" class="table-bordered2">
+                <thead>
+                    <tr>
+                       <th class="left-align">Certifications</th>
+                    </tr>
+                </thead>  
+                                       
+
+           </table>
+      </DIV>
+      <table width="100%" class="table-bordered">
+            <thead>
+                <tr>
+                    <th class="left-align">Certificate Name</th>
+                    <th class="left-align">Category</th>
+                    <th class="left-align">Status</th>
+                    <th class="left-align">Acquired Date </th> 
+                    <th class="left-align">Expiry Date</th> 
+                    
+                </tr>                   
+            </thead>
+            <tbody>
+            <apex:repeat value="{!lstCertificationBeans}" var="certi" >
+                   <tr>
+                        <td class="left-align" >{!certi.certificationName }</td>
+                        <td class="left-align" >{!certi.category }</td>
+                        <td class="left-align" >{!certi.status}</td>
+                        <td class="left-align" >
+                        <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                              <apex:param value="{!certi.acquiredDate}" />
+                        </apex:outputText></td>
+                        <td class="left-align" >
+                        <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                              <apex:param value="{!certi.expiryDate }" />
+                        </apex:outputText></td>
+                        
+                    </tr>
+            </apex:repeat>  
+            </tbody>
+             
+              <br/>
+  <br/>
+  <DIV align="left">
+           <table width="100%" class="table-bordered2">
+                <thead>
+                    <tr>
+                       <th class="left-align">Passports</th>
+                    </tr>
+                </thead>  
+                                       
+
+           </table>
+      </DIV>
+       <table width="100%" class="table-bordered">
+            <thead>
+                <tr>
+                    <th class="left-align">Passport Name</th>
+                    <th class="left-align">Passport Expiry Date</th>
+                    <th class="left-align">Passport Type</th>
+                    <th class="left-align">Remaining Pages</th> 
+
+                    
+                </tr>                   
+            </thead>
+            <tbody>
+            <apex:repeat value="{!lstPassportBeans}" var="passprt" >
+                   <tr>
+                        <td class="left-align" >{!passprt.passportName}</td>
+                      <td class="left-align" >
+                        <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                              <apex:param value="{!passprt.passportExpiryDate}" />
+                        </apex:outputText></td>
+                        <td class="left-align" >{!passprt.passportType}</td>
+                        <td class="left-align" >{!passprt.remainingPages}</td>
+                        
+                    </tr>
+            </apex:repeat>  
+            </tbody>
+        </table>  
+          <br/>
+  <br/> 
+       <DIV align="left" >
+           <table width="100%" class="table-bordered2">
+                <thead>
+                    <tr>
+                       <th class="left-align">Visas</th>
+                    </tr>
+                </thead>  
+                                       
+
+           </table>
+      </DIV>
+      <table width="100%" class="table-bordered">
+            <thead>
+                <tr>
+                    <th class="left-align">Passport Name</th>
+                    <th class="left-align">Visa Expiry Date</th>
+                    <th class="left-align">Visa Country</th> 
+                    <th class="left-align">Visa For</th> 
+                    
+                </tr>                   
+            </thead>
+            <tbody>
+            <apex:repeat value="{!lstVisaBeans}" var="visa" >
+                   <tr>
+                        <td class="left-align" >{!visa.passport}</td>
+                       <td class="left-align" >
+                        <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                              <apex:param value="{!visa.visaExpiryDate}" />
+                        </apex:outputText>
+                        </td>
+                        <td class="left-align" >{!visa.visaCountry}</td>
+                         <td class="left-align" >{!visa.visaFor}</td>
+                        
+                    </tr>
+            </apex:repeat>  
+            </tbody>
+        </table>  
+        <br/>
+         <DIV align="left">
+           <table width="100%" class="table-bordered2">
+                <thead>
+                    <tr>
+                       <th class="left-align">Mobilize Work Orders</th>
+                    </tr>
+                </thead>  
+                                       
+
+           </table>
+      </DIV>
+      
+      
+      <table width="100%" class="table-bordered">
+            <thead>
+                <tr>
+                    <th class="left-align">Work Order number</th>
+                    <th class="left-align">StartDateTime</th>
+                    <th class="left-align">EndDateTime</th>
+                    <th class="left-align">Job Location</th>
+                    <th class="left-align">Product Category</th>
+                    <th class="left-align">Product Group </th> 
+                    <th class="left-align">Job Type</th> 
+                    <th class="left-align">Field </th> 
+                    <th class="left-align">Billable Type</th> 
+                    
+                </tr>                   
+            </thead>
+            <tbody>
+            <apex:repeat value="{!TechMWO}" var="MWO" >
+                   <tr>                        
+                        <td class="left-align" >{!MWO.Name}</td>
+                          <td class="left-align" >
+                      <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                              <apex:param value="{!MWO.GE_SM_HQ_Planned_Start_Date__c}" />
+                        </apex:outputText>
+                        </td>
+
+                        <td class="left-align" >
+                        <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                              <apex:param value="{!MWO.GE_SM_HQ_Planned_End_Date__c}" />
+                        </apex:outputText>
+                        </td> 
+                        <td class="left-align" >{!MWO.GE_SS_Job_Location__c}</td>
+                        <td class="left-align" >{!MWO.GE_SS_Product_Category__c}</td>
+                        <td class="left-align" >{!MWO.GE_SS_Product_Group__c}</td>
+                        <td class="left-align" >{!MWO.GE_SS_Job_Type_New__c}</td>
+                        <td class="left-align" >{!MWO.GE_SS_Field__r.name}</td>
+                        <td class="left-align" >{!MWO.GE_SS_Billable_Type__c}</td>                                                     
+                    </tr>
+                    
+            </apex:repeat>  
+            </tbody>
+        </table>   
+
+  
+  
+</table>    
+  
+  
+ </body>  
+</apex:page>

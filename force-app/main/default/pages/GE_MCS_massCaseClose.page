@@ -1,0 +1,131 @@
+<!--
+================================================================
+Page Name   : GE_MCS_massCaseClose 
+Author      : Jagan Mohan Cherlakola
+Created Date: 23/12/2013
+Reason      : This Page is used to close number of cases using 'Mass Case Close' button on MCS List View.
+Modified By/ ON : Vijaya Murukutla / On 18 July 2014
+Purpose : Included the logic for Subtype validation as part of the R-17252
+================================================================
+-->
+
+
+<apex:page standardController="Case" recordSetVar="cases" extensions="GE_MCS_MassCaseCloseController" showHeader="false"  id="mccas">
+    <apex:form id="mcform">
+        <apex:pageMessage summary="No. of Cases selected: {!mySelectedSize}" severity="info" id="mcpms" rendered="{!mblock}"/>
+       <!-- <apex:pageMessage summary="Record Set Size: {!myRecordsSize}"  severity="info" id="mupmr"/>-->
+        
+        
+        <apex:OutputPanel rendered="{!flag}" >
+    <br />    
+    <b><apex:outputText value="{!Msg}"   style="background-color:yellow;font-size:14px" />
+    </b>
+    <br />
+    
+    <br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    
+    <b><apex:commandButton value="Cancel" action="{!cancel}" title="Go back and create Accounts,Contacts & take Ownership" id="butcan4"/></b>
+    <br />
+        
+    <br />
+    </apex:OutputPanel>
+    <apex:OutputPanel rendered="{!oktemp}" >
+    <br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <b><apex:commandButton value="Ok" action="{!cancel}" id="butcan3"/></b>
+    <br />
+    </apex:OutputPanel>
+    <apex:OutputPanel rendered="{!toggle}">
+    <br />  
+    <b><apex:outputText value="{!Msg1}" style="background-color:yellow;font-size:14px" />
+    <br />
+    </b>
+        <br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <apex:commandButton value="Ok" action="{!cancel}"   id="butcan"/>
+    <br />
+    </apex:OutputPanel>
+    <apex:OutputPanel rendered="{!difRec}">
+    <br />
+    <b><apex:outputText value="{!Msg2}" style="background-color:yellow;font-size:14px" />
+    </b>
+    <br />
+    <br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <apex:commandButton value="Ok" action="{!cancel}"   id="butcan2"/>
+    <br />
+    </apex:OutputPanel>                                                                                                                                                                                                                                                                                                                                   
+    
+    
+        <apex:OutputLabel rendered="{!mblock}">
+        <apex:pageBlock title="Case Mass-Close" mode="edit" id="mcb1" >
+            <apex:pageMessages />
+            <apex:pageBlockSection id="mcs1">
+            
+           <apex:selectList value="{!case.status}" multiselect="false" size="1">
+          <apex:selectOption itemValue="Closed" itemLabel="Closed"/>
+          <!-- <apex:selectOption itemValue="New" itemLabel="New"/>-->
+          <apex:actionSupport event="onchange" rerender="mcselectedlist"/>
+               </apex:selectList>
+               
+             
+                          
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons location="bottom" id="mcbut">
+             <apex:commandButton value="Save" action="{!save}" onComplete="validateCases();" title="Will Close your Cases which have  Accounts & Contacts" id="butsav"/>
+               <apex:commandButton value="Cancel" action="{!cancel}" title="Go Back" id="butcan"/>
+                       
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+        <apex:pageBlock title="Selected Cases" id="mcselectedlist">
+            <apex:pageBlockTable value="{!selected}" var="cse" id="mctab">
+                <apex:column value="{!cse.CaseNumber}" id="csename"/>
+                <apex:column value="{!cse.status}" id="csestatus"/>
+                 <apex:column value="{!cse.Account.Name}" id="cseacc"/>
+                <apex:column value="{!cse.Contact.Name}" headerValue="Contact Name" title="Contact Name" id="csecon"/>
+                <apex:column value="{!cse.RecordType.Name}"  headerValue="Record Type" title="Record Type" rendered="temp" id="cserec"/>
+                <apex:column value="{!cse.OwnerId}"  headerValue="Owner" title="Owner" rendered="temp" id="cseown"/>
+                <apex:column value="{!cse.GE_ES_Sub_Type__c}"  headerValue="Sub type" title="Sub type" rendered="temp" id="csesub"/>
+
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+        </apex:OutputLabel>
+    </apex:form>
+    
+    
+    
+    
+    
+    
+    <script>
+    
+  
+    window.document.onload = new function(e)
+    {
+        if(difRec){
+            alert('The below cases are from different RecordType');
+            //return false;
+        }
+    }
+  
+
+<!--window.document.onload = new function(e)
+{
+  !var noDets = '{!noCs}';
+  if(noCs>0)
+      
+             
+  {
+    alert("The below cases dont have Account or Contact, so Status not changed");
+  }
+  
+ 
+  
+}-->
+</script>
+</apex:page>

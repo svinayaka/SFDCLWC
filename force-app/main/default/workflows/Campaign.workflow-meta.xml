@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Email_to_Program_Owner_COE</fullName>
+        <description>LeadGen Email Notifications - Campaign; Addition of Campaign on Program; Email to Program Owner &amp; COE</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Parent_Owner_Email_ge_og__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <recipient>GE_OG_Marketing_and_Demand_Gen_CoE_Commu</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Risk_Process_Email_Templates/Send_to_owner_COE_when_Campaign_is_added_to_a_Program</template>
+    </alerts>
+    <alerts>
+        <fullName>Notify_COE_when_Campaign_requires_Support</fullName>
+        <description>LeadGen Email Notifications - Campaign; When Campaign is in Planned and requires Support;Email to COE</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>GE_OG_Marketing_and_Demand_Gen_CoE_Commu</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Risk_Process_Email_Templates/Send_to_COE_when_Campaign_is_in_Progress_and_requires_support</template>
+    </alerts>
+    <alerts>
+        <fullName>Notify_owner_COE_when_Program_is_added_to_a_Theme</fullName>
+        <description>LeadGen Email Notifications - Campaign - When Program is added to a Theme - Email to Notify Owner &amp; COE</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>GE_OG_Marketing_and_Demand_Gen_CoE_Commu</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Risk_Process_Email_Templates/Send_to_owner_COE_when_Program_is_added_to_a_Theme</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>GE_ES_Approved_Unit_Price_Changed</fullName>
+        <field>GE_ES_Approved_Unit_Price_Date__c</field>
+        <formula>Today()</formula>
+        <name>GE ES Approved Unit Price Changed</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Campaign_as_Active</fullName>
+        <field>IsActive</field>
+        <literalValue>1</literalValue>
+        <name>Update Campaign as Active</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Campaign_as_InActive</fullName>
+        <field>IsActive</field>
+        <literalValue>0</literalValue>
+        <name>Update_Campaign_as_InActive</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Parent_Email</fullName>
+        <field>Parent_Owner_Email_ge_og__c</field>
+        <formula>Parent.CreatedBy.Email</formula>
+        <name>Update Parent Email</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <rules>
+        <fullName>Email Notification on addition of Campaign on Program</fullName>
+        <actions>
+            <name>Email_to_Program_Owner_COE</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>Update_Parent_Email</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>(RecordType.DeveloperName = &apos;Campaign&apos; &amp;&amp; ISNEW()) || (RecordType.DeveloperName = &apos;Campaign&apos; &amp;&amp; ISCHANGED( ParentId ) &amp;&amp; !ISNULL(ParentId))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Email Notification on addition of Program on Theme</fullName>
+        <actions>
+            <name>Notify_owner_COE_when_Program_is_added_to_a_Theme</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula>(RecordType.DeveloperName = &apos;Program&apos; &amp;&amp; ISNEW()) || (RecordType.DeveloperName = &apos;Program&apos; &amp;&amp; ISCHANGED( ParentId ) &amp;&amp;  !ISNULL(ParentId))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Email Notification when Campaign is in Planned and requires Support</fullName>
+        <actions>
+            <name>Notify_COE_when_Campaign_requires_Support</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula>ISPICKVAL(Status, &apos;Planned&apos;) &amp;&amp; ( (ISCHANGED(Additional_Assets_Required_ge_og__c) &amp;&amp; Additional_Assets_Required_ge_og__c = true) || (ISCHANGED(Inside_sales_support_needed_ge_og__c) &amp;&amp; ISPICKVAL( Inside_sales_support_needed_ge_og__c , &apos;Yes&apos;)) || (ISCHANGED(Telesales_Support_Needed_ge_og__c) &amp;&amp; ISPICKVAL(  Telesales_Support_Needed_ge_og__c , &apos;Yes&apos;) ))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE ES Approved Unit Price Changed</fullName>
+        <actions>
+            <name>GE_ES_Approved_Unit_Price_Changed</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>When ever the Approved Unit Price changes need to capture the date</description>
+        <formula>ISCHANGED( GE_ES_Approved_Unit_Price_USD__c)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Rule_To_Update_Campaign_as_Active</fullName>
+        <actions>
+            <name>Update_Campaign_as_Active</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Campaign.Status</field>
+            <operation>equals</operation>
+            <value>In Progress,Planned</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Rule_To_Update_Campaign_as_InActive</fullName>
+        <actions>
+            <name>Update_Campaign_as_InActive</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Campaign.Status</field>
+            <operation>notEqual</operation>
+            <value>In Progress,Planned</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

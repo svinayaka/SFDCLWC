@@ -1,0 +1,10 @@
+<apex:page standardController="SVMXC__Site__c" 
+rendered="{GE_AL_Credit_Status__c='Bad Standing'}">
+
+    <script type="text/javascript">
+        {
+            window.alert("Customer Credit Status: Bad Standing");
+        }
+    </script>
+            
+</apex:page>

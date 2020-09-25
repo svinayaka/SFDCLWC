@@ -1,0 +1,41 @@
+<apex:page Controller="GE_ES_Unfollow_Followers" sidebar="false" showHeader="false">
+    <script>
+        function Cancel() 
+            {
+            window.close();
+            }
+    </script>
+    <apex:form >
+            <apex:pageblock id="pb1" title="My Followers">
+            
+
+            <apex:pageBlockButtons location="bottom">
+  
+               
+                <apex:commandButton value="Done" onclick="Cancel()" immediate="true"/>
+
+            </apex:pageBlockButtons>
+
+                <apex:pageblockTable value="{!MyFollowerList}" var="item" id="dataTab1">
+                    <apex:column >
+                        <apex:image value="{!item.u.SmallPhotoUrl}" width="32px" height="32px"/>
+                    </apex:column>
+                                        
+                    <apex:column >
+                        <b><apex:outputField value="{!item.es.Subscriber.Name}"/></b><br></br>
+                        <apex:outputField value="{!item.es.Subscriber.Title}"/>
+                    </apex:column>                     
+
+                    <apex:column >
+                          <apex:commandbutton value="Remove" onclick="removeFollowerActionMethod('{!item.es.Id}')"/>
+                    </apex:column>
+                </apex:pageblockTable> 
+                
+                         <apex:actionRegion >
+                    <apex:actionFunction action="{!RemoveFollowers}" name="removeFollowerActionMethod" rerender="dataTab1">
+                        <apex:param name="EntityId" assignTo="{!removeFollower}" value=""/>
+                    </apex:actionFunction>
+                </apex:actionRegion>   
+                </apex:pageblock>      
+    </apex:form>
+</apex:page>

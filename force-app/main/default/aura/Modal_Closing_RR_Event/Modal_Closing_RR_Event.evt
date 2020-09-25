@@ -1,0 +1,5 @@
+<aura:event type="COMPONENT">    
+    <aura:attribute name="refresh" type="String" default="false"/>
+    <aura:attribute name="closeChildPopup" type="boolean" default="false"/>
+    <aura:attribute name="values" type="String[]"/>
+</aura:event>

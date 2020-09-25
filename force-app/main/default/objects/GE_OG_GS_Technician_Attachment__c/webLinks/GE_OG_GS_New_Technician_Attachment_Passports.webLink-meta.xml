@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GE_OG_GS_New_Technician_Attachment_Passports</fullName>
+    <availability>online</availability>
+    <displayType>massActionButton</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <linkType>url</linkType>
+    <masterLabel>New Technician Attachment (Passports)</masterLabel>
+    <openType>replace</openType>
+    <protected>false</protected>
+    <requireRowSelection>true</requireRowSelection>
+    <url>/{!$Setup.GE_OG_GS_Technician_Attachment_Setting__c.GE_OG_GS_ObjectPrefixCode__c}/e?{!$Setup.GE_OG_GS_Technician_Attachment_Setting__c.GE_OG_GS_Passport_Lookup_Id__c}={!GE_OG_GS_Passport__c.Name}&amp;{!$Setup.GE_OG_GS_Technician_Attachment_Setting__c.GE_OG_GS_Technician_Lookup_Id__c}={!GE_OG_GS_Passport__c.GE_OG_GS_Technician__c}&amp;retURL=%2F{!GE_OG_GS_Passport__c.Id}</url>
+</WebLink>

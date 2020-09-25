@@ -1,0 +1,64 @@
+<apex:page id="PredixcommunitiesSelfRegPage" Controller="PredixSelfRegController"   showHeader="true" cache="false" title="{!$Label.site.user_registration}" >
+   <apex:define name="body">  
+     <centre>
+<apex:form id="RegForm" forceSSL="true">
+  <apex:panelGrid style="margin-top:1em; margin-left:30em; width:50%">
+                   <apex:pageMessages id="error"/>
+                   <apex:pageBlock title="Cutomer Information" mode="edit">
+                   <apex:pageblockSection columns="2"  >
+                  
+                  
+                     <apex:pageBlockSectionItem >
+                     <apex:outputLabel value="First Name" for="firstName"/>
+                     </Apex:pageBlockSectionItem>
+                       <apex:pageBlockSectionItem >
+                      <apex:inputfield required="true" id="firstName" value="{!objAccReq.GE_OG_Customer_First_Name__c}" />
+                      </Apex:pageBlockSectionItem>
+                       <apex:pageBlockSectionItem >
+                       <apex:outputLabel value="Last Name" for="lastName"/>
+                       </Apex:pageBlockSectionItem>
+                       <apex:pageBlockSectionItem >
+                      <apex:inputfield required="true" id="LastName" value="{!objAccReq.GE_OG_Customer_Last_Name__c}" />
+                        </Apex:pageBlockSectionItem>
+                       <apex:pageBlockSectionItem >
+                      <apex:outputLabel value="{!$Label.site.email}" for="email"/>
+                      </Apex:pageBlockSectionItem>
+                       <apex:pageBlockSectionItem >
+                      <apex:inputfield required="true" id="Email" value="{!objAccReq.GE_OG_Contact_Email__c}" />
+                        </Apex:pageBlockSectionItem>
+                       <apex:pageBlockSectionItem >
+                         <apex:outputLabel value="Contact Phone" for="phone"/>
+                         </Apex:pageBlockSectionItem>
+                       <apex:pageBlockSectionItem >
+                      <apex:inputfield required="true" id="Phone" value="{!objAccReq.GE_OG_Contact_Phone__c}" />
+                        </Apex:pageBlockSectionItem>
+                       
+                       
+                       <apex:pageBlockSectionItem >
+                      <apex:outputLabel value="Company/Organization Name" for="Company/Organization Name"/>
+                      </Apex:pageBlockSectionItem>
+                       <apex:pageBlockSectionItem >
+                      <apex:inputfield required="true" id="organization" value="{!objAccReq.GE_OG_Company_Organization_Name__c}" />
+                        </Apex:pageBlockSectionItem>
+                       <apex:pageBlockSectionItem >
+                       <apex:outputLabel value="Reason for Access" for="Reason "/>
+                       </Apex:pageBlockSectionItem>
+                       <apex:pageBlockSectionItem >
+                      <apex:inputfield required="true" id="ReasonforAccess" value="{!objAccReq.GE_OG_Reason_for_Access_Required__c}" />
+                        </Apex:pageBlockSectionItem>
+                        </Apex:pageblockSection>
+                             <apex:pageblockSection columns="4"  >
+                             <apex:outputtext />
+                        <apex:commandButton action="{!submitRequest}" value="Submit Request" id="submit"/> 
+                       <apex:commandButton action="{!cancel}" immediate="true" value="Cancel"/>  
+                      
+                         </Apex:pageblockSection>
+                           </apex:pageBlock>                
+                    
+                     </apex:panelGrid>
+                  <br/>
+</apex:form>
+    </centre>
+      <br/>
+    </apex:define>
+</apex:page>

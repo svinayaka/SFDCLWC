@@ -1,0 +1,57 @@
+<apex:page standardController="SVMXC__SVMX_Event__c"  extensions="GE_OG_SVMXEvent" >
+  <apex:form id="frm">
+  <apex:pageBlock title="Create Personal Event" id="MainPgBlock">
+    <apex:pageMessage summary="{!ErrorMessage}" severity="Error" strength="3"  rendered="{!isShowError}"/>
+     <apex:outputLabel value="{!MessageDisplay}" rendered="{!EventStatusDisplay}" style="display:block;width:500px;font-size:16px;background-color:yellow;"/>  
+     <apex:pageblockSection title="ServiceMax Event Edit" id="pgSection1">
+     <apex:inputField label="Event Type" value="{!SVMXC__SVMX_Event__c.SVMXC__Type__c}"/>   
+     <p></p>  
+         <apex:inputField label="Subject" value="{!SVMXC__SVMX_Event__c.Name}"/>   
+     <p></p>
+     <apex:inputField label="StartDateTime" value="{!SVMXC__SVMX_Event__c.SVMXC__StartDateTime__c}"/> 
+     <p></p>
+     <apex:inputField label="EndDateTime" value="{!SVMXC__SVMX_Event__c.SVMXC__EndDateTime__c}"/>
+     <!--<apex:inputField label="Technician" value="{!SVMXC__SVMX_Event__c.SVMXC__Technician__c}"/>-->
+     <p></p>
+     <apex:pageblockSectionItem helptext="Select ServiceTeam to which you are Dispatcher">Service Team
+      <apex:inputField label="Service Team" value="{!SVMXC__SVMX_Event__c.SVMXC__Service_Team__c}"/> 
+        </apex:pageblockSectionItem>  
+             
+      <apex:commandButton value="Generate Technicians" action="{!getGenerateTechnician}"/>
+      
+      </apex:pageblockSection>
+     <apex:pageblockSection title="Additional Information">
+     <apex:inputField label="Description" value="{!SVMXC__SVMX_Event__c.SVMXC__Description__c}"/> 
+     </apex:pageblockSection>
+<apex:pageBlockButtons >
+<apex:commandButton action="{!save}" value="Create Personal Events"> </apex:commandButton>
+<apex:commandButton action="{!cancel}" value="Cancel"></apex:commandButton>
+<apex:commandButton value="Reset all"  onclick="myFunction(); return false;"/>
+</apex:pageBlockButtons>
+
+</apex:pageBlock>
+<apex:pageBlock id="PageBlock">
+<apex:pageblockSection >
+<apex:pageblocktable value="{!WrapperList}" var="w"  id="TechnicianTable" rendered="{!TechnicianTable}">
+<apex:column headerValue="">
+<apex:facet name="header">
+<apex:inputCheckbox value="{!SelectAll}" >
+<apex:actionSupport event="onchange"  action="{!getSelectAll}" reRender="frm"/>
+</apex:inputCheckbox>
+</apex:facet>
+<apex:inputCheckbox value="{!w.Check}" />
+</apex:column>
+<apex:column value="{!w.tech.SVMXC__Service_Group__c}"/>
+<apex:column value="{!w.tech.Name}"/>
+
+</apex:pageblocktable>
+</apex:pageblockSection>
+<!--<apex:outputLabel value="{!MessageDisplay}" rendered="{!TechnicianTable}"/>-->
+</apex:pageBlock>
+</apex:form>     
+   <script>
+     function myFunction() {
+    window.top.location.href='/apex/GE_OG_ServiceMaxEvent';
+     }
+    </script> 
+</apex:page>

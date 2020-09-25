@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>Project_Team_Member_Update_DUP_USER</fullName>
+        <field>DUP_USER_ge_og__c</field>
+        <formula>CASESAFEID(Project_ge_og__c) +  CASESAFEID(User_ge_og__c)</formula>
+        <name>Project Team Member - Update DUP_USER</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <rules>
+        <fullName>Project Team Member - Check Duplicate User</fullName>
+        <actions>
+            <name>Project_Team_Member_Update_DUP_USER</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>TRUE</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

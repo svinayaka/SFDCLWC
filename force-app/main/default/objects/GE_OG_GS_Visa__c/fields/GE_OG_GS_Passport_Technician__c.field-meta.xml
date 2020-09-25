@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GE_OG_GS_Passport_Technician__c</fullName>
+    <externalId>false</externalId>
+    <formula>GE_OG_GS_Passport__r.GE_OG_GS_Technician__r.Name</formula>
+    <label>Technician</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

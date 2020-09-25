@@ -1,0 +1,17 @@
+<apex:page docType="html-5.0" standardStylesheets="false">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css"/>
+
+<link rel="stylesheet" href="https://cdn.fieldfx.com/{!$Api.Session_ID}/FX5__/syncsim/poc/main.css" />
+
+<script type="text/javascript" src="https://cdn.fieldfx.com/{!$Api.Session_ID}/FX5__/syncsim/poc/main.js"></script>
+
+<script type="text/javascript">
+
+var salesforce = { SessionId: '{!$API.Session_Id}' };
+
+</script>
+
+<div id="root"></div>
+
+</apex:page>

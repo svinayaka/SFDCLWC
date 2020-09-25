@@ -1,0 +1,98 @@
+<apex:page >
+<!--
+<apex:page standardController="Account" extensions="AccountSearchController">
+ <apex:pagemessages />
+   <apex:sectionHeader title="Account" subtitle="Search Result"/>
+     <apex:form >
+    <apex:pageBlock >
+        <apex:pageBlockButtons >
+                    <apex:commandButton value="Submit To CMF" action="{!Submit}" />
+                    <apex:commandButton value="Cancel Request" onclick="return confirm('This will Delete the Current Record.\n\nAre you sure you want to Cancel?')" action="{!DeleteRec}"/>
+                    <apex:commandButton value="Go Back" action="{!Cancel}"/>
+
+               </apex:pageBlockButtons> 
+               
+               
+               <apex:pageblockSection title="Current Account Record" columns="1">
+
+               <apex:pageblockSectionItem >
+               <apex:outputLabel value="Account Name" for="account__name"/>
+               <apex:outputLabel value="{!Account.name}" id="account__name"/> 
+               </apex:pageblockSectionItem>
+               
+               <apex:pageblockSectionItem >
+               <apex:outputLabel value="Site Use Code" for="Site_Use_Code"/>
+               <apex:outputLabel value="{!Account.GE_HQ_Site_Use_Code__c}" id="Site_Use_Code"/> 
+               </apex:pageblockSectionItem>
+               
+               <apex:pageblockSectionItem >
+               <apex:outputLabel value="Street" for="Shipping_Street"/>
+               <apex:outputLabel value="{!Account.GE_HQ_New_Account_Street__c}" id="Shipping_Street"/> 
+               </apex:pageblockSectionItem>
+               
+               <apex:pageblockSectionItem >
+               <apex:outputLabel value="City" for="Shipping_City"/>
+               <apex:outputLabel value="{!Account.GE_HQ_New_Account_City__c}" id="Shipping_City"/> 
+               </apex:pageblockSectionItem>
+               
+               <apex:pageblockSectionItem >
+               <apex:outputLabel value="State" for="Shipping_State"/>
+               <apex:outputLabel value="{!Account.GE_HQ_New_Account_State_Province__c}" id="Shipping_State"/> 
+               </apex:pageblockSectionItem>
+               
+               <apex:pageblockSectionItem >
+               <apex:outputLabel value="Postal Code" for="Shipping_Postal_Code"/>
+               <apex:outputLabel value="{!Account.GE_HQ_New_Account_Zip_Postal_Code__c}" id="Shipping_Postal_Code"/> 
+               </apex:pageblockSectionItem>
+               
+               <apex:pageblockSectionItem >
+               <apex:outputLabel value="Country" for="Shipping_Country"/>
+               <apex:outputLabel value="{!Account.GE_HQ_New_Account_Country__c}" id="Shipping_Country"/> 
+               </apex:pageblockSectionItem>
+               
+               <apex:pageblockSectionItem >
+               <apex:outputLabel value="Phone" for="Phone"/>
+               <apex:outputlabel value="{!Account.Phone}" id="Phone"/> 
+               </apex:pageblockSectionItem>
+               
+               </apex:pageblockSection>
+               
+              <apex:pageBlockSection title="Existing CMF Approved and Pending Accounts" >
+                <apex:pageBlockTable value="{!arrAcc}" var="acc" >
+                     <apex:column headerValue="Account Name">         
+                     <apex:outputLink value="/{!acc.id}" Title="Go To Account Page" Target="_blank"> {!acc.Name}</apex:outputLink>
+                        </apex:column>
+                          <apex:column headervalue="DUNS Number" value="{!acc.GE_HQ_DUNS_Number__c}"/>
+                          <apex:column headervalue="Street"  value="{!acc.ShippingStreet}"/>
+                          <apex:column headervalue="City" value="{!acc.ShippingCity}"/>
+                          <apex:column headervalue="State"  value="{!acc.ShippingState}"/>
+                          <apex:column headervalue="Postal Code"  value="{!acc.ShippingPostalCode}"/>
+                          <apex:column headervalue="Country"  value="{!acc.ShippingCountry}"/>      
+                          <apex:column headervalue="Request Status" value="{!acc.GE_HQ_Request_Status__c}" />    
+                  
+                    </apex:pageBlockTable> 
+                </apex:pageBlockSection>
+              
+                
+                  <apex:pageBlockSection title="Pending Account Modification Requests">
+                   
+                    <apex:pageBlockTable value="{!arrAccRequest}" var="AccReqt">
+                                                  
+                          <apex:column HeaderValue="Account Name">
+                          <apex:outputLink value="/{!AccReqt.id}" Title="Go To Account Modification Request Page" target="_blank"> {!AccReqt.GE_HQ_Account_Name__c}</apex:outputLink>
+                          </apex:column>
+                          <apex:column headerValue="Account Modification Request" value="{!AccReqt.name}"/>
+                          <apex:column headervalue="Street"Value="{!AccReqt.GE_HQ_Street__c}"/>
+                          <apex:column headervalue="City" value="{!AccReqt.GE_HQ_City__c}"/>
+                          <apex:column headervalue="State" value="{!AccReqt.GE_HQ_Postal_Code__c}"/>
+                          <apex:column headervalue="Postal Code" value="{!AccReqt.GE_HQ_State_Province__c}"/>
+                          <apex:column headervalue="Country" value="{!AccReqt.GE_HQ_Country__c}"/>                          
+                          <apex:column headervalue="Request Status" value="{!AccReqt.GE_HQ_Request_Status__c}"/>
+                    </apex:pageBlockTable>             
+                </apex:pageBlockSection>
+                
+         </apex:pageBlock>        
+       
+  </apex:form>
+ -->
+</apex:page>

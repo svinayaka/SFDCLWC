@@ -1,0 +1,657 @@
+<apex:page standardcontroller="case"  extensions="GE_OG_MCTS_CaseEditController" action="{!autoRun}"  
+  tabStyle="case">
+  
+  <style type="text/css">
+  .m1{
+
+   width: 40px;
+
+}
+.m2{
+
+   width: 130px;
+
+}
+.m3{
+
+   width: 100px;
+
+}
+</style>
+<script>
+    function calllink()
+    {
+            var r = alert("Click on the link only if LE Account is not found in app.");
+    }
+</script>
+<style>
+                        a:hover {
+                            background:#ffffff; /*BG color is a must for IE6*/
+                            text-decoration:none;
+                            
+                            position:relative;
+                        } 
+                        a.tooltip span {
+                           display: none;
+                        }
+                        a.tooltip:hover span{
+                            display: block;
+                                  position:absolute;
+                                  top:1.25em;
+                                  padding:2px 5px;
+                                  left:-15em; width:15em;
+                                  z-index:100;
+                                  border:1px solid orange;
+                                  background-color:#FEFDB9;
+                                  color:black;
+                        }
+                    </style> 
+   <apex:form id="mitem">
+   <script type="text/javascript">
+            window.onload = setFocus
+            function setFocus() {
+                document.getElementById("hiddenElement").focus();
+            }
+             function NullValues(t)
+            {
+            
+            rerendersubbusiness(t)
+            
+            }
+            function NullValues1(t)
+            {
+            
+            rerenderbusiness(t)
+            
+            }
+            function NullValues2(t)
+            {
+  
+             rerenderassemblyvalue(t)
+            
+            }
+            function NullValues3(t)
+            {
+             rerendercomponentvalue(t)
+            
+            }
+             function NullValues4(t)
+            {
+             rerenderitemvalue(t)
+            
+            }
+            
+             function NullValues5(t)
+            {
+             rerenderdescriptionvalue(t)
+            
+            }
+
+        </script>
+   <apex:pagemessages />
+   
+    <apex:actionFunction name="rerenderdescriptionvalue"  action="{!makeNullValues5}" rerender="out,pb,pbs1,component,itemsSelectList1,itemdescriptionsSelectList1,itemdescription1sSelectList1" status="loading1">
+            <apex:param name="six" value="" />
+         
+      </apex:actionFunction>
+        
+         <apex:actionFunction name="rerenderitemvalue"  action="{!makeNullValues4}" rerender="out,pb,pbs1,component,itemsSelectList1,itemdescriptionsSelectList1,itemdescription1sSelectList1" status="loading1" immediate="true">
+            <apex:param name="five" value="" />
+         
+      </apex:actionFunction>
+        
+        <apex:actionFunction name="rerendercomponentvalue"  action="{!makeNullValues3}" rerender="out,pb,pbs1,component,itemsSelectList1,itemdescriptionsSelectList1,itemdescription1sSelectList1" status="loading1" immediate="true">
+            <apex:param name="four" value="" />
+         
+      </apex:actionFunction>
+        
+         <apex:actionFunction name="rerenderassemblyvalue"  action="{!makeNullValues2}" rerender="out,pb,pbs1,component,itemsSelectList1,itemdescriptionsSelectList1,itemdescription1sSelectList1" status="loading1" immediate="true">
+            <apex:param name="three" value="" />
+         
+      </apex:actionFunction>
+        
+         <apex:actionFunction name="rerenderbusiness"  action="{!makeNullValues}" rerender="out,pb,pbs1,component,itemsSelectList1,itemdescriptionsSelectList1,itemdescription1sSelectList1" status="loading1"  immediate="true">
+            <apex:param name="one" value="" />
+         
+      </apex:actionFunction>
+        
+         <apex:actionFunction name="rerendersubbusiness"  action="{!makeNullValues1}" rerender="out,pb,pbs1,component,itemsSelectList1,itemdescriptionsSelectList1,itemdescription1sSelectList1" status="loading1" immediate="true">
+            <apex:param name="two" value="" />
+         
+      </apex:actionFunction>
+      
+   
+   <apex:actionFunction name="rerenderassembly" rerender="out,pb,pbs1" status="loading1" immediate="true">
+          <apex:param name="firstParam" assignTo="{!assembly}" value="" />
+         
+      </apex:actionFunction>
+   
+    <!--<apex:pageMessage id="pgMsg" Title="No Products found for given ProductCode" severity="info" strength="2" rendered="{!pgMsgTxt!=''}"></apex:pageMessage> -->   
+   <apex:actionFunction name="rerenderitem" rerender="out,pb,pbs1,itemsSelectList1,itemdescriptionsSelectList1,itemdescription1sSelectList1" status="loading1">
+          <apex:param name="firstParam" assignTo="{!component}" value="" />
+         
+      </apex:actionFunction>
+      <apex:actionFunction name="rerenderitemdescription" rerender="out,pb,pbs1,itemdescriptionsSelectList1,itemdescription1sSelectList1" status="loading1" >
+          <apex:param name="firstParam" assignTo="{!item}" value="" />
+         
+      </apex:actionFunction>
+      <apex:actionFunction name="rerenderitemdescription1" rerender="out,pb,pbs1,itemdescription1sSelectList1" status="loading1" >
+          <apex:param name="firstParam" assignTo="{!itemdescription}" value="" />
+         
+      </apex:actionFunction>
+       <apex:actionFunction name="rerenderSg4" rerender="out,pb,pbs1" status="loading1" >
+          <apex:param name="firstParam" assignTo="{!itemdescription1}" value="" />
+         
+      </apex:actionFunction>
+       <apex:actionFunction name="rerenderSg5" rerender="out,pb,pbs1,itemsSelectList1,itemdescriptionsSelectList1,itemdescription1sSelectList1,sg5sSelectList1,tstpopup" status="loading1" >
+          <apex:param name="firstParam" assignTo="{!sg4}" value="" />
+         
+      </apex:actionFunction>
+       
+  
+
+
+       
+      <apex:sectionHeader title="Case Edit"  />
+      <apex:outputPanel id="allstatusload" rendered="{!if(c.status!='Waiting for Customer',true,false)}">
+ <apex:pageBlock >
+ 
+ 
+  <apex:pageBlockSection title="General" columns="2" collapsible="false" > 
+                  <apex:outputField value="{!c.casenumber}" rendered="{!!clonecase}"/>
+                  <apex:pageBlockSectionItem id="CaseNumber" rendered="{!clonecase}">
+                  <apex:outputLabel value="Case Number" />
+                  <apex:outputLabel value="Case Clone" />
+
+                  </apex:pageBlockSectionItem>
+                  <apex:outputField value="{!c.ownerid}"/>
+                   <apex:pageBlockSectionItem id="Business" > 
+                    <B>Business</B>
+                    <apex:inputField value="{!c.GE_OG_Business_CIR__c}" onchange="NullValues1(this.value)" required="true"/>
+                </apex:pageBlockSectionItem> 
+                  <apex:inputField value="{!c.Status}" required="true" /> 
+                  <apex:inputField value="{!c.GE_OG_Sub_Business_CIR__c}" onchange="NullValues(this.value)" required="true"> </apex:inputField>
+                       <apex:pageBlockSectionItem >
+                        <div style="color:black">Customer Escalation
+                            <a class="tooltip" target="_blank"><img src="{!$Resource.helptxt}"/> 
+                                <span>{!$ObjectType.case.fields.GE_OG_Customer_Escalation_CIR__c.InlineHelpText}</span>  
+                            </a>     
+                        </div>  
+                      <apex:inputField value="{!c.GE_OG_Customer_Escalation_CIR__c}" required="true" />
+                       </apex:pageBlockSectionItem>
+                    
+                    <apex:pageBlockSectionItem >
+                        <div style="color:black">Impact on Customer
+                            <a class="tooltip" target="_blank"><img src="{!$Resource.helptxt}"/> 
+                                <span>{!$ObjectType.case.fields.GE_OG_Customer_Impact_CIR__c.InlineHelpText}</span>  
+                            </a>     
+                        </div>  
+                       <apex:inputField value="{!c.GE_OG_Customer_Impact_CIR__c}" required="true"/>
+                    </apex:pageBlockSectionItem>
+                    
+                     <apex:pageBlockSectionItem >
+                        <div style="color:black">EHS/Product Safety Impact 
+                            <a class="tooltip" target="_blank"><img src="{!$Resource.helptxt}"/> 
+                                <span>{!$ObjectType.case.fields.GE_OG_EHS_Product_Safety_CIR__c.InlineHelpText}</span>  
+                            </a>     
+                        </div>  
+                     <apex:inputfield value="{!c.GE_OG_EHS_Product_Safety_CIR__c}" required="true"/>
+                     </apex:pageBlockSectionItem>
+                     
+                     <apex:inputField value="{!c.GE_OG_Escalation_Level_CIR__c}" />
+                     <apex:inputField value="{!c.GE_OG_Front_Line_case_Reference_CIR__c}"/>
+                     <apex:inputField value="{!c.Type}" required="true" />
+                      <apex:inputField value="{!c.Task_Owner_Function__c}"/>
+                <apex:outputField value="{!c.recordtypeid}"  />  
+                   
+               
+        </apex:pageBlockSection>
+                     
+                   
+                <apex:pageBlockSection title="Customer Contacts" columns="2" collapsible="false">
+                <!--Regarding R-22389 and 15-6 Release
+                          <apex:inputField value="{!c.GE_OG_MC_TS_Initiator_Type__c}" required="true"/>
+                          -->
+                            <apex:inputField value="{!c.Contactid}"/>
+                            <apex:inputField value="{!c.GE_OG_MC_TS_Name_of_Site_Contact__c}"/>
+                            
+                            <apex:inputField value="{!c.GE_OG_Site_LegalEntity_Account__c}" />
+                            <apex:outputLink value="{!$Label.GE_OG_Case_CustomerConnect_link}" target="_Blank" onclick="calllink()">Search LE Account in Customer Connect</apex:outputLink>
+                            <apex:inputfield value="{!c.Site_Contact_Information__c}" style="width:180px; height:50px" /> 
+                            <apex:inputField value="{!c.GE_OG_CIR_Customer_Email__c}" required="true"/>
+                            <apex:inputField value="{!c.origin}"/>
+                            <apex:inputField value="{!c.GE_OG_CIR_Customer_Phone__c}"/>
+                </apex:pageBlockSection>
+ 
+ 
+ 
+ 
+ 
+ 
+<apex:pageblockSection id="pb" collapsible="false" columns="1">  
+<apex:outputPanel id="out">
+<apex:actionStatus id="loading1" stopText="">
+
+            <apex:facet name="start" >
+                <div class="waitingSearchDiv" id="el_loading" style=" height:100%;opacity:0.75;width:100%; position:fixed;">
+                    <div class="waitingHolder" >
+                        <img class="waitingImage" style="width:40px; height:40px; " src="{!$Resource.GEMDM__GE_MDM_LoadingIcon}" title="Please Wait..." />
+                        <br/>
+                        <span class="waitingDescription" style="font-size:20px;">Please Wait...</span>
+                    </div>
+                </div>
+            </apex:facet>
+        </apex:actionStatus>
+        
+      
+         
+      
+    </apex:outputPanel>
+    </apex:pageblocksection>
+
+    <apex:pageblockSection title="Info for Resolution" columns="2" collapsible="false" id="inforesol">
+                <apex:inputfield value="{!c.subject}" required="true" />
+                <apex:inputField value="{!c.Description}" required="true" style="width:250px; height:100px"/>
+                <apex:inputField value="{!c.GE_OG_Issue_Event_Date_CIR__c}" required="true"/>
+                <apex:inputField value="{!c.GE_OG_Customer_Want_Date_CIR__c}" required="true"/>
+            </apex:pageblockSection>
+            
+    
+   <apex:pageblockSection id="pbs"  title="Job Details" columns="2" collapsible="false">
+    
+    <apex:inputField value="{!c.accountid}" />   
+    <apex:inputField value="{!c.GE_OG_Account_Name_Only_If_Not_List_CIR__c}"/>
+    <!--<apex:inputField value="{!c.GE_OG_Key_Account_Name_CIR__c}" style="width:180px"/>-->
+   
+  <apex:pageBlockSectionItem >
+                    <div style="color:black">Project Name
+                    <a class="tooltip" target="_blank"><img src="{!$Resource.helptxt}"/> 
+                            <span>{!$ObjectType.case.fields.GE_OG_Project_Name_CIR__c.InlineHelpText}</span>  
+                        </a>     
+                    </div>  
+                    <apex:inputField value="{!c.GE_OG_Project_Name_CIR__c}"/>
+   </apex:pageBlockSectionItem>
+                       
+    <apex:inputField value="{!c.GE_OG_CIR_Site_Name__c}"/>         
+ 
+   <apex:pageBlockSectionItem id="assembly" > 
+   <B>Assembly</B>
+                
+                
+   <apex:inputField value="{!c.GE_OG_CIR_Assembly__c}" onchange="NullValues2(this.value)" required="true" />
+            
+    </apex:pageBlockSectionItem>                
+           
+ 
+</apex:pageblockSection> 
+                    
+                    <input id="hiddenElement" type="hidden" />
+                    
+<apex:pageblockSection id="pbs1" columns="2"> 
+
+
+          <apex:inputField value="{!c.Product_Hierarchy__c}"/>
+          <!--  <apex:pageBlockSectionItem id="component"> 
+            <apex:outputLabel value="Component" style="padding-left:150px"> &nbsp;&nbsp;&nbsp;&nbsp;</apex:outputLabel>
+                      <apex:actionRegion >    
+                        <apex:selectList styleclass="std" size="1" 
+                            value="{!component}"  disabled="{!assembly=null}">
+                                <apex:selectOptions value="{!componentsSelectList}"/>
+                                <apex:actionSupport event="onchange" rerender="out,pb,pbs1,component,itemsSelectList1,itemdescriptionsSelectList1,itemdescription1sSelectList1" action="{!makeNullValues3}" status="loading1"/>
+                         </apex:selectList>
+                          </apex:actionRegion>
+            </apex:pageBlockSectionItem> -->
+           
+            <apex:inputField value="{!c.GE_OG_CIR_Unit_Serial_number__c}" />
+             <apex:outputField value="{!c.Component__c}"/>
+            
+        <!--    <apex:pageBlockSectionItem id="itemsSelectList1" >     
+             <apex:outputLabel value="Item" style="padding-left:195px">&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputLabel>
+               <apex:actionRegion >
+                  <apex:selectList styleclass="std" size="1" 
+                             value="{!item}" disabled="{!component=null}"  >
+                            <apex:selectOptions value="{!itemsSelectList1}"/>  
+                             <apex:actionSupport event="onchange" rerender="out,pb,pbs1,component,itemsSelectList1,itemdescriptionsSelectList1,itemdescription1sSelectList1" action="{!makeNullValues4}" status="loading1"/>
+                      
+                 </apex:selectList>
+                      </apex:actionRegion>
+                </apex:pageBlockSectionItem> -->
+              
+          <apex:inputField value="{!c.GE_OG_CIR_Site_Country__c}" style="width:180px"/>
+          <apex:outputField value="{!c.Item__c}"/>
+       
+    <!--     <apex:pageBlockSectionItem id="itemdescriptionsSelectList1" >
+      
+               
+           <apex:outputLabel value="Item Description" style="padding-left:120px">&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputLabel>
+           <apex:actionRegion > 
+            <apex:selectList styleclass="std" size="1" 
+                 value="{!itemdescription}"  disabled="{!item=null}" >
+                <apex:selectOptions value="{!itemdescriptionsSelectList1}"/>  
+                <apex:actionSupport event="onchange" rerender="out,pb,pbs1,component,itemsSelectList1,itemdescriptionsSelectList1,itemdescription1sSelectList1" action="{!makeNullValues5}" status="loading1"/>
+           
+            </apex:selectList>
+           </apex:actionRegion>
+       </apex:pageBlockSectionItem> -->
+       
+         <apex:inputField value="{!c.GE_OG_CIR_Region__c}"/>
+          <apex:outputField value="{!c.Item_Description__c}" />
+         
+<!-- <apex:pageBlockSectionItem id="itemdescription1sSelectList1" >
+       <apex:outputLabel value="Item Description1" style="padding-left:120px">&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputLabel>
+                     <apex:actionRegion >     
+            <apex:selectList styleclass="std" size="1" 
+                 value="{!itemdescription1}"  disabled="{!itemdescription=null}">
+                <apex:selectOptions value="{!itemdescription1sSelectList1}"/>  
+                <apex:actionSupport event="onchange" rerender="out,pb,pbs1,itemdescription1sSelectList1" status="loading1"/>
+            
+            </apex:selectList>
+             </apex:actionRegion>
+           </apex:pageBlockSectionItem>  -->
+          
+           <apex:inputField value="{!c.GE_OG_TS_Case_Time__c}"/>
+           <apex:outputField value="{!c.Item_Description_1__c}" />
+    </apex:pageblockSection>
+    
+    <apex:pageBlockSection title="Info For Resolution" columns="2" collapsible="false"> 
+                     <apex:inputfield value="{!c.GE_OG_Resolution_Committed_date_CIR__c}"/>
+                     <apex:inputfield value="{!c.GE_OG_Resolution_Forecasted_Date_CIR__c}"/>
+                     <apex:inputfield value="{!c.GE_OG_MC_TS_Final_Issue__c}" style="width:150px; height:50px"/>
+                     <apex:inputfield value="{!c.GE_OG_Final_TS_Solution__c}" style="width:150px; height:50px"/>
+                     <!--Modifying as per the requirement R-22358
+                     <apex:inputfield value="{!c.GE_OG_Case_Update_CIR__c}" style="width:150px; height:50px"/>
+                     -->
+                     <apex:outputField value="{!c.GE_OG_Case_Update_CIR__c}" style="width:150px; height:50px"/>
+                     
+                     <apex:inputfield value="{!c.GE_OG_Customer_Feedback_CIR__c}" style="width:150px; height:50px"/>
+                     <apex:inputfield value="{!c.GE_OG_Case_Cancellation_Note_CIR__c}" style="width:150px; height:50px"/>
+                     <apex:inputfield value="{!c.GE_OG_Send_Back_Reason_Description_CIR__c}" style="width:150px; height:50px"/>
+                     <apex:inputfield value="{!c.GE_OG_TS_NPS__c}"/>                           
+            </apex:pageBlockSection>
+            
+            <apex:pageBlocksection title="Continuous Improvement" columns="2" collapsible="false" >
+                    <apex:inputfield value="{!c.GE_OG_CIR_NC_Screening__c}"/>
+                    <apex:inputfield value="{!c.GE_OG_CIR_Defect_Code_Lev_1__c}"/>
+                    <apex:inputfield value="{!c.GE_OG_NCA_RCA_value_CIR__c}"/>
+                    <apex:inputfield value="{!c.GE_OG_CIR_Defect_Code_Lev_2__c}"/>
+                    <apex:inputfield value="{!c.GE_OG_MC_TS_Notify_CI_team__c}"/>
+                    <apex:inputfield value="{!c.GE_OG_CIR_Defect_Code_Lev_3__c }"/>
+                    <apex:inputfield value="{!c.GE_OG_MC_TS_CI_Notification_date__c}"/>
+                    <apex:inputfield value="{!c.Priority}"/>
+                    <apex:inputfield value="{!c.GE_OG_MC_TS_PQE_engaged__c}"/>
+            </apex:pageBlockSection>
+    <center>
+    <apex:pageBlockButtons >
+          
+    <apex:commandButton value="Save"  action="{!savecase}"  />
+    <apex:commandButton value="Cancel"  action="{!cancel}"  />
+           </apex:pageBlockButtons> 
+           </center> 
+           </apex:pageblock> 
+           </apex:outputPanel>
+       <apex:outputPanel id="refreshPage1" rendered="{!refreshPage}">
+        <!-- This panel is only shown when the controller wants the parent page to perform a 'reload' -->
+        <script>
+       
+        window.top.location='/{!c.id}';
+            
+           
+        </script>
+
+      
+    </apex:outputPanel>
+    <!-- Adding New Logic -->
+    
+    
+     <apex:outputPanel id="waitingforcustomerstatusload" rendered="{!if(c.status='Waiting for Customer',true,false)}">
+     <apex:pageBlock >
+      <apex:pageBlockSection title="General" columns="2" collapsible="false">
+
+
+
+                      <!--  <apex:pageBlockSectionItem >
+                            <div style="color:black">Key Account
+                                    
+                            </div>  
+                               <apex:inputField value="{!c.Key_Account_Name__c}" />
+                               <!--<apex:outputField value="{!c.GE_OG_Customer_Impact_CIR__c}" />
+                        </apex:pageBlockSectionItem> -->
+
+                        <apex:pageBlockSectionItem >
+                            <div style="color:black">Impact on Customer
+                                <a class="tooltip" target="_blank"><img src="{!$Resource.helptxt}"/> 
+                                    <span>{!$ObjectType.Case.fields.GE_OG_Customer_Impact_CIR__c.InlineHelpText}</span>  
+                                </a>     
+                            </div>  
+                           <apex:outputField value="{!c.GE_OG_Customer_Impact_CIR__c}" />
+                        </apex:pageBlockSectionItem>
+                        
+                        <!--<apex:inputField value="{!c.GE_OG_CIR_Not_A_Key_Account__c }" />-->
+                        
+                         <apex:pageBlockSectionItem >
+                            <div style="color:black">Customer Escalation
+                                <a class="tooltip" target="_blank"><img src="{!$Resource.helptxt}"/> 
+                                    <span>{!$ObjectType.Case.fields.GE_OG_Customer_Escalation_CIR__c.InlineHelpText}</span>  
+                                </a>     
+                            </div>  
+                          <apex:outputField value="{!c.GE_OG_Customer_Escalation_CIR__c}" />
+                        </apex:pageBlockSectionItem>
+                        
+                        
+                        
+                        
+                        <apex:pageBlockSectionItem >
+                            <div style="color:black">EHS/Product Safety Impact 
+                                <a class="tooltip" target="_blank"><img src="{!$Resource.helptxt}"/> 
+                                    <span>{!$ObjectType.Case.fields.GE_OG_EHS_Product_Safety_CIR__c.InlineHelpText}</span>  
+                                </a>     
+                            </div>  
+                            <apex:outputfield value="{!c.GE_OG_EHS_Product_Safety_CIR__c}" />
+                        </apex:pageBlockSectionItem>
+                        
+                        
+                        <apex:pageBlockSectionItem >
+                            <div style="color:black">GE Escalation
+                                <a class="tooltip" target="_blank"><img src="{!$Resource.helptxt}"/> 
+                                    <span>{!$ObjectType.Case.fields.GE_OG_GE_Executive_Request_CIR__c.InlineHelpText}</span>  
+                                </a>     
+                            </div>  
+                          <apex:outputField value="{!c.GE_OG_GE_Executive_Request_CIR__c}"/>
+                        </apex:pageBlockSectionItem>
+                        
+                        
+                        
+                        
+                        <!--   <apex:pageBlockSectionItem >
+                            <div style="color:black">Impact on Customer - Description 
+                                <a class="tooltip" target="_blank"><img src="{!$Resource.helptxt}"/> 
+                                    <span>{!$ObjectType.Case.fields.GE_OG_CIR_Impact_on_Customer_Description__c.InlineHelpText}</span>  
+                                </a>     
+                            </div>  
+                         <apex:outputField value="{!c.GE_OG_CIR_Impact_on_Customer_Description__c}" />
+                        </apex:pageBlockSectionItem>
+                        
+                 <apex:pageBlockSectionItem >
+                            <div style="color:black">Impact on Customer - Description 
+                                <a class="tooltip" target="_blank"><img src="{!$Resource.helptxt}"/> 
+                                    <span>{!$ObjectType.Case.fields.GE_OG_CIR_Type_of_Issue__c.InlineHelpText}</span>  
+                                </a>     
+                            </div>  
+                         <apex:outputField value="{!c.GE_OG_CIR_Type_of_Issue__c}" />
+                        </apex:pageBlockSectionItem>       -->
+     
+    <apex:outputField value="{!c.GE_OG_Business_CIR__c}"/>
+    <apex:outputField value="{!c.GE_OG_Sub_Business_CIR__c}"/>
+    <apex:outputField value="{!c.GE_OG_Front_Line_case_Reference_CIR__c}"/>
+      <!-- <apex:outputfield value="{!c.GE_OG_Confirm_Escalated_CIR__c}" /> 
+    <apex:outputfield value="{!c.GE_OG_CIR_Case_Manager_Function__c}" /> 
+     <apex:outputField value="{!c.GE_OG_CIR_Safer_case__c}"/> 
+     <apex:outputField value="{!c.GE_OG_Link_to_CIR_Handbook_and_Videos__c}"/> -->
+          <apex:outputField value="{!case.recordtypeid}"  />
+    </apex:pageBlockSection>
+    
+     <apex:pageBlockSection title="Customer Contacts" columns="2" collapsible="false">
+    <apex:outputField value="{!c.GE_OG_CIR_Customer_Contact_Name__c}"/>
+    <apex:outputField value="{!c.GE_OG_CIR_Customer_Address__c}"/>
+    <apex:outputField value="{!c.GE_OG_CIR_Customer_Phone__c}"/>
+    <apex:outputField value="{!c.GE_OG_CIR_Customer_Email__c}"/>
+
+    </apex:pageBlockSection>
+    
+    <apex:pageblockSection title="Info for Resolution" columns="2" collapsible="false">
+   <!-- <apex:pageBlockSectionItem >
+                        <div style="color:black">Action Taken Prior To CIR
+                            <a class="tooltip" target="_blank"><img src="{!$Resource.helptxt}"/> 
+                                <span>{!$ObjectType.Case.fields.GE_OG_Actions_Taken_To_Resolve_befor_CIR__c.InlineHelpText}</span>  
+                            </a>     
+                        </div>  
+                        
+                       <apex:outputField value="{!c.GE_OG_Actions_Taken_To_Resolve_befor_CIR__c}"/>
+                     </apex:pageBlockSectionItem> -->
+     <apex:outputfield value="{!c.subject}" />
+    <apex:outputField value="{!c.Description}" />
+     <!--<apex:pageBlockSectionItem >
+                        <div style="color:black">Specific Deliverable Required to Resolve
+                            <a class="tooltip" target="_blank"><img src="{!$Resource.helptxt}"/> 
+                                <span>{!$ObjectType.Case.fields.GE_OG_CIR_Specific_Deliverable_Required__c.InlineHelpText}</span>  
+                            </a>     
+                        </div>  
+                        
+                        <apex:outputfield value="{!c.GE_OG_CIR_Specific_Deliverable_Required__c}" />
+                     </apex:pageBlockSectionItem>-->
+    <apex:outputField value="{!c.GE_OG_Issue_Event_Date_CIR__c}"/>
+    <apex:pageBlockSectionItem >
+                        <div style="color:black">Customer Want Date
+                            <a class="tooltip" target="_blank"><img src="{!$Resource.helptxt}"/> 
+                                <span>{!$ObjectType.Case.fields.GE_OG_Customer_Want_Date_CIR__c.InlineHelpText}</span>  
+                            </a>     
+                        </div>  
+                        
+                        <apex:outputfield value="{!c.GE_OG_Customer_Want_Date_CIR__c}" />
+                     </apex:pageBlockSectionItem>
+                        
+
+
+    </apex:pageBlockSection>
+    <apex:pageBlockSection title="Job Details" columns="2" collapsible="false">
+
+    <apex:outputField value="{!c.accountid}" />
+   
+                    <apex:pageBlockSectionItem >
+                        <div style="color:black">Account Name - Only If Not Listed
+                            <a class="tooltip" target="_blank"><img src="{!$Resource.helptxt}"/> 
+                                <span>{!$ObjectType.Case.fields.GE_OG_Account_Name_Only_If_Not_List_CIR__c.InlineHelpText}</span>  
+                            </a>     
+                        </div>  
+                        
+                        <apex:outputfield value="{!c.GE_OG_Account_Name_Only_If_Not_List_CIR__c}" />
+                     </apex:pageBlockSectionItem>
+
+    <!-- <apex:outputField value="{!c.GE_OG_Project_Sales_Order_ID_CIR__c}"/> -->
+
+    <apex:pageBlockSectionItem >
+                        <div style="color:black">Project Name
+                        <a class="tooltip" target="_blank"><img src="{!$Resource.helptxt}"/> 
+                                <span>{!$ObjectType.Case.fields.GE_OG_Project_Name_CIR__c.InlineHelpText}</span>  
+                            </a>     
+                        </div>  
+                        
+                      <apex:outputField value="{!c.GE_OG_Project_Name_CIR__c}"/>
+    </apex:pageBlockSectionItem>
+                  
+           
+    <apex:outputField value="{!c.GE_OG_CIR_Unit_Serial_number__c}"/>
+   <!-- <apex:outputField value="{!c.GE_OG_CIR_M_C_Job_Type__c}"/> 
+    <apex:outputField value="{!c.GE_OG_M_C_Job_Number_CIR__c}"/> 
+    <apex:outputField value="{!c.GE_OG_CIR_M_C_Location_of_Mfg_Service__c}"/> -->
+    <apex:outputField value="{!c.GE_OG_CIR_Site_Name__c}" />
+    <apex:outputfield value="{!c.GE_OG_CIR_Assembly__c}" />
+    <apex:outputField value="{!c.GE_OG_CIR_Site_Country__c}"/>
+    <apex:outputfield value="{!c.GE_OG_CIR_Component__c}" />
+    <apex:outputField value="{!c.GE_OG_CIR_Region__c}"/>
+    <apex:outputfield value="{!c.GE_OG_CIR_Item__c}" />
+    <apex:outputfield value="{!c.GE_OG_Item_Description_CIR__c}"/>
+
+    </apex:pageBlockSection>
+
+
+
+    <apex:pageBlockSection title="Case Resolution" columns="2" collapsible="false">
+    <apex:pageBlockSectionItem >
+                        <div style="color:black">Resolution Committed date
+                            <a class="tooltip" target="_blank"><img src="{!$Resource.helptxt}"/> 
+                                <span>{!$ObjectType.Case.fields.GE_OG_Resolution_Committed_date_CIR__c.InlineHelpText}</span>  
+                            </a>     
+                        </div>  
+                        
+                        <apex:outputfield value="{!c.GE_OG_Resolution_Committed_date_CIR__c}"  />
+                     </apex:pageBlockSectionItem>
+    <apex:pageBlockSectionItem >
+                        <div style="color:black">Resolution Forecasted Date
+                            <a class="tooltip" target="_blank"><img src="{!$Resource.helptxt}"/> 
+                                <span>{!$ObjectType.Case.fields.GE_OG_Resolution_Forecasted_Date_CIR__c.InlineHelpText}</span>  
+                            </a>     
+                        </div>  
+                        
+                        <apex:outputfield value="{!c.GE_OG_Resolution_Forecasted_Date_CIR__c}"  style="width:250px; height:100px"/>
+                     </apex:pageBlockSectionItem>
+    <apex:outputfield value="{!c.GE_OG_MC_TS_Final_Issue__c}" style="width:350px; height:200px"/>
+    
+    <apex:outputfield value="{!c.GE_OG_Final_TS_Solution__c}" style="width:350px; height:200px"/>
+
+    <apex:outputfield value="{!c.GE_OG_Case_Update_CIR__c}"  style="width:350px; height:200px"/>
+    <apex:outputfield value="{!c.GE_OG_Customer_Feedback_CIR__c}" />
+    <apex:outputfield value="{!c.GE_OG_Case_Cancellation_Note_CIR__c}" />
+    <apex:outputfield value="{!c.GE_OG_Send_Back_Reason_Description_CIR__c}" style="width:350px; height:200px"/>
+    
+    </apex:pageBlockSection>
+
+    <apex:pageBlockSection title="Continuous Improvement" columns="2" collapsible="false">
+    <apex:outputfield value="{!c.GE_OG_CIR_Link_to_CIN_Cal__c}" />
+    
+    <apex:pageBlockSectionItem >
+                        <div style="color:black">NC Screening
+                            <a class="tooltip" target="_blank"><img src="{!$Resource.helptxt}"/> 
+                                <span>{!$ObjectType.Case.fields.GE_OG_CIR_NC_Screening__c.InlineHelpText}</span>  
+                            </a>     
+                        </div>  
+                        
+                        <apex:outputfield value="{!c.GE_OG_CIR_NC_Screening__c}" />
+                     </apex:pageBlockSectionItem>
+
+    <apex:outputfield value="{!c.GE_OG_CIR_Defect_Code_Lev_1__c}" />
+    <apex:outputfield value="{!c.GE_OG_NCA_RCA_value_CIR__c}"/>
+    <apex:outputfield value="{!c.GE_OG_CIR_Defect_Code_Lev_2__c}" />
+    <apex:outputfield value="{!c.GE_OG_Gensuite_Link_CIR__c}" />
+    <apex:outputfield value="{!c.GE_OG_CIR_Defect_Code_Lev_3__c }" />
+
+    </apex:pageBlockSection>
+    <center>
+    <apex:pageBlockButtons >
+          
+    <apex:commandButton value="Save"  action="{!savecase}"  />
+    <apex:commandButton value="Cancel"  action="{!cancel}"  />
+           </apex:pageBlockButtons> 
+           </center> 
+</apex:pageBlock>
+   
+     </apex:outputPanel>
+     
+    <script type='text/javascript'> 
+function runOnEnter(ev) { 
+
+if (window.event && window.event.keyCode == 13 || ev.which == 13) { 
+
+searchAccRecs(); 
+return false; 
+} else { 
+
+return true; 
+} 
+} 
+</script>
+       
+   </apex:form>
+   
+   
+</apex:page>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>48.0</apiVersion>
+    <availableInTouch>false</availableInTouch>
+    <confirmationTokenRequired>false</confirmationTokenRequired>
+    <description>The Sync Simulator displays an object-by-object breakdown of the data and attachments that sync to FieldFX Mobile for a user.</description>
+    <label>Sync Simulator</label>
+</ApexPage>

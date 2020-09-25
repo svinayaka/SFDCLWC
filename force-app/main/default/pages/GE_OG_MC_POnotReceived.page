@@ -1,0 +1,3 @@
+<apex:page standardController="SVMXC__Service_Order__c" extensions="GE_OG_MC_POnotReceived_Cntrl" >
+    <b><apex:outputText value="PO not Received is checked 'A PO has not been received for this project'" rendered="{!flag == true}" style="font-color:red;background-color:yellow;" /></b>
+</apex:page>

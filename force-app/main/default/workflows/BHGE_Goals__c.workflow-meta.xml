@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Notify_Previous_new_owner</fullName>
+        <description>DM Email Notifications - Account Plans - BHGE Goals; Notify Previous/ new owner; Email sent to Owner, Previous owner</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Previous_Owner_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>OWNER_GEOG__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Accounts_and_Contacts_Email_Templates/Notify_BHGE_Goal_Previous_Current_Owner</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Update_Previous_Owner_Email</fullName>
+        <field>Previous_Owner_Email__c</field>
+        <formula>IF(NOT(ISNEW()), PRIORVALUE(Owner_Email__c ),&apos;&apos; )</formula>
+        <name>Update Previous Owner Email</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <rules>
+        <fullName>Update Previous Owner Email</fullName>
+        <actions>
+            <name>Notify_Previous_new_owner</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>Update_Previous_Owner_Email</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Update Previous Owner Email on change of Owner field</description>
+        <formula>OR(ISCHANGED( OWNER_GEOG__c ),ISNEW())</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

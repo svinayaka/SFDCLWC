@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>PRM_MAP_MANAGER_SHARING</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>PRM MAP MANAGER SHARING</label>
+        <sharedTo>
+            <group>PRM_MAP_MANAGER</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Channel PRM business plan</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+</SharingRules>

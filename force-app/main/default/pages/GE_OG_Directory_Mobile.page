@@ -1,0 +1,170 @@
+<!--
+Page Name              : GE_OG_Directory_Mobile
+Used Where ?           : OG Directory
+Purpose/Overview       : This page is used to provide directory for oil & Gas by specific filters
+Functional Area        : Innovation 
+Author                 : Jain Kirtesh
+Created Date           : 14/03/2014
+
+Change History -
+
+Date Modified : Developer Name     : Method/Section Modified/Added : Purpose/Overview of Change
+
+-->
+<apex:page standardController="User" Extensions="GEOGDirectoryController_Mobile" action="{!onLoadPage_Countries}" id="pg" >
+    <apex:sectionHeader subtitle="Oil & Gas Directory"/>
+    <apex:form id="form1">
+        <apex:outputPanel styleClass="fieldToHide" >
+            <apex:inputField value="{!user.GE_HQ_Tier_1_P_L__c}" id="Tier1" />
+        </apex:outputpanel>
+        <apex:pageBlock id="pb" >
+            <apex:pageBlockButtons location="bottom">
+                <apex:actionStatus id="statusSaveTrip" stopText="">
+                    <apex:facet name="start">
+                        <apex:image url="/img/loading32.gif"/>
+                    </apex:facet>
+                </apex:actionStatus>  
+                <apex:commandButton value="Submit"   status="statusSaveTrip" onclick="return getReport();" style="font-size:15px;width:100px;height:23px"/>                
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection columns="1">
+                <apex:inputField id="funct" value="{!user.Function__c}" onchange="selectedFunctVal(this.id);" label="Function*"/>
+                <apex:inputField value="{!user.GE_HQ_Tier_2_P_L__c}" id="tier2" onchange="selectedTier2Val(this.id);" label="Tier 2 P&L*"/>
+                <apex:inputField value="{!user.GE_HQ_Tier_3_P_L__c}" id="tier3" onchange="selectedTier3Val(this.id);" />   
+                <apex:pageBlockSectionItem >
+                    <apex:outputText >Country*</apex:outputText>
+                    <div class="ui-widget">
+                        <input id="countries" />
+                    </div>
+                </apex:pageBlockSectionItem>  
+            </apex:pageBlockSection>
+            <apex:outputLabel >* Indicates required fields</apex:outputLabel>
+        </apex:pageBlock>
+        <apex:pageBlock mode="detail">            
+            <br></br>
+        <center> <a href="#" onclick="personalUpdate();"><FONT size="3">Update your Directory Info</FONT></a></center><br></br><br></br>
+<hr></hr><br></br>
+<center><a  href="javascript:feedBack();" ><img src="{!$Resource.feedback}" alt="Feed Back" width="150" height="40"></img></a></center>
+<br></br> 
+</apex:pageBlock>
+</apex:form>
+<script src="//code.jquery.com/jquery-1.8.2.js"></script>
+<script src="//code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css"/>
+<script type="text/javascript">
+var valText='Oil & Gas (O&G)';
+var defalt=document.getElementById('{!$Component.form1.Tier1}');
+defalt.value=valText;
+defalt.disabled = true;
+var j$ = jQuery.noConflict();
+var countriesavailable = {!JSONString};/*checkmarx false positive*/  
+j$(document).ready(function(){
+    j$('.fieldToHide').hide();
+    j$("#countries").autocomplete({
+        source : countriesavailable 
+    });
+});
+var value1;
+var value2='';
+var country='';
+var functon;
+function selectedTier2Val(data)
+{
+    value1 = document.getElementById(data).value;
+    value2='';
+}
+function selectedTier3Val(data)
+{
+    value2 = document.getElementById(data).value;
+}
+function selectedFunctVal(data)
+{
+    functon = document.getElementById(data).value;
+}
+function feedBack()
+{
+    var link='{!$Label.GE_OG_Directory_FeedbackGroupurl}';
+    sforce.one.navigateToURL(link);
+    return false;
+}
+function personalUpdate()
+{
+    var link;
+    link='/apex/GEOGDPersonalInfo'+'?Id='+'{!usrid}';
+    sforce.one.navigateToURL(link);
+    return false;
+}
+function getReport()
+{
+    var tier21;
+    var tier31;
+    var Link;
+    value1=value1.split(' ').join('_');
+    value1=value1.replace(/&/g,",");
+    value2=value2.split(' ').join('_');
+    value2=value2.replace(/&/g,",");
+    tier21=encodeURIComponent(value1);
+    tier31=encodeURIComponent(value2);
+    country=document.getElementById('countries').value;
+    if(!value1 && !functon)
+        alert("Please Select the Function and Tier2 P&L Values");
+    else if(!value1)
+        alert("Please Select Tier2 P&L Value");
+        else if(!functon)
+            alert("Please Select the Function Value");
+            else if(country=='')
+                alert("Please Select a country");
+                else{
+                    //alert("entered");
+                    Link='/apex/GEOGDirectoryReport_mobile?Function='+functon+'&tier2='+tier21+'&country='+country+'&tier3='+tier31;
+                    //alert(Link);
+                    try {            
+                        sforce.one.navigateToURL(Link);
+                    }catch(e){
+                        alert(e);
+                    }        
+                }
+    return false;
+}
+</script>
+<style>
+    
+    .popupBackground {
+    /* Background color */
+    background-color:black;
+    opacity: 0.20;
+    filter: alpha(opacity = 20);
+    
+    /* Dimensions */
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 998;
+    position: absolute;
+    
+    /* Mouse */
+    cursor:wait;
+    }
+    
+    /* This is for the message DIV */
+    .PopupPanel {
+    /* Background color */
+    border: solid 2px blue;
+    background-color: white;
+    
+    /* Dimensions */
+    left: 50%;
+    width: 200px;
+    margin-left: -100px;
+    top: 50%;
+    height: 50px;
+    margin-top: -25px;
+    z-index: 999;
+    position: fixed;
+    
+    /* Mouse */
+    cursor:pointer;
+    }
+</style> 
+
+</apex:page>

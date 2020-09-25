@@ -1,0 +1,3 @@
+<apex:page standardController="Opportunity" extensions="skuid.Redirects" action="{!redirect}&objecttype=Opportunity&actiontype=View">
+
+</apex:page>

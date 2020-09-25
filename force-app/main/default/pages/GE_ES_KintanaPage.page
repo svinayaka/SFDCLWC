@@ -1,0 +1,9 @@
+<apex:page standardController="GE_ES_Request_Type__c" extensions="GE_ES_KintanaWrapper" action="{!submit}">
+
+<apex:pageMessages />
+<apex:form >
+<br/><br/>
+<apex:commandButton value="Go back to Request Type" action="{!origOpp}"/>
+</apex:form>
+
+</apex:page>

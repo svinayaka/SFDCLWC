@@ -1,0 +1,58 @@
+<!--
+* page Name-----------: GE_PRM_All_Addendum_Contracts 
+* Used Where----------: in ChannelAppointment 
+* Purpose/Overview----: NRT Process
+* Functional Area-----: PRM
+* Author--------------: 
+* Created Date--------:  
+* Test Class Name-----: 
+* Change History -
+* Date Modified : Developer Name     : Method/Section Modified/Added : Purpose/Overview of Change
+-->
+<apex:page >
+ <!-- <apex:page standardcontroller="GE_PRM_Channel_Appointment__c"  extensions="GE_PRM_Channel_Appointment_Class" sidebar="true" showHeader="true" standardstylesheets="true" tabStyle="Appointment__tab" action="{!checkforAppointment}">
+    
+      <apex:sectionHeader title="Account Name : {!addendumAccName}" subtitle="Addendum contracts"/> 
+    <style> 
+        .AddrowButton
+        {
+        background: #A9A9A9;
+        border: 1px solid #8BA446;
+        display: inline-block;
+        padding: 5px 10px 5px;
+        border-radius: 2px 2px 2px 2px;
+        box-shadow: 0px 1px 2px 0px rgb(173, 173, 173);
+        font-family: Arial;
+        vertical-align: middle;
+        text-decoration: none;
+        background-image:none;
+        color:white;
+        font-size: 1em;
+        }        
+        .AddrowButton:hover 
+        {
+        background: rgb(138, 181, 41);
+        text-decoration: none;
+        color:white;
+        }
+    </style>
+    <apex:form >
+        <apex:commandButton value="Back" action="{!backtoAccount}" style="padding-left: 3px;margin-bottom: 10px; text-align:center;" />
+        <apex:pageBlock >
+        <apex:pageBlockTable value="{!contractlist}" var="tmp">  
+            <apex:column headerValue="System ID"><apex:outputLink value="/{!tmp.id}" target="_blank">{!tmp.ContractNumber}</apex:outputLink></apex:column> 
+            <apex:column headerValue="Action"><apex:commandLink value="Go to Channel Appointment" action="{!checkforChannelAppointment}" title="Go to Channel Appointment" target="_blank" styleClass="AddrowButton" style="color: white;  margin-bottom: 10px;">
+                    <apex:param name="abc" assignTo="{!ContrID}" value="{!tmp.id}"/>
+            </apex:commandLink> </apex:column>                   
+            <apex:column headerValue="Tier 2"><apex:outputField value="{!tmp.GE_PRM_Tier_2__c}" styleclass="inp" style="height:50px;"/></apex:column>
+            <apex:column headerValue="Tier 3"><apex:outputField value="{!tmp.GE_PRM_Tier_3__c}" styleclass="inp" style="height:50px;"/></apex:column>
+            <apex:column headerValue="Tier 4"><apex:outputField value="{!tmp.GE_PRM_Tier_4__c}" styleclass="inp" style="height:50px;"/></apex:column>                            
+            <apex:column headerValue="Status"><apex:outputField value="{!tmp.Status}" styleclass="inp" style="height:50px;"/></apex:column>
+            <apex:column headerValue="Commercial Manager"><apex:outputField value="{!tmp.GE_PRM_Commercial_Manager1__c}"  styleclass="inp" style="height:50px;"/> </apex:column>                                   
+            <apex:column headerValue="Last Modified "><apex:outputField value="{!tmp.LastModifiedDate}" styleclass="inp" style="height:50px;"/></apex:column>                        
+        </apex:pageBlockTable>  
+        </apex:pageBlock>
+        <apex:commandButton value="Back" action="{!backtoAccount}" style="padding-left: 3px;margin-bottom: 10px; text-align:center;" />
+    </apex:form>
+    !-->
+</apex:page>

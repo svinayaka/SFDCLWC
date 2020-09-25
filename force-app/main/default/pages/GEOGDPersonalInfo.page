@@ -1,0 +1,39 @@
+<apex:page standardController="User" showHeader="false" sidebar="false" extensions="GEOGDirectoryController" action="{!addCodeUtilization}">
+<apex:sectionHeader subtitle="Directory Information - {!user.name}" />
+  
+  <apex:form id="form1" >
+      <apex:pageBlock id="pb" >
+         
+      <apex:outputPanel styleClass="fieldToHide" >
+           <apex:inputField value="{!user.GE_HQ_Tier_1_P_L__c}" id="tier1" />
+      </apex:outputPanel>    
+      <apex:pageBlockSection columns="1" >    
+                      
+          <apex:inputField value="{!user.FirstName}" />
+          <apex:inputField value="{!user.LastName}" />
+          <apex:inputField value="{!user.Title}" /> 
+          <apex:inputField value="{!user.GE_HQ_Tier_2_P_L__c}" />
+          <apex:inputField value="{!user.GE_HQ_Tier_3_P_L__c}" />
+          <apex:inputField value="{!user.Function__c}" />  
+          <apex:inputField value="{!user.Phone}" /> 
+          <apex:inputField value="{!user.Site_Location__c}" />
+          <apex:inputField value="{!user.GE_DS_Country__c}" />
+           </apex:pageBlockSection>
+     <!-- <apex:pageBlockButtons location="bottom"> -->
+        <apex:commandButton action="{!quicksave}" value="Save" status="saving" oncomplete="closing();" style="margin-left:1.5cm;font-size:20px;width:200px;height:30px" />
+        <apex:actionStatus startText="(Saving...)" id="saving"/>   
+       <!--   </apex:pageBlockButtons> -->  
+   </apex:pageBlock>
+  </apex:form>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+  <script type="text/javascript"> 
+  
+  $('.fieldToHide').hide();
+      function closing()
+      {
+      alert("Information Successfully Saved");
+     sforce.one.navigateToURL('/apex/GE_OG_Directory_mobile'); 
+       
+      }
+      </script>
+</apex:page>

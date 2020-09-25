@@ -1,0 +1,253 @@
+<apex:page id="MainPage"
+           contentType="{!contentType}"
+           showHeader="false" 
+           controller="RiskChecklistPDF_GE_OG"   >
+    <apex:param name="oppId" value="{!oppty.id}"/>
+    
+    <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+        <style type="text/css">
+            @page {
+            size:landscape; <!-- Commented by Kiru - testing--><!-- comments removed by harsha-->
+            }
+          #customers th, #customers td , #customers table {
+            border-collapse: collapse;
+            border: 1px solid black;
+            
+            }
+        </style> 
+    </head>
+    <table>
+        <tr>
+            <td>Account -  {!oppty.Account.Name}</td>
+        </tr>
+        <tr>
+            <td>Oppty Name - {!oppty.Name}</td>
+        </tr>
+    </table>
+    
+    <apex:pageBlock title="Deal Review Details">
+        <table id="customers" height="500px" cellspacing="0" cellpadding="0" width="90%" border="0px">
+            <tr valign="top">
+                <td valign="top" width="45%">
+                    <table width="100%" border="0px" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td valign="top">
+                                <table border="0px" rules="rows" align="top" VALIGN="top" cellspacing="0" cellpadding="0">
+                                    <tr height="30px" bgcolor="#DDFFFF">
+                                        <td colspan="2"><b>Opportunity Info</b></td>
+                                    </tr>                                  
+                                    <tr id="row1" >
+                                        <td width="45%">
+                                            <apex:outputText styleClass="labelCol first" value="Account Name" />
+                                        </td>
+                                        <td width="45%" >  
+                                            <apex:outputText value="{!oppty.Account.Name}" />
+                                        </td>
+                                    </tr>
+                                    <tr id="row10" >
+                                        <td >
+                                            <apex:outputText styleClass="labelCol first" value="Install Country" />
+                                        </td>
+                                        <td >  
+                                            <apex:outputText value="{!oppty.install_country_ge_og__c}" />
+                                        </td>
+                                    </tr>     
+                                    
+                                    <tr id="row10">
+                                        <td >
+                                            <apex:outputText styleClass="labelCol first" value="Quote Type" />
+                                        </td>
+                                        <td >  
+                                            <apex:outputText value="{!oppty.quote_type_ge_og__c}" />
+                                        </td>
+                                    </tr>  
+                                    
+                                    <tr id="row10" >
+                                        <td >
+                                            <apex:outputText styleClass="labelCol first" value="Install Region" />
+                                        </td>
+                                        <td>  
+                                            <apex:outputText value="{!oppty.region_ge_og__c}" />
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr id="row11" >
+                                        <td >
+                                            <apex:outputText styleClass="labelCol first" value="Opportunity Owner" />
+                                        </td>
+                                        <td>  
+                                            <apex:outputText value="{!oppty.Owner.Name}" />
+                                        </td>
+                                    </tr>
+                                    <tr id="row12" >
+                                        <td >
+                                            <apex:outputText styleClass="labelCol first" value="Comm Primary Resource" />
+                                        </td>
+                                        <td>  
+                                            <!--apex:outputText value="{!oppty.commercial_primary_resource_ge_og__c}" /-->
+                                          <!--  <apex:outputText value="{!commPrimaryResource}" /> -->
+                                            <apex:outputText value="{!commercialPrimaryResource}"/>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr id="row7">
+                                        <td>
+                                            <apex:outputText styleClass="labelCol first" value="GE O&G legal entity" />
+                                        </td>
+                                        <td >  
+                                            <apex:outputText value="{!oppty.ge_legal_entity_ge_og__r.name}" />
+                                        </td>
+                                    </tr> 
+                                    
+                                </table>     
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <!-- start of second column -->
+                <td width="45%" valign="top">
+                    <table valign="top" align="top" width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td >
+                                <!-- start of financial Section -->
+                                <table border="0px" rules="rows" VALIGN="top" cellspacing="0" cellpadding="0">
+                                    <tr align="top" height="30px" bgcolor="#DDFFFF">
+                                        <td colspan="2"><b>  Financial Section </b></td>
+                                    </tr> 
+                                    <tr id="row1" >
+                                        <td width="45%">
+                                            <apex:outputText styleClass="labelCol first" value="Oppty CM%" />
+                                        </td>
+                                        <td width="45%" >  
+                                            <apex:outputText value="{!VALUE(TEXT(oppty.oppty_cm_ge_og__c))}" />
+                                            <apex:outputLabel rendered="{!NOT(ISNULL(oppty.oppty_cm_ge_og__c))}">%</apex:outputLabel>
+                                        </td>
+                                    </tr>
+                                    <tr id="row6" >
+                                        <td>
+                                            <apex:outputText styleClass="labelCol first" value="Opportunity Currency" />
+                                        </td>
+                                        <td>  
+                                            <apex:outputField value="{!oppty.CurrencyIsoCode}" />
+                                        </td>
+                                    </tr> 
+                                    
+                                    
+                                </table>   
+                                <!-- End of financial section --> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td valign="top">
+                                <!-- start of key dates section -->
+                                <table valign="top" align="top" border="0px" cellspacing="0" rules="rows" cellpadding="0" width="100%">
+                                    <tr  bgcolor="#DDFFFF">
+                                        <td colspan="2" width ="90%"><span ><b> Key Dates </b></span></td>
+                                    </tr>
+                                    <tr id="row1" >
+                                        <td width="45%">
+                                            <apex:outputText styleClass="labelCol first" value="Bid Due Date" />
+                                        </td>
+                                        <td width="45%">  
+                                            <apex:outputField value="{!oppty.bid_due_date_ge_og__c}" />
+                                        </td>
+                                    </tr> 
+                                </table>
+                            </td>
+                        </tr>                      
+                    </table>                     
+                </td>
+                <!--end of second column-->            
+            </tr>
+        </table >
+        <!--Section for showing the Opportunity product related to the Opportunity-->
+        
+    </apex:pageBlock>
+    
+    
+    <!-- Opportunity line items -->
+    <apex:pageBlock title="Products">
+        <table id="customers" border="1px" cellpadding="0" cellspacing="0" width="90%">
+            <tr>
+                <td width="40%">Product</td>
+                <td width="20%">Quantity</td>              
+                <td width="20%">Total Price</td>
+            </tr>
+            <apex:repeat value="{!OpptyLineItem}" var="each">
+                <tr>
+                    <td width="40%">{!each.pricebookentry.name}</td>
+                    <td width="20%">{!each.Quantity}</td>              
+                    <td width="20%"><apex:outputText value="{0, number}"><apex:param value="{!each.TotalPrice}" /></apex:outputText></td>
+                </tr>
+            </apex:repeat>
+        </table>   
+    </apex:pageBlock>
+    
+    <!--  <apex:pageBlock title="Products">
+<table border="1px" cellpadding="0" cellspacing="0" width="90%">
+<tr>
+<td width="40%">Product</td>
+<td width="20%">Quantity</td>              
+<td width="20%">Total Price</td>
+</tr>
+<apex:repeat value="{!OpptyLineItem}" var="each">
+<tr>
+<td width="40%">{!each.pricebookentry.name}</td>
+<td width="20%">{!each.Quantity}</td>              
+<td width="20%"><apex:outputText value="{0, number}"><apex:param value="{!each.TotalPrice}" /></apex:outputText></td>
+</tr>
+</apex:repeat>
+</table>   
+</apex:pageBlock>-->
+    
+    <!-- Related list for Risk checklist item -->
+    
+    <apex:pageBlock title="Risk Summary">
+        <table id="customers" border="1px" cellpadding="0" cellspacing="0" width="90%">
+            <tr>
+                <td width="40%">Category</td>
+                <td width="20%">Reviewer</td>              
+                <td width="20%">Status</td>
+            </tr>
+            <apex:repeat value="{!rccLIST}" var="rcc">
+                <tr>
+                    <td width="40%">{!rcc.rcl_category_ge_og__c}</td>
+                    <td width="20%">{!rcc.rcl_reviewer_ge_og__r.Name}</td>              
+                    <td width="20%">{!rcc.status_ge_og__c}</td>
+                </tr>
+            </apex:repeat>
+        </table> 
+    </apex:pageBlock>
+    
+    
+    <apex:pageBlock title="Risk Checklist">    
+        <table id="customers" border="1px" cellpadding="0" cellspacing="0" width="90%">
+            <tr>
+                <td width="10%">Category</td>
+                <td width="30%">Name</td>
+                <td width="15%">Answer</td> 
+                <td width="10%">Deviation Level</td>
+                <td width="20%">Comment</td>
+                <td width="10%">Approver</td>              
+            </tr>
+            <apex:repeat value="{!rcdList}" var="each">
+                <tr>
+                    <td width="10%"> {!each.risk_checklist_category_id_ge_og__r.rcl_category_ge_og__c}</td>
+                    <!--td width="30%">{!If(each.risk_checklist_ge_og__c =='',each.checklist_reference_ge_og__r.question_ge_og__c,each.risk_checklist_ge_og__c)}
+</td>
+<td width="15%">{!each.deviation_reference_ge_og__r.deviation_ge_og__c}</td>
+<td width="10%">{!each.rcl_deviation_level_ge_og__c}</td> -->
+                    <td width="30%">{!each.risk_checklist_ge_og__c}</td>
+                    <td width="15%">{!each.rcl_deviation_ge_og__c}</td>
+                    <td width="10%">{!each.rcl_deviation_level_ge_og__c}</td>
+                    <td width="20%">{!each.comments_ge_og__c}</td> 
+                    <td width="10%">{!each.risk_checklist_category_id_ge_og__r.rcl_reviewer_ge_og__r.name}</td>
+                </tr>
+            </apex:repeat>
+        </table>      
+    </apex:pageBlock>
+    
+    
+    
+</apex:page>

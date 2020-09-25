@@ -1,0 +1,515 @@
+<apex:page standardController="case" tabStyle="Case"  extensions="GE_OG_CIR_CaseNewController" lightningStylesheets="True"  showheader="true" id="page">
+   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+   <script type="text/javascript" src="/resource/1358914798000/bootstrap/bootstrap/js/bootstrap.js"></script>
+   <center>
+      <b style="color:red;"> Please Click Save to Submit the Case</b>
+   </center>
+   <apex:form id="formId">
+      <apex:pageblock title="Case Edit" id="pBlock">
+         <apex:messages style="color:white;"/>
+         <apex:message style="color:white;"/>
+         <style>
+            a:hover {
+            background:#ffffff; /*BG color is a must for IE6*/
+            text-decoration:none;
+            position:relative;
+            } 
+            a.tooltip span {
+            display: none;
+            }
+            a.tooltip:hover span{
+            display: block;
+            position:absolute;
+            top:1.25em;
+            padding:2px 5px;
+            left:-15em; width:15em;
+            z-index:100;
+            border:1px solid orange;
+            background-color:#FEFDB9;
+            color:black;
+            }
+         </style>
+         <script type="text/javascript">
+            function fnChange(JobType)
+            {
+                jobtypeToController(JobType.value);
+            }
+            
+            function NullValues(t)
+            {
+                rerendersubbusiness(t)
+               
+            
+            }
+            
+            function businessnull(t)
+            {
+                rerenderbusiness(t)
+                
+            }
+            
+            
+            
+            function NullValues2(t)
+            {
+                 rerenderassemblyvalue(t)
+            }
+            
+            function NullValues3(t)
+            {
+                 rerendercomponentvalue(t)
+            }
+            
+            function NullValues4(t)
+            {
+                 rerenderitemvalue(t)
+            }
+            function NullValues5(t)
+            {
+            
+             rerenderclopvalue(t)
+            
+            }
+             function NullValues6(t)
+            {
+            
+             rerendervsvalue(t)
+            
+            }
+            
+            
+            var isClicked = false;
+            function checkDoubleSubmit(obj)
+            {
+            
+            if (isClicked) { return false; }
+            else { isClicked = true; 
+            return true; }
+            }        
+            
+            
+            
+            
+         </script>
+        <!-- <h3>
+            <b>
+               <apex:outputText style="color:red; font-size:110% " value="IMPORTANT – READ BEFORE PROCEEDING">
+               </apex:outputText>
+            </b>
+         </h3>
+         <P>
+            <apex:outputText value="PLEASE BE AWARE THAT THE CONTENT OF THIS CIR CASE MAY BE PUBLISHED TO THE CUSTOMER">
+            </apex:outputText>
+         </p>
+         <P>
+            <apex:outputText value="If you select at least one of the following values:  ">
+            </apex:outputText>
+         </p>
+         <h3>
+             <table style="width:50%">
+  <tr>
+    <td>Impact on Customer </td>
+    <td>= High</td>
+    <td>Customer Escalation </td>
+    <td>=Yes    </td>
+  </tr>
+  <tr>
+    <td>EHS/Product Safety</td>
+    <td>= Accident</td>
+    <td>GE Executive Escalated Request</td>
+    <td>=Yes</td>
+  </tr>
+  
+</table>
+
+         </h3>
+         <p>
+            <apex:outputText value="You are creating an Escalated case, which goes to the attention of the Oil & Gas Senior Leaderhip. Please select the appropriate values for the Escalation triggers. 
+               Place your Cursor over the “?” to clarify the options available.
+               ">
+            </apex:outputText>
+         </p> -->
+         <apex:actionFunction name="rerenderbusiness"  action="{!makeNullValues}" rerender="ajaxrequest,ajaxrequestone,ajaxrequestLOP,ajaxrequestonee,out,pb,pbs1,component,itemsSelectList1" status="loading1" immediate="true">
+            <apex:param name="one" value="" />
+         </apex:actionFunction>
+         <apex:actionFunction name="rerendersubbusiness"  action="{!makeNullValues1}" rerender="ajaxrequestt,ajaxrequestdts,ajaxrequestdts1,ajaxrequestdts2,ajaxrequestdts3,ajaxrequestdts4,ajaxrequestdts5,ajaxrequestdts6,ajaxrequestdts7,ajaxrequestdts8,pBlockSec4,out,pb,pbs1,component,itemsSelectList1" status="loading1" immediate="true">
+            <apex:param name="two" value="" />
+         </apex:actionFunction>
+         <apex:actionFunction name="rerenderassemblyvalue"  action="{!makeNullValues2}" rerender="out,pb,pbs1,component,itemsSelectList1" status="loading1" immediate="true" >
+            <apex:param name="three" value="" />
+         </apex:actionFunction>
+         <apex:actionFunction name="rerenderclopvalue" action="{!makeNullValues6}" rerender="out,pb,pbs1,ajaxrequestone,component,itemsSelectList1" status="loading1" immediate="true" >
+            <apex:param name="Six" value="" />
+         </apex:actionFunction>
+         <!--<apex:actionFunction name="rerenderitemvalue"  action="{!makeNullValues4}" rerender="out,pb,pbs1,component,itemsSelectList1" status="loading1" immediate="true" >
+            <apex:param name="five" value="" />
+         </apex:actionFunction>
+         <apex:actionFunction name="rerendercomponentvalue"  action="{!makeNullValues3}" rerender="out,pb,pbs1,component,itemsSelectList1" status="loading1" immediate="true" >
+            <apex:param name="four" value="" />
+         </apex:actionFunction>
+         <apex:actionFunction name="rerenderclopvalue" action="{!makeNullValues6}" rerender="out,pb,pbs1,component,itemsSelectList1" status="loading1" immediate="true" >
+            <apex:param name="Six" value="" />
+         </apex:actionFunction>
+         <apex:actionFunction name="rerendervsvalue" action="{!makeNullValues7}" rerender="out,pb,pbs1,component,itemsSelectList1" status="loading1" immediate="true" >
+            <apex:param name="Seven" value="" />
+         </apex:actionFunction>-->
+         
+         <apex:actionFunction name="jobtypeToController" action="{!jobtypeToController}" rerender="">
+            <apex:param name="param" value="" id="y" assignTo="{!SelectedFields}" />
+         </apex:actionFunction>
+         <center>
+            <apex:pageBlockButtons >
+               <apex:commandButton value="Save" action="{!save}" onclick=" return checkDoubleSubmit(id);"/>
+               <apex:commandButton value="Cancel" action="{!cancel}"/>
+            </apex:pageBlockButtons>
+         </center>
+         <apex:outputPanel rendered="{!if(case.status=='New',true,false)}"  id="panelId">
+          <!--  <apex:pageblockSection id="pb" collapsible="false"> -->
+               <apex:outputPanel id="out">
+                  <apex:actionStatus id="loading1" stopText="">
+                     <apex:facet name="start" >
+                        <div class="waitingSearchDiv" id="el_loading" style="height:100%;opacity:0.75;width:100%; position:fixed;">
+                           <div class="waitingHolder" >
+                              <img class="waitingImage" style="width:40px; height:40px; " src="{!$Resource.GEMDM__GE_MDM_LoadingIcon}" title="Please Wait..." />
+                              <br/>
+                              <span class="waitingDescription" style="font-size:20px;">Please Wait...</span>
+                           </div>
+                        </div>
+                     </apex:facet>
+                  </apex:actionStatus>
+               </apex:outputPanel>
+        <!--    </apex:pageblocksection> -->
+            <apex:pageBlockSection title="General Information" columns="2" collapsible="false" id="pbsval">
+               <apex:inputField value="{!case.casenumber}"/>
+               <apex:outputfield value="{!case.status}"/>
+               <!--/apex:outputpanel-->  
+               
+               
+               <apex:pageBlockSectionItem >
+                  <div style="color:black">Escalation 
+                          
+                  </div>
+                  <apex:inputfield value="{!case.Escalation__c}" required="true"/>
+               </apex:pageBlockSectionItem>
+               <apex:pageBlockSectionItem >
+                  <div style="color:black">Impact on customer 
+                     <a class="tooltip" target="_blank"><img src="{!$Resource.helptxt}"/> 
+                     <span>{!$ObjectType.Case.fields.GE_OG_Customer_Impact_CIR__c.InlineHelpText}</span>  
+                     </a>     
+                  </div>
+                  <apex:inputfield value="{!case.GE_OG_Customer_Impact_CIR__c}" required="true"/>
+               </apex:pageBlockSectionItem>
+               <apex:outputField value="{!case.GE_OG_Escalation_Level_CIR__c}" />
+               
+               <!--<apex:inputField value="{!case.GE_OG_CIR_Not_A_Key_Account__c}"/>-->
+               <apex:pageBlockSectionItem >
+                  <div style="color:black">HSE/Product Safety Impact 
+                     <a class="tooltip" target="_blank"><img src="{!$Resource.helptxt}"/> 
+                     <span>{!$ObjectType.Case.fields.GE_OG_EHS_Product_Safety_CIR__c.InlineHelpText}</span>  
+                     </a>     
+                  </div>
+                  <apex:inputfield value="{!case.GE_OG_EHS_Product_Safety_CIR__c}" required="true"/>
+               </apex:pageBlockSectionItem>
+               
+               <apex:pageBlockSectionItem >
+                  <div style="color:black">Type Of Issue 
+                     <a class="tooltip" target="_blank"><img src="{!$Resource.helptxt}"/> 
+                     <span>{!$ObjectType.Case.fields.GE_OG_CIR_Type_of_Issue__c.InlineHelpText}</span>  
+                     </a>     
+                  </div>
+                  <apex:inputfield value="{!case.GE_OG_CIR_Type_of_Issue__c}" required="true"/>
+               </apex:pageBlockSectionItem>
+               
+               <apex:pageBlockSectionItem >
+                  <div style="color:black">Impact on Customer - Description 
+                     <a class="tooltip" target="_blank"><img src="{!$Resource.helptxt}"/> 
+                     <span>{!$ObjectType.Case.fields.GE_OG_CIR_Impact_on_Customer_Description__c.InlineHelpText}
+                     </span>  
+                     </a>     
+                  </div>
+                  <apex:inputField value="{!case.GE_OG_CIR_Impact_on_Customer_Description__c}" required="true"  
+                     style="width:250px; height:100px"/>
+               </apex:pageBlockSectionItem>
+               
+               <apex:pageBlockSectionItem >
+                  <div style="color:black">Type Of Issue Level 2
+                  </div>
+                  <apex:inputfield value="{!case.GE_OG_CIR_Type_of_issue_level_2__c}" />
+               </apex:pageBlockSectionItem>
+               
+               <apex:pageBlockSectionItem >
+                  <apex:outputLabel value="Business" />
+                  <apex:inputField value="{!case.GE_OG_Business_CIR__c}" required="true" onchange="businessnull(this.value)"/>
+               </apex:pageBlockSectionItem>
+               
+               <apex:inputField value="{!case.GE_OG_Front_Line_case_Reference_CIR__c}"/>
+               
+               <apex:pageBlockSectionItem >
+                  <apex:outputLabel value="Sub Business" />
+                  <apex:inputField value="{!case.GE_OG_Sub_Business_CIR__c}" required="true" onchange="NullValues(this.value)" />
+               </apex:pageBlockSectionItem>
+               
+               <apex:inputField value="{!case.GE_OG_CIR_Safer_case__c}"/>
+               
+               
+               <apex:pageBlockSectionItem id="assembly" >
+                  <apex:outputLabel value="Assembly/Sub-Product Line" />
+                  <apex:inputfield value="{!case.GE_OG_CIR_Assembly__c}" onchange="NullValues2(this.value)"/>
+               </apex:pageBlockSectionItem>  
+               <apex:pageBlockSectionItem >
+                  <apex:outputLabel value="Link to CIR Handbook and Videos" />
+                  <apex:outputLink value="{!handbook}" id="theLink" target="_blank">{!handbook}</apex:outputLink>
+               </apex:pageBlockSectionItem>
+               
+             <!--  <apex:inputField value="{!case.NPT_Loss_Of_Production_Hours__c}"/>-->
+               
+              <apex:pageBlockSectionItem >
+                  <div style="color:black">Product Hierarchy 
+                     <a class="tooltip" target="_blank"><img src="{!$Resource.helptxt}"/> 
+                     <span>{!$ObjectType.Case.fields.Product_Hierarchy__c.InlineHelpText}</span>  
+                     </a>     
+                  </div>
+                  <apex:inputfield value="{!case.Product_Hierarchy__c}"/>
+               </apex:pageBlockSectionItem>
+             <apex:outputField value="{!case.recordtypeid}"  />
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel value="Component" />
+                  <apex:outputField value="{!Case.Component__c}" style="padding-left:110px"/>                  
+               </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem />
+                <apex:pageBlockSectionItem >
+                  <apex:outputLabel value="Item" />
+                  <apex:outputField value="{!case.Item__c}" style="padding-left:153px"/>
+               </apex:pageBlockSectionItem>
+               
+               <!--
+               <apex:pageBlockSectionItem >
+                  <div style="color:black">Customer Escalation
+                     <a class="tooltip" target="_blank"><img src="{!$Resource.helptxt}"/> 
+                     <span>{!$ObjectType.Case.fields.GE_OG_Customer_Escalation_CIR__c.InlineHelpText}</span>  
+                     </a>     
+                  </div>
+                  <apex:inputField value="{!case.GE_OG_Customer_Escalation_CIR__c}" required="true" />
+               </apex:pageBlockSectionItem>
+               <apex:inputField value="{!case.GE_OG_CIR_Unit_Serial_number__c}" id="IBid"/>
+               
+               <apex:pageBlockSectionItem >
+                  <div style="color:black">GE Escalation
+                     <a class="tooltip" target="_blank"><img src="{!$Resource.helptxt}"/> 
+                     <span>{!$ObjectType.Case.fields.GE_OG_GE_Executive_Request_CIR__c.InlineHelpText}</span>  
+                     </a>     
+                  </div>
+                  <apex:inputField value="{!case.GE_OG_GE_Executive_Request_CIR__c}" required="true"/>
+               </apex:pageBlockSectionItem>     --> 
+               
+               <!--   <apex:actionRegion > 
+                  <apex:inputField value="{!case.GE_OG_Business_CIR__c}" id="pbsvalue" onchange="fnChange(this.val);"/>       
+                               <apex:actionSupport event="onchange" rerender="pBlock2"/>  
+                              </apex:inputfield>         
+                         </apex:actionRegion>   -->
+               
+            </apex:pageBlockSection>    
+            <apex:outputPanel id="ajaxrequestone">
+               <apex:pageBlockSection id="CLOP" rendered="{!businesscir=='Turbomachinery & Process Solutions'}">
+                  <apex:pageBlockSectionItem >
+                     <div style="color:black">Customer Loss of Production
+                        <a class="tooltip" target="_blank"><img src="{!$Resource.helptxt}"/> 
+                        <span>{!$ObjectType.Case.fields.Customer_Loss_of_Production__c.InlineHelpText}</span>  
+                        </a> 
+                     </div>
+                     <apex:inputField value="{!case.Customer_Loss_of_Production__c}" required="true" onchange="NullValues5(this.value)"  />
+                  </apex:pageBlockSectionItem>
+               </apex:pageBlockSection>
+            </apex:outputPanel>       
+              <apex:outputPanel id="ajaxrequestLOP">
+               <apex:pageBlockSection rendered="{!businesscir=='Oil Field Equipment' || businesscir=='Oil Field Services'}">
+                  <apex:pageBlockSectionItem >
+                     <div style="color:black">NPT/Loss Of Production (Hours)
+                        <a class="tooltip" target="_blank"><img src="{!$Resource.helptxt}"/> 
+                        <span>{!$ObjectType.Case.fields.NPT_Loss_Of_Production_Hours__c.InlineHelpText}</span>  
+                        </a> 
+                     </div>
+                     <apex:inputField value="{!case.NPT_Loss_Of_Production_Hours__c}"/>                 
+                      </apex:pageBlockSectionItem>
+               </apex:pageBlockSection>
+            </apex:outputPanel>
+            
+            
+            <apex:pageBlockSection collapsible="false" id="pBlockSec" title="Customer Details">
+               <apex:inputField value="{!case.GE_OG_CIR_Customer_Contact_Name__c }"/>
+
+            <apex:pageBlockSectionItem >
+                  <div style="color:black">Key Account
+                  <a class="tooltip" target="_blank"><img src="{!$Resource.helptxt}"/> 
+                     <span>{!$ObjectType.Case.fields.Key_Account_Name__c.InlineHelpText}</span>  
+                     </a>
+                  </div>
+                  <apex:outputField value="{!case.Key_Account_Name__c}" />
+               </apex:pageBlockSectionItem>
+               <apex:inputField value="{!case.GE_OG_CIR_Customer_Address__c }"/>
+               
+               <apex:inputField value="{!case.accountid}" id="accId"/>
+               <apex:inputField value="{!case.GE_OG_CIR_Customer_Phone__c}"/>               
+            
+               <apex:pageBlockSectionItem >
+                  <div style="color:black">Account Name - Only If Not Listed
+                     <a class="tooltip" target="_blank"><img src="{!$Resource.helptxt}"/> 
+                     <span>{!$ObjectType.Case.fields.GE_OG_Account_Name_Only_If_Not_List_CIR__c.InlineHelpText}</span>  
+                     </a>     
+                  </div>
+                  <apex:inputField value="{!case.GE_OG_Account_Name_Only_If_Not_List_CIR__c}"/>
+               </apex:pageBlockSectionItem>
+               <apex:inputField value="{!case.GE_OG_CIR_Customer_Email__c }"/>
+               <apex:inputField value="{!case.GE_OG_CIR_Site_Name__c}" id="siteName" required="true"/>
+               <apex:pageBlockSectionItem />
+               <apex:inputField value="{!case.GE_OG_CIR_Site_Country__c}" id="siteCountry" style="width:180px" />
+               <apex:pageBlockSectionItem />
+               <apex:outputField value="{!case.GE_O_G_Region__c}"/>
+               
+            </apex:pageBlockSection>    
+            
+           
+            <apex:pageblockSection title="Info for Resolution" columns="2" collapsible="false">
+               <apex:inputfield value="{!case.subject}" required="true" />
+               <apex:inputField value="{!case.Description}" required="true"  style="width:250px; height:100px"/>
+               <apex:pageBlockSectionItem >
+                  <div style="color:black">Action Taken Prior To CIR
+                     <a class="tooltip" target="_blank"><img src="{!$Resource.helptxt}"/> 
+                     <span>{!$ObjectType.Case.fields.GE_OG_Actions_Taken_To_Resolve_befor_CIR__c.InlineHelpText}
+                     </span>  
+                     </a>     
+                  </div>
+                  <apex:inputfield value="{!case.GE_OG_Actions_Taken_To_Resolve_befor_CIR__c}" required="true" 
+                     style="width:250px; height:100px"/>
+               </apex:pageBlockSectionItem>
+               <apex:pageBlockSectionItem >
+                  <div style="color:black">Specific Deliverable Required to Resolve
+                     <a class="tooltip" target="_blank"><img src="{!$Resource.helptxt}"/> 
+                     <span>{!$ObjectType.Case.fields.GE_OG_CIR_Specific_Deliverable_Required__c.InlineHelpText}</span>  
+                     </a>     
+                  </div>
+                  <apex:inputField value="{!case.GE_OG_CIR_Specific_Deliverable_Required__c}" required="true" style="width:250px; height:100px"/>
+               </apex:pageBlockSectionItem>
+               <apex:inputField value="{!case.GE_OG_Issue_Event_Date_CIR__c}" required="true"/>
+               <apex:pageBlockSectionItem >
+                  <div style="color:black">Customer Want Date
+                     <a class="tooltip" target="_blank"><img src="{!$Resource.helptxt}"/> 
+                     <span>{!$ObjectType.Case.fields.GE_OG_Customer_Want_Date_CIR__c.InlineHelpText}</span>  
+                     </a>     
+                  </div>
+                  <apex:inputField value="{!case.GE_OG_Customer_Want_Date_CIR__c}"/>
+               </apex:pageBlockSectionItem>
+            </apex:pageblockSection>    
+            
+            
+            <apex:pageBlockSection title="Job Details" columns="2" id="pBlockSec4" collapsible="false" >
+               <apex:inputField value="{!case.GE_OG_Project_Sales_Order_ID_CIR__c}"/>
+               <apex:pageBlockSectionItem >
+                  <div style="color:black">Project Name
+                     <a class="tooltip" target="_blank"><img src="{!$Resource.helptxt}"/> 
+                     <span>{!$ObjectType.Case.fields.GE_OG_Project_Name_CIR__c.InlineHelpText}</span>  
+                     </a>     
+                  </div>
+                  <apex:inputField value="{!case.GE_OG_Project_Name_CIR__c}"  required="{!if
+                     (((subbusinessvalue =='Drilling Equipment')||(subbusinessvalue =='Subsea Services')||(subbusinessvalue =='Subsea Production Systems, Services & Offshore')||
+                     (subbusinessvalue =='Flexible Pipeline Systems & Wellstream Construction Services')||(subbusinessvalue =='Surface Pressure Control')),True,False)}"/>
+                     
+               </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>  
+            <apex:outputPanel id="ajaxrequest">
+               <apex:pageBlockSection rendered="{!businesscir=='Digital Solutions'}">
+               <!--<apex:pageBlockSection rendered="{!businesscir=='Digital Solutions' || businesscir=='Turbomachinery & Process Solutions'}">-->
+                  <apex:inputField value="{!case.GE_OG_CIR_M_C_Job_Type__c}" required="true" onchange="fnChange(this);"  />
+                  <apex:inputField value="{!case.GE_OG_M_C_Job_Number_CIR__c}" required="true"  />
+                  <apex:inputField value="{!case.GE_OG_CIR_M_C_Location_of_Mfg_Service__c}" required="true" rendered="{!case.GE_OG_Sub_Business_CIR__c!='null'}"/>
+                  
+               </apex:pageBlockSection>
+            </apex:outputPanel>
+            
+            
+            <apex:outputPanel id="ajaxrequestt">
+              <apex:pageBlockSection rendered="{!(businesscir=='Oil Field Equipment' &&  (subbusinesscir=='Flexible Pipeline Systems & Wellstream Construction Services' || subbusinesscir == 'Surface Pressure Control'))}">
+                  <apex:inputField value="{!case.GE_OG_CIR_M_C_Location_of_Mfg_Service__c}" required="true" rendered="{!case.GE_OG_Sub_Business_CIR__c!='null'}"/>
+                  
+               </apex:pageBlockSection>
+            </apex:outputPanel> 
+            
+            <!--Updated by Naveen Vuppu as part of CIR Lightning implementation-->
+            <apex:outputPanel id="ajaxrequestdts1">
+                  <apex:pageBlockSection rendered="{!IF(businesscir=='Turbomachinery & Process Solutions' && subbusinesscir=='Equipment & Projects' ,true,false)}">
+                  <apex:inputField value="{!c.GE_OG_CIR_M_C_Job_Type__c}" required="true" onchange="fnChange(this);"  />
+                  <apex:inputField value="{!c.GE_OG_M_C_Job_Number_CIR__c}" required="true"  />
+                  <!--<apex:inputField value="{!c.GE_OG_CIR_M_C_Location_of_Mfg_Service__c}" required="true" rendered="{!c.GE_OG_Sub_Business_CIR__c!='null'}"/>-->
+               </apex:pageBlockSection>
+            </apex:outputPanel>
+            
+            <apex:outputPanel id="ajaxrequestdts2">
+               <apex:pageBlockSection rendered="{!IF(businesscir=='Turbomachinery & Process Solutions' && subbusinesscir=='FPT- Aftermarket Solutions' ,true,false)}">
+                  <apex:inputField value="{!c.GE_OG_CIR_M_C_Job_Type__c}" required="true" onchange="fnChange(this);"  />
+                  <apex:inputField value="{!c.GE_OG_M_C_Job_Number_CIR__c}" required="true"  />
+                  <apex:inputField value="{!c.GE_OG_CIR_M_C_Location_of_Mfg_Service__c}" required="true" rendered="{!c.GE_OG_Sub_Business_CIR__c!='null'}"/>
+               </apex:pageBlockSection>
+            </apex:outputPanel>
+            
+            <apex:outputPanel id="ajaxrequestdts3">
+                  <apex:pageBlockSection rendered="{!IF(businesscir=='Turbomachinery & Process Solutions' && subbusinesscir=='FPT- Valve Projects' ,true,false)}">
+                  <apex:inputField value="{!c.GE_OG_CIR_M_C_Job_Type__c}" required="true" onchange="fnChange(this);"  />
+                  <apex:inputField value="{!c.GE_OG_M_C_Job_Number_CIR__c}" required="true"  />
+                  <apex:inputField value="{!c.GE_OG_CIR_M_C_Location_of_Mfg_Service__c}" required="true" rendered="{!c.GE_OG_Sub_Business_CIR__c!='null'}"/>
+               </apex:pageBlockSection>
+            </apex:outputPanel>
+            
+            <apex:outputPanel id="ajaxrequestdts4">
+                  <apex:pageBlockSection rendered="{!IF(businesscir=='Turbomachinery & Process Solutions' && subbusinesscir=='Power Transmission' ,true,false)}">
+                  <apex:inputField value="{!c.GE_OG_CIR_M_C_Job_Type__c}" required="true" onchange="fnChange(this);"  />
+                  <apex:inputField value="{!c.GE_OG_M_C_Job_Number_CIR__c}" required="true"  />
+                  <!--<apex:inputField value="{!c.GE_OG_CIR_M_C_Location_of_Mfg_Service__c}" required="true" rendered="{!c.GE_OG_Sub_Business_CIR__c!='null'}"/>-->
+               </apex:pageBlockSection>
+            </apex:outputPanel>
+            
+            <apex:outputPanel id="ajaxrequestdts5">
+               <apex:pageBlockSection rendered="{!IF(businesscir=='Turbomachinery & Process Solutions' && subbusinesscir=='PVS' ,true,false)}">
+                  <apex:inputField value="{!c.GE_OG_CIR_M_C_Job_Type__c}" required="true" onchange="fnChange(this);"  />
+                  <apex:inputField value="{!c.GE_OG_M_C_Job_Number_CIR__c}" required="true"  />
+                  <apex:inputField value="{!c.GE_OG_CIR_M_C_Location_of_Mfg_Service__c}" required="true" rendered="{!c.GE_OG_Sub_Business_CIR__c!='null'}"/>
+               </apex:pageBlockSection>
+            </apex:outputPanel>
+            
+            <apex:outputPanel id="ajaxrequestdts6">
+               <apex:pageBlockSection rendered="{!IF(businesscir=='Turbomachinery & Process Solutions' && subbusinesscir=='Services - CS & TX' ,true,false)}">
+                  <apex:inputField value="{!c.GE_OG_CIR_M_C_Job_Type__c}" required="true" onchange="fnChange(this);"  />
+                  <apex:inputField value="{!c.GE_OG_M_C_Job_Number_CIR__c}" required="true"  />
+                  <apex:inputField value="{!c.GE_OG_CIR_M_C_Location_of_Mfg_Service__c}" rendered="{!c.GE_OG_Sub_Business_CIR__c!='null'}"/>
+               </apex:pageBlockSection>
+            </apex:outputPanel>
+            
+            <apex:outputPanel id="ajaxrequestdts7">
+               <apex:pageBlockSection rendered="{!IF(businesscir=='Turbomachinery & Process Solutions' && subbusinesscir=='Services - Upgrades' ,true,false)}">
+                  <apex:inputField value="{!c.GE_OG_CIR_M_C_Job_Type__c}" required="true" onchange="fnChange(this);"  />
+                  <apex:inputField value="{!c.GE_OG_M_C_Job_Number_CIR__c}" required="true"  />
+                  <apex:inputField value="{!c.GE_OG_CIR_M_C_Location_of_Mfg_Service__c}" rendered="{!c.GE_OG_Sub_Business_CIR__c!='null'}"/>
+               </apex:pageBlockSection>
+            </apex:outputPanel>
+            
+            <apex:outputPanel id="ajaxrequestdts8">
+               <apex:pageBlockSection rendered="{!IF(businesscir=='Turbomachinery & Process Solutions' && subbusinesscir=='Thermodyn' ,true,false)}">
+                  <apex:inputField value="{!c.GE_OG_CIR_M_C_Job_Type__c}" required="true" onchange="fnChange(this);"  />
+                  <apex:inputField value="{!c.GE_OG_M_C_Job_Number_CIR__c}" required="true"  />
+               </apex:pageBlockSection>
+            </apex:outputPanel>
+            
+            <!--<apex:outputPanel id="ajaxrequestdts2">
+               <apex:pageBlockSection rendered="{!IF(businesscir=='Turbomachinery & Process Solutions' && subbusinesscir=='FPT- Natural Gas Solutions' ,true,false)}">
+                  <apex:inputField value="{!c.GE_OG_CIR_M_C_Job_Type__c}" required="true" onchange="fnChange(this);"  />
+                  <apex:inputField value="{!c.GE_OG_M_C_Job_Number_CIR__c}" required="true"  />
+                  <apex:inputField value="{!c.GE_OG_CIR_M_C_Location_of_Mfg_Service__c}" required="true" rendered="{!c.GE_OG_Sub_Business_CIR__c!='null'}"/>
+               </apex:pageBlockSection>
+            </apex:outputPanel>-->
+                        
+         </apex:outputpanel>
+      </apex:pageblock>
+   </apex:form>
+   <center>
+      <b style="color:red;"> Please Click Save to Submit the Case</b>
+   </center>
+</apex:page>

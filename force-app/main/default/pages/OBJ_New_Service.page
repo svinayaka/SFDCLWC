@@ -1,0 +1,1 @@
+<apex:page standardController="SVMXC__Service__c" extensions="COMM_Controller" tabStyle="SVMXC__Service__c" showheader="true" action="{!CreateService}" />

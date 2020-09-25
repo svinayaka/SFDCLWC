@@ -1,0 +1,2 @@
+<apex:page action="{!redirect}&objecttype=Campaign&actiontype=Clone" extensions="skuid.Redirects" standardcontroller="Campaign">
+</apex:page>

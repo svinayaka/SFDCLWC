@@ -1,0 +1,8 @@
+<apex:page StandardController="SFDC_Support_Case__c" sidebar="false">
+    <apex:form >
+        <p> <apex:outputText value="Your Ticket has been created successfully in TSG Service Now. To view more information regarding your ticket, please log on to TSG Service Now by following this Link" style="color: blue; display: block; margin-left: 16px; text-align:center; padding-right: 18px; padding-top:20px; padding-bottom:5px; font-size:25px; font-style: italic;font-weight: bold;;" /></p>
+        <p><apex:commandLink value="TSG Service Now" onClick="window.open('https://ge.service-now.com/');" style="color: blue; display: block; margin-left: 16px; text-align:center; padding-right: 18px; padding-top:5px; padding-bottom:5px; font-size:20px; font-style: italic;font-weight: bold;"/> </p>
+        <p> <apex:outputText value="And look out for the 'All Active Tasks' under the 'My requests (Tickets Opened by me)' from the Left Hand Side pannel" style="color: blue; display: block; margin-left: 16px; text-align:center; padding-right: 18px; padding-top:5px; padding-bottom:150px; font-size:15px; font-style: italic;font-weight: bold;;" /></p>
+        
+    </apex:form>
+</apex:page>

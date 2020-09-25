@@ -1,0 +1,7 @@
+<apex:page standardController="GE_Installed_Base__c" sidebar="true">
+<c:GEESShowProcessingImage id="prcImg" />
+<script type="text/javascript" language="JavaScript"> 
+ShowProcessingImg();  
+top.location='/setup/ui/recordtypeselect.jsp?ent=01IA0000001EH9l&retURL=%2Fa0M%2Fo&save_new_url=%2Fa0M%2Fe%3FretURL%3D%252Fa0M%252Fo&nooverride=1&Name=System Generated Name-ID';     
+</script>
+</apex:page>

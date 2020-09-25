@@ -1,0 +1,3 @@
+<apex:page standardController="SVMXC__SVMX_Event__c" contenttype="application/pdf" renderAs="pdf" >
+<c:GE_OG_MC_WOSMaxEventJISSheet woId="{!SVMXC__SVMX_Event__c.SVMXC__Service_Order__c}" SMaxEventId="{!id}" />
+</apex:page>

@@ -1,0 +1,35 @@
+<apex:page standardController="Account" recordSetVar="accounts" tabStyle="Account">
+  <style>
+  .btn.refreshListButton
+  {
+    display:inline;
+    visibility:visible;
+  }
+  .btn
+  {
+    display:none;
+    visibility:hidden;
+  }
+  .x-grid3-td-checkbox
+  {
+    display:none;
+    visibility:hidden;
+  }
+  .selectCount
+  {
+    display:none;
+    visibility:hidden;
+  }
+  .x-grid3-td-ACCOUNT_PHONE1
+  {
+    display:none;
+    visibility:hidden;
+  }
+  .x-grid3-td-CORE_USERS_ALIAS
+  {
+    display:none;
+    visibility:hidden;
+  }
+  </style>
+  <apex:enhancedList type="Account" height="800" rowsPerPage="50" id="AccountList" />
+</apex:page>

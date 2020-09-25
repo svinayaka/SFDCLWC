@@ -1,0 +1,599 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Email_Alert_For_Contract_Team_on_Appointment_Approval</fullName>
+        <description>Email Alert For Contract Team on Appointment Approval</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <recipients>
+            <recipient>GE_PRM_Contractual_Team</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/Application_Approved_Notify_Contract_Team</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PRM_Additional_Info_Provided_by_Channel_Manager_on_Compliance_NMI</fullName>
+        <ccEmails>compass.tester@ge.com</ccEmails>
+        <description>Additional Info Provided by Channel Manager on Compliance NMI</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_PRM_Regional_Compliance_Manager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PRM_Additional_Info_provided_by_Channel_manager_for_Compliance_NMI</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PRM_Application_Approved_By_Channel_Manager</fullName>
+        <ccEmails>compass.tester@ge.com</ccEmails>
+        <description>GE_PRM_Application_Approved_By_Channel_Manager</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_PRM_Applicant_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PRM_Application_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PRM_Application_Returned_To_Partner</fullName>
+        <ccEmails>compass.tester@ge.com</ccEmails>
+        <description>GE_PRM_Application_Returned_To_Partner</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_PRM_Applicant_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PRM_Application_Returned_To_Partner</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PRM_Application_Submission_Confirmation</fullName>
+        <ccEmails>compass.tester@ge.com</ccEmails>
+        <description>GE_PRM_Application_Submission_Confirmation</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_PRM_Applicant_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>dlenergy.esitoops1@ge.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>GE_PRM_Email_Templates/GE_PRM_Application_Submission_Confirmation</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PRM_Application_Submitted</fullName>
+        <ccEmails>compass.tester@ge.com</ccEmails>
+        <description>GE_PRM_Application_Submitted</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>dlenergy.esitoops1@ge.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>GE_PRM_Email_Templates/GE_PRM_Application_Submitted</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PRM_Email_Alert_for_Channel_Manager_stating</fullName>
+        <description>GE PRM Email Alert for Channel Manager stating</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_PRM_Applicant_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PRM_New_Fast_Track_AFA_Rejected</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PRM_Email_Alert_for_partner_user_stating</fullName>
+        <description>GE PRM Email Alert for partner user stating</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_PRM_Applicant_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PRM_New_Fast_Track_AFA_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PRM_Email_notification_to_the_National_Executive</fullName>
+        <ccEmails>compass.tester@ge.com</ccEmails>
+        <description>Email notification to the National Executive when DOA gets generated for New Fast Track and Renewal Fast Track</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_PRM_National_Executive__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PRM_Email_To_National_Executive_Appointment</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PRM_Notification_by_Channel_Partner_regarding_the_Approval_or_Rejection_of_th</fullName>
+        <description>Notification by Channel Partner  regarding the Approval or Rejection of the changes requested</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/Notification_regarding_acceptance_of_changes_to_AFA</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PRM_Notify_Channel_Partner_on_Legal_Address_update</fullName>
+        <ccEmails>compass.tester@ge.com</ccEmails>
+        <description>Notify Channel Partner on Legal  Address update</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_PRM_Applicant_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PRM_Application_Partner_Info_Updated</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PRM_Notify_Compliance_Manager_on_Fast_Track_AFA</fullName>
+        <ccEmails>compass.tester@ge.com</ccEmails>
+        <description>Notify Compliance Manager on Fast Track AFA</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_PRM_Regional_Compliance_Manager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PRM_AFA_Compliance_Notification</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PRM_Notiify_Partner_on_AFA_Creation</fullName>
+        <ccEmails>compass.tester@ge.com</ccEmails>
+        <description>Notiify Partner on AFA Creation</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_PRM_Applicant_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PRM_Afa_Creation_To_Partners</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PRM_Partner_Email_On_Afa_Clone</fullName>
+        <ccEmails>compass.tester@ge.com</ccEmails>
+        <description>GE_PRM_Partner_Email_On_Afa_Clone</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_PRM_Applicant_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PRM_Afa_Creation_To_Partners</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PRM_Send_mail_to_Partner_on_Approval</fullName>
+        <ccEmails>compass.tester@ge.com</ccEmails>
+        <description>Send mail to Partner on Approval</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_PRM_Applicant_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PRM_Application_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PRM_Sent_NMT_to_Partner</fullName>
+        <ccEmails>compass.tester@ge.com</ccEmails>
+        <description>GE PRM Sent NMT to Partner</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_PRM_Applicant_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PRM_Notify_Partner_on_NMI</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Additional_Due_Diligence_Approved_Date</fullName>
+        <field>GE_PRM_Add_Due_Dilig_Approved_Date__c</field>
+        <formula>NOW()</formula>
+        <name>Additional Due Diligence Approved Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Addtn_Info_RecordType</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>Express_AFA_Locked</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>GE PRM Addtn Info RecordType</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Afa_Submitted_RecType_FT</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>New_Fast_track_AFA_locked</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Afa Submitted RecType FT</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Application_Approved</fullName>
+        <description>Application is Approved by the Channel Manager</description>
+        <field>RecordTypeId</field>
+        <lookupValue>GE_PRM_Application_Approved</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Application Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Application_Submitted</fullName>
+        <description>Application has been submitted by the Partner to the Channel Manager</description>
+        <field>RecordTypeId</field>
+        <lookupValue>GE_PRM_Application_Submitted</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Application Submitted</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Application_Update_Approved_Date</fullName>
+        <field>GE_PRM_Application_Approved_Date__c</field>
+        <formula>NOW()</formula>
+        <name>GE_PRM_Application_Update_Approved_Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Compliance_Accept_Reject_Date</fullName>
+        <field>GE_PRM_Compliance_Accepted_Rejected_Date__c</field>
+        <formula>NOW()</formula>
+        <name>GE_PRM_Compliance_Accept_Reject_Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_FastTrack_Submit</fullName>
+        <field>GE_PRM_Status__c</field>
+        <literalValue>Submitted</literalValue>
+        <name>GE PRM FastTrack Submit</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Nullify_CM_action_field</fullName>
+        <field>GE_PRM_Chnl_Mgr_Actns__c</field>
+        <literalValue>Additional Information Provided</literalValue>
+        <name>Update CM action field</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Nullify_Subsidiaries</fullName>
+        <field>GE_PRM_KYC_Actns__c</field>
+        <literalValue>Additional Information Provided</literalValue>
+        <name>Update Subsidiaries Status</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_RecType_InProgress</fullName>
+        <description>When the KYC user requires more information</description>
+        <field>RecordTypeId</field>
+        <lookupValue>Express_AFA</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>GE PRM RecType InProgress</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Rec_Type_InProgress_FastTrack</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>New_Fast_track_AFA</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>GE PRM Rec Type InProgress FastTrack</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Record_Type_update_ExpressLocked</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>GE_PRM_Express_AFA_Locked_KYC</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Record Type update ExpressLocked</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Status_KYC_NMI</fullName>
+        <description>When KYC want NMI the status needs to get updated to NMI</description>
+        <field>GE_PRM_Status__c</field>
+        <literalValue>Need More Info</literalValue>
+        <name>GE PRM Status KYC NMI</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Update_Application_Submitted_Date</fullName>
+        <field>GE_PRM_Application_Submitted_Date__c</field>
+        <formula>NOW()</formula>
+        <name>GE_PRM_Update_Application_Submitted_Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Update_Channel_Manager_Task_Date</fullName>
+        <field>GE_PRM_Channel_Manager_Task_Date__c</field>
+        <formula>NOW()</formula>
+        <name>Update Channel Manager Task Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Update_DOA_Approved_Date</fullName>
+        <field>GE_PRM_DOA_Approved_Date__c</field>
+        <formula>NOW()</formula>
+        <name>GE_PRM_Update_DOA_Approved_Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Update_DOA_Generated_Date</fullName>
+        <field>GE_PRM_DOA_Generated_Date__c</field>
+        <formula>NOW()</formula>
+        <name>GE_PRM_Update_DOA_Generated_Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Update_KYC_Approved_Rejected_Date</fullName>
+        <field>GE_PRM_KYC_Approved_Rejected_Date__c</field>
+        <formula>NOW()</formula>
+        <name>GE_PRM_Update_KYC_Approved_Rejected_Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Update_KYC_Created_Date</fullName>
+        <field>GE_PRM_KYC_Task_Created_Date__c</field>
+        <formula>NOW()</formula>
+        <name>Update KYC Created Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Update_RecordTypeName</fullName>
+        <field>GE_PRM_Record_Type_Name__c</field>
+        <formula>$RecordType.DeveloperName</formula>
+        <name>Update RecordTypeName</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Update_Risk_Score_Generated_Date</fullName>
+        <field>GE_PRM_Risk_Score_Generated_Date__c</field>
+        <formula>NOW()</formula>
+        <name>GE_PRM_Update_Risk_Score_Generated_Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Update_Status_Approved</fullName>
+        <description>When Channel Manager verifies the application, update the status to Approved</description>
+        <field>GE_PRM_Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>GE_PRM_Update_Status_Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Update_Status_Submitted</fullName>
+        <field>GE_PRM_Status__c</field>
+        <literalValue>Submitted</literalValue>
+        <name>GE_PRM_Update_Status_Submitted</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Update_Status_Submitted_CM</fullName>
+        <field>GE_PRM_Status__c</field>
+        <literalValue>Submitted</literalValue>
+        <name>Update Appointment Status</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Update_the_Record_type</fullName>
+        <description>To Update the Record Type.</description>
+        <field>RecordTypeId</field>
+        <lookupValue>New_Fast_track_AFA_locked</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>GE PRM Update the Record type</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Update_the_Status_Approved</fullName>
+        <description>To Update the Status of Appointment to Approved.</description>
+        <field>GE_PRM_Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>GE PRM Update the Status Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_PRM_Update_the_Status_Rejected</fullName>
+        <description>To Update the Status of Appointment to Rejected.</description>
+        <field>GE_PRM_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>GE PRM Update the Status Rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_CM_Approved_Date</fullName>
+        <field>GE_PRM_CM_Approved_Date__c</field>
+        <formula>NOW()</formula>
+        <name>Update CM Approved Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <tasks>
+        <fullName>Compliance_Manager_needs_more_information_about_your_Appointment</fullName>
+        <assignedToType>owner</assignedToType>
+        <dueDateOffset>2</dueDateOffset>
+        <notifyAssignee>true</notifyAssignee>
+        <priority>High</priority>
+        <protected>false</protected>
+        <status>In Progress</status>
+        <subject>Compliance Manager needs more information about your Appointment</subject>
+    </tasks>
+    <tasks>
+        <fullName>GE_PRM_Address_Modification_Request</fullName>
+        <assignedToType>owner</assignedToType>
+        <description>Partner needs changes to the Address info. Please find the details in the Comments field of the &apos;Certify Address and Identity&apos; section.</description>
+        <dueDateOffset>2</dueDateOffset>
+        <notifyAssignee>true</notifyAssignee>
+        <priority>Normal</priority>
+        <protected>false</protected>
+        <status>In Progress</status>
+        <subject>Address Modification Request</subject>
+    </tasks>
+    <tasks>
+        <fullName>GE_PRM_Addtnl_Info_Provided_CM</fullName>
+        <assignedToType>owner</assignedToType>
+        <description>Please review the changes made by partner and approve.</description>
+        <dueDateOffset>7</dueDateOffset>
+        <notifyAssignee>true</notifyAssignee>
+        <priority>Normal</priority>
+        <protected>false</protected>
+        <status>Not Started</status>
+        <subject>Additional Info Provided</subject>
+    </tasks>
+    <tasks>
+        <fullName>GE_PRM_Application_for_Appointment_KYC_Status_updated_for_Channel_Partner_change</fullName>
+        <assignedToType>owner</assignedToType>
+        <description>Please navigate to the AfA by clicking on &apos;Related To&apos; Link above to view KYC approval status.</description>
+        <dueDateOffset>2</dueDateOffset>
+        <notifyAssignee>false</notifyAssignee>
+        <priority>High</priority>
+        <protected>false</protected>
+        <status>In Progress</status>
+        <subject>Application for Appointment: KYC Status updated for Channel Partner change request</subject>
+    </tasks>
+    <tasks>
+        <fullName>GE_PRM_Application_for_appointment_received</fullName>
+        <assignedToType>owner</assignedToType>
+        <description>This is to Notify the completion of AFA by the Channel Partner. Please navigate to the AfA by clicking on &apos;Related To&apos; Link above to review the Afa</description>
+        <dueDateOffset>2</dueDateOffset>
+        <notifyAssignee>true</notifyAssignee>
+        <priority>High</priority>
+        <protected>false</protected>
+        <status>In Progress</status>
+        <subject>Application for appointment received</subject>
+    </tasks>
+    <tasks>
+        <fullName>GE_PRM_Applicaton_for_Appointment_Channel_Partner_has_indicated_Using_Sub_Dealer</fullName>
+        <assignedTo>prm.kycuserprm@ge.com</assignedTo>
+        <assignedToType>user</assignedToType>
+        <description>Please navigate to the AfA by clicking on &apos;Related To&apos; Link above to review the Sub Dealers request for this account.
+Also, review any attachments that might be uploaded by the Partners</description>
+        <dueDateOffset>2</dueDateOffset>
+        <notifyAssignee>true</notifyAssignee>
+        <priority>High</priority>
+        <protected>false</protected>
+        <status>In Progress</status>
+        <subject>Applicaton for Appointment:Channel Partner has indicated Using Sub Dealers</subject>
+    </tasks>
+    <tasks>
+        <fullName>GE_PRM_Branch_Locations_Review</fullName>
+        <assignedTo>prm.kycuserprm@ge.com</assignedTo>
+        <assignedToType>user</assignedToType>
+        <description>Please navigate to the AFA by clicking on &apos;Related To&apos; Link above to review the requested changes by the Channel Partner.</description>
+        <dueDateOffset>2</dueDateOffset>
+        <notifyAssignee>true</notifyAssignee>
+        <priority>High</priority>
+        <protected>false</protected>
+        <status>In Progress</status>
+        <subject>Branch Locations Review</subject>
+    </tasks>
+    <tasks>
+        <fullName>GE_PRM_Subsidiaries_Review</fullName>
+        <assignedTo>prm.kycuserprm@ge.com</assignedTo>
+        <assignedToType>user</assignedToType>
+        <description>Please navigate to the AFA by clicking on &apos;Related To&apos; Link above to review the requested changes by the Channel Partner.</description>
+        <dueDateOffset>2</dueDateOffset>
+        <notifyAssignee>true</notifyAssignee>
+        <priority>High</priority>
+        <protected>false</protected>
+        <status>In Progress</status>
+        <subject>Subsidiaries/Affiliations Review</subject>
+    </tasks>
+    <tasks>
+        <fullName>High_Risk_Generated</fullName>
+        <assignedTo>prm.kycuserprm@ge.com</assignedTo>
+        <assignedToType>user</assignedToType>
+        <description>Please navigate to the AfA by clicking on &apos;Related To&apos; Link above to review the High Risk Score Fast Track AFA.</description>
+        <dueDateOffset>2</dueDateOffset>
+        <notifyAssignee>true</notifyAssignee>
+        <priority>High</priority>
+        <protected>false</protected>
+        <status>In Progress</status>
+        <subject>High Risk Generated</subject>
+    </tasks>
+    <tasks>
+        <fullName>Low_Risk_Generated</fullName>
+        <assignedTo>complianceuserprm@ge.com</assignedTo>
+        <assignedToType>user</assignedToType>
+        <description>Please navigate to the AfA by clicking on &apos;Related To&apos; Link above to review the Low Risk Score Fast Track AFA.</description>
+        <dueDateOffset>2</dueDateOffset>
+        <notifyAssignee>false</notifyAssignee>
+        <priority>High</priority>
+        <protected>false</protected>
+        <status>In Progress</status>
+        <subject>Low Risk Generated</subject>
+    </tasks>
+    <tasks>
+        <fullName>Recommendation_for_Appointment_PRM_KYC_Status_update</fullName>
+        <assignedToType>owner</assignedToType>
+        <description>Please navigate to the RfA by clicking on &apos;Related To&apos; Link above to view the PRM KYC Approve/Rejected status</description>
+        <dueDateOffset>2</dueDateOffset>
+        <notifyAssignee>false</notifyAssignee>
+        <priority>High</priority>
+        <protected>false</protected>
+        <status>In Progress</status>
+        <subject>Recommendation for Appointment: PRM KYC Status update</subject>
+    </tasks>
+</Workflow>

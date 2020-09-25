@@ -1,0 +1,54 @@
+<!--*************************************************************************************************************************************************************
+@ Page Name:      Lesson_Learned _Page
+@ Version:        1.1
+@ Author:         Raksha (raksha.shanbhag@bhge.com)
+@ Purpose:        To open lesson Learned search page
+                  
+**************************************************************************************************************************************************************/
+-->
+<apex:page controller="LessonsLearnedController" lightningStyleSheets="true" >
+
+     <apex:slds />
+       
+   <apex:includeLightning />
+   <div id="someDivId"  />
+  
+   <script>
+   
+   var workOrderId = '{!workOrderId}';
+  
+  
+       if(workOrderId != null && workOrderId != ''){
+       
+            $Lightning.use("c:Lessons_Learned_App", function(){
+               $Lightning.createComponent("c:Lessons_Learned_Attach",
+                    {
+                           'workOrderRecId':workOrderId
+                    },
+                    "someDivId",
+                    function(cmp){
+                               
+                    }
+                );
+            }); 
+       }  
+       else{
+       
+           $Lightning.use("c:Lessons_Learned_App", function(){
+               $Lightning.createComponent("c:Lessons_Learned",
+                    {
+                           
+                    },
+                    "someDivId",
+                    function(cmp){
+                               
+                    }
+                );
+            }); 
+          
+       
+       }   
+   
+    </script>
+    
+</apex:page>

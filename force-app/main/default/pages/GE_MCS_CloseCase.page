@@ -1,0 +1,10 @@
+<!-- 
+Page Name         : GE_MCS_Closecase
+Purpose/Overview  : Displaying Case with standard functionality.
+Author            : Lakshmi Prasanna Kethu
+
+-->
+
+<apex:page standardController="Case" extensions="GE_CloseCaseController" action="{!originalpage}" >
+  
+</apex:page>

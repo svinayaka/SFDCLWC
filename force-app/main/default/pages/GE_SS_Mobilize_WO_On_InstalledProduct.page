@@ -1,0 +1,68 @@
+<apex:page standardController="SVMXC__Installed_Product__c"  extensions="GE_SS_Mobilize_WO_On_InstalledProduct"  >
+
+<apex:form >
+<script>
+    function deleteWO(idvalue) {
+        var cnfm = window.confirm('Are you sure?');
+        if(cnfm) {
+            callAF(idWO);
+        }   
+        
+    }
+    </script>
+<apex:actionFunction name="callAF" action="{!deleteWO}" reRender="WoTable">
+    <apex:param name="name1" value="" assignTo="{!idvalue}"/>
+    </apex:actionFunction>  
+
+   <apex:pageBlock id="WoTable">
+       <apex:pageBlockTable value="{!lstWorkOrder}" var="objWO">
+       
+           
+           <apex:column headerValue="Action     " >
+              <apex:outputlink target="_blank" value="/{!objWO.SVMXC__Service_Order__r.Id}/e" >Edit</apex:outputlink>|&nbsp;
+              <apex:commandLink value="Del" onclick="delRec('{!objWO.SVMXC__Service_Order__r.Id}');" rerender="WoTable"/>
+          </apex:column>
+          
+           <apex:column headerValue="Work Order Number" width="10%">            
+               <apex:outputlink target="_blank" value="/{!objWO.SVMXC__Service_Order__r.Id}" >{!objWO.SVMXC__Service_Order__r.Name}</apex:outputlink>
+           </apex:column>
+           
+             <apex:column headerValue="Job Type" >
+               <apex:outputField value="{!objWO.SVMXC__Service_Order__r.GE_SS_Job_Type__c}"/>
+             </apex:column>
+            
+            <apex:column headerValue="Job Description" >
+               <apex:outputField value="{!objWO.SVMXC__Service_Order__r.GE_SS_Job_Description__c}"/>
+           </apex:column>
+           
+           <apex:column >
+               <apex:facet name="header">Planned Mobilization<br/>Date of FSE's</apex:facet>
+               <apex:outputField value="{!objWO.SVMXC__Service_Order__r.GE_SS_Planned_Mobilization_date_of_FSE__c}" />
+           </apex:column>
+           
+           <apex:column >
+            <apex:facet name="header">Planned<br/>Demobilization<br/>Date of FSE's</apex:facet>
+               <apex:outputfield value="{!objWO.SVMXC__Service_Order__r.GE_SS_Planned_Demobilization_date_of_FSE__c}"  ></apex:outputfield>
+           </apex:column>
+
+           <apex:column headerValue="Total Personnel" >
+               <apex:outputfield value="{!objWO.SVMXC__Service_Order__r.GE_SS_Total_Personnel__c}"></apex:outputfield>
+           </apex:column>
+           
+           <apex:column headerValue="Owner Name" >
+               <apex:outputfield value="{!objWO.SVMXC__Service_Order__r.OwnerId}"  ></apex:outputfield>
+           </apex:column>
+           
+         
+       </apex:pageBlockTable>
+       
+        <apex:panelGrid columns="2">
+           <apex:outputPanel rendered="{!recordSize}">
+           <apex:outputlink target="_blank" value="/apex/GE_SS_Mobilize_WO_On_InstalledProduct?id={!tmpID}&allRec=true" >Go To List ></apex:outputlink>
+           </apex:outputPanel>
+       </apex:panelGrid>
+   
+   </apex:pageBlock>
+
+</apex:form>
+</apex:page>

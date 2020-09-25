@@ -1,8 +1,28 @@
 :host {
-
+    
 }
 .BH-alert-icon button, .BH-alert-icon button:hover, .BH-alert-icon button:active {
     color: lightblue;
     outline: none;
     border: none;
+}
+.BH-alert-icon_active button, .BH-alert-icon_active button:hover, .BH-alert-icon_active button:active {
+    color: orange !important;
+}
+
+
+.notification-Icon {
+    position: relative;
+}
+.notification-alert {
+    position: absolute;
+    top: -20%;
+    display: inline-block;
+    font-size: 0.7vw;
+    left: 1.2%;
+    background: orange;
+    width: 1vw;
+    text-align: center;
+    border-radius: 50%;
+    height: 1vw;
 }

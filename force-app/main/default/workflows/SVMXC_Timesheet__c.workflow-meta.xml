@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Notify_Timesheet_Owner_s_Manager_of_Submitted_Timesheet</fullName>
+        <description>Notify Timesheet Owner&apos;s Manager of Submitted Timesheet</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_DS_Manager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>SVMXC__ServiceMaxEmailTemplates/GE_OG_DS_Timesheet_Submitted_notification</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>GE_DS_StatusApproved</fullName>
+        <field>GE_OG_DS_Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>GE_DS_StatusApproved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_DS_StatusNew</fullName>
+        <field>GE_OG_DS_Status__c</field>
+        <literalValue>New</literalValue>
+        <name>GE_DS_StatusNew</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_DS_UpdateTimesheetStatusSubmitted</fullName>
+        <field>GE_OG_DS_Status__c</field>
+        <literalValue>Submitted</literalValue>
+        <name>GE_DS_UpdateTimesheetStatusSubmitted</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Prior_Status</fullName>
+        <field>GE_DS_Prior_Status__c</field>
+        <formula>TEXT(PRIORVALUE( GE_OG_DS_Status__c ))</formula>
+        <name>Update Prior Status</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <rules>
+        <fullName>GE_DS_Prior Status</fullName>
+        <actions>
+            <name>Update_Prior_Status</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>SVMXC_Timesheet__c.GE_OG_DS_Status__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

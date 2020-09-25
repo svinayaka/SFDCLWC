@@ -1,0 +1,73 @@
+<!--
+Page Name: GE_ES_CaseProductsAddingMultiItem
+Used Where ? : Used for Add Case Product functionality 
+Purpose/Overview : Implements the search and add products for the ES & Industrial business
+Functional Area : Service Management (Case)
+Author: Jayaraju Nulakachandanam 
+Created Date:   July 01st,2011
+
+Change History -
+
+Date Modified : Developer Name     : Section/PageBlock Modified/Added : Purpose/Overview of Change
+
+-->
+
+<apex:page standardController="Case" extensions="GE_ES_CaseSearchAddProducts"  sidebar="false" showHeader="true" tabStyle="GE_Case_Product__c" standardStylesheets="true" action="{!populateLineItems}">
+ <!-- <apex:form > -->
+        <!--Section Header to display the page header similar to the standard page -->
+ <!--       <apex:sectionHeader title="Edit Products for Case : {!CaseObj.CaseNumber}"    help="/help/doc/user_ed.jsp?loc=help&target=products_add.htm&section=Products"/>  -->
+        
+        <!-- Page Block start -->
+<!--        <apex:pageBlock Id="pageBlockId">
+           <apex:pageblocksection title="Case Product Details"  />
+           -->
+           <!-- Page Messages to display error messages-->
+          <!-- <apex:messages styleClass="error" />              -->
+               
+           <!-- page block buttons which will be displayed as the detail page buttons -->
+          <!-- <apex:pageBlockButtons location="both" >
+               <apex:commandButton action="{!saveEdit}" value="Save" /> 
+               <apex:commandButton action="{!SavenMore}" value="Save & More" /> 
+               <apex:commandButton action="{!cancel}" value="Cancel" />
+           </apex:pageBlockButtons>
+           
+           <apex:outputPanel id="edit">            -->
+           <!-- table to display the line items-->          
+          <!-- <table>
+               <tr>                 -->
+                   <!-- repeater to display the headers   -->
+                  <!-- <apex:repeat value="{!headers}" var="h">
+                       <td class="hdr"><b>{!h}</b> 
+                       </td>
+                   </apex:repeat>
+               </tr> -->
+               <!-- repeater to iterate through the list of selected line items and display as multi line edit page -->
+              <!-- <apex:repeat value="{!CaseProdList}" var="CPL" id="first">
+                <tr>
+                    <td><b><apex:outputField value="{!CPL.GE_ES_ProdNamHid__c}" id="prod"/></b></td> -->
+                    <!--<td><apex:outputField value="{!CPL.GE_ES_P_L_Temp__c}" id="PnL"/></td>
+                    <td><apex:outputField value="{!CPL.GE_ES_SubPL_Hid__c}" id="SubPnL"/></td>
+                    <td><apex:outputField value="{!CPL.GE_ES_OptyDrvHid__c}" id="OpptyDriver"/></td>
+                    <td><apex:outputField value="{!CPL.GE_ES_ProdSerHid__c}" id="ProdServ"/></td>
+                    <td><apex:outputField value="{!CPL.GE_ES_OffrngHid__c}" id="Offer"/></td>-->
+                   <!-- <td><apex:outputField value="{!CPL.GE_ES_ProdCodHid__c}" id="ProdCode"/></td>
+                    <td><apex:outputField value="{!CPL.GE_ES_ProdDesHid__c}" id="ProdDesc"/></td>                    
+                    <td><apex:inputField value="{!CPL.GE_ES_Quantity__c}" id="qty"/></td>
+                    <td><apex:inputField value="{!CPL.GE_ES_SalesPrice__c}"  /></td>
+                    <td><apex:inputField value="{!CPL.GE_ES_Serial_Nbr__c}"  /></td>
+                    <td><apex:inputField value="{!CPL.GE_ES_ManufDate__c}"  /></td>
+                    <td><apex:inputField value="{!CPL.GE_ES_DefectInfo__c}"  /></td>
+                    
+                </tr>
+               </apex:repeat>
+           
+         -->
+            <!--end of second column-->
+        <!--
+          </table >
+       </apex:outputPanel>    
+           
+        </apex:pageBlock>
+        
+  </apex:form> -->
+</apex:page>

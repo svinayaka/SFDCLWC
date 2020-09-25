@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingOwnerRules>
+        <fullName>Lead_Sharing_DM_to_SD</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Lead Sharing DM to SD</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>FFX_SD_User</roleAndSubordinatesInternal>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>GEEnergyDataAdmin</roleAndSubordinatesInternal>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Lead_Sharing_SD_to_DM</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Lead Sharing SD to DM</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>Executive</roleAndSubordinatesInternal>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>FFX_SD_User</roleAndSubordinatesInternal>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Lead_Sharing_SD_to_SD</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Lead Sharing SD to SD</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>FFX_SD_User</roleAndSubordinatesInternal>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>FFX_SD_User</roleAndSubordinatesInternal>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Role_and_Internal_Subordinates_GE_Energy_Data_Admin</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Role and Internal Subordinates: GE Energy Data Admin</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>Executive</roleAndSubordinatesInternal>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>GEEnergyDataAdmin</roleAndSubordinatesInternal>
+        </sharedFrom>
+    </sharingOwnerRules>
+</SharingRules>

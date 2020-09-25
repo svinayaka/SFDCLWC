@@ -1,0 +1,116 @@
+<apex:page >
+ <!-- 
+<apex:page standardController="GE_HQ_Account_Plan__c" extensions="Embedded_Analytics_Extn">
+<style>
+
+     #r5Div
+     {
+         height:300px;
+     }
+    .rDiv
+    {
+        background-color: white;
+        width    : 320px;
+        height   : 260px;
+        margin:2px;
+        overflow:hidden;
+        border: 1px solid;
+        float:left;
+    }
+    
+    .rDiv iframe
+    {
+        height:1200px;
+        width:350px;
+        margin-top:-775px;
+        margin-top:-773px\9;
+        margin-left:-30px;
+    }
+    
+    .hov
+    {
+        position:relative;
+        cursor:pointer;
+        width:320px;
+        height:25px;
+        z-index:99;
+    }
+    
+    .hov:hover
+     {
+        background-color:blue;
+        opacity:0.1;
+        filter:alpha(opacity=10);
+     }
+           
+</style>
+<apex:form >
+<apex:pageBlock title="Filtered By: {!accName} ({!GE_HQ_Account_Plan__c.GE_HQ_DDUNS_fm__c})">
+    <apex:pageBlockSection columns="2">
+        <apex:inputField value="{!GE_HQ_Account_Plan__c.GE_OG_Tier_2_P_L__c}">
+            <apex:actionSupport action="{!setTiers}" event="onchange" reRender="reportCharts"/>
+        </apex:inputField>
+        <apex:inputField value="{!GE_HQ_Account_Plan__c.GE_OG_Tier_3_P_L__c}">
+            <apex:actionSupport action="{!setTiers}" event="onchange" reRender="reportCharts"/>
+        </apex:inputField>-->
+         <!--<apex:selectRadio value="{!tier2}" label="Filter By: {!tier2}">   
+         <apex:selectOptions value="{!tiers}"></apex:selectOptions>
+        </apex:selectRadio>-->
+   <!-- </apex:pageBlockSection>
+<apex:pageBlock id="reportCharts" rendered="true" title="Filter By: O&G>{!tier2}>{!tier3}">
+-->
+    <!--<div class="rDiv">
+        <div class="report" title="Open {!HTMLEncode(Report0Name)} in new tab..." onclick="window.open('','_new').location.href='/{!HTMLEncode(Report0Id)}?pv3={!HTMLEncode(DDUNS)}&pv4={!HTMLEncode(tier2)}&pv5={!HTMLEncode(tier3)}';"></div>
+        <iframe src="/{!Report0Id}?pv3={!DDUNS}&pv4={!tier2}&pv5={!tier3}" class="r" scrolling="no"></iframe>
+    </div>-->
+ <!-- 
+    <div class="rDiv" id="r1Div">
+        <div class="hov" title="Open {!HTMLEncode(Report1Name)} in new tab..." onclick="window.open('','_new').location.href='/{!HTMLEncode(Report1Id)}?pv3={!HTMLEncode(DDUNS)}&pv4={!HTMLEncode(tier2)}&pv5={!HTMLEncode(tier3)}';"></div>
+        <iframe src="/{!Report1Id}?pv3={!DDUNS}&pv4={!tier2}&pv5={!tier3}" class="r" scrolling="no" ></iframe>
+    </div>
+    <div class="rDiv" id="r2Div">
+        <div class="hov" title="Open {!HTMLEncode(Report2Name)} in new tab..." onclick="window.open('','_new').location.href='/{!HTMLEncode(Report2Id)}?pv3={!HTMLEncode(DDUNS)}&pv4={!HTMLEncode(tier2)}&pv5={!HTMLEncode(tier3)}';"></div>
+        <iframe src="/{!Report2Id}?pv3={!DDUNS}&pv4={!tier2}&pv5={!tier3}" class="r" scrolling="no" ></iframe>
+    </div>
+    
+   <div class="rDiv" id="r3Div">
+        <div class="hov" title="Open {!HTMLEncode(Report3Name)} in new tab..." onclick="window.open('','_new').location.href='/{!HTMLEncode(Report3Id)}?pv3={!HTMLEncode(DDUNS)}&pv4={!HTMLEncode(tier2)}&pv5={!HTMLEncode(tier3)}';"></div>
+        <iframe src="/{!Report3Id}?pv3={!DDUNS}&pv4={!tier2}&pv5={!tier3}" class="r" scrolling="no" ></iframe>
+    </div>-->
+ <!--   <div class="rDiv" id="r4Div">
+        <div class="hov" title="Open {!HTMLEncode(Report4Name)} in new tab..." onclick="window.open('','_new').location.href='/{!HTMLEncode(Report4Id)}?pv3={!HTMLEncode(DDUNS)}&pv4={!HTMLEncode(tier2)}&pv5={!HTMLEncode(tier3)}';"></div>
+        <iframe src="/{!Report4Id}?pv3={!DDUNS}&pv4={!tier2}&pv5={!tier3}" class="r" scrolling="no" ></iframe>
+    </div>-->
+      <!-- <div class="rDiv" id="r5Div">
+        <div class="hov" title="Open {!HTMLEncode(Report5Name)} in new tab..." onclick="window.open('','_new').location.href='/{!HTMLEncode(Report5Id)}?pv3={!HTMLEncode(DDUNS)}&pv4={!HTMLEncode(tier2)}&pv5={!HTMLEncode(tier3)}';"></div>
+        <iframe src="/{!Report5Id}?pv3={!DDUNS}&pv4={!tier2}&pv5={!tier3}" class="r" scrolling="no" ></iframe>
+    </div-->
+ <!--  <div class="rDiv" id="r6Div">
+   <div class="hov" title="Open {!HTMLEncode(Report6Name)} in new tab..." onclick="window.open('','_new').location.href='/{!HTMLEncode(Report6Id)}?pv3={!HTMLEncode(DDUNS)}&pv4={!HTMLEncode(tier2)}&pv5={!HTMLEncode(tier3)}';"></div>
+        <iframe src="/{!Report6Id}?pv3={!DDUNS}&pv4={!tier2}&pv5={!tier3}" class="r" scrolling="no" ></iframe>
+    </div>-->
+
+<!--
+</apex:pageBlock> 
+</apex:pageBlock>
+</apex:form>-->
+<!--
+    <c:Embedded_Analyitcs_Dynamic_Component id="EADC"
+           Report0Id="{!Report0Id}" Report0Name="{!Report0Name}" 
+           Report1Id="{!Report1Id}" Report1Name="{!Report1Name}" 
+           Report2Id="{!Report2Id}" Report2Name="{!Report2Name}"
+           Report3Id="{!Report3Id}" Report3Name="{!Report3Name}"  
+           Report4Id="{!Report4Id}" Report4Name="{!Report4Name}" 
+           Report5Id="{!Report5Id}" Report5Name="{!Report5Name}" 
+           Report6Id="{!Report6Id}" Report6Name="{!Report6Name}"  
+           Report7Id="{!Report7Id}" Report7Name="{!Report7Name}" 
+           Report8Id="{!Report8Id}" Report8Name="{!Report8Name}" 
+           Report9Id="{!Report9Id}" Report9Name="{!Report9Name}" 
+           Report10Id="{!Report10Id}" Report10Name="{!Report10Name}" 
+           Report11Id="{!Report11Id}" Report11Name="{!Report11Name}" 
+           Report12Id="{!Report12Id}" Report12Name="{!Report12Name}" 
+           Report13Id="{!Report13Id}" Report13Name="{!Report13Name}" 
+           Report14Id="{!Report14Id}" Report14Name="{!Report14Name}" 
+           DashboardId="{!DashId}" pv0="{!DDUNS}"/>
+-->
+</apex:page>

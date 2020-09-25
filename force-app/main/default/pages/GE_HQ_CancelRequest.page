@@ -1,0 +1,32 @@
+<apex:page >
+<!--
+<apex:page standardController="Account" extensions="AccountSearchController" >
+    <style>
+        .s1 {
+            font-family: Verdana, Arial;
+            font-size:14px;
+            font-weight:Bold;
+            color:Red;
+            }
+    </style>
+    <apex:form >
+    <apex:pagemessages ></apex:pagemessages> 
+    // With out this the messages were not being displayed. Added as per bug#7828
+    
+    <apex:outputLabel styleClass="s1" >
+        <center>
+            <br/> Cancelling the Account request will delete your account request from the system. <br/><br/><br/>
+            Do You want to proceed?
+        </center>
+    </apex:outputLabel>
+    
+    //<apex:pagemessage severity="Warning" strength="3">Cancelling the Account request will delete your acount //request from the system </apex:pagemessage>
+    
+    <center>
+        <br/> <apex:commandButton value="Proceed" action="{!DeleteRec}"/>
+        <apex:commandButton value="Go Back" action="{!Cancel}"/>
+    </center>
+    // </apex:pageBlockButtons>             
+    </apex:form>
+    -->
+</apex:page>

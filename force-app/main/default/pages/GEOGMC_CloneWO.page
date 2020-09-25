@@ -1,0 +1,15 @@
+<!--
+Type Name [Class/Trigger/Page Name] : VF - GEOGMC_CloneWO
+Purpose                             : Customize the standard clone functionality of Workorder Object
+Overview                            : This page is to implement the custom clone functionality of WorkOrder Object
+                                      by removing the fields ServiceTeam, Technician and Skill while clone
+Functional Area                     : ServiceMax
+Author                              : RajaKumar Malla
+Created Date                        : 12 Feb 2013
+-->
+
+<apex:page standardController="SVMXC__Service_Order__c" extensions="GEOGMC_CloneWOController"  id="page" tabStyle="SVMXC__Service_Order__c" action="{!reDirect}">
+    <apex:form id="frm">
+    
+    </apex:form>
+</apex:page>

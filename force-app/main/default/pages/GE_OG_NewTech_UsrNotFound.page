@@ -1,0 +1,19 @@
+<apex:page standardController="SVMXC__Service_Group_Members__c" extensions="GE_OG_NewTech_UsrNotFoundExt">    
+    <apex:form id="myform">
+        <apex:sectionheader title="Salesforce user account not found">
+            <apex:pageblock mode="read" id="theBlock" title="Technician Created - did not find Salesforce user record">
+                <apex:pageblockbuttons >
+                    <apex:commandbutton action="{!submit}" value="Ok"></apex:commandbutton>
+                    <apex:param value="$CurrentPage.parameters.Id"/>
+                </apex:pageblockbuttons>                   
+                   <p>
+                       Your technician record has been created successful!
+                       <br></br>
+            			However, a Salesforce user account with a matching SSO could not be found and set automatically.                		
+                       <br></br>
+        				<b>Please click Ok</b> and link an existing Salesforce user to the technican if applicable.
+                    </p>                     
+            </apex:pageblock>
+        </apex:sectionheader>
+    </apex:form>    
+</apex:page>

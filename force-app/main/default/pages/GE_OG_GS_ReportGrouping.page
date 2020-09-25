@@ -1,0 +1,94 @@
+<apex:page controller="GE_OG_GS_ReportGroupingController" showHeader="false" sidebar="false" >
+<apex:stylesheet value="{!URLFOR($Resource.GE_OG_DS_JQuery, 'css/ui.jqgrid-bootstrap.css')}" />
+	<apex:stylesheet value="{!URLFOR($Resource.GE_OG_DS_JQuery, 'css/ui.jqgrid.css')}" />
+	<apex:stylesheet value="{!URLFOR($Resource.GE_OG_DS_JQuery, 'jquery-ui.min.css')}" />
+    <apex:includeScript value="{!URLFOR($Resource.GE_OG_DS_JQuery, 'js/jquery-1.11.0.min.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.GE_OG_DS_JQuery, 'jquery-ui.min.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.GE_OG_DS_JQuery, 'js/jquery.jqGrid.src.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.GE_OG_DS_JQuery)}/{!localeFile}" />
+    <apex:form id="form1"  >
+    	<apex:pageBlock mode="edit"  >
+        	<apex:pageBlockButtons location="top" >
+        		<apex:commandButton action="{!reloadData}" value="Reload Data" />
+        	</apex:pageBlockButtons>
+         	<apex:pageBlockSection columns="2" title="Report Filters"  >
+        		<apex:repeat value="{!filterFields}" var="f" rendered="{!hasFilters}" >
+        			<apex:outputField value="{!sObj[f.objField]}" /> 
+        			<apex:inputCheckbox value="{!f.selected}" />
+        		</apex:repeat>
+        		
+        		<apex:pageblockSectionItem >
+               		<apex:outputLabel value="Group By First Column" />
+               		<apex:inputCheckbox value="{!groupData}" /> 
+               </apex:pageblockSectionItem>
+        		
+        	</apex:pageBlockSection>
+        	<apex:pageBlockSection columns="1" >
+        		<apex:pageblockSectionItem >
+        			<apex:outputLabel value="" />
+        			<apex:outputText value="{!reportSetting.Help_Text__c}" />
+        		</apex:pageblockSectionItem>
+        	</apex:pageBlockSection>
+        	
+		    <div style="clear;both;height:40px" ></div>
+		    <table id="dispatchTable" ></table>
+		    <div id="dispatchTablePage" ></div>
+    	</apex:pageBlock>
+    </apex:form>
+
+    <script type="text/javascript" >
+    	
+    	
+    	var dispatchData = new Array();
+    	var row = new Array();
+   		<apex:repeat value="{!reportData}" var="k" >
+   			<apex:repeat value="{!reportData[k]}" var="row" >
+   				row = new Array();
+   				<apex:repeat value="{!fieldsList}" var="field" >
+   					row["{!field.apiFieldName}"] = "{!JSENCODE(row[field.apiFieldName])}";
+   				</apex:repeat>
+   				dispatchData.push(row);
+   			</apex:repeat>
+   		</apex:repeat>
+   		
+   		var rowsDef = new Array();
+   		var rowDef = new Array();
+   		<apex:repeat value="{!fieldsList}" var="field" >
+   			rowDef = { label: '{!field.fieldLabel}', name: '{!field.apiFieldName}', search:true, <apex:outputText rendered="{!field.isDate}" >sorttype: 'date', formatter: 'date', srcformat: '{!dateFormat1}', searchoptions: { dataInit: function(element) {  jQuery(element).datepicker({dateFormat: '{!dateFormat2}', showOn: 'focus'}); }, sopt: ['ge', 'le', 'eq']} </apex:outputText><apex:outputText rendered="{!field.isNumber}" >sorttype: 'number', searchoptions: { sopt: ['ge', 'le', 'eq']} </apex:outputText><apex:outputText rendered="{! AND(NOT(field.isDate), NOT(field.isNumber))}" > sorttype: "text", searchoptions: { sopt: ['bw', 'bn',  'ew', 'en', 'cn', 'nc']}  </apex:outputText><apex:outputText rendered="{!field.key}" >, key : true</apex:outputText> };
+   			rowsDef.push(rowDef);
+		</apex:repeat>
+   		
+    
+    	jQuery(document).ready(function() {
+    		jQuery("#dispatchTable").jqGrid({
+    			regional: '{!locale}',
+    			datatype: "local",
+    			data: dispatchData,
+    			height: 600,
+    			scroll: true,
+    			colModel: rowsDef,
+    			viewrecords: true,
+    			loadonce: true,
+    			rowNum: 100,
+    			<apex:outputText rendered="{!groupData}" >
+    			grouping: true,
+    			groupingView: {
+    				groupField: ["{!groupField.apiFieldName}"],
+    				groupColumnShow: [false],
+    				groupText: ["<span style='font-size: 14px; font-weight:bold;font-style:italic;' >{0}</span>"],
+    				groupOrder: ["asc"],
+    				groupSummary: [false],
+    				groupCollapse: false
+    			},
+    			</apex:outputText>
+    			pager: "#dispatchTablePage"
+    		});
+    		
+    		jQuery("#dispatchTable").jqGrid('filterToolbar', {stringResult: true, searchOperators: true});
+    	});
+    	
+    	
+    
+    </script>
+    
+</apex:page>

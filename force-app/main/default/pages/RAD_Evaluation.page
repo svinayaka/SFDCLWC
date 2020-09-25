@@ -1,0 +1,1473 @@
+<apex:page standardController="eRAD__c" extensions="RAD_Evaluation_Cntrl" sidebar="false" showHeader="false"  standardStylesheets="false" action="{!pageaction}" id="pageid">
+    <apex:includeScript value="{!$Resource.Jquery}"/>
+    <script language="JavaScript" type="text/javascript">
+        $( document ).ready(function() {
+            var nVer = navigator.appVersion;
+            var nAgt = navigator.userAgent;
+            var browserName  = navigator.appName;
+            var fullVersion  = ''+parseFloat(navigator.appVersion); 
+            var majorVersion = parseInt(navigator.appVersion,10);
+            var nameOffset,verOffset,ix;
+            if ((verOffset=nAgt.indexOf("Chrome"))!=-1) {
+                 jq(".browclass1").addClass("inputfldfirefox");
+            }else if ((verOffset=nAgt.indexOf("Firefox"))!=-1 || (verOffset=nAgt.indexOf("MSIE"))!=-1) {
+                 jq(".browclass1").addClass("inputfldchrome");
+            }
+        });
+    </script>
+    <style>
+        .inputfldfirefox{
+            height:13px;
+            width:90px;
+        }
+        .inputfldchrome{
+            height:14px;
+            width:90px;
+        }
+        .activeTab {font-size:1.25em;font-style:normal;font-family: 'Calibri';font-weight:bold;font-size: 95%;background-color: #1797c0;color:white; width:60px;height:20px;background-image:none;border: 0px solid #747e96;border-bottom: 0px solid #fff;
+        -moz-border-radius-topleft: 10px;
+        -moz-border-radius-topright: 10px;
+        -moz-border-radius-bottomright: 0px;
+        -moz-border-radius-bottomleft: 0px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        border-bottom-left-radius: 0 px;
+        border-bottom-right-radius: 0 px;
+        position:relative;
+        }
+        .inactiveTab {font-size:1.25em;,font-style:normal;font-family: 'Calibri';font-weight:bold;font-size: 95%;;background-color: #CECEF6; color:black;width:60px;height:20px;background-image:none;border: 0px solid #747e96;border-bottom: 0px solid #fff;
+        -moz-border-radius-topleft: 10px;
+        -moz-border-radius-topright: 10px;
+        -moz-border-radius-bottomright: 0px;
+        -moz-border-radius-bottomleft: 0px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        border-bottom-left-radius: 0 px;
+        border-bottom-right-radius: 0 px;
+        position: relative;
+        }
+        .rich-tabhdr-side-border { background-image: none; }
+        .rich-tabhdr-side-cell { border-top: none; }
+        .rich-tabpanel-content {font-size:100%}
+        .pagetable
+        {
+            font-size: 95%;
+            font-weight: bold;
+            color:white;
+            text-align:center;
+            padding: 5px 2px 4px 5px;
+            background: #1797c0!important;
+        }        
+        .innerpagetable
+        {
+            background: #003f77 ;
+            border-width: 0 0 1px 1px;
+            border-color: white;
+            font-size: 85%;
+            color:white;
+            font-weight: bold;
+            text-align:center;
+            padding: 5px 2px 4px 5px;
+        }
+        .innerpagetable1
+        {
+            height:14px;
+            border-width: 0 0 1px 1px;
+            padding: 5px 2px 4px 5px;
+        }
+        .button {
+            background: #006eb3;
+            border: 1px solid #006eb3;
+            color: #fff;
+            padding: 4px 20px;
+            font-family: Arial,Helvetica,sans-serif;
+        }
+        .toptable {
+            font-size: 13px;
+            font-family: Arial,Verdana,sans-serif;
+        }
+        <!-- CSS goes in the document HEAD or added to your external stylesheet -->
+    </style>
+    <script>
+        var jq = $.noConflict();
+        function calcapexrating(){
+            var total = jq('.totalcapex').val();
+            var pareint = parseInt(jq('.TP_Price').val()) + parseInt(jq('.EP_Price').val()) + parseInt(jq('.IP_Price').val()) + parseInt(jq('.SpP_Price').val()) + parseInt(jq('.TrP_Price').val()) + parseInt(jq('.TeP_Price').val()) + parseInt(jq('.BP_Price').val());
+            for(var c=0;c<total;c++){
+                var val1 = (jq(".capex1"+c).val() * parseInt(jq('.TP_Price').val())) + (jq(".capex2"+c).val() * parseInt(jq('.EP_Price').val())) + (jq(".capex3"+c).val() * parseInt(jq('.IP_Price').val())) + (jq(".capex4"+c).val() * parseInt(jq('.TrP_Price').val())) + (jq(".capex5"+c).val() * parseInt(jq('.SpP_Price').val())) + (jq(".capex6"+c).val() * parseInt(jq('.TeP_Price').val())) + (jq(".capex7"+c).val() * parseInt(jq('.BP_Price').val()));
+                var tot = (val1/pareint);
+                if(isNaN(tot)){
+                    tot = 0;
+                }
+                jq('.capextotal'+c).val(tot.toFixed(1));
+            }
+            var geog = (jq(".capexgeog1").val() * parseInt(jq('.TP_Price').val())) + (jq(".capexgeog2").val() * parseInt(jq('.EP_Price').val())) + (jq(".capexgeog3").val() * parseInt(jq('.IP_Price').val())) + (jq(".capexgeog4").val() * parseInt(jq('.TrP_Price').val())) + (jq(".capexgeog5").val() * parseInt(jq('.SpP_Price').val())) + (jq(".capexgeog6").val() * parseInt(jq('.TeP_Price').val())) + (jq(".capexgeog7").val() * parseInt(jq('.BP_Price').val()));
+            var geogtot = (geog/pareint);
+            if(isNaN(geogtot)){
+                geogtot = 0;
+            }
+            jq('.capscr').val(geogtot.toFixed(1));
+        }
+        function calopexrating(){
+            var total=jq('.totalopex').val();
+            var pareint = parseInt(jq('.Real').val()) + parseInt(jq('.Main').val()) + parseInt(jq('.Avail').val()) + parseInt(jq('.Fec').val()) + parseInt(jq('.Mc').val()) + parseInt(jq('.Eff').val()) + parseInt(jq('.tpc').val()) + parseInt(jq('.pmd').val()) + parseInt(jq('.pmdr').val()) + parseInt(jq('.umc').val()) + parseInt(jq('.cpmt').val()) + parseInt(jq('.ser').val()) + parseInt(jq('.icc').val());
+            
+            for(c=0;c<total;c++)
+            {
+                var val1 = (jq(".opex1"+c).val() * parseInt(jq('.Real').val())) + (jq(".opex2"+c).val() * parseInt(jq('.Main').val())) + (jq(".opex3"+c).val() * parseInt(jq('.Avail').val())) + (jq(".opex4"+c).val() * parseInt(jq('.Fec').val())) + (jq(".opex5"+c).val() * parseInt(jq('.Mc').val())) + (jq(".opex6"+c).val() * parseInt(jq('.Eff').val())) + (jq(".opex7"+c).val() * parseInt(jq('.tpc').val())) + (jq(".opex8"+c).val() * parseInt(jq('.pmd').val())) + (jq(".opex9"+c).val() * parseInt(jq('.pmdr').val())) + (jq(".opexid1"+c).val() * parseInt(jq('.umc').val())) + (jq(".opexid2"+c).val() * parseInt(jq('.cpmt').val())) + (jq(".opexid3"+c).val() * parseInt(jq('.ser').val())) + (jq(".opexid4"+c).val() * parseInt(jq('.icc').val()));
+                var tot = (val1/pareint);
+                if(isNaN(tot)){
+                    tot = 0;
+                }
+                jq('.opexidtotal1'+c).val(tot.toFixed(1));
+            }
+            var geog = (jq(".opexgeog1").val() * parseInt(jq('.Real').val())) + (jq(".opexgeog2").val() * parseInt(jq('.Main').val())) + (jq(".opexgeog3").val() * parseInt(jq('.Avail').val())) + (jq(".opexgeog4").val() * parseInt(jq('.Fec').val())) + (jq(".opexgeog5").val() * parseInt(jq('.Mc').val())) + (jq(".opexgeog6").val() * parseInt(jq('.Eff').val())) + (jq(".opexgeog7").val() * parseInt(jq('.tpc').val())) + (jq(".opexgeog8").val() * parseInt(jq('.pmd').val())) + (jq(".opexgeog9").val() * parseInt(jq('.pmdr').val())) + (jq(".opexgeogid1").val() * parseInt(jq('.umc').val())) + (jq(".opexgeogid2").val() * parseInt(jq('.cpmt').val())) + (jq(".opexgeogid3").val() * parseInt(jq('.ser').val())) + (jq(".opexgeogid4").val() * parseInt(jq('.icc').val()));
+            var geogtot = (geog/pareint);
+            if(isNaN(geogtot)){
+                geogtot = 0;
+            }
+            jq('.opexscr').val(geogtot.toFixed(1));
+        }
+        function calcommrating(){
+            var total=jq('.totalcomm').val();
+            var pareint = parseInt(jq('.del').val()) + parseInt(jq('.tc').val()) + parseInt(jq('.resp').val()) + parseInt(jq('.prebid').val()) + parseInt(jq('.sub').val()) + parseInt(jq('.oem').val()) + parseInt(jq('.fauser').val()) + parseInt(jq('.qn').val()) + parseInt(jq('.btd').val()) + parseInt(jq('.ass').val()) + parseInt(jq('.awb').val()) + parseInt(jq('.faepc').val()) + parseInt(jq('.prebidag').val()) + parseInt(jq('.itw').val()); 
+             for(c=0;c<total;c++)
+            {
+                var val1 = (jq(".comm1"+c).val() * parseInt(jq('.del').val())) + (jq(".comm2"+c).val() * parseInt(jq('.tc').val())) + (jq(".comm3"+c).val() * parseInt(jq('.resp').val())) + (jq(".comm4"+c).val() * parseInt(jq('.prebid').val())) + (jq(".comm5"+c).val() * parseInt(jq('.sub').val())) + (jq(".comm6"+c).val() * parseInt(jq('.oem').val())) + (jq(".comm7"+c).val() * parseInt(jq('.fauser').val())) + (jq(".comm8"+c).val() * parseInt(jq('.qn').val())) + (jq(".comm9"+c).val() * parseInt(jq('.btd').val())) + (jq(".commid1"+c).val() * parseInt(jq('.ass').val())) + (jq(".commid2"+c).val() * parseInt(jq('.awb').val())) + (jq(".commid3"+c).val() * parseInt(jq('.faepc').val())) + (jq(".commid4"+c).val() * parseInt(jq('.prebidag').val())) + (jq(".commid5"+c).val() * parseInt(jq('.itw').val()));
+                var tot = (val1/pareint);
+                if(isNaN(tot)){
+                    tot = 0;
+                }
+                jq('.commidtotal1'+c).val(tot.toFixed(1));
+            }
+            var geog = (jq(".commgeog1").val() * parseInt(jq('.del').val())) + (jq(".commgeog2").val() * parseInt(jq('.tc').val())) + (jq(".commgeog3").val() * parseInt(jq('.resp').val())) + (jq(".commgeog4").val() * parseInt(jq('.prebid').val())) + (jq(".commgeog5").val() * parseInt(jq('.sub').val())) + (jq(".commgeog6").val() * parseInt(jq('.oem').val())) + (jq(".commgeog7").val() * parseInt(jq('.fauser').val())) + (jq(".commgeog8").val() * parseInt(jq('.qn').val())) + (jq(".commgeog9").val() * parseInt(jq('.btd').val())) + (jq(".commgeogid1").val() * parseInt(jq('.ass').val())) + (jq(".commgeogid2").val() * parseInt(jq('.awb').val())) + (jq(".commgeogid3").val() * parseInt(jq('.faepc').val())) + (jq(".commgeogid4").val() * parseInt(jq('.prebidag').val())) + (jq(".commgeogid5").val() * parseInt(jq('.itw').val()));
+            var geogtot = (geog/pareint);
+            if(isNaN(geogtot)){
+                geogtot = 0;
+            }
+            jq('.comscr').val(geogtot.toFixed(1));
+        }
+        function calrefrating(){
+            var total=jq('.totalref').val();
+            var pareint = parseInt(jq('.isf').val()) + parseInt(jq('.pr').val()) + parseInt(jq('.cif').val()) + parseInt(jq('.rif').val()) + parseInt(jq('.otr').val()) + parseInt(jq('.cpif').val()) + parseInt(jq('.loc').val()) + parseInt(jq('.sw').val()) + parseInt(jq('.pes').val());
+            for(c=0;c<total;c++)
+            {
+                var val1 = (jq(".ref1"+c).val() * parseInt(jq('.isf').val())) + (jq(".ref2"+c).val() * parseInt(jq('.pr').val())) + (jq(".ref3"+c).val() * parseInt(jq('.cif').val())) + (jq(".ref4"+c).val() * parseInt(jq('.rif').val())) + (jq(".ref5"+c).val() * parseInt(jq('.otr').val())) + (jq(".ref6"+c).val() * parseInt(jq('.cpif').val())) + (jq(".ref7"+c).val() * parseInt(jq('.loc').val())) + (jq(".ref8"+c).val() * parseInt(jq('.sw').val())) + (jq(".ref9"+c).val() * parseInt(jq('.pes').val()));
+                var tot = (val1/pareint);
+                if(isNaN(tot)){
+                    tot = 0;
+                }
+                jq('.refidtotal1'+c).val(tot.toFixed(1));
+            }
+            var geog = (jq(".refgeog1").val() * parseInt(jq('.isf').val())) + (jq(".refgeog2").val() * parseInt(jq('.pr').val())) + (jq(".refgeog3").val() * parseInt(jq('.cif').val())) + (jq(".refgeog4").val() * parseInt(jq('.rif').val())) + (jq(".refgeog5").val() * parseInt(jq('.otr').val())) + (jq(".refgeog6").val() * parseInt(jq('.cpif').val())) + (jq(".refgeog7").val() * parseInt(jq('.loc').val())) + (jq(".refgeog8").val() * parseInt(jq('.sw').val())) + (jq(".refgeog9").val() * parseInt(jq('.pes').val()));
+            var geogtot = (geog/pareint);
+            if(isNaN(geogtot)){
+                geogtot = 0;
+            }
+            jq('.refscr').val(geogtot.toFixed(1));
+        }
+        function calrelrating(){
+            var total=jq('.totalrel').val();
+            var pareint = parseInt(jq('.rweu').val()) + parseInt(jq('.rwe').val()) + parseInt(jq('.rwi').val()) + parseInt(jq('.rep').val()) + parseInt(jq('.rwb').val()) + parseInt(jq('.sd').val());
+            for(c=0;c<total;c++)
+            {
+                var val1 = (jq(".rel1"+c).val() * parseInt(jq('.rweu').val())) + (jq(".rel2"+c).val() * parseInt(jq('.rwe').val())) + (jq(".rel3"+c).val() * parseInt(jq('.rwi').val())) + (jq(".rel4"+c).val() * parseInt(jq('.rep').val())) + (jq(".rel5"+c).val() * parseInt(jq('.rwb').val())) + (jq(".rel6"+c).val() * parseInt(jq('.sd').val()));
+                var tot = (val1/pareint);
+                if(isNaN(tot)){
+                    tot = 0;
+                }
+                jq('.relidtotal1'+c).val(tot.toFixed(1));
+            }
+            var geog = (jq(".relgeog1").val() * parseInt(jq('.rweu').val())) + (jq(".relgeog2").val() * parseInt(jq('.rwe').val())) + (jq(".relgeog3").val() * parseInt(jq('.rwi').val())) + (jq(".relgeog4").val() * parseInt(jq('.rep').val())) + (jq(".relgeog5").val() * parseInt(jq('.rwb').val())) + (jq(".relgeog6").val() * parseInt(jq('.sd').val()));
+            var geogtot = (geog/pareint);
+            if(isNaN(geogtot)){
+                geogtot = 0;
+            }
+            jq('.relscr').val(geogtot.toFixed(1));
+        }
+        function caltechrating(){
+            var total=jq('.totaltech').val();
+            var pareint = parseInt(jq('.atomcp').val())+ parseInt(jq('.esf').val())+parseInt(jq('.md').val())+parseInt(jq('.svp').val())+parseInt(jq('.foot').val())+parseInt(jq('.isol').val()) + parseInt(jq('.wei').val()) + parseInt(jq('.noise').val()) + parseInt(jq('.ccof').val()) + parseInt(jq('.tvd').val()) + parseInt(jq('.tline').val()) + parseInt(jq('.mq').val()) +parseInt(jq('.gte').val()) + parseInt(jq('.gtff').val()) + parseInt(jq('.cover').val()) + parseInt(jq('.atcsa').val()) + parseInt(jq('.rtcsa').val()) + parseInt(jq('.opcsa').val());
+            for(c=0;c<total;c++)
+            {
+                var val1 = (jq(".tech1"+c).val() * parseInt(jq('.atomcp').val())) + (jq(".tech2"+c).val() * parseInt(jq('.esf').val())) + (jq(".tech3"+c).val() * parseInt(jq('.md').val())) + (jq(".tech4"+c).val() * parseInt(jq('.svp').val())) + (jq(".tech5"+c).val() * parseInt(jq('.foot').val())) + (jq(".tech6"+c).val() * parseInt(jq('.isol').val())) + (jq(".tech7"+c).val() * parseInt(jq('.wei').val())) + (jq(".tech8"+c).val() * parseInt(jq('.noise').val())) + (jq(".tech9"+c).val() * parseInt(jq('.ccof').val())) + (jq(".techid1"+c).val() * parseInt(jq('.tvd').val())) + (jq(".techid2"+c).val() * parseInt(jq('.tline').val())) + (jq(".techid3"+c).val() * parseInt(jq('.mq').val())) + (jq(".techid4"+c).val() * parseInt(jq('.gte').val())) + (jq(".techid5"+c).val() * parseInt(jq('.gtff').val())) + (jq(".techid6"+c).val() * parseInt(jq('.cover').val()))+ (jq(".techid7"+c).val() * parseInt(jq('.atcsa').val()))+ (jq(".techid8"+c).val() * parseInt(jq('.rtcsa').val()))+ (jq(".techid9"+c).val() * parseInt(jq('.opcsa').val()));
+                var tot = (val1/pareint);
+                if(isNaN(tot)){
+                    tot = 0;
+                }
+                jq('.techidtotal1'+c).val(tot.toFixed(1));
+            }
+            var geog = (jq(".techgeog1").val() * parseInt(jq('.atomcp').val())) + (jq(".techgeog2").val() * parseInt(jq('.esf').val())) + (jq(".techgeog3").val() * parseInt(jq('.md').val())) + (jq(".techgeog4").val() * parseInt(jq('.svp').val())) + (jq(".techgeog5").val() * parseInt(jq('.foot').val())) + (jq(".techgeog6").val() * parseInt(jq('.isol').val())) + (jq(".techgeog7").val() * parseInt(jq('.wei').val())) + (jq(".techgeog8").val() * parseInt(jq('.noise').val())) + (jq(".techgeog9").val() * parseInt(jq('.ccof').val())) + (jq(".techgeogid1").val() * parseInt(jq('.tvd').val())) + (jq(".techgeogid2").val() * parseInt(jq('.tline').val())) + (jq(".techgeogid3").val() * parseInt(jq('.mq').val())) + (jq(".techgeogid4").val() * parseInt(jq('.gte').val())) + (jq(".techgeogid5").val() * parseInt(jq('.gtff').val())) + (jq(".techgeogid6").val() * parseInt(jq('.cover').val()))+ (jq(".techgeogid7").val() * parseInt(jq('.atcsa').val()))+ (jq(".techgeogid8").val() * parseInt(jq('.rtcsa').val()))+ (jq(".techgeogid9").val() * parseInt(jq('.opcsa').val()));
+            var geogtot = (geog/pareint);
+            if(isNaN(geogtot)){
+                geogtot = 0;
+            }
+            jq('.techscr').val(geogtot.toFixed(1));    
+        }
+        function calallrating(){
+            calcapexrating();
+            calopexrating();
+            calcommrating();
+            calrefrating();
+            calrelrating();
+            caltechrating();
+        }
+        function calallratingreport(){
+            calallrating();
+            saveforreport();
+        }
+    </script>
+    
+    <apex:form id="frm" >
+        <apex:actionFunction name="saveforreport" action="{!save_custom}" oncomplete="window.open('/apex/eRAD_Custom_Report?id={!eradid}','_blank');"/>
+        <table align="left" width="100%" cellspacing="" class="toptable ">
+        <tr>
+        <td width="9%"><apex:outputLabel value="Oppty Id :" style="text-align:left;font-weight:bold;color:darkblue;" /></td>
+        <td><apex:commandLink value="{!erAdlist[0].Opportunity_Number__C}" style="color:black;" onclick="window.open('/{!erAdlist[0].Opportunity__c}','_blank');"/></td>
+        </tr>
+        <tr>
+        <td><apex:outputLabel value="Oppty Name :" style="text-align:left;font-weight:bold;color:darkblue;" /></td>
+        <td><apex:outputLabel value="{!erAdlist[0].Opportunity_Name__C}" /></td>
+        </tr>
+        <tr>
+        <td><apex:outputLabel value="Oppty Status :" style="text-align:left;font-weight:bold;color:darkblue;" /></td>
+        <td><apex:outputLabel value="{!erAdlist[0].Opportunity_Status__C}" /></td>
+        </tr>
+        <tr>
+        <td><apex:outputLabel value="Status :" style="text-align:left;font-weight:bold;color:darkblue;" /></td>
+        <td><apex:outputLabel value="{!erAdlist[0].Status__c}" /></td>
+        </tr>
+        </table><br/>
+        <apex:tabPanel headerSpacing="4"  switchType="client" TabClass="activeTab" inactiveTabClass="inactiveTab ">
+            <apex:tab label="Capex" id="Cap" >
+                <apex:pageBlock id="cap_pb">
+                    <table>
+                    <tr >
+                    <td style="background: #1797c0!important;font-weight:bold;color:white;font-size:95%;"><apex:outputlabel value="Category Weight (%)"/></td><td><apex:inputfield value="{!erAdlist[0].Capex_Category_weight__c}" styleclass="capexcw"/></td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td>
+                        <div align="center">
+                        <apex:outputPanel rendered="{!buttonboo == true}"><apex:commandButton value="Save" onclick="calallrating();" action="{!save_custom}" styleClass="button" rendered="{!buttonboo == true}"/></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == true}"> &nbsp;<apex:commandButton value="Return to eRAD" rendered="{!buttonboo == true}" onclick="calallrating();" action="{!ss_savecontent}" styleClass="button"/></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == false}">&nbsp;<apex:commandButton value="Return to eRAD" rendered="{!buttonboo == false}" action="{!cancelpage}" styleClass="button"/></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == true}">&nbsp;<apex:commandButton value="Report" onclick="calallratingreport();" rendered="{!buttonboo == true}" rerender="pageid" styleClass="button" /></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == false}">&nbsp;<apex:commandButton value="Report" onclick="window.open('/apex/eRAD_Custom_Report?id={!eradid}','_blank');" rendered="{!buttonboo == false}" rerender="pageid" styleClass="button" /></apex:outputPanel>
+                            <apex:outputpanel >&nbsp;<apex:commandButton value="Calculate Score" onclick="calcapexrating();" rerender="pageid" styleClass="button" /></apex:outputpanel>
+                        </div>
+                    </td>    
+                    </tr>
+                    </table><br/>
+                    <apex:variable value="0" var="capexvar"/>
+                    <apex:pageBlockTable var="wrap" value="{!erAdlist}"  headerClass="pagetable" id="cap_pbtable" cellspacing="5px">
+                        <apex:column headerValue="Capex Atrributes & Weights" id="pbtable_col">
+                            <div style="width:200px;">
+                            <apex:pageBlockTable var="erad" value="{!erAdlist}" headerClass="innerpagetable1">
+                                <apex:column headerValue="">
+                                        <apex:pageblocksection columns="1">
+                                            <br/>
+                                            <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                                <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Total_Price__c.label}</apex:outputLabel>
+                                                <apex:inputField value="{!erad.Total_Price__c}" styleClass="TP_Price" />
+                                            </apex:pageBlockSectionItem><br/>
+                                            <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                                <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Equipment_Price__c.label}</apex:outputLabel>
+                                                <apex:inputField value="{!erad.Equipment_Price__c}" styleClass="EP_Price"/>
+                                            </apex:pageBlockSectionItem><br/>
+                                            <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                                <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Installation_Price__c.label}</apex:outputLabel>
+                                                <apex:inputField value="{!erad.Installation_Price__c}" styleClass="IP_Price"/>
+                                            </apex:pageBlockSectionItem><br/>
+                                            <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                                <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Training_Price__c.label}</apex:outputLabel>
+                                                <apex:inputField value="{!erad.Training_Price__c}" styleClass="TrP_Price"/>
+                                            </apex:pageBlockSectionItem><br/>
+                                            <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                                <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Spare_parts_Price__c.label}</apex:outputLabel>
+                                                <apex:inputField value="{!erad.Spare_parts_Price__c}" styleClass="SpP_Price"/>
+                                            </apex:pageBlockSectionItem><br/>
+                                            <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                                <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Tests_Price__c.label}</apex:outputLabel>
+                                                <apex:inputField value="{!erad.Tests_Price__c}" styleClass="TeP_Price"/>
+                                            </apex:pageBlockSectionItem><br/>
+                                            <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                                <apex:outputLabel >{!$ObjectType.eRAD__c.fields.BOP_Price__c.label}</apex:outputLabel>
+                                                <apex:inputField value="{!erad.BOP_Price__c}" styleClass="BP_Price"/>
+                                            </apex:pageBlockSectionItem><br/><br/><br/>
+                                        </apex:pageblocksection>
+                                </apex:column>
+                            </apex:pageBlockTable>
+                          </div>
+                        </apex:column>
+                        <apex:column headerValue="GE O&G" >
+                            <div style="width:220px;">
+                            <apex:pageBlockTable var="erad" value="{!erAdlist}" headerClass="innerpagetable" width="100%">
+                                <apex:column headerValue="Value" width="50%">
+                                    <center>
+                                        <br/>
+                                        <apex:inputtext value="{!erad.TP_Value__c}" label="" style="width:90px;height:14px;background-color:#006eb3;color:white" disabled="true"/><br/><br/>
+                                        <apex:inputField value="{!erad.EP_Value__c}" label="" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.IP_Value__c}" label="" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.TrP_Value__c}" label="" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.SpP_Value__c}" label="" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.TeP_Value__c}" label="" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.BP_Value__c}" label="" styleclass="browclass1"/><br/><br/><br/>
+                                        <apex:outputtext value="Total Capex Score" style="font-size:12px;color:#003f77;font-weight:bold;"/>
+                                    </center>
+                                </apex:column>
+                                <apex:column headerValue="Rating" style="background-color: #CECEF6;" width="50%">
+                                    <center>
+                                        <br/>
+                                        <apex:inputField value="{!erad.TP_Rating__c}" styleclass="capexgeog1" label=""/><br/><br/>
+                                        <apex:inputField value="{!erad.EP_Rating__c}" styleclass="capexgeog2" label=""/><br/><br/>
+                                        <apex:inputField value="{!erad.IP_Rating__c}" styleclass="capexgeog3" label=""/><br/><br/>
+                                        <apex:inputField value="{!erad.TrP_Rating__c}" styleclass="capexgeog4" label=""/><br/><br/>
+                                        <apex:inputField value="{!erad.SpP_Rating__c}" styleclass="capexgeog5" label=""/><br/><br/>
+                                        <apex:inputField value="{!erad.TeP_Rating__c}" styleclass="capexgeog6" label=""/><br/><br/>
+                                        <apex:inputField value="{!erad.BP_Rating__c}" styleclass="capexgeog7" label=""/><br/><br/><br/>
+                                        <apex:inputfield value="{!erad.Capex_Score__c}" styleclass="capscr" style="text-align:center;width:50px;height:13px;background-color:#006eb3;color:white"/>
+                                    </center>
+                                </apex:column>
+                            </apex:pageBlockTable>
+                            </div>
+                        </apex:column>
+                        
+                        <apex:repeat value="{!competitorsList}" var="comp">
+                            <apex:column headerValue="{!comp.Competitor__c}">
+                            <div style="width:350px;">
+                            <apex:pageBlockTable var="wrap" value="{!erAdlist}" headerClass="innerpagetable" width="100%">
+                                <apex:column headerValue="Value" >
+                                    <center>
+                                    <br/>
+                                    <apex:inputField value="{!comp.TP_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.EP_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.IP_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.TrP_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.SpP_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.TeP_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.BP_Value__c}" styleclass="browclass1"/><br/><br/><br/><br/>
+                                    </center>
+                                </apex:column>
+                                <apex:column headerValue="Comparison" >
+                                    <center>
+                                    <br/>
+                                    <apex:inputField value="{!comp.TP_Comparison__c}"/><br/><br/>
+                                    <apex:inputField value="{!comp.EP_Comparison__c}"/><br/><br/>
+                                    <apex:inputField value="{!comp.IP_Comparison__c}"/><br/><br/>
+                                    <apex:inputField value="{!comp.TrP_Comparison__c}"/><br/><br/>
+                                    <apex:inputField value="{!comp.SpP_Comparison__c}"/><br/><br/>
+                                    <apex:inputField value="{!comp.TeP_Comparison__c}"/><br/><br/>
+                                    <apex:inputField value="{!comp.BP_Comparison__c}"/><br/><br/><br/><br/>
+                                    </center>
+                                </apex:column>
+                                <apex:column headerValue="Rating" style="background-color: #CECEF6;">
+                                    <center>
+                                    <br/>
+                                    <apex:inputField value="{!comp.TP_Rating__c}" styleclass="capex1{!capexvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.EP_Rating__c}" styleclass="capex2{!capexvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.IP_Rating__c}" styleclass="capex3{!capexvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.TrP_Rating__c}" styleclass="capex4{!capexvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.SpP_Rating__c}" styleclass="capex5{!capexvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.TeP_Rating__c}" styleclass="capex6{!capexvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.BP_Rating__c}" styleclass="capex7{!capexvar}" /><br/><br/><br/>
+                                    <apex:inputfield value="{!comp.Capex_Score__c}"  label="" styleclass="capextotal{!capexvar}" style="text-align:center;width:50px;height:13px;background-color:#006eb3;color:white"/>
+                                    </center>
+                                </apex:column>
+                            </apex:pageBlockTable>
+                            </div>
+                            <apex:variable var="capexvar" value="{!VALUE(capexvar) + 1}"/>
+                            </apex:column>
+                        </apex:repeat>
+                        <apex:column headerValue="Remarks" >
+                            <div style="width:336px;">
+                            <apex:pageBlockTable var="erad" value="{!erAdlist}" headerClass="innerpagetable1">
+                                <apex:column headerValue="">
+                                    <apex:inputField value="{!erad.TP_Remarks__c}" style="width:330px;height:32px;" label="" />
+                                    <apex:inputField value="{!erad.EP_Remarks__c}" style="width:330px;height:32px;" label="" />
+                                    <apex:inputField value="{!erad.IP_Remarks__c}" style="width:330px;height:32px;" label="" />
+                                    <apex:inputField value="{!erad.TrP_Remarks__c}" style="width:330px;height:32px;" label=""/>
+                                    <apex:inputField value="{!erad.SpP_Remarks__c}" style="width:330px;height:32px;" label="" />
+                                    <apex:inputField value="{!erad.TeP_Remarks__c}" style="width:330px;height:32px;" label="" />
+                                    <apex:inputField value="{!erad.BP_Remarks__c}" style="width:330px;height:32px;" label="" /><br/><br/><br/>
+                                </apex:column>
+                            </apex:pageBlockTable>
+                            </div>
+                        </apex:column>
+                    </apex:pageBlockTable><br/>
+                    <input type="hidden" value="{!capexvar}" class="totalcapex"/>
+                    <table  width="80%">
+                    <tr>
+                    <td>
+                        <div align="center">
+                        <apex:outputPanel rendered="{!buttonboo == true}"><apex:commandButton value="Save" onclick="calallrating();" action="{!save_custom}" styleClass="button" rendered="{!buttonboo == true}"/></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == true}"> &nbsp;<apex:commandButton value="Return to eRAD" rendered="{!buttonboo == true}" onclick="calallrating();" action="{!ss_savecontent}" styleClass="button"/></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == false}">&nbsp;<apex:commandButton value="Return to eRAD" rendered="{!buttonboo == false}" action="{!cancelpage}" styleClass="button"/></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == true}">&nbsp;<apex:commandButton value="Report" onclick="calallratingreport();" rendered="{!buttonboo == true}" rerender="pageid" styleClass="button" /></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == false}">&nbsp;<apex:commandButton value="Report" onclick="window.open('/apex/eRAD_Custom_Report?id={!eradid}','_blank');" rendered="{!buttonboo == false}" rerender="pageid" styleClass="button" /></apex:outputPanel>
+                            <apex:outputpanel >&nbsp;<apex:commandButton value="Calculate Score" onclick="calcapexrating();" rerender="pageid" styleClass="button" /></apex:outputpanel>
+                        </div>
+                    </td>    
+                    </tr>
+                    </table>
+                </apex:pageBlock><br/>
+                <apex:pageBlock >
+                    <apex:image url="{!$Resource.eRAD_Rating_Scale}" width="670" height="230"/>
+                </apex:pageBlock>
+            </apex:tab>
+            
+            <apex:tab label="Opex" name="Opex" id="Op" >
+                <apex:pageBlock id="Op_pb">
+                    <table>
+                    <tr>
+                    <td style="background: #1797c0!important;font-weight:bold;color:white;font-size:95%;"><apex:outputlabel value="Category Weight (%)"/></td><td><apex:inputfield value="{!erAdlist[0].Opex_Category_weight__c}" styleclass="opexcw"/></td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td>
+                        <div align="center">
+                            <apex:outputPanel rendered="{!buttonboo == true}"><apex:commandButton value="Save" onclick="calallrating();" action="{!save_custom}" styleClass="button" rendered="{!buttonboo == true}"/></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == true}"> &nbsp;<apex:commandButton value="Return to eRAD" rendered="{!buttonboo == true}" onclick="calallrating();" action="{!ss_savecontent}" styleClass="button"/></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == false}">&nbsp;<apex:commandButton value="Return to eRAD" rendered="{!buttonboo == false}" action="{!cancelpage}" styleClass="button"/></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == true}">&nbsp;<apex:commandButton value="Report" onclick="calallratingreport();" rendered="{!buttonboo == true}" rerender="pageid" styleClass="button" /></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == false}">&nbsp;<apex:commandButton value="Report" onclick="window.open('/apex/eRAD_Custom_Report?id={!eradid}','_blank');" rendered="{!buttonboo == false}" rerender="pageid" styleClass="button" /></apex:outputPanel>
+                            <apex:outputpanel >&nbsp;<apex:commandButton value="Calculate Score" onclick="calopexrating();" rerender="pageid" styleClass="button" /></apex:outputpanel>
+                        </div>
+                    </td>
+                    </tr>
+                    </table><br/>
+                    <apex:variable value="0" var="opvar"/>
+                    <apex:pageBlockTable var="erad" value="{!erAdlist}"  headerClass="pagetable" id="Op_pbtable" cellspacing="5px">
+                        <apex:column headerValue="Opex Attributes & Weights">
+                            <div style="width:340px;">
+                            <apex:pageBlockTable var="erad" value="{!erAdlist}" headerClass="innerpagetable1">
+                                <apex:column headerValue="">
+                                    <apex:pageblocksection columns="1">
+                                        <br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Reliability__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Reliability__c}" label="" styleClass="Real" />
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Maintenability__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Maintenability__c}" label="" styleClass="Main"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Availability__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Availability__c}" label="" styleClass="Avail"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Field_engineer_cost__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Field_engineer_cost__c}" label="" styleClass="Fec"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Maintenance_Cost__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Maintenance_Cost__c}" label="" styleClass="Mc"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Effieciency__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Effieciency__c}" label="" styleClass="Eff"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Total_Price_CSA__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Total_Price_CSA__c}" label="" styleClass="tpc"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Planned_Maintenance_Driver_CSA__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Planned_Maintenance_Driver_CSA__c}" label="" styleClass="pmd"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Planned_Maintenance_Driven_CSA__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Planned_Maintenance_Driven_CSA__c}" label="" styleClass="pmdr"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Unplanned_Maintenance_CSA__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Unplanned_Maintenance_CSA__c}" label="" styleClass="umc"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.CPMT_CSA__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.CPMT_CSA__c}" label="" styleClass="cpmt"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Service_2_0_CSA__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Service_2_0_CSA__c}" label="" styleClass="ser"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Initial_Spares_CSA__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Initial_Spares_CSA__c}" label="" styleClass="icc"/>
+                                        </apex:pageBlockSectionItem><br/><br/><br/>
+                                    </apex:pageblocksection>
+                                </apex:column>
+                            </apex:pageBlockTable>
+                            </div>
+                        </apex:column>
+                        <apex:column headerValue="GE O&G" >
+                            <div style="width:220px;">
+                            <apex:pageBlockTable var="erad" value="{!erAdlist}" headerClass="innerpagetable" width="100%">
+                                <apex:column headerValue="Value" width="50%">
+                                    <center>
+                                        <br/>
+                                        <apex:inputField value="{!erad.Reliability_Value__c}" label="" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.Maintenability_Value__c}" label="" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.Availability_Value__c}" label="" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.FEC_Value__c}" label="" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.MC_Value__c}" label="" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.Effieciency_Value__c}" label="" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.TP_CSA_Value__c}" label="" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.PM_Driver_CSA_Value__c}" label="" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.PM_Driven_CSA_Value__c}" label="" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.UM_CSA_Value__c}" label="" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.CPMT_CSA_Value__c}" label="" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.Service_CSA_Value__c}" label="" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.IS_CSA_Value__c}" label="" styleclass="browclass1"/><br/><br/><br/>
+                                        
+                                        <apex:outputLabel value="Total Opex Score" style="font-size:12px;color:#003f77;font-weight:bold;"/>
+                                    </center>
+                                </apex:column>
+                                <apex:column headerValue="Rating" style="background-color: #CECEF6;" width="50%">
+                                    <center>
+                                        <br/>
+                                        <apex:inputField value="{!erad.Reliability_Rating__c}" styleclass="opexgeog1" label=""/><br/><br/>
+                                        <apex:inputField value="{!erad.Maintenability_Rating__c}" styleclass="opexgeog2" label=""/><br/><br/>
+                                        <apex:inputField value="{!erad.Availability_Rating__c}" styleclass="opexgeog3" label=""/><br/><br/>
+                                        <apex:inputField value="{!erad.FEC_Rating__c}" styleclass="opexgeog4" label=""/><br/><br/>
+                                       <apex:inputField value="{!erad.MC_Rating__c}" styleclass="opexgeog5" label=""/><br/><br/>
+                                       
+                                        <apex:inputField value="{!erad.Effieciency_Rating__c}" styleclass="opexgeog6" label=""/><br/><br/>
+                                        <apex:inputField value="{!erad.TP_CSA_Rating__c}" styleclass="opexgeog7" label=""/><br/><br/>
+                                        <apex:inputField value="{!erad.PM_Driver_CSA_Rating__c}" styleclass="opexgeog8" label=""/><br/><br/>
+                                        <apex:inputField value="{!erad.PM_Driven_CSA_Rating__c}" styleclass="opexgeog9" label=""/><br/><br/>
+                                        <apex:inputField value="{!erad.UM_CSA_Rating__c}" styleclass="opexgeogid1" label=""/><br/><br/>
+                                        <apex:inputField value="{!erad.CPMT_CSA_Rating__c}" styleclass="opexgeogid2" label=""/><br/><br/>
+                                        <apex:inputField value="{!erad.Service_CSA_Rating__c}" styleclass="opexgeogid3" label=""/><br/><br/>
+                                        <apex:inputField value="{!erad.IS_CSA_Rating__c}" styleclass="opexgeogid4" label=""/><br/><br/><br/>
+                                        <apex:inputfield value="{!erad.Opex_Score__c}" styleclass="opexscr"  style="text-align:center;width:50px;height:13px;background-color:#006eb3;color:white"/>
+                                    </center>
+                                </apex:column>
+                            </apex:pageBlockTable>
+                            </div>
+                        </apex:column>
+                        <apex:repeat value="{!competitorsList}" var="comp">
+                            <apex:column headerValue="{!comp.Competitor__c}">
+                            <div style="width:220px;">
+                            <apex:pageBlockTable var="erad" value="{!erAdlist}" headerClass="innerpagetable" width="100%">
+                                <apex:column headerValue="Value" width="50%">
+                                    <center>
+                                    <br/>
+                                    <apex:inputField value="{!comp.Reliability_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.Maintenability_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.Availability_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.FEC_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.MC_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.Effieciency_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.TP_CSA_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.PM_Driver_CSA_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.PM_Driven_CSA_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.UM_CSA_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.CPMT_CSA_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.Service_CSA_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.IS_CSA_Value__c}" styleclass="browclass1"/><br/><br/><br/><br/>
+                                    </center>
+                                </apex:column>
+                                <apex:column headerValue="Rating" style="background-color: #CECEF6;" width="50%">
+                                    <center>
+                                    <br/>
+                                    <apex:inputField value="{!comp.Reliability_Rating__c}" styleclass="opex1{!opvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.Maintenability_Rating__c}" styleclass="opex2{!opvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.Availability_Rating__c}" styleclass="opex3{!opvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.FEC_Rating__c}" styleclass="opex4{!opvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.MC_Rating__c}" styleclass="opex5{!opvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.Effieciency_Rating__c}" styleclass="opex6{!opvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.TP_CSA_Rating__c}" styleclass="opex7{!opvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.PM_Driver_CSA_Rating__c}" styleclass="opex8{!opvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.PM_Driven_CSA_Rating__c}" styleclass="opex9{!opvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.UM_CSA_Rating__c}" styleclass="opexid1{!opvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.CPMT_CSA_Rating__c}" styleclass="opexid2{!opvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.Service_CSA_Rating__c}" styleclass="opexid3{!opvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.IS_CSA_Rating__c}" styleclass="opexid4{!opvar}"/><br/><br/><br/>
+                                    <apex:inputfield value="{!comp.Opex_Score__c}" label="" styleclass="opexidtotal1{!opvar}" style="text-align:center;width:50px;height:13px;background-color:#006eb3;color:white"/>
+                                    </center>
+                                </apex:column>
+                            </apex:pageBlockTable>
+                            </div>
+                            <apex:variable var="opvar" value="{!VALUE(opvar) + 1}"/>
+                            </apex:column>
+                        </apex:repeat>
+                        <apex:column headerValue="Remarks" >
+                            <div style="width:336px;">
+                            <apex:pageBlockTable var="erad" value="{!erAdlist}" headerClass="innerpagetable1">
+                                <apex:column headerValue="">
+                                    <apex:inputField value="{!erad.Reliability_Remarks__c}" style="width:330px;height:32px;" label="" />
+                                    <apex:inputField value="{!erad.Maintenability_Remarks__c}" style="width:330px;height:32px;" label=""/>
+                                    <apex:inputField value="{!erad.Availability_Remarks__c}" style="width:330px;height:32px;" label="" />
+                                    <apex:inputField value="{!erad.FEC_Remarks__c}" label="" style="width:330px;height:32px;" />
+                                    <apex:inputField value="{!erad.MC_Remarks__c}" label="" style="width:330px;height:32px;"/>
+                                    <apex:inputField value="{!erad.Effieciency_Remarks__c}" style="width:330px;height:32px;" label="" />
+                                    <apex:inputField value="{!erad.TP_CSA_Remarks__c}" label="" style="width:330px;height:32px;"/>
+                                    <apex:inputField value="{!erad.PM_Driver_CSA_Remarks__c}" label="" style="width:330px;height:32px;"/>
+                                    <apex:inputField value="{!erad.PM_Driven_CSA_Remarks__c}" label="" style="width:330px;height:32px;"/>
+                                    <apex:inputField value="{!erad.UM_CSA_Remarks__c}" label="" style="width:330px;height:32px;"/>
+                                    <apex:inputField value="{!erad.CPMT_CSA_Remarks__c}" label="" style="width:330px;height:32px;"/>
+                                    <apex:inputField value="{!erad.Service_CSA_Remarks__c}" label="" style="width:330px;height:32px;"/>
+                                    <apex:inputField value="{!erad.IS_CSA_Remarks__c}" label="" style="width:330px;height:32px;"/><br/><br/><br/>
+                                </apex:column>
+                            </apex:pageBlockTable>
+                            </div>
+                        </apex:column>
+                    </apex:pageBlockTable><br/>
+                    <input type="hidden" value="{!opvar}" class="totalopex"/>
+                    <table  width="80%">
+                    <tr>
+                    <td>
+                        <div align="center">
+                            <apex:outputPanel rendered="{!buttonboo == true}"><apex:commandButton value="Save" onclick="calallrating();" action="{!save_custom}" styleClass="button" rendered="{!buttonboo == true}"/></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == true}"> &nbsp;<apex:commandButton value="Return to eRAD" rendered="{!buttonboo == true}" onclick="calallrating();" action="{!ss_savecontent}" styleClass="button"/></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == false}">&nbsp;<apex:commandButton value="Return to eRAD" rendered="{!buttonboo == false}" action="{!cancelpage}" styleClass="button"/></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == true}">&nbsp;<apex:commandButton value="Report" onclick="calallratingreport();" rendered="{!buttonboo == true}" rerender="pageid" styleClass="button" /></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == false}">&nbsp;<apex:commandButton value="Report" onclick="window.open('/apex/eRAD_Custom_Report?id={!eradid}','_blank');" rendered="{!buttonboo == false}" rerender="pageid" styleClass="button" /></apex:outputPanel>
+                            <apex:outputpanel >&nbsp;<apex:commandButton value="Calculate Score" onclick="calopexrating();" rerender="pageid" styleClass="button" /></apex:outputpanel>
+                        </div>
+                    </td>    
+                    </tr>
+                    </table>
+                </apex:pageBlock><br/>
+                <apex:pageBlock >
+                    <apex:image url="{!$Resource.eRAD_Rating_Scale}" width="670" height="230"/>
+                </apex:pageBlock>
+            </apex:tab>
+            
+            <apex:tab label="Commercial" name="commercial" id="Com">
+                <apex:pageBlock id="Com_pb">
+                    <table>
+                    <tr>
+                    <td style="background: #1797c0!important;font-weight:bold;color:white;font-size: 95%;"><apex:outputlabel value="Category Weight (%)"/></td><td><apex:inputfield value="{!erAdlist[0].Commercial_Category_weight__c}" styleclass="commercialcw"/></td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td>
+                        <div align="center">
+                            <apex:outputPanel rendered="{!buttonboo == true}"><apex:commandButton value="Save" onclick="calallrating();" action="{!save_custom}" styleClass="button" rendered="{!buttonboo == true}"/></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == true}"> &nbsp;<apex:commandButton value="Return to eRAD" rendered="{!buttonboo == true}" onclick="calallrating();" action="{!ss_savecontent}" styleClass="button"/></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == false}">&nbsp;<apex:commandButton value="Return to eRAD" rendered="{!buttonboo == false}" action="{!cancelpage}" styleClass="button"/></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == true}">&nbsp;<apex:commandButton value="Report" onclick="calallratingreport();" rendered="{!buttonboo == true}" rerender="pageid" styleClass="button" /></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == false}">&nbsp;<apex:commandButton value="Report" onclick="window.open('/apex/eRAD_Custom_Report?id={!eradid}','_blank');" rendered="{!buttonboo == false}" rerender="pageid" styleClass="button" /></apex:outputPanel>
+                            <apex:outputpanel >&nbsp;<apex:commandButton value="Calculate Score" onclick="calcommrating();" rerender="pageid" styleClass="button" /></apex:outputpanel>
+                        </div>
+                    </td>
+                    </tr>
+                    </table><br/>
+                    <apex:variable value="0" var="commvar"/>
+                    <apex:pageBlockTable var="wrap" value="{!erAdlist}"  headerClass="pagetable" id="Com_pbtable" cellspacing="5px">
+                        <apex:column headerValue="Commercial Attributes & Weights">
+                            <div style="width:270px;">
+                            <apex:pageBlockTable var="erad" value="{!erAdlist}" headerClass="innerpagetable1">
+                                <apex:column headerValue="">
+                                    <apex:pageblocksection columns="1">
+                                        <br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Delivery_wk__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Delivery_wk__c}" label="" styleClass="del" />
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.T_C__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.T_C__c}" label="" styleClass="tc"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Responsiveness__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Responsiveness__c}" label="" styleClass="resp"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Pre_bid_support__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Pre_bid_support__c}" label="" styleClass="prebid"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.submission_best_price__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.submission_best_price__c}" label="" styleClass="sub"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.OEM_Integrated_Solution__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.OEM_Integrated_Solution__c}" label="" styleClass="oem"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.FA_agreement_w_End_User__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.FA_agreement_w_End_User__c}" label="" styleClass="fauser"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Quick_negotiation__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Quick_negotiation__c}" label="" styleClass="qn"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Bidder_Tender_deviations__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Bidder_Tender_deviations__c}" label="" styleClass="btd"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.After_Sales_services__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.After_Sales_services__c}" label="" styleClass="ass"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Agreement_w_Buyer__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Agreement_w_Buyer__c}" label="" styleClass="awb"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.FA_agreement_w_EPC__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.FA_agreement_w_EPC__c}" label="" styleClass="faepc"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Pre_bid_agreement_EPC__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Pre_bid_agreement_EPC__c}" label="" styleClass="prebidag"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Installation_time_wk__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Installation_time_wk__c}" label="" styleClass="itw"/>
+                                        </apex:pageBlockSectionItem><br/><br/><br/>
+                                    </apex:pageblocksection>
+                                </apex:column>
+                            </apex:pageBlockTable>
+                            </div>
+                        </apex:column>
+                        <apex:column headerValue="GE O&G" >
+                            <div style="width:250px;">
+                            <apex:pageBlockTable var="erad" value="{!erAdlist}" headerClass="innerpagetable" width="100%">
+                                <apex:column headerValue="Value" width="60%">
+                                    <center>
+                                        <br/>
+                                        <apex:inputField value="{!erad.Delivery_wk_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.T_C_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.Responsiveness_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.Pre_bid_support_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.Submission_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.OEM_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.FA_agreement_End_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.Quick_negotiation_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.BTD_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.ASS_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.Agreement_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.FA_agreement_EPC_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.Pre_bid_agreement_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.Installation_time_Value__c}" styleclass="browclass1"/><br/><br/><br/>
+                                        <apex:outputLabel value="Total Commercial Score" style="font-size:12px;color:#003f77;font-weight:bold;"/>
+                                    </center>
+                                </apex:column>
+                                <apex:column headerValue="Rating" style="background-color: #CECEF6;" width="50%">
+                                    <center>
+                                        <br/>
+                                        <apex:inputField value="{!erad.Delivery_wk_Rating__c}" styleclass="commgeog1"/><br/><br/>
+                                        <apex:inputField value="{!erad.T_C_Rating__c}" styleclass="commgeog2"/><br/><br/>
+                                        <apex:inputField value="{!erad.Responsiveness_Rating__c}" styleclass="commgeog3"/><br/><br/>
+                                        <apex:inputField value="{!erad.Pre_bid_support_Rating__c}" styleclass="commgeog4"/><br/><br/>
+                                        <apex:inputField value="{!erad.Submission_Rating__c}" styleclass="commgeog5"/><br/><br/>
+                                        <apex:inputField value="{!erad.OEM_Rating__c}" styleclass="commgeog6"/><br/><br/>
+                                        <apex:inputField value="{!erad.FA_agreement_End_Rating__c}" styleclass="commgeog7"/><br/><br/>
+                                        <apex:inputField value="{!erad.Quick_negotiation_Rating__c}" styleclass="commgeog8"/><br/><br/>
+                                        <apex:inputField value="{!erad.BTD_Rating__c}" styleclass="commgeog9"/><br/><br/>
+                                        <apex:inputField value="{!erad.ASS_Rating__c}" styleclass="commgeogid1"/><br/><br/>
+                                        <apex:inputField value="{!erad.Agreement_Rating__c}" styleclass="commgeogid2"/><br/><br/>
+                                        <apex:inputField value="{!erad.FA_agreement_EPC_Rating__c}" styleclass="commgeogid3"/><br/><br/>
+                                        <apex:inputField value="{!erad.Pre_bid_agreement_Rating__c}" styleclass="commgeogid4"/><br/><br/>
+                                        <apex:inputField value="{!erad.Installation_time_Rating__c}" styleclass="commgeogid5"/><br/><br/><br/>
+                                        <apex:inputfield value="{!erad.Commercial_Score__c}" styleclass="comscr"  style="text-align:center;width:50px;height:13px;background-color:#006eb3;color:white"/>
+                                    </center>
+                                </apex:column>
+                            </apex:pageBlockTable>
+                            </div>
+                        </apex:column>
+                        <apex:repeat value="{!competitorsList}" var="comp">
+                            <apex:column headerValue="{!comp.Competitor__c}">
+                            <div style="width:220px;">
+                            <apex:pageBlockTable var="erad" value="{!erAdlist}" headerClass="innerpagetable" width="100%">
+                                <apex:column headerValue="Value" width="50%">
+                                    <center>
+                                    <br/>
+                                    <apex:inputField value="{!comp.Delivery_wk_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.T_C_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.Responsiveness_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.Pre_bid_support_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.Submission_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.OEM_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.FA_agreement_End_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.Quick_negotiation_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.BTD_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.ASS_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.Agreement_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.FA_agreement_EPC_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.Pre_bid_agreement_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.Installation_time_Value__c}" styleclass="browclass1"/><br/><br/><br/><br/>
+                                    </center>
+                                </apex:column>
+                                <apex:column headerValue="Rating" style="background-color: #CECEF6;" width="50%">
+                                    <center>
+                                    <br/>
+                                    <apex:inputField value="{!comp.Delivery_wk_Rating__c}" styleclass="comm1{!commvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.T_C_Rating__c}" styleclass="comm2{!commvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.Responsiveness_Rating__c}" styleclass="comm3{!commvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.Pre_bid_support_Rating__c}" styleclass="comm4{!commvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.Submission_Rating__c}" styleclass="comm5{!commvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.OEM_Rating__c}" styleclass="comm6{!commvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.FA_agreement_End_Rating__c}" styleclass="comm7{!commvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.Quick_negotiation_Rating__c}" styleclass="comm8{!commvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.BTD_Rating__c}" styleclass="comm9{!commvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.ASS_Rating__c}" styleclass="commid1{!commvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.Agreement_Rating__c}" styleclass="commid2{!commvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.FA_agreement_EPC_Rating__c}" styleclass="commid3{!commvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.Pre_bid_agreement_Rating__c}" styleclass="commid4{!commvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.Installation_time_Rating__c}" styleclass="commid5{!commvar}"/><br/><br/><br/>
+                                    <apex:inputfield value="{!comp.Commercial_Score__c}" label="" styleclass="commidtotal1{!commvar}" style="text-align:center;width:50px;height:13px;background-color:#006eb3;color:white"/>
+                                    </center>
+                                </apex:column>
+                            </apex:pageBlockTable>
+                            </div>
+                            <apex:variable var="commvar" value="{!VALUE(commvar) + 1}"/>
+                            </apex:column>
+                        </apex:repeat>
+                        <apex:column headerValue="Remarks" >
+                            <div style="width:336px;">
+                            <apex:pageBlockTable var="erad" value="{!erAdlist}" headerClass="innerpagetable1">
+                                <apex:column headerValue="">
+                                    <apex:inputField value="{!erad.Delivery_wk_Remarks__c}" style="width:330px;height:32px;" label="" />
+                                    <apex:inputField value="{!erad.T_C_Remarks__c}" style="width:330px;height:32px;" label=""/>
+                                    <apex:inputField value="{!erad.Responsiveness_Reamarks__c}" style="width:330px;height:32px;" label="" />
+                                    <apex:inputField value="{!erad.Pre_bid_support_Remarks__c}" label="" style="width:330px;height:32px;" />
+                                    <apex:inputField value="{!erad.Submission_Remarks__c}" label="" style="width:330px;height:32px;"/>
+                                    <apex:inputField value="{!erad.OEM_Remarks__c}" style="width:330px;height:32px;" label="" />
+                                    <apex:inputField value="{!erad.FA_agreement_End_Remarks__c}" style="width:330px;height:32px;" label="" />
+                                    <apex:inputField value="{!erad.Quick_negotiation_Remarks__c}" style="width:330px;height:32px;" label="" />
+                                    <apex:inputField value="{!erad.BTD_Remarks__c}" style="width:330px;height:32px;" label="" />
+                                    <apex:inputField value="{!erad.ASS_Remarks__c}" style="width:330px;height:32px;" label="" />
+                                    <apex:inputField value="{!erad.Agreement_Remarks__c}" style="width:330px;height:32px;" label="" />
+                                    <apex:inputField value="{!erad.FA_agreement_EPC_Remarks__c}" style="width:330px;height:32px;" label="" />
+                                    <apex:inputField value="{!erad.Pre_bid_agreement_Remarks__c}" style="width:330px;height:32px;" label="" />
+                                    <apex:inputField value="{!erad.Installation_time_Remarks__c}" style="width:330px;height:32px;" label="" /><br/><br/><br/>
+                                </apex:column>
+                            </apex:pageBlockTable>
+                            </div>
+                        </apex:column>
+                    </apex:pageBlockTable><br/>
+                    <input type="hidden" value="{!commvar}" class="totalcomm"/>
+                    <table  width="80%">
+                    <tr>
+                    <td>
+                        <div align="center">
+                            <apex:outputPanel rendered="{!buttonboo == true}"><apex:commandButton value="Save" onclick="calallrating();" action="{!save_custom}" styleClass="button" rendered="{!buttonboo == true}"/></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == true}"> &nbsp;<apex:commandButton value="Return to eRAD" rendered="{!buttonboo == true}" onclick="calallrating();" action="{!ss_savecontent}" styleClass="button"/></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == false}">&nbsp;<apex:commandButton value="Return to eRAD" rendered="{!buttonboo == false}" action="{!cancelpage}" styleClass="button"/></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == true}">&nbsp;<apex:commandButton value="Report" onclick="calallratingreport();" rendered="{!buttonboo == true}" rerender="pageid" styleClass="button" /></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == false}">&nbsp;<apex:commandButton value="Report" onclick="window.open('/apex/eRAD_Custom_Report?id={!eradid}','_blank');" rendered="{!buttonboo == false}" rerender="pageid" styleClass="button" /></apex:outputPanel>
+                            <apex:outputpanel >&nbsp;<apex:commandButton value="Calculate Score" onclick="calcommrating();" rerender="pageid" styleClass="button" /></apex:outputpanel>
+                        </div>
+                    </td>    
+                    </tr>
+                    </table>
+                </apex:pageBlock><br/>
+                <apex:pageBlock >
+                    <apex:image url="{!$Resource.eRAD_Rating_Scale}" width="670" height="230"/>
+                </apex:pageBlock>
+            </apex:tab>
+            
+            <apex:tab label="References" name="Reference" id="ref">
+                <apex:pageBlock id="ref_pb">
+                    
+                    <table>
+                    <tr>
+                    <td style="background: #1797c0!important;font-weight:bold;color:white;font-size:95%;"><apex:outputlabel value="Category Weight (%)"/></td><td><apex:inputfield value="{!erAdlist[0].Reference_Category_Weight__c}" styleclass="referencescw"/></td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td>
+                        <div align="center">
+                            <apex:outputPanel rendered="{!buttonboo == true}"><apex:commandButton value="Save" onclick="calallrating();" action="{!save_custom}" styleClass="button" rendered="{!buttonboo == true}"/></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == true}"> &nbsp;<apex:commandButton value="Return to eRAD" rendered="{!buttonboo == true}" onclick="calallrating();" action="{!ss_savecontent}" styleClass="button"/></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == false}">&nbsp;<apex:commandButton value="Return to eRAD" rendered="{!buttonboo == false}" action="{!cancelpage}" styleClass="button"/></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == true}">&nbsp;<apex:commandButton value="Report" onclick="calallratingreport();" rendered="{!buttonboo == true}" rerender="pageid" styleClass="button" /></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == false}">&nbsp;<apex:commandButton value="Report" onclick="window.open('/apex/eRAD_Custom_Report?id={!eradid}','_blank');" rendered="{!buttonboo == false}" rerender="pageid" styleClass="button" /></apex:outputPanel>
+                            <apex:outputpanel >&nbsp;<apex:commandButton value="Calculate Score" onclick="calrefrating();" rerender="pageid" styleClass="button" /></apex:outputpanel>
+                        </div>
+                    </td>
+                    </tr>
+                    </table><br/>
+                    <apex:variable value="0" var="refvar"/>
+                    <apex:pageBlockTable var="wrap" value="{!erAdlist}"  headerClass="pagetable" id="ref_pbtable" cellspacing="5px" >
+                        <apex:column headerValue="References Attributes & Weights">
+                            <div style="width:290px;">
+                            <apex:pageBlockTable var="erad" value="{!erAdlist}" headerClass="innerpagetable1">
+                                <apex:column headerValue="">
+                                    <apex:pageblocksection columns="1">
+                                        <br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Industrial_Service_References__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Industrial_Service_References__c}" label="" styleClass="isf" />
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Product_References__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Product_References__c}" label="" styleClass="pr"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Customer_Installed_Fleet__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Customer_Installed_Fleet__c}" label="" styleClass="cif"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Region_installed_Fleet__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Region_installed_Fleet__c}" label="" styleClass="rif"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.OTR_performances__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.OTR_performances__c}" label="" styleClass="otr"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Customer_Plant_Installed_Fleet__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Customer_Plant_Installed_Fleet__c}" label="" styleClass="cpif"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Localization__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Localization__c}" label="" styleClass="loc"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Service_Workshops__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Service_Workshops__c}" label="" styleClass="sw"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Prior_Equipment_Supplier__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Prior_Equipment_Supplier__c}" label="" styleClass="pes"/>
+                                        </apex:pageBlockSectionItem><br/><br/><br/>
+                                        </apex:pageblocksection>
+                                </apex:column>
+                            </apex:pageBlockTable>
+                            </div>
+                        </apex:column>
+                        <apex:column headerValue="GE O&G" >
+                            <div style="width:250px;">
+                            <apex:pageBlockTable var="erad" value="{!erAdlist}" headerClass="innerpagetable" WIDth="100%">
+                                <apex:column headerValue="Value" width="60%">
+                                    <center>
+                                        <br/>
+                                        <apex:inputField value="{!erad.ISR_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.PR_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.CIF_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.RIF_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.OTR_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.CPIF_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.Localization_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.SW_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.PES_Value__c}" styleclass="browclass1"/><br/><br/><br/>
+                                        <apex:outputLabel value="Total References Score" style="font-size:12px;color:#003f77;font-weight:bold;"/>
+                                    </center>
+                                </apex:column>
+                                <apex:column headerValue="Rating" style="background-color: #CECEF6;" width="50%">
+                                    <center>
+                                        <br/>
+                                        <apex:inputField value="{!erad.ISR_Rating__c}" styleclass="refgeog1"/><br/><br/>
+                                        <apex:inputField value="{!erad.PR_Rating__c}" styleclass="refgeog2"/><br/><br/>
+                                        <apex:inputField value="{!erad.CIF_Rating__c}" styleclass="refgeog3"/><br/><br/>
+                                        <apex:inputField value="{!erad.RIF_Rating__c}" styleclass="refgeog4"/><br/><br/>
+                                        <apex:inputField value="{!erad.OTR_Rating__c}" styleclass="refgeog5"/><br/><br/>
+                                        <apex:inputField value="{!erad.CPIF_Rating__c}" styleclass="refgeog6"/><br/><br/>
+                                        <apex:inputField value="{!erad.Localization_Rating__c}" styleclass="refgeog7"/><br/><br/>
+                                        <apex:inputField value="{!erad.SW_Rating__c}" styleclass="refgeog8"/><br/><br/>
+                                        <apex:inputField value="{!erad.PES_Rating__c}" styleclass="refgeog9"/><br/><br/><br/>
+                                        <apex:inputfield value="{!erad.References_Score__c}" styleclass="refscr"  style="text-align:center;width:50px;height:13px;background-color:#006eb3;color:white"/>
+                                    </center>
+                                </apex:column>
+                            </apex:pageBlockTable>
+                            </div>
+                        </apex:column>
+                        <apex:repeat value="{!competitorsList}" var="comp">
+                            <apex:column headerValue="{!comp.Competitor__c}">
+                            <div style="width:220px;">
+                            <apex:pageBlockTable var="wrap" value="{!erAdlist}" headerClass="innerpagetable" width="100%">
+                                <apex:column headerValue="Value" width="50%">
+                                    <center>
+                                    <br/>
+                                    <apex:inputField value="{!comp.ISR_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.PR_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.CIF_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.RIF_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.OTR_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.CPIF_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.Localization_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.SW_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.PES_Value__c}" styleclass="browclass1"/><br/><br/><br/><br/>
+                                    </center>
+                                </apex:column>
+                                <apex:column headerValue="Rating" style="background-color: #CECEF6;" width="50%">
+                                    <center>
+                                    <br/>
+                                    <apex:inputField value="{!comp.ISR_Rating__c}" styleclass="ref1{!refvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.PR_Rating__c}" styleclass="ref2{!refvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.CIF_Rating__c}" styleclass="ref3{!refvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.RIF_Rating__c}" styleclass="ref4{!refvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.OTR_Rating__c}" styleclass="ref5{!refvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.CPIF_Rating__c}" styleclass="ref6{!refvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.Localization_Rating__c}" styleclass="ref7{!refvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.SW_Rating__c}" styleclass="ref8{!refvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.PES_Rating__c}" styleclass="ref9{!refvar}"/><br/><br/><br/>
+                                    <apex:inputField value="{!comp.References_Score__c}" label="" styleclass="refidtotal1{!refvar}" style="text-align:center;width:50px;height:13px;background-color:#006eb3;color:white"/>
+                                    </center>
+                                </apex:column>
+                            </apex:pageBlockTable>
+                            </div>
+                            <apex:variable var="refvar" value="{!VALUE(refvar) + 1}"/>
+                            </apex:column>
+                        </apex:repeat>
+                        <apex:column headerValue="Remarks" >
+                            <div style="width:336px;">
+                            <apex:pageBlockTable var="erad" value="{!erAdlist}" headerClass="innerpagetable1">
+                                <apex:column headerValue="">
+                                    <apex:inputField value="{!erad.ISR_Remarks__c}" style="width:330px;height:32px;" label="" />
+                                    <apex:inputField value="{!erad.PR_Remarks__c}" style="width:330px;height:32px;" label=""/>
+                                    <apex:inputField value="{!erad.CIF_Remarks__c}" style="width:330px;height:32px;" label="" />
+                                    <apex:inputField value="{!erad.RIF_Remarks__c}" label="" style="width:330px;height:32px;" />
+                                    <apex:inputField value="{!erad.OTR_Remarks__c}" label="" style="width:330px;height:32px;"/>
+                                    <apex:inputField value="{!erad.CPIF_Remarks__c}" label="" style="width:330px;height:32px;"/>
+                                    <apex:inputField value="{!erad.Localization_Remarks__c}" label="" style="width:330px;height:32px;"/>
+                                    <apex:inputField value="{!erad.SW_Remarks__c}" label="" style="width:330px;height:32px;"/>
+                                    <apex:inputField value="{!erad.PES_Remarks__c}" style="width:330px;height:32px;" label="" /><br/><br/><br/>
+                                </apex:column>
+                            </apex:pageBlockTable>
+                            </div>
+                        </apex:column>
+                    </apex:pageBlockTable><br/>
+                    <input type="hidden" value="{!refvar}" class="totalref"/>
+                    <table width="80%">
+                    <tr>
+                    <td>
+                        <div align="center">
+                            <apex:outputPanel rendered="{!buttonboo == true}"><apex:commandButton value="Save" onclick="calallrating();" action="{!save_custom}" styleClass="button" rendered="{!buttonboo == true}"/></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == true}"> &nbsp;<apex:commandButton value="Return to eRAD" rendered="{!buttonboo == true}" onclick="calallrating();" action="{!ss_savecontent}" styleClass="button"/></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == false}">&nbsp;<apex:commandButton value="Return to eRAD" rendered="{!buttonboo == false}" action="{!cancelpage}" styleClass="button"/></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == true}">&nbsp;<apex:commandButton value="Report" onclick="calallratingreport();" rendered="{!buttonboo == true}" rerender="pageid" styleClass="button" /></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == false}">&nbsp;<apex:commandButton value="Report" onclick="window.open('/apex/eRAD_Custom_Report?id={!eradid}','_blank');" rendered="{!buttonboo == false}" rerender="pageid" styleClass="button" /></apex:outputPanel>
+                            <apex:outputpanel >&nbsp;<apex:commandButton value="Calculate Score" onclick="calrefrating();" rerender="pageid" styleClass="button" /></apex:outputpanel>
+                        </div>
+                    </td>    
+                    </tr>
+                    </table>
+                </apex:pageBlock><br/>
+                <apex:pageBlock >
+                    <apex:image url="{!$Resource.eRAD_Rating_Scale}" width="670" height="230"/>
+                </apex:pageBlock>
+            </apex:tab>
+            
+            <apex:tab label="Relations" name="Relations" id="rel">
+                <apex:pageBlock id="rel_pb">
+                    <table>
+                    <tr>
+                    <td style="background: #1797c0!important;font-weight:bold;color:white;font-size:95%;"><apex:outputlabel value="Category Weight (%)"/></td><td><apex:inputfield value="{!erAdlist[0].Relation_Category_Weight__c}" styleclass="relationscw"/></td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td>
+                        <div align="center">
+                            <apex:outputPanel rendered="{!buttonboo == true}"><apex:commandButton value="Save" onclick="calallrating();" action="{!save_custom}" styleClass="button" rendered="{!buttonboo == true}"/></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == true}"> &nbsp;<apex:commandButton value="Return to eRAD" rendered="{!buttonboo == true}" onclick="calallrating();" action="{!ss_savecontent}" styleClass="button"/></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == false}">&nbsp;<apex:commandButton value="Return to eRAD" rendered="{!buttonboo == false}" action="{!cancelpage}" styleClass="button"/></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == true}">&nbsp;<apex:commandButton value="Report" onclick="calallratingreport();" rendered="{!buttonboo == true}" rerender="pageid" styleClass="button" /></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == false}">&nbsp;<apex:commandButton value="Report" onclick="window.open('/apex/eRAD_Custom_Report?id={!eradid}','_blank');" rendered="{!buttonboo == false}" rerender="pageid" styleClass="button" /></apex:outputPanel>
+                            <apex:outputpanel >&nbsp;<apex:commandButton value="Calculate Score" onclick="calrelrating();" rerender="pageid" styleClass="button" /></apex:outputpanel>
+                        </div>
+                    </td>
+                    </tr>
+                    </table><br/>
+                    <apex:variable value="0" var="relvar"/>
+                    <apex:pageBlockTable var="wrap" value="{!erAdlist}"  headerClass="pagetable" id="rel_pbtable" cellspacing="5px">
+                        <apex:column headerValue="Relations Attributes & Weights">
+                            <div style="width:250px;">
+                            <apex:pageBlockTable var="erad" value="{!erAdlist}" headerClass="innerpagetable1">
+                                <apex:column headerValue="">
+                                        <apex:pageblocksection columns="1">
+                                            <br/>
+                                            <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                                <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Relations_With_End_User__c.label}</apex:outputLabel>
+                                                <apex:inputField value="{!erad.Relations_With_End_User__c}" label="" styleClass="rweu" />
+                                            </apex:pageBlockSectionItem><br/>
+                                            <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                                <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Relations_with_EPC__c.label}</apex:outputLabel>
+                                                <apex:inputField value="{!erad.Relations_with_EPC__c}" label="" styleClass="rwe"/>
+                                                </apex:pageBlockSectionItem><br/>
+                                            <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                                <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Relations_with_Influencer__c.label}</apex:outputLabel>
+                                                <apex:inputField value="{!erad.Relations_with_Influencer__c}" label="" styleClass="rwi"/>
+                                            </apex:pageBlockSectionItem><br/>
+                                            <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                                <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Reputation__c.label}</apex:outputLabel>
+                                                <apex:inputField value="{!erad.Reputation__c}" label="" styleClass="rep"/>
+                                            </apex:pageBlockSectionItem><br/>
+                                            <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                                <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Relations_with_Buyer__c.label}</apex:outputLabel>
+                                                <apex:inputField value="{!erad.Relations_with_Buyer__c}" label="" styleClass="rwb"/>
+                                            </apex:pageBlockSectionItem><br/>
+                                            <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                                <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Supplier_Diversification__c.label}</apex:outputLabel>
+                                                <apex:inputField value="{!erad.Supplier_Diversification__c}" label="" styleClass="sd"/>
+                                            </apex:pageBlockSectionItem><br/><br/><br/>
+                                        </apex:pageblocksection>
+                                </apex:column>
+                            </apex:pageBlockTable>
+                            </div>
+                        </apex:column>
+                        <apex:column headerValue="GE O&G" >
+                            <div style="width:230px;">
+                            <apex:pageBlockTable var="erad" value="{!erAdlist}" headerClass="innerpagetable" width="100%">
+                                <apex:column headerValue="Value" width="60%">
+                                    <center>
+                                        <br/>
+                                        <apex:inputField value="{!erad.RWEU_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.RWE_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.RWI_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.Reputation_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.RWB_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.SD_Value__c}" styleclass="browclass1"/><br/><br/><br/>
+                                        <apex:outputLabel value="Total Relations Score" style="font-size:12px;color:#003f77;font-weight:bold;"/>
+                                    </center>
+                                </apex:column>
+                                <apex:column headerValue="Rating" style="background-color: #CECEF6;" width="50%">
+                                    <center>
+                                        <br/>
+                                        <apex:inputField value="{!erad.RWEU_Rating__c}" styleclass="relgeog1"/><br/><br/>
+                                        <apex:inputField value="{!erad.RWE_Rating__c}" styleclass="relgeog2"/><br/><br/>
+                                        <apex:inputField value="{!erad.RWI_Rating__c}" styleclass="relgeog3"/><br/><br/>
+                                        <apex:inputField value="{!erad.Reputation_Rating__c}" styleclass="relgeog4"/><br/><br/>
+                                        <apex:inputField value="{!erad.RWB_Rating__c}" styleclass="relgeog5"/><br/><br/>
+                                        <apex:inputField value="{!erad.SD_Rating__c}" styleclass="relgeog6"/><br/><br/><br/>
+                                        <apex:inputfield value="{!erad.Relations_Score__c}" styleclass="relscr"  style="text-align:center;width:50px;height:13px;background-color:#006eb3;color:white"/>
+                                    </center>
+                                </apex:column>
+                            </apex:pageBlockTable>
+                            </div>
+                        </apex:column>
+                        <apex:repeat value="{!competitorsList}" var="comp">
+                            <apex:column headerValue="{!comp.Competitor__c}">
+                            <div style="width:220px;">
+                            <apex:pageBlockTable var="wrap" value="{!erAdlist}" headerClass="innerpagetable" width="100%">
+                                <apex:column headerValue="Value" width="50%">
+                                    <center>
+                                    <br/>
+                                    <apex:inputField value="{!comp.RWEU_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.RWE_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.RWI_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.Reputation_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.RWB_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.SD_Value__c}" styleclass="browclass1"/><br/><br/><br/><br/>
+                                    </center>
+                                </apex:column>
+                                <apex:column headerValue="Rating" style="background-color: #CECEF6;" width="50%">
+                                    <center>
+                                    <br/>
+                                    <apex:inputField value="{!comp.RWEU_Rating__c}" styleclass="rel1{!relvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.RWE_Rating__c}" styleclass="rel2{!relvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.RWI_Rating__c}" styleclass="rel3{!relvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.Reputation_Rating__c}" styleclass="rel4{!relvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.RWB_Rating__c}" styleclass="rel5{!relvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.SD_Rating__c}" styleclass="rel6{!relvar}"/><br/><br/><br/>
+                                    <apex:inputfield value="{!comp.Relations_Score__c}" label="" styleclass="relidtotal1{!relvar}" style="text-align:center;width:50px;height:13px;background-color:#006eb3;color:white"/>
+                                    </center>
+                                </apex:column>
+                            </apex:pageBlockTable>
+                            </div>
+                            <apex:variable var="relvar" value="{!VALUE(relvar) + 1}"/>
+                            </apex:column>
+                        </apex:repeat>
+                        <apex:column headerValue="Remarks" >
+                            <div style="width:336px;">
+                            <apex:pageBlockTable var="erad" value="{!erAdlist}" headerClass="innerpagetable1">
+                                <apex:column headerValue="">
+                                    <apex:inputField value="{!erad.RWEU_Remarks__c}" style="width:330px;height:32px;" label="" />
+                                    <apex:inputField value="{!erad.RWE_Remarks__c}" style="width:330px;height:32px;" label=""/>
+                                    <apex:inputField value="{!erad.RWI_Remarks__c}" style="width:330px;height:32px;" label="" />
+                                    <apex:inputField value="{!erad.Reputation_Remarks__c}" label="" style="width:330px;height:32px;" />
+                                    <apex:inputField value="{!erad.RWB_Remarks__c}" label="" style="width:330px;height:32px;"/>
+                                    <apex:inputField value="{!erad.SD_Remarks__c}" style="width:330px;height:32px;" label="" /><br/><br/><br/>
+                                </apex:column>
+                            </apex:pageBlockTable>
+                            </div>
+                        </apex:column>
+                    </apex:pageBlockTable><br/>
+                    <input type="hidden" value="{!relvar}" class="totalrel"/>
+                    <table width="80%">
+                    <tr>
+                    <td>
+                        <div align="center">
+                            <apex:outputPanel rendered="{!buttonboo == true}"><apex:commandButton value="Save" onclick="calallrating();" action="{!save_custom}" styleClass="button" rendered="{!buttonboo == true}"/></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == true}"> &nbsp;<apex:commandButton value="Return to eRAD" rendered="{!buttonboo == true}" onclick="calallrating();" action="{!ss_savecontent}" styleClass="button"/></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == false}">&nbsp;<apex:commandButton value="Return to eRAD" rendered="{!buttonboo == false}" action="{!cancelpage}" styleClass="button"/></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == true}">&nbsp;<apex:commandButton value="Report" onclick="calallratingreport();" rendered="{!buttonboo == true}" rerender="pageid" styleClass="button" /></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == false}">&nbsp;<apex:commandButton value="Report" onclick="window.open('/apex/eRAD_Custom_Report?id={!eradid}','_blank');" rendered="{!buttonboo == false}" rerender="pageid" styleClass="button" /></apex:outputPanel>
+                            <apex:outputpanel >&nbsp;<apex:commandButton value="Calculate Score" onclick="calrelrating();" rerender="pageid" styleClass="button" /></apex:outputpanel>
+                        </div>
+                    </td>    
+                    </tr>
+                    </table>
+                </apex:pageBlock><br/>
+                <apex:pageBlock >
+                    <apex:image url="{!$Resource.eRAD_Rating_Scale}" width="670" height="230"/>
+                </apex:pageBlock>
+            </apex:tab>
+            
+            <apex:tab label="Technical" name="technical" id="tech">
+                <apex:pageBlock id="tech_pb">
+                    <table>
+                    <tr>
+                    <td style="background: #1797c0!important;font-weight:bold;color:white;font-size: 95%;"><apex:outputlabel value="Category Weight (%)"/></td><td><apex:inputfield value="{!erAdlist[0].Technical_Category_weight__c}" styleclass="techcw"/></td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td>
+                        <div align="center">
+                            <apex:outputPanel rendered="{!buttonboo == true}"><apex:commandButton value="Save" onclick="calallrating();" action="{!save_custom}" styleClass="button" rendered="{!buttonboo == true}"/></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == true}"> &nbsp;<apex:commandButton value="Return to eRAD" rendered="{!buttonboo == true}" onclick="calallrating();" action="{!ss_savecontent}" styleClass="button"/></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == false}">&nbsp;<apex:commandButton value="Return to eRAD" rendered="{!buttonboo == false}" action="{!cancelpage}" styleClass="button"/></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == true}">&nbsp;<apex:commandButton value="Report" onclick="calallratingreport();" rendered="{!buttonboo == true}" rerender="pageid" styleClass="button" /></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == false}">&nbsp;<apex:commandButton value="Report" onclick="window.open('/apex/eRAD_Custom_Report?id={!eradid}','_blank');" rendered="{!buttonboo == false}" rerender="pageid" styleClass="button" /></apex:outputPanel>
+                            <apex:outputpanel >&nbsp;<apex:commandButton value="Calculate Score" onclick="caltechrating();" rerender="pageid" styleClass="button" /></apex:outputpanel>
+                        </div>
+                    </td> 
+                    </tr>
+                    </table><br/>
+                    <apex:variable value="0" var="techvar"/>
+                    <apex:pageBlockTable var="erad" value="{!erAdlist}"  headerClass="pagetable" id="tech_pbtable" cellspacing="5px">
+                        <apex:column headerValue="Technical Attributes & Weights">
+                            <div style="width:345px;">
+                            <apex:pageBlockTable var="erad" value="{!erAdlist}" headerClass="innerpagetable1">
+                                <apex:column headerValue="">
+                                    <apex:pageblocksection columns="1">
+                                        <br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Ability_to_meet_Customer_Spec__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Ability_to_meet_Customer_Spec__c}" label="" styleClass="atomcp" />
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Equipment_Size_Fitting__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Equipment_Size_Fitting__c}" styleClass="esf"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Machine_design__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Machine_design__c}" label="" styleClass="md"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Sub_Vendor_Preferences__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Sub_Vendor_Preferences__c}" label="" styleClass="svp"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Footprint_m2__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Footprint_m2__c}" label="" styleClass="foot"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Integrated_Solution__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Integrated_Solution__c}" label="" styleClass="isol"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Weights__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Weights__c}" label="" styleClass="wei"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Noise_db_A__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Noise_db_A__c}" label="" styleClass="noise"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.CC_Operational_Flexibility__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.CC_Operational_Flexibility__c}" label="" styleClass="ccof"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Test_Value_Driver__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Test_Value_Driver__c}" label="" styleClass="tvd"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Train_line_up_number_of_casings__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Train_line_up_number_of_casings__c}" label="" styleClass="tline"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Mechanical_quality__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Mechanical_quality__c}" label="" styleClass="mq"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.GT_Emissions_NOX_CO__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.GT_Emissions_NOX_CO__c}" label="" styleClass="gte"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.GT_Fuel_Flexibility__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.GT_Fuel_Flexibility__c}" label="" styleClass="gtff"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Covered_units_and_IOC_details_CSA_Only__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Covered_units_and_IOC_details_CSA_Only__c}" label="" styleClass="cover"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Availability_target_inc_bonus_LDs_CSA__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Availability_target_inc_bonus_LDs_CSA__c}" label="" styleClass="atcsa"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Reliability_target_inc_bonus_LDs_CSA__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Reliability_target_inc_bonus_LDs_CSA__c}" label="" styleClass="rtcsa"/>
+                                        </apex:pageBlockSectionItem><br/>
+                                        <apex:pageBlockSectionItem labelStyle="text-align:left;font-size:13px;">
+                                            <apex:outputLabel >{!$ObjectType.eRAD__c.fields.Other_Performances_CSA_Only__c.label}</apex:outputLabel>
+                                            <apex:inputField value="{!erad.Other_Performances_CSA_Only__c}" label="" styleClass="opcsa"/>
+                                        </apex:pageBlockSectionItem><br/><br/><br/>
+                                    </apex:pageblocksection>
+                                </apex:column>
+                            </apex:pageBlockTable>
+                            </div>
+                        </apex:column>
+                        <apex:column headerValue="GE O&G" >
+                            <div style="width:250px;">
+                            <apex:pageBlockTable var="erad" value="{!erAdlist}" headerClass="innerpagetable" width="100%">
+                                <apex:column headerValue="Value" width="60%">
+                                    <center>
+                                        <br/>
+                                        <apex:inputField value="{!erad.Ability_to_meet_Customer_Spec_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.ESF_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.MD_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.SVP_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.Footprint_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.IS_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.Weight_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.Noise_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.CCOF_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.Test_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.Train_line_up_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.MQ_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.GT_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.GTFF_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.Covered_units_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.AT_CSA_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.RT_CSA_Value__c}" styleclass="browclass1"/><br/><br/>
+                                        <apex:inputField value="{!erad.OP_CSA_Value__c}" styleclass="browclass1"/><br/><br/><br/>
+                                        <apex:outputLabel value="Total Technical Score" style="font-size:12px;color:#003f77;font-weight:bold;"/>
+                                    </center>
+                                </apex:column>
+                                <apex:column headerValue="Rating" style="background-color: #CECEF6;" width="50%">
+                                    <center>
+                                        <br/>
+                                        <apex:inputField value="{!erad.Ability_to_meet_Customer_Spec_Rating__c}" styleclass="techgeog1"/><br/><br/>
+                                        <apex:inputField value="{!erad.ESF_Rating__c}" styleclass="techgeog2"/><br/><br/>
+                                        <apex:inputField value="{!erad.MD_Rating__c}" styleclass="techgeog3"/><br/><br/>
+                                        <apex:inputField value="{!erad.SVP_Raitng__c}" styleclass="techgeog4"/><br/><br/>
+                                        <apex:inputField value="{!erad.Footprint_Rating__c}" styleclass="techgeog5"/><br/><br/>
+                                        <apex:inputField value="{!erad.IS_Rating__c}" styleclass="techgeog6"/><br/><br/>
+                                        <apex:inputField value="{!erad.Weight_Rating__c}" styleclass="techgeog7"/><br/><br/>
+                                        <apex:inputField value="{!erad.Noise_Rating__c}" styleclass="techgeog8"/><br/><br/>
+                                        <apex:inputField value="{!erad.CCOF_Rating__c}" styleclass="techgeog9"/><br/><br/>
+                                        <apex:inputField value="{!erad.Test_Rating__c}" styleclass="techgeogid1"/><br/><br/>
+                                        <apex:inputField value="{!erad.Train_line_up_Rating__c}" styleclass="techgeogid2"/><br/><br/>
+                                        <apex:inputField value="{!erad.MQ_Rating__c}" styleclass="techgeogid3"/><br/><br/>
+                                        <apex:inputField value="{!erad.GT_Rating__c}" styleclass="techgeogid4"/><br/><br/>
+                                        <apex:inputField value="{!erad.GTFF_Rating__c}" styleclass="techgeogid5"/><br/><br/>
+                                        <apex:inputField value="{!erad.Covered_units_Rating__c}" styleclass="techgeogid6"/><br/><br/>
+                                        <apex:inputField value="{!erad.AT_CSA_Rating__c}" styleclass="techgeogid7"/><br/><br/>
+                                        <apex:inputField value="{!erad.RT_CSA_Rating__c}" styleclass="techgeogid8"/><br/><br/>
+                                        <apex:inputField value="{!erad.OP_CSA_Rating__c}" styleclass="techgeogid9"/><br/><br/><br/>
+                                        <apex:inputfield value="{!erad.Technical_Score__c}" styleclass="techscr"  style="text-align:center;width:50px;height:13px;background-color:#006eb3;color:white"/>
+                                    </center>
+                                </apex:column>
+                            </apex:pageBlockTable>
+                            </div>
+                        </apex:column>
+                        <apex:repeat value="{!competitorsList}" var="comp">
+                            <apex:column headerValue="{!comp.Competitor__c}">
+                            <div style="width:220px;">
+                            <apex:pageBlockTable var="wrap" value="{!erAdlist}" headerClass="innerpagetable" width="100%">
+                                <apex:column headerValue="Value" width="50%">
+                                    <center>
+                                    <br/>
+                                    <apex:inputField value="{!comp.Ability_to_meet_Customer_Spec_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.ESF_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.MD_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.SVP_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.Footprint_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.IS_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.Weight_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.Noise_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.CCOF_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.Test_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.Train_line_up_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.MQ_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.GT_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.GTFF_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.Covered_units_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.AT_CSA_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.RT_CSA_Value__c}" styleclass="browclass1"/><br/><br/>
+                                    <apex:inputField value="{!comp.OP_CSA_Value__c}" styleclass="browclass1"/><br/><br/><br/><br/>
+                                    </center>
+                                </apex:column>
+                                <apex:column headerValue="Rating" style="background-color: #CECEF6;" width="50%">
+                                    <center>
+                                    <br/>
+                                    <apex:inputField value="{!comp.Ability_to_meet_Customer_Spec_Rating__c}" styleclass="tech1{!techvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.ESF_Rating__c}" styleclass="tech2{!techvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.MD_Rating__c}" styleclass="tech3{!techvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.SVP_Raitng__c}" styleclass="tech4{!techvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.Footprint_Rating__c}" styleclass="tech5{!techvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.IS_Rating__c}" styleclass="tech6{!techvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.Weight_Rating__c}" styleclass="tech7{!techvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.Noise_Rating__c}" styleclass="tech8{!techvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.CCOF_Rating__c}" styleclass="tech9{!techvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.Test_Rating__c}" styleclass="techid1{!techvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.Train_line_up_Rating__c}" styleclass="techid2{!techvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.MQ_Rating__c}" styleclass="techid3{!techvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.GT_Rating__c}" styleclass="techid4{!techvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.GTFF_Rating__c}" styleclass="techid5{!techvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.Covered_units_Rating__c}" styleclass="techid6{!techvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.AT_CSA_Rating__c}" styleclass="techid7{!techvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.RT_CSA_Rating__c}" styleclass="techid8{!techvar}"/><br/><br/>
+                                    <apex:inputField value="{!comp.OP_CSA_Rating__c}" styleclass="techid9{!techvar}"/><br/><br/><br/>
+                                    <apex:inputfield value="{!comp.Technical_Score__c}" label="" styleclass="techidtotal1{!techvar}" style="text-align:center;width:50px;height:13px;background-color:#006eb3;color:white"/>
+                                    </center>
+                                </apex:column>
+                            </apex:pageBlockTable>
+                            </div>
+                            <apex:variable var="techvar" value="{!VALUE(techvar) + 1}"/>
+                            </apex:column>
+                        </apex:repeat>
+                        <apex:column headerValue="Remarks" >
+                            <div style="width:336px;">
+                            <apex:pageBlockTable var="erad" value="{!erAdlist}" headerClass="innerpagetable1">
+                                <apex:column headerValue="">
+                                    <apex:inputField value="{!erad.Ability_to_meet_Customer_Remarks__c}" style="width:330px;height:32px;" label="" />
+                                    <apex:inputField value="{!erad.ESF_Remarks__c}" style="width:330px;height:32px;" label=""/>
+                                    <apex:inputField value="{!erad.MD_Remarks__c}" style="width:330px;height:32px;" label="" />
+                                    <apex:inputField value="{!erad.SVP_Remarks__c}" label="" style="width:330px;height:32px;" />
+                                    <apex:inputField value="{!erad.Footprint_Remarks__c}" label="" style="width:330px;height:32px;"/>
+                                    <apex:inputField value="{!erad.IS_Remarks__c}" style="width:330px;height:32px;" label="" />
+                                    <apex:inputField value="{!erad.Weight_Remarks__c}" style="width:330px;height:32px;" label="" />
+                                    <apex:inputField value="{!erad.Noise_Remarks__c}" style="width:330px;height:32px;" label="" />
+                                    <apex:inputField value="{!erad.CCOF_Remarks__c}" style="width:330px;height:32px;" label="" />
+                                    <apex:inputField value="{!erad.Test_Remarks__c}" style="width:330px;height:32px;" label="" />
+                                    <apex:inputField value="{!erad.Train_line_up_Remarks__c}" style="width:330px;height:32px;" label="" />
+                                    <apex:inputField value="{!erad.MQ_Remarks__c}" style="width:330px;height:32px;" label="" />
+                                    <apex:inputField value="{!erad.GT_Remarks__c}" style="width:330px;height:32px;" label="" />
+                                    <apex:inputField value="{!erad.GTFF_Remarks__c}" style="width:330px;height:32px;" label="" />
+                                    <apex:inputField value="{!erad.Covered_units_Remarks__c}" style="width:330px;height:32px;" label="" />
+                                    <apex:inputField value="{!erad.AT_CSA_Remarks__c}" style="width:330px;height:32px;" label="" />
+                                    <apex:inputField value="{!erad.RT_CSA_Remarks__c}" style="width:330px;height:32px;" label="" />
+                                    <apex:inputField value="{!erad.OP_CSA_Reamrks__c}" style="width:330px;height:32px;" label="" /><br/><br/><br/>
+                                </apex:column>
+                            </apex:pageBlockTable>
+                            </div>
+                        </apex:column>
+                    </apex:pageBlockTable><br/>
+                    <input type="hidden" value="{!techvar}" class="totaltech"/>
+                    <table width="80%">
+                    <tr>
+                    <td>
+                        <div align="center">
+                            <apex:outputPanel rendered="{!buttonboo == true}"><apex:commandButton value="Save" onclick="calallrating();" action="{!save_custom}" styleClass="button" rendered="{!buttonboo == true}"/></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == true}"> &nbsp;<apex:commandButton value="Return to eRAD" rendered="{!buttonboo == true}" onclick="calallrating();" action="{!ss_savecontent}" styleClass="button"/></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == false}">&nbsp;<apex:commandButton value="Return to eRAD" rendered="{!buttonboo == false}" action="{!cancelpage}" styleClass="button"/></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == true}">&nbsp;<apex:commandButton value="Report" onclick="calallratingreport();" rendered="{!buttonboo == true}" rerender="pageid" styleClass="button" /></apex:outputPanel>
+                            <apex:outputPanel rendered="{!buttonboo == false}">&nbsp;<apex:commandButton value="Report" onclick="window.open('/apex/eRAD_Custom_Report?id={!eradid}','_blank');" rendered="{!buttonboo == false}" rerender="pageid" styleClass="button" /></apex:outputPanel>
+                            <apex:outputpanel >&nbsp;<apex:commandButton value="Calculate Score" onclick="caltechrating();" rerender="pageid" styleClass="button" /></apex:outputpanel>
+                        </div>
+                    </td>    
+                    </tr>
+                    </table>
+                </apex:pageBlock><br/>
+                <apex:pageBlock >
+                    <apex:image url="{!$Resource.eRAD_Rating_Scale}" width="670" height="230"/>
+                </apex:pageBlock>
+            </apex:tab>
+            
+            <apex:tab label="Final Statement" labelWidth="140%" reRender="frm" name="FinalStatement" id="FS">
+                <apex:pageBlock >
+                    <apex:outputPanel rendered="{!errormsg}">
+                    <apex:pageMessages /><br/>
+                    </apex:outputPanel>
+                    <apex:outputtext value="{!$ObjectType.eRAD__c.fields.Highllights__c.label}" style="font-weight:bold;font-size:15px"/><br/>
+                    <apex:inputField value="{!erAdlist[0].Highllights__c}" label="" style="width:100%;height:100px;"/><br/><br/>
+                    <div align="center">
+                        <apex:commandButton value="Submit" onclick="calallrating();" action="{!savecontent}" styleClass="button" rendered="{!buttonboo == true}"/>&nbsp;&nbsp;
+                        <apex:commandButton value="Save" onclick="calallrating();" action="{!save_custom}" styleClass="button" rendered="{!buttonboo == true}"/>
+                        <apex:outputpanel >&nbsp;<apex:commandButton value="Cancel" action="{!cancelpage}" styleClass="button" /></apex:outputpanel>
+                        <apex:outputpanel rendered="{!buttonboo == true}">&nbsp;<apex:commandButton value="Report" rendered="{!buttonboo == true}" onclick="calallratingreport();" rerender="pageid" styleClass="button" /></apex:outputpanel>
+                        <apex:outputpanel rendered="{!buttonboo == false}">&nbsp;<apex:commandButton value="Report" rendered="{!buttonboo == false}" onclick="window.open('/apex/eRAD_Custom_Report?id={!eradid}','_blank');" rerender="pageid" styleClass="button" /></apex:outputpanel>
+                    </div>
+                </apex:pageBlock>
+            </apex:tab>
+        </apex:tabPanel>
+    </apex:form>
+</apex:page>

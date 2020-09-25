@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>I1__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <label>Intake Gas 1 Serial #</label>
+    <referenceTo>SVMXC__Installed_Product__c</referenceTo>
+    <relationshipLabel>Pulls (Intake Gas 1 Serial #)</relationshipLabel>
+    <relationshipName>Pulls_IntkGs_1</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

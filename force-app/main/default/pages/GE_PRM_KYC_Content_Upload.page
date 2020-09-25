@@ -1,0 +1,153 @@
+<!--
+Type Name [Class/Trigger/Page Name] : Page
+Used Where ?                        : Used in the Customer KYC Detail Page Layout
+Purpose/Overview                    : Help PRM KYC users to upload documents specific to PRM
+                                      
+Functional Area                     : PRM
+Author                              : Sushma Bijur
+Created Date                        : 
+Test Class Name                     : 
+Limitation                          : 
+
+Change History -
+Date Modified   : Developer Name        : Method/Section Modified/Added     : Purpose/Overview of Change
+-->
+<apex:page >
+<!-- Controller="GE_PRM_KYC_Content" >
+ <apex:form >
+ 
+ <apex:pageBlock >
+  <apex:pageMessages />
+ 
+ <apex:pageblockbuttons > 
+    <apex:commandButton value="Back" action="{!back}"/>
+    <apex:commandButton value="Upload" action="{!upload}"/>
+    <apex:commandButton value="Cancel" action="{!cancel}"/> 
+   </apex:pageblockbuttons>
+
+<apex:pageBlockSection columns="1" Title="Upload Content1">
+  
+  <apex:pageblockSectionItem >
+  <apex:outputLabel value="Title"></apex:outputLabel>
+  <apex:inputtext value="{!mycontentList[0].title}" > </apex:inputtext>
+  </apex:pageblockSectionItem>
+  
+  <apex:pageBlockSectionItem >
+    <apex:outputLabel value="Description"></apex:outputLabel>
+    <apex:inputtextarea value="{!mycontentList[0].description}"/>   
+   </apex:pageBlockSectionItem>
+   
+   <apex:pageBlockSectionItem >
+    <apex:outputLabel value="Content"></apex:outputLabel>
+    <apex:inputFile value="{!mycontentList[0].VersionData}" filename="{!mycontentList[0].PathOnClient}" />
+    
+   </apex:pageBlockSectionItem>
+   
+        
+    <apex:pageBlockSectionItem >
+    <apex:outputLabel value="Tags"></apex:outputLabel>
+    <apex:inputtextarea value="{!mycontentList[0].tagcsv}"/>   
+   </apex:pageBlockSectionItem>
+   
+</apex:pageBlockSection>
+
+
+  <apex:pageBlockSection columns="1" Title="Upload Content2">
+  
+  <apex:pageblockSectionItem >
+  <apex:outputLabel value="Title"></apex:outputLabel>
+  <apex:inputtext value="{!mycontentList[1].title}"> </apex:inputtext>
+  </apex:pageblockSectionItem>
+  
+  <apex:pageBlockSectionItem >
+    <apex:outputLabel value="Description"></apex:outputLabel>
+    <apex:inputtextarea value="{!mycontentList[1].description}"/>   
+   </apex:pageBlockSectionItem>
+   
+   <apex:pageBlockSectionItem >
+    <apex:outputLabel value="Content"></apex:outputLabel>
+    <apex:inputFile value="{!mycontentList[1].VersionData}" filename="{!mycontentList[1].PathOnClient}"/>
+   </apex:pageBlockSectionItem>
+   
+     <apex:pageBlockSectionItem >
+    <apex:outputLabel value="Tags"></apex:outputLabel>
+    <apex:inputtextarea value="{!mycontentList[1].tagcsv}"/>   
+   </apex:pageBlockSectionItem>
+   
+</apex:pageBlockSection>
+
+<apex:pageBlockSection columns="1" Title="Upload Content3">
+  
+  <apex:pageblockSectionItem >
+  <apex:outputLabel value="Title"></apex:outputLabel>
+  <apex:inputtext value="{!mycontentList[2].title}"> </apex:inputtext>
+  </apex:pageblockSectionItem>
+  
+  <apex:pageBlockSectionItem >
+    <apex:outputLabel value="Description"></apex:outputLabel>
+    <apex:inputtextarea value="{!mycontentList[2].description}"/>   
+   </apex:pageBlockSectionItem>
+   
+   <apex:pageBlockSectionItem >
+    <apex:outputLabel value="Content"></apex:outputLabel>
+    <apex:inputFile value="{!mycontentList[2].VersionData}" filename="{!mycontentList[2].PathOnClient}"/>
+   </apex:pageBlockSectionItem>
+   
+    <apex:pageBlockSectionItem >
+    <apex:outputLabel value="Tags"></apex:outputLabel>
+    <apex:inputtextarea value="{!mycontentList[2].tagcsv}"/>   
+   </apex:pageBlockSectionItem>
+   
+</apex:pageBlockSection>
+
+<apex:pageBlockSection columns="1" Title="Upload Content4">
+  
+  <apex:pageblockSectionItem >
+  <apex:outputLabel value="Title"></apex:outputLabel>
+  <apex:inputtext value="{!mycontentList[3].title}"> </apex:inputtext>
+  </apex:pageblockSectionItem>
+  
+  <apex:pageBlockSectionItem >
+    <apex:outputLabel value="Description"></apex:outputLabel>
+    <apex:inputtextarea value="{!mycontentList[3].description}"/>   
+   </apex:pageBlockSectionItem>
+   
+   <apex:pageBlockSectionItem >
+    <apex:outputLabel value="Content"></apex:outputLabel>
+    <apex:inputFile value="{!mycontentList[3].VersionData}" filename="{!mycontentList[3].PathOnClient}"/>
+   </apex:pageBlockSectionItem>
+   
+     <apex:pageBlockSectionItem >
+    <apex:outputLabel value="Tags"></apex:outputLabel>
+    <apex:inputtextarea value="{!mycontentList[3].tagcsv}"/>   
+   </apex:pageBlockSectionItem>
+   
+</apex:pageBlockSection>
+
+<apex:pageBlockSection columns="1" Title="Upload Content5">
+  
+  <apex:pageblockSectionItem >
+  <apex:outputLabel value="Title"></apex:outputLabel>
+  <apex:inputtext value="{!mycontentList[4].title}"> </apex:inputtext>
+  </apex:pageblockSectionItem>
+  
+  <apex:pageBlockSectionItem >
+    <apex:outputLabel value="Description"></apex:outputLabel>
+    <apex:inputtextarea value="{!mycontentList[4].description}"/>   
+   </apex:pageBlockSectionItem>
+   
+   <apex:pageBlockSectionItem >
+    <apex:outputLabel value="Content"></apex:outputLabel>
+    <apex:inputFile value="{!mycontentList[4].VersionData}" filename="{!mycontentList[4].PathOnClient}"/>
+   </apex:pageBlockSectionItem>
+   
+   <apex:pageBlockSectionItem >
+    <apex:outputLabel value="Tags"></apex:outputLabel>
+    <apex:inputtextarea value="{!mycontentList[4].tagcsv}"/>   
+   </apex:pageBlockSectionItem>
+   
+</apex:pageBlockSection>
+ 
+  </apex:pageBlock>
+ </apex:form>-->
+</apex:page>

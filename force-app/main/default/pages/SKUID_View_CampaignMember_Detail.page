@@ -1,0 +1,2 @@
+<apex:page action="{!redirect}&objecttype=CampaignMember&actiontype=View" extensions="skuid.Redirects" standardcontroller="CampaignMember">
+</apex:page>

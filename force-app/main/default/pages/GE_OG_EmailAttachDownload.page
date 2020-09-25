@@ -1,0 +1,515 @@
+<apex:page controller="GE_OG_EmailAttachDownload" sidebar="false" showHeader="false" tabstyle="case" cache="false">
+  <style>
+  #center_div
+   {
+     border:1px solid gray;
+     margin-left:auto;
+     margin-right:auto;
+     width:120%;
+     <!--background-color:#d0f0f6;-->
+     text-align:left;
+     padding:8px;
+   }
+   
+  #nanda_div
+   {
+     border:1px solid gray;
+     margin-left:auto;
+     margin-right:auto;
+     width:200%;
+     <!--background-color:#d0f0f6;-->
+     text-align:left;
+     padding:8px;
+   }
+  #email_div
+   {
+     background-color:#AFEEEE;
+   }
+  #emailH_div
+   {
+     background-color:#E0FFFF;
+   }
+
+  #child_div
+   {
+     background-color:#b0c4de;
+   }
+  #att_div
+   {
+     background-color:#F5F5DC;
+   }
+  h1 {color:#00ff00;}
+
+  .pbBody
+   {
+     /* Color for the pageblock background */
+     background-color:#e0ffff;
+   }
+
+ </style>
+ <style type="text/css">
+     #myTag {color: #FF00FF;}
+ </style>
+ 
+ <script type="text/javascript">
+   
+    function selectAll(source) {
+        checkboxes = document.getElementsByName('att_ids_group[]');
+        for (var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = source.checked;
+        }
+    }
+    function selectAll_Notes(source) {
+        checkboxes = document.getElementsByName('att_ids_nattch[]');
+        for (var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = source.checked;
+        }
+    }
+    function selectAll_Chatter(source) {
+        checkboxes = document.getElementsByName('chatt_ids_group[]');
+        for (var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = source.checked;
+        }
+    }
+    
+ </script>
+      
+     <!--For Multi-Attach Download-->
+ <head>
+    <script type="text/javascript" src="/soap/ajax/26.0/connection.js"> </script>
+ 
+    <apex:includeScript value="{!URLFOR($Resource.GE_OG_EmailAttachments,'EmailAttachments/jQuery.js')}"/>
+    <!-- <apex:includeScript value="{!URLFOR($Resource.Downloadify_Master)}"/> -->
+    <apex:includeScript value="{!URLFOR($Resource.GE_OG_EmailAttachments,'EmailAttachments/js_zip/jszip.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.GE_OG_EmailAttachments,'EmailAttachments/js_zip/jszip-load.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.GE_OG_EmailAttachments,'EmailAttachments/js_zip/jszip-deflate.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.GE_OG_EmailAttachments,'EmailAttachments/js_zip/jszip-inflate.js')}"/>
+    <!-- <apex:includeScript value="{!URLFOR($Resource.Downloadify_Master, '/js/swfobject.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.Downloadify_Master, '/js/downloadify.min.js')}"/> -->
+   
+    <script type="text/javascript">
+    Visualforce.remoting.timeout = 120000;  // Set timeout at page level
+    var j$ = jQuery.noConflict();
+ 
+    j$(document).ready(function() {
+          //Hide upload button
+            var uploadZipButton = j$('input[id$=uploadZipButton]');
+            uploadZipButton.css('display', 'none');
+          
+          //alert('Test_1');
+          //Instantiate JSZip
+          //var zipFile = new JSZip();
+          //alert('Test_2');
+               
+          //Intercept click event
+            j$('input[id=generateZipLink]').click(function() {
+                  var zipFile = new JSZip();
+                  var checkedSize = j$("input[name='att_ids_group[]']:checked").size();
+                  var checkedSize_Notes = j$("input[name='att_ids_nattch[]']:checked").size();
+                  var checkedSize_Chatter = j$("input[name='chatt_ids_group[]']:checked").size();
+                  
+                  var count = 0;
+                  var exceptioncaught = false;
+                  var LengthZip = 0 ;
+                  
+                  //Iterate over each selected file               
+                  j$("input[name='att_ids_group[]']:checked").each(function() {
+                        //Refresh zip process status
+                        j$('span[id$=zipStatus]').text('Getting file...');
+                         
+                        //Get file using javascript remoting
+                        Visualforce.remoting.Manager.invokeAction(
+                              '{!$RemoteAction.GE_OG_EmailAttachDownload.getAttachment}',
+                               j$(this).val(),
+                               function(result, event){
+                                     //alert('Test_3');
+                                       if (event.status) {
+                                            //alert('***'+result.attName);
+                                            
+                                            LengthZip = LengthZip+(result.TotalLength) ;
+                                            
+                                            if( LengthZip > 4000000 ){
+                                                if(exceptioncaught == true){
+                                                alert('Download Attachments size should be less than 4 MB.') ;
+                                                j$('span[id$=zipStatus]').text(' ');
+                                                exceptioncaught=true ;
+                                    
+                                                }
+                                            }else{
+                                                //Refresh zip process status
+                                                j$('span[id$=zipStatus]').text('Compressing file "' + result.attName + '"...');
+                                                //alert('Test_4');
+                                                count++;
+                                   
+                                                //Add the file
+                                                compressFile(zipFile, result.attName, result.attEncodedBody);
+                                 
+                                                //Once all the selected files have been compressed
+                                                if (count == checkedSize+checkedSize_Notes+checkedSize_Chatter ) {
+                                                //Refresh zip process status
+                                                  j$('span[id$=zipStatus]').text('Generating zip file...');
+                                     
+                                                 //Send form
+                                                   sendZip(zipFile);
+                                                }
+                                              }
+                                          } else if (event.type === 'exception') {
+                                     if(exceptioncaught == false){
+                                        alert('Exception: ' + event.message);
+                                        exceptioncaught =true ;
+                                        j$('span[id$=zipStatus]').text('');
+                                     }
+                               } else {
+                                 if(exceptioncaught == false){
+                                    alert('Message: ' + event.message);
+                                    exceptioncaught=true ;
+                                    j$('span[id$=zipStatus]').text('');
+                                }
+                             }
+                          }, 
+                        {escape: true}
+                      );//End getAttachment
+ 
+                  });//end each selected attId
+                  
+                  j$("input[name='att_ids_nattch[]']:checked").each(function() {
+                        //Refresh zip process status
+                          j$('span[id$=zipStatus]').text('Getting file...');
+                         
+                        //Get file using javascript remoting
+                          Visualforce.remoting.Manager.invokeAction(
+                              '{!$RemoteAction.GE_OG_EmailAttachDownload.getAttachment}',
+                               j$(this).val(),
+                               function(result, event){
+                                     //alert('Test_3');
+                                       if (event.status) {
+                                            //alert('***'+result.attName);
+                                            LengthZip = LengthZip+(result.TotalLength) ;
+                                            
+                                            if(LengthZip > 4000000 ){
+                                                if(exceptioncaught == false){
+                                                    alert('Download Attachments size should be less than 4 MB.');
+                                                    j$('span[id$=zipStatus]').text(' ');
+                                                    exceptioncaught = true ;
+                                                }
+                                            }else{
+                                            //Refresh zip process status
+                                            j$('span[id$=zipStatus]').text('Compressing file "' + result.attName + '"...');
+                                            //alert('Test_4');
+                                            count++;
+                                   
+                                          //Add the file
+                                           compressFile(zipFile, result.attName, result.attEncodedBody);
+                                 
+                                          //Once all the selected files have been compressed
+                                            if (count == checkedSize+checkedSize_Notes+checkedSize_Chatter ) {
+                                                //Refresh zip process status
+                                                 j$('span[id$=zipStatus]').text('Generating zip file...');
+                                     
+                                                 //Send form
+                                                   sendZip(zipFile);
+                                                }
+                                             } 
+                                          } else if (event.type === 'exception') {
+                                            if(exceptioncaught == false){
+                                                alert('Message: ' + event.message);
+                                                exceptioncaught = true ;
+                                                j$('span[id$=zipStatus]').text('');
+                                            }
+                                        } else {
+                                             if(exceptioncaught == false){
+                                                alert('Message: ' + event.message);
+                                                exceptioncaught = true ;
+                                                j$('span[id$=zipStatus]').text(''); 
+                                            }
+                                        }
+                                    }, 
+                        {escape: true}
+                      );//End getAttachment
+ 
+                  });//end each selected attId
+                  
+              
+              
+              <!-- Chatter Attachments-->
+              
+              j$("input[name='chatt_ids_group[]']:checked").each(function() {
+                        //Refresh zip process status
+                        j$('span[id$=zipStatus]').text('Getting file...');
+                         
+                        //Get file using javascript remoting
+                        Visualforce.remoting.Manager.invokeAction(
+                              '{!$RemoteAction.GE_OG_EmailAttachDownload.getAttachment}',
+                               j$(this).val(),
+                               function(result, event){
+                                     //alert('Test_3');
+                                       if (event.status) {
+                                            //alert('***'+result.attName);
+                                            
+                                            LengthZip = LengthZip+(result.TotalLength) ;
+                                            
+                                            if( LengthZip > 4000000 ){
+                                                if(exceptioncaught == false){
+                                                alert('Download Attachments size should be less than 4 MB.') ;
+                                                j$('span[id$=zipStatus]').text(' ');
+                                                exceptioncaught=true ;
+                                    
+                                                }
+                                            }else{
+                                                //Refresh zip process status
+                                                j$('span[id$=zipStatus]').text('Compressing file "' + result.attName + '"...');
+                                                //alert('Test_4');
+                                                count++;
+                                   
+                                                //Add the file
+                                                compressFile(zipFile, result.attName, result.attEncodedBody);
+                                 
+                                                //Once all the selected files have been compressed
+                                                if (count == checkedSize+checkedSize_Notes+checkedSize_Chatter ) {
+                                                //Refresh zip process status
+                                                  j$('span[id$=zipStatus]').text('Generating zip file...');
+                                     
+                                                 //Send form
+                                                   sendZip(zipFile);
+                                                }
+                                              }
+                                          } else if (event.type === 'exception') {
+                                     if(exceptioncaught == false){
+                                        alert('Exception: ' + event.message);
+                                        exceptioncaught =true ;
+                                        j$('span[id$=zipStatus]').text('');
+                                     }
+                               } else {
+                                 if(exceptioncaught == false){
+                                    alert('Message: ' + event.message);
+                                    exceptioncaught=true ;
+                                    j$('span[id$=zipStatus]').text('');
+                                }
+                             }
+                          }, 
+                        {escape: true}
+                      );//End getAttachment
+ 
+                  });//end each selected attId
+                  
+                  });//end click
+              
+              
+             
+            //Compress one single file
+            function compressFile(zipFile, name, data) {
+                zipFile.file(name, data, {base64:true});
+      }
+ 
+    //Generate and upload zip file
+     function sendZip(zipFile) {
+             var datam = zipFile.generate();
+             var zipContent = j$('input[id$=zipContent]');
+             zipContent.val(datam);
+                
+             //Refresh zip process status
+                
+             j$('span[id$=zipStatus]').text('Downloading zip file...');
+               
+            //alert('before Downloadify');
+                /*
+              Downloadify.create('downloadify',
+                                   { 
+                                      filename: function(){
+                                        return 'test.zip';
+                                        },
+                                    
+                                      data:function(){return zipContent;}, 
+                                      dataType: 'base64',
+                                      width: 100,
+                                      height: 30,
+                                      transparent: true,
+                                      append: false });*/
+                 //alert('after Downloadify');
+               var uploadZipButton = j$('input[id$=uploadZipButton]');
+               uploadZipButton.trigger('click');
+              
+               setTimeout(function(){j$('span[id$=zipStatus]').text('')},15000);
+            }
+        });
+      </script>
+ </head>
+    
+    
+    <!--..........-->
+
+   <!-- <apex:relatedList list="ActivityHistories" subject="{!case}"></apex:relatedList>-->
+   <!-- <apex:relatedList list="EmailMessages" subject="{!Case}"/>-->
+    <apex:form id="theForm" enctype="multipart/form-data">
+    
+    <apex:actionFunction name="btnDownloadAttachments" action="{!downloadAttachments}"/>
+      
+      <!--SEARCH WITH CASE NUMBER-->
+    <apex:pageblock >
+        <apex:pageBlockSection >
+   
+           <apex:panelGroup >
+               <apex:outputLabel for="searchText"><b>Search with Case Number</b></apex:outputLabel>&nbsp;&nbsp;
+               <apex:inputText id="searchText" value="{!searchText}" />
+               <apex:commandButton value="Go!" action="{!search}"  />
+             <apex:pageMessages />
+           </apex:panelGroup>
+        </apex:pageBlockSection>
+    </apex:pageblock>
+    
+    
+    <apex:sectionHeader title="Case" subtitle="{!CaseName.CaseNumber}"/>
+        
+                    <!--EMAILS and RELATED ATTACHMENTS-->
+    <apex:pageblock >
+        
+        <table>
+            <tr>
+                <td>
+                    <b><apex:outputLabel for="zipFileName" value="File name: " /></b>&nbsp;&nbsp; 
+                    <apex:inputText id="zipFileName" value="{!zipFileName}"  />.zip
+                </td>
+                <td>
+                     <input type="button" id="generateZipLink" value="Download Attachments" Class="btn"/>
+                     <span id="zipStatus"></span>
+                </td>
+                 <td>
+                </td>
+            </tr>
+         </table>
+         
+         
+      
+         <br/>
+         <br/>
+         <apex:pageblockSection title="Emails and related Attachments of {!CaseName.CaseNumber}" >
+    
+         <apex:outputpanel id="emailTable" rendered="{!IF(lstEmailMessagesToAttachments.size>0, 'true' , 'false')}" >
+            <table cellpadding="2" cellspacing="0"  id="center_div" ><col width="8"/><col width="100"/><col width="30"/><col width="30"/><col width="50"/><col width="50"/>
+                <tr id="emailH_div">
+                    <th  valign="top"><input type="checkbox" id="selectall" onClick="selectAll(this)" /></th><th valign="centre">Subject Name</th><th valign="top">From Address</th><th valign="top">To Address</th><th valign="top">Status</th><th valign="top">Message Date</th>
+                </tr>
+                                    <!--REPEAT FOR EMAIL-->
+            <apex:repeat Value="{!lstEmailMessagesToAttachments}" var="InstantEmailwithAttment">
+                <tr style="Background-color:white" onblur="if (window.hiOff){hiOff(this);}" onfocus="if (window.hiOn){hiOn(this);}" onmouseout="if (window.hiOff){hiOff(this);}" onmouseover="if (window.hiOn){hiOn(this);}">
+                   <td><apex:image url="{!URLFOR($Resource.GE_OG_EmailAttachments,'EmailAttachments/GE_OG_InboundMail.jpg')}" rendered="{!IF(InstantEmailwithAttment.eMessage.Incoming ==true,'true','false')}"/>
+                   <apex:image url="{!URLFOR($Resource.GE_OG_EmailAttachments,'EmailAttachments/GE_OG_OutboundMail.jpg')}" rendered="{!IF(InstantEmailwithAttment.eMessage.Incoming ==false,'true','false')}"/></td>
+                   <!-- <td><apex:inputcheckbox value="{!InstantEmailwithAttment.emailMessageChkbox}" onclick="changeFont(this,'{!$Component.thePanel}');" /></td>-->
+                   
+                   <td style="font-size:10pt">{!InstantEmailwithAttment.eMessage.Subject}</td>
+                   <td style="font-size:10pt" >{!InstantEmailwithAttment.eMessage.FromAddress}</td>
+                   <td style="font-size:10pt" >{!InstantEmailwithAttment.eMessage.ToAddress}</td>
+                   <td style="font-size:10pt"><apex:outputField value="{!InstantEmailwithAttment.eMessage.Status}"/></td>
+                   <td style="font-size:10pt"><apex:outputField value="{!InstantEmailwithAttment.eMessage.MessageDate}"/></td>
+            
+                </tr>
+                                  <!--REPEAT FOR ATTACHMENT-->
+                <apex:outputpanel id="attachTable" rendered="{!IF(InstantEmailwithAttment.lstAttachments.size>0, 'true' , 'false')}" >
+                <!-- <tr id="att_div" style="display:{!IF(InstantEmailwithAttment.lstAttachments.size> 0 , 'inline', 'none')}" >-->
+                <tr> <th></th><th> Attachment Name</th><th> Size</th><th></th><th></th><th></th></tr>
+                     <apex:repeat value="{!InstantEmailwithAttment.lstAttachments}" var="insAttachment">
+                         <tr  onblur="if (window.hiOff){hiOff(this);}" onfocus="if (window.hiOn){hiOn(this);}" onmouseout="if (window.hiOff){hiOff(this);}" onmouseover="if (window.hiOn){hiOn(this);}">
+                             <td></td>
+                             <td >
+                             <input type="checkbox" name="att_ids_group[]" value="{!insAttachment.InstantAttachment.id}" />&nbsp;
+                         
+                             <apex:image url="{!URLFOR($Resource.GE_OG_EmailAttachments,'EmailAttachments/GE_OG_attachment.jpg')}" />
+                             <!-- <apex:outputLink target="_blank"  value="{!URLFOR($Action.Attachment.Download, insAttachment.InstantAttachment.id)}">{!insAttachment.InstantAttachment.Name}</apex:outputLink>-->
+                             <a  onclick="window.open('{!URLFOR($Action.Attachment.Download, insAttachment.InstantAttachment.id)}','{!insAttachment.InstantAttachment.Id}','width=800,height=700,left=300px,resizable=1')"  href="#">{!insAttachment.InstantAttachment.Name}</a> 
+
+                              <!-- {!insAttachment.InstantAttachment.Name}--></td>
+                             <td>{!insAttachment.InstantAttachment.BodyLength/1000}KB</td>
+                           <td > <!-- <apex:outputField value="{!insAttachment.InstantAttachment.LastModifiedDate}"/> --></td>
+                            <td></td>
+                            <td></td>
+                         </tr>
+                      </apex:repeat> 
+                 </apex:outputpanel>
+                    
+            <!-- <apex:outputpanel id="emailTableWithNoAttach" rendered="{!IF(InstantEmailwithAttment.lstAttachments.size>0,false,true)}">
+                     No Attachments To Display
+                 </apex:outputpanel>-->
+                   
+         
+            </apex:repeat>
+          </table>
+         </apex:outputpanel>
+      
+         <apex:outputpanel id="emailTableWithNoRow" rendered="{!IF(lstEmailMessagesToAttachments.size>0,false,true)}">
+             No Records To Display
+         </apex:outputpanel>
+     </apex:pageblockSection>
+    <!-- </apex:pageblock>-->
+              
+                           <!--NOTES AND ATTACHMENTS-->
+    <!--<apex:pageblock >-->
+      <apex:pageblockSection title="Notes and  Attachments of {!CaseName.CaseNumber}" >
+             <apex:outputpanel id="NAttachTable" rendered="{!IF(nandA.size>0, 'true' , 'false')}" >
+                 <table cellpadding="2" cellspacing="0"  width="100" id="nanda_div" ><col width="4"/><col width="50"/><col width="50"/><col width="50"/><col width="50"/><col width="50"/>
+                     <tr id="att_div" ><th><input type="checkbox" id="selectall" onClick="selectAll_Notes(this)" /></th><th> Attachment Name</th><th> Size</th><th>Last Modified Date</th><th>Created By</th><th></th></tr>
+       
+                     <apex:repeat value="{!nandA}" var="natt">
+                     <tr  onblur="if (window.hiOff){hiOff(this);}" onfocus="if (window.hiOn){hiOn(this);}" onmouseout="if (window.hiOff){hiOff(this);}" onmouseover="if (window.hiOn){hiOn(this);}">
+                         
+                         
+                         <td> <input type="checkbox" name="att_ids_nattch[]" value="{!natt.InstantAttachment.id}" /> </td>
+                         <td>
+
+                         <apex:image url="{!URLFOR($Resource.GE_OG_EmailAttachments,'EmailAttachments/GE_OG_attachment.jpg')}"/>
+                    <!-- <apex:outputLink value="{!URLFOR($Action.Attachment.Download, natt.InstantAttachment.id)}">{! natt.InstantAttachment.Name}</apex:outputLink>-->
+                         <a    onclick="window.open('{!URLFOR($Action.Attachment.Download, natt.InstantAttachment.id)}','{!natt.InstantAttachment.Id}','width=800,height=700,left=300px')"  href="#">{!natt.InstantAttachment.Name}</a>
+                            
+                     <!-- {!insAttachment.InstantAttachment.Name}--></td>
+                         <td>{! natt.InstantAttachment.BodyLength/1000}KB</td>
+                         <td ><apex:outputField value="{! natt.InstantAttachment.LastModifiedDate}"/></td>
+                         <td>{! natt.InstantAttachment.CreatedBy.Name}</td>
+                         <td></td></tr>
+                      </apex:repeat> 
+                 </table>
+             </apex:outputpanel>
+             <apex:outputpanel id="NAttachTableWithNoRow" rendered="{!IF(nandA.size>0,false,true)}">
+                  No Records To Display
+             </apex:outputpanel>
+      </apex:pageblockSection>
+      
+      
+                                       <!--Feed ATTACHMENTS-->
+    <!--<apex:pageblock >-->
+     <apex:pageblockSection title="Chatter Feed Attachments of {!CaseName.CaseNumber}" >
+             <apex:outputpanel id="FAttachTable" rendered="{!IF(ChatA.size>0, 'true' , 'false')}" >
+                 <table cellpadding="2" cellspacing="0"  width="100" id="nanda_div" ><col width="4"/><col width="50"/><col width="50"/><col width="50"/><col width="50"/><col width="50"/>
+                     <tr id="att_div" ><th><input type="checkbox" id="selectall" onClick="selectAll_Chatter(this)" /></th><th> Attachment Name</th><th> Size</th><th>Last Modified Date</th><th>Created By</th><th></th></tr>
+       
+                     <apex:repeat value="{!ChatA}" var="fatt">
+                     <tr  onblur="if (window.hiOff){hiOff(this);}" onfocus="if (window.hiOn){hiOn(this);}" onmouseout="if (window.hiOff){hiOff(this);}" onmouseover="if (window.hiOn){hiOn(this);}">
+                         
+                         
+                         <td> <input type="checkbox" name="chatt_ids_group[]" value="{!fatt.Id}" /> </td>
+                         <td> 
+
+                        <apex:image url="{!URLFOR($Resource.GE_OG_EmailAttachments,'EmailAttachments/GE_OG_attachment.jpg')}" />
+                    
+                        <A href="/sfc/servlet.shepherd/version/download/{!fatt.RelatedRecordId}">{!fatt.ContentFileName}</A>   
+                      </td>
+                         <td>{! fatt.ContentSize/1000}KB</td>
+                         <td ><apex:outputField value="{! fatt.LastModifiedDate}"/></td>
+                         <td>{! fatt.CreatedBy.Name}</td>
+                         <td></td></tr>
+                      </apex:repeat> 
+                 </table>
+             </apex:outputpanel>
+             
+
+             <apex:outputpanel id="NAttachTableWithNoRow" rendered="{!IF(ChatA.size>0,false,true)}">
+                  No Records To Display
+             </apex:outputpanel>
+      </apex:pageblockSection>
+                        
+   
+    </apex:pageblock>
+    
+     <apex:inputHidden id="zipContent" value="{!zipContent}" />
+     <apex:commandButton id="uploadZipButton" value="Upload" action="{!uploadZip}" reRender="theForm"  />
+ 
+    </apex:form>
+ </apex:page>

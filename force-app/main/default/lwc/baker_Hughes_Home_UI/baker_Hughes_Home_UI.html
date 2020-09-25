@@ -1,0 +1,302 @@
+<template>
+
+    <div class="slds-page-header ">
+
+        <h1><strong>Opportunities</strong></h1>
+
+        <lightning-tabset>
+        <lightning-tab label="MY OPPORTUNITIES">
+            MY OPPORTUNITIES
+
+        </lightning-tab>
+        <lightning-tab label="MY TEAM OPPORTUNITIES">
+            <lightning-tabset>
+                <lightning-tab label="REGULAR VIEW">
+
+                    <div>
+                        <h2>Filter Fields</h2>
+                        
+                        
+                    </div>
+                    <div>
+                        <h2>KPI Details</h2>
+                        <table class="slds-table slds-table_cell-buffer">
+                            <thead>
+                              <tr class="slds-line-height_reset">
+                                <th class="" scope="col">
+                                  <div class="slds-truncate" title="Total">Total</div>
+                                </th>
+                                <th class="" scope="col">
+                                  <div class="slds-truncate" title="Count">Count</div>
+                                </th>
+                                <th class="" scope="col">
+                                  <div class="slds-truncate" title="Average">Average</div>
+                                </th>
+                                <th class="" scope="col">
+                                  <div class="slds-truncate" title="% Stale Volume">% Stale Volume</div>
+                                </th>
+                                <th class="" scope="col">
+                                  <div class="slds-truncate" title="Created  30 Days">Created  30 Days</div>
+                                </th>
+                                <th class="" scope="col">
+                                  <div class="slds-truncate" title="EOD Past Due">EOD Past Due</div>
+                                </th>
+                                
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr class="slds-hint-parent">
+                                <th data-label="Opportunity Name" scope="row">
+                                  <div class="slds-truncate" title="Cloudhub">$1.5 MM</div>
+                                </th>
+                                <td data-label="Account Name">
+                                  <div class="slds-truncate" title="Cloudhub">2</div>
+                                </td>
+                                <td data-label="Close Date">
+                                  <div class="slds-truncate" title="4/14/2015">$750.0 K</div>
+                                </td>
+                                <td data-label="Prospecting">
+                                  <div class="slds-truncate" title="Prospecting">0.0%</div>
+                                </td>
+                                <td data-label="Confidence">
+                                  <div class="slds-truncate" title="20%">$0.0 K</div>
+                                </td>
+                                <td data-label="Amount">
+                                  <div class="slds-truncate" title="$25k">$0.0 K</div>
+                                </td>
+                                
+                              </tr>
+                              
+                            </tbody>
+                          </table>
+
+                    </div></b><br/><br/>
+                    <template if:true={myTeamReqularOpptyList.data}>
+
+                        <!-- modal start  style="height: 850px; widows: 800px;" -->        
+                        <template if:true={bShowModal}>
+                            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_medium">
+                            <div class="slds-modal__container" style="height: 800px;">
+                                <!-- modal header start -->
+                                <header class="slds-modal__header">
+                                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                                        <lightning-icon icon-name="utility:close"
+                                                        alternative-text="close"
+                                                        variant="inverse"
+                                                        size="small" >
+                                        </lightning-icon>
+                                        <span class="slds-assistive-text">Close</span>
+                                    </button>
+                                    <h3 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Open Activities</h3>
+                                </header>
+                                <!-- modal body start -->
+                                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">                                    
+                                  <template if:true={taskList.data}>
+                                    <div style="height: 150px; widows: 300px;">
+                                    <lightning-datatable
+                                                data={taskList.data} 
+                                                columns={taskColumns} 
+                                                key-field="Id"
+                                                onsave={handleSave}
+                                                draft-values={draftTaksValues}>>
+                                    </lightning-datatable>
+                                  </div>
+                                </template>
+                                <template if:true={error}>
+                                        {error}
+                                </template>
+                                <div>
+                                  <header class="slds-modal__header">
+                                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Create Activity</h2>
+                                </header>
+                                    <lightning-record-edit-form object-api-name="Task" onsuccess={handleSuccess} onsubmit ={handleTaskSave}>
+
+                                        <label class="slds-form-element__label" for="subName">Subject</label>
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-select_container">
+                                            <select class="slds-select" id="subName" onchange={handleSubjectChange}>
+                                                
+                                                <template for:each={subjectOptions} for:item="sub">
+                                                <option key={sub.value} value={sub.value}>{sub.label}</option>
+                                                </template>
+                                            </select>
+                                            </div>
+                                        </div>
+                                        <br/>
+
+                                        <template if:true={TypePicklistValues.data}> 
+                                            <lightning-combobox name="progress" label="Type" value={value} placeholder="-Select-" options={TypePicklistValues.data.values} onchange={handleTypeChange} ></lightning-combobox>
+                                        </template>
+                                        <lightning-input type="text" name="Activity Date" label="Activity Date" value={ActivityDate} onchange={handleActivityDateChange}></lightning-input>
+                                        <lightning-input type="text" name="Description" label="Description" value={description} onchange={handleDescriptionChange}></lightning-input>
+                                       
+                                        <label class="slds-form-element__label" for="userName">Assinged To</label>
+                                             <div class="slds-form-element__control">
+                                                 <div class="slds-select_container">
+                                                 <select class="slds-select" id="userName" onchange={handleOwnerIdChange}>
+                                                     
+                                                     <template for:each={options} for:item="usr">
+                                                     <option key={usr.value} value={usr.value}>{usr.label}</option>
+                                                     </template>
+                                                 </select>
+                                                 </div>
+                                             </div>
+                                    <br/>
+                                  
+                                    <lightning-button label="Submit" onclick={handleTaskSave} variant="brand"></lightning-button>
+                                
+                                        
+
+                                     <!--   <lightning-input-field field-name="AccountId">
+                                        </lightning-input-field>
+                                        <lightning-input-field field-name="OwnerId">
+                                        </lightning-input-field>
+                                        <lightning-input-field field-name="Status">
+                                        </lightning-input-field>
+                                        <lightning-input-field field-name="Subject">
+                                        </lightning-input-field>
+                                        <lightning-input-field field-name="ActivityDate">
+                                        </lightning-input-field>
+                                        <lightning-input-field field-name="Assigned_To_ID_GE_OG__c">
+                                        </lightning-input-field>
+                                        <lightning-input-field field-name="Id">
+                                        </lightning-input-field> -->
+                                        
+                                    </lightning-record-edit-form >
+                                    </div>
+                                </div>
+                                <!-- modal footer start-->
+                                <footer class="slds-modal__footer">
+                                    <button class="slds-button slds-button_neutral" onclick={closeModal}>Cancel</button>
+                                </footer>
+                            </div>
+                            </section>
+                            <div class="slds-backdrop slds-backdrop_open"></div>
+                        </template>
+                        <!-- modal end -->  
+                        
+                        <div style="height: 350px;">
+                        <lightning-datatable
+                                    data={myTeamReqularOpptyList.data} 
+                                    columns={columns} 
+                                    key-field="Id"
+                                    onsave={handleSave}
+                                    onrowaction={handleRowAction}                                    
+                                    draft-values={draftValues}>>
+                        </lightning-datatable>
+                        </div>
+                    </template>
+                    <template if:true={error}>
+                            {error}
+                    </template>
+                    </lightning-tab>
+                    <lightning-tab label="REVENUE SCHEDULING VIEW">
+                        <template if:true={myTeamRevenueOpptyList.data}>
+
+
+                          <!-- modal start  style="height: 850px; widows: 800px;" -->        
+                        <template if:true={bShowModal}>
+                          <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_medium">
+                          <div class="slds-modal__container" style="height: 800px;">
+                              <!-- modal header start -->
+                              <header class="slds-modal__header">
+                                  <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                                      <lightning-icon icon-name="utility:close"
+                                                      alternative-text="close"
+                                                      variant="inverse"
+                                                      size="small" >
+                                      </lightning-icon>
+                                      <span class="slds-assistive-text">Close</span>
+                                  </button>
+                                  <h3 id="modal-heading-04" class="slds-text-heading_medium slds-hyphenate">Open Activities</h3>
+                              </header>
+                              <!-- modal body start -->
+                              <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">                                    
+                                <template if:true={taskList.data}>
+                                  <div style="height: 150px; widows: 300px;">
+                                  <lightning-datatable
+                                              data={taskList.data} 
+                                              columns={taskColumns} 
+                                              key-field="Id"
+                                              onsave={handleSave}
+                                              draft-values={draftTaksValues}>>
+                                  </lightning-datatable>
+                                </div>
+                              </template>
+                              <template if:true={error}>
+                                      {error}
+                              </template>
+                              <div>
+                                <header class="slds-modal__header">
+                                  <h2 id="modal-heading-03" class="slds-text-heading_medium slds-hyphenate">Create Activity</h2>
+                              </header>
+                                  <lightning-record-edit-form object-api-name="Task" onsuccess={handleSuccess} onsubmit ={handleTaskSave}>
+
+                                      <label class="slds-form-element__label" for="subName1">Subject</label>
+                                      <div class="slds-form-element__control">
+                                          <div class="slds-select_container">
+                                          <select class="slds-select" id="subName1" onchange={handleSubjectChange}>
+                                              
+                                              <template for:each={subjectOptions} for:item="sub">
+                                              <option key={sub.value} value={sub.value}>{sub.label}</option>
+                                              </template>
+                                          </select>
+                                          </div>
+                                      </div>
+                                      <br/>
+
+                                      <template if:true={TypePicklistValues.data}> 
+                                          <lightning-combobox name="progress" label="Type" value={value} placeholder="-Select-" options={TypePicklistValues.data.values} onchange={handleTypeChange} ></lightning-combobox>
+                                      </template>
+                                      <lightning-input type="text" name="Activity Date" label="Activity Date" value={ActivityDate} onchange={handleActivityDateChange}></lightning-input>
+                                      <lightning-input type="text" name="Description" label="Description" value={description} onchange={handleDescriptionChange}></lightning-input>
+                                     
+                                      <label class="slds-form-element__label" for="userName1">Assinged To</label>
+                                           <div class="slds-form-element__control">
+                                               <div class="slds-select_container">
+                                               <select class="slds-select" id="userName1" onchange={handleOwnerIdChange}>
+                                                   
+                                                   <template for:each={options} for:item="usr">
+                                                   <option key={usr.value} value={usr.value}>{usr.label}</option>
+                                                   </template>
+                                               </select>
+                                               </div>
+                                           </div>
+                                  <br/>
+                                
+                                  <lightning-button label="Submit" onclick={handleTaskSave} variant="brand"></lightning-button>
+                                      
+                                  </lightning-record-edit-form >
+                                  </div>
+                              </div>
+                              <!-- modal footer start-->
+                              <footer class="slds-modal__footer">
+                                  <button class="slds-button slds-button_neutral" onclick={closeModal}>Cancel</button>
+                              </footer>
+                          </div>
+                          </section>
+                          <div class="slds-backdrop slds-backdrop_open"></div>
+                      </template>
+                      <!-- modal end -->  
+
+                            <lightning-datatable
+                                        data={myTeamRevenueOpptyList.data} 
+                                        columns={columns} 
+                                        key-field="Id"
+                                        onsave={handleSave}                                        
+                                        draft-values={draftValues}>>
+                            </lightning-datatable>
+                        </template>
+                        <template if:true={error}>
+                                {error}
+                        </template>
+                        </lightning-tab>
+                </lightning-tabset>    
+        </lightning-tab>
+        <lightning-tab label="ALL OPPORTUNITIES">
+            ALL OPPORTUNITIES
+        </lightning-tab>
+        </lightning-tabset>
+    </div>
+
+</template>

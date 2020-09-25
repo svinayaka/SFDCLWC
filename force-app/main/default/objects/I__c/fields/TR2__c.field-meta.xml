@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TR2__c</fullName>
+    <externalId>false</externalId>
+    <label>Cable Serial2 Temp Rating</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>205F</fullName>
+                <default>false</default>
+                <label>205F</label>
+            </value>
+            <value>
+                <fullName>255F</fullName>
+                <default>false</default>
+                <label>255F</label>
+            </value>
+            <value>
+                <fullName>300F</fullName>
+                <default>false</default>
+                <label>300F</label>
+            </value>
+            <value>
+                <fullName>400F</fullName>
+                <default>false</default>
+                <label>400F</label>
+            </value>
+            <value>
+                <fullName>450F</fullName>
+                <default>false</default>
+                <label>450F</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

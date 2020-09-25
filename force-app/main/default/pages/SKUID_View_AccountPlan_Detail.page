@@ -1,0 +1,3 @@
+<apex:page standardController="Account_Planning__c" extensions="skuid.Redirects" action="{!redirect}&objecttype=Account_Planning__c&actiontype=View">
+
+</apex:page>

@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GE_OG_Tier3_PnL__c</fullName>
+    <externalId>false</externalId>
+    <label>Primary Tier 3</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>GE_OG_Tier2_PnL__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Advanced Sensors</fullName>
+                <default>false</default>
+                <label>Advanced Sensors</label>
+            </value>
+            <value>
+                <fullName>Artificial Lift</fullName>
+                <default>false</default>
+                <label>Artificial Lift</label>
+            </value>
+            <value>
+                <fullName>Bently Nevada</fullName>
+                <default>false</default>
+                <label>Bently Nevada</label>
+            </value>
+            <value>
+                <fullName>Control software &amp; solutions</fullName>
+                <default>false</default>
+                <label>Control software &amp; solutions</label>
+            </value>
+            <value>
+                <fullName>Control Solutions</fullName>
+                <default>false</default>
+                <label>Control Solutions</label>
+            </value>
+            <value>
+                <fullName>Digital</fullName>
+                <default>false</default>
+                <label>Digital</label>
+            </value>
+            <value>
+                <fullName>Downhole Technology</fullName>
+                <default>false</default>
+                <label>Downhole Technology</label>
+            </value>
+            <value>
+                <fullName>DP&amp;S</fullName>
+                <default>false</default>
+                <label>DP&amp;S</label>
+            </value>
+            <value>
+                <fullName>DP&amp;S - Installation</fullName>
+                <default>false</default>
+                <label>DP&amp;S - Installation</label>
+            </value>
+            <value>
+                <fullName>DP&amp;S - New Units</fullName>
+                <default>false</default>
+                <label>DP&amp;S - New Units</label>
+            </value>
+            <value>
+                <fullName>DP&amp;S - Opex Contractual</fullName>
+                <default>false</default>
+                <label>DP&amp;S - Opex Contractual</label>
+            </value>
+            <value>
+                <fullName>DP&amp;S - Opex Transactional</fullName>
+                <default>false</default>
+                <label>DP&amp;S - Opex Transactional</label>
+            </value>
+            <value>
+                <fullName>DP&amp;S - Upgrades</fullName>
+                <default>false</default>
+                <label>DP&amp;S - Upgrades</label>
+            </value>
+            <value>
+                <fullName>DT/LS/Zenith</fullName>
+                <default>false</default>
+                <label>DT/LS/Zenith</label>
+            </value>
+            <value>
+                <fullName>Electric Submersible Pumps</fullName>
+                <default>false</default>
+                <label>Electric Submersible Pumps</label>
+            </value>
+            <value>
+                <fullName>Flexible Pipe Systems</fullName>
+                <default>false</default>
+                <label>Flexible Pipe Systems</label>
+            </value>
+            <value>
+                <fullName>Flow &amp; Process Technologies</fullName>
+                <default>false</default>
+                <label>Flow &amp; Process Technologies</label>
+            </value>
+            <value>
+                <fullName>Gas Processing</fullName>
+                <default>false</default>
+                <label>Gas Processing</label>
+            </value>
+            <value>
+                <fullName>GP - New Units</fullName>
+                <default>false</default>
+                <label>GP - New Units</label>
+            </value>
+            <value>
+                <fullName>GP - New Units Installation</fullName>
+                <default>false</default>
+                <label>GP - New Units Installation</label>
+            </value>
+            <value>
+                <fullName>GP - Parts &amp; Services</fullName>
+                <default>false</default>
+                <label>GP - Parts &amp; Services</label>
+            </value>
+            <value>
+                <fullName>GP - Upgrades</fullName>
+                <default>false</default>
+                <label>GP - Upgrades</label>
+            </value>
+            <value>
+                <fullName>Inspection Technologies</fullName>
+                <default>false</default>
+                <label>Inspection Technologies</label>
+            </value>
+            <value>
+                <fullName>Installation</fullName>
+                <default>false</default>
+                <label>Installation</label>
+            </value>
+            <value>
+                <fullName>Logging Services</fullName>
+                <default>false</default>
+                <label>Logging Services</label>
+            </value>
+            <value>
+                <fullName>Measurement &amp; Sensing</fullName>
+                <default>false</default>
+                <label>Measurement &amp; Sensing</label>
+            </value>
+            <value>
+                <fullName>Measurement Solutions</fullName>
+                <default>false</default>
+                <label>Measurement Solutions</label>
+            </value>
+            <value>
+                <fullName>New Units</fullName>
+                <default>false</default>
+                <label>New Units</label>
+            </value>
+            <value>
+                <fullName>Offshore</fullName>
+                <default>false</default>
+                <label>Offshore</label>
+            </value>
+            <value>
+                <fullName>Opex</fullName>
+                <default>false</default>
+                <label>Opex</label>
+            </value>
+            <value>
+                <fullName>Opex Core</fullName>
+                <default>false</default>
+                <label>Opex Core</label>
+            </value>
+            <value>
+                <fullName>Opex CS</fullName>
+                <default>false</default>
+                <label>Opex CS</label>
+            </value>
+            <value>
+                <fullName>PII Pipeline Solutions</fullName>
+                <default>false</default>
+                <label>PII Pipeline Solutions</label>
+            </value>
+            <value>
+                <fullName>PVS - Installation</fullName>
+                <default>false</default>
+                <label>PVS - Installation</label>
+            </value>
+            <value>
+                <fullName>PVS - New Units</fullName>
+                <default>false</default>
+                <label>PVS - New Units</label>
+            </value>
+            <value>
+                <fullName>PVS - Opex Contractual</fullName>
+                <default>false</default>
+                <label>PVS - Opex Contractual</label>
+            </value>
+            <value>
+                <fullName>PVS - Opex Transactional</fullName>
+                <default>false</default>
+                <label>PVS - Opex Transactional</label>
+            </value>
+            <value>
+                <fullName>PVS - Upgrades</fullName>
+                <default>false</default>
+                <label>PVS - Upgrades</label>
+            </value>
+            <value>
+                <fullName>Recip Compression - Aftermarket</fullName>
+                <default>false</default>
+                <label>Recip Compression - Aftermarket</label>
+            </value>
+            <value>
+                <fullName>Recip Compression - New Units</fullName>
+                <default>false</default>
+                <label>Recip Compression - New Units</label>
+            </value>
+            <value>
+                <fullName>Reciprocating Compression</fullName>
+                <default>false</default>
+                <label>Reciprocating Compression</label>
+            </value>
+            <value>
+                <fullName>Reuter Stokes</fullName>
+                <default>false</default>
+                <label>Reuter Stokes</label>
+            </value>
+            <value>
+                <fullName>Rod Lift Systems</fullName>
+                <default>false</default>
+                <label>Rod Lift Systems</label>
+            </value>
+            <value>
+                <fullName>Services</fullName>
+                <default>false</default>
+                <label>Services</label>
+            </value>
+            <value>
+                <fullName>Subsea Drilling Systems</fullName>
+                <default>false</default>
+                <label>Subsea Drilling Systems</label>
+            </value>
+            <value>
+                <fullName>Subsea Production Systems</fullName>
+                <default>false</default>
+                <label>Subsea Production Systems</label>
+            </value>
+            <value>
+                <fullName>Subsea Systems</fullName>
+                <default>false</default>
+                <label>Subsea Systems</label>
+            </value>
+            <value>
+                <fullName>Surface Pressure Control</fullName>
+                <default>false</default>
+                <label>Surface Pressure Control</label>
+            </value>
+            <value>
+                <fullName>Upgrades</fullName>
+                <default>false</default>
+                <label>Upgrades</label>
+            </value>
+            <value>
+                <fullName>Valves, pumps &amp; systems</fullName>
+                <default>false</default>
+                <label>Valves, pumps &amp; systems</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Downstream Technology Solutions</controllingFieldValue>
+            <valueName>DP&amp;S - Installation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Downstream Technology Solutions</controllingFieldValue>
+            <valueName>DP&amp;S - New Units</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Downstream Technology Solutions</controllingFieldValue>
+            <valueName>DP&amp;S - Opex Contractual</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Downstream Technology Solutions</controllingFieldValue>
+            <valueName>DP&amp;S - Opex Transactional</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Downstream Technology Solutions</controllingFieldValue>
+            <valueName>DP&amp;S - Upgrades</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Downstream Technology Solutions</controllingFieldValue>
+            <valueName>GP - New Units</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Downstream Technology Solutions</controllingFieldValue>
+            <valueName>GP - New Units Installation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Downstream Technology Solutions</controllingFieldValue>
+            <valueName>GP - Parts &amp; Services</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Downstream Technology Solutions</controllingFieldValue>
+            <valueName>GP - Upgrades</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Downstream Technology Solutions</controllingFieldValue>
+            <valueName>PVS - Installation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Downstream Technology Solutions</controllingFieldValue>
+            <valueName>PVS - New Units</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Downstream Technology Solutions</controllingFieldValue>
+            <valueName>PVS - Opex Contractual</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Downstream Technology Solutions</controllingFieldValue>
+            <valueName>PVS - Opex Transactional</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Downstream Technology Solutions</controllingFieldValue>
+            <valueName>PVS - Upgrades</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Downstream Technology Solutions</controllingFieldValue>
+            <valueName>Recip Compression - Aftermarket</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Downstream Technology Solutions</controllingFieldValue>
+            <valueName>Recip Compression - New Units</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Turbomachinery Solutions</controllingFieldValue>
+            <valueName>Installation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Turbomachinery Solutions</controllingFieldValue>
+            <valueName>New Units</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Turbomachinery Solutions</controllingFieldValue>
+            <valueName>Opex Core</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Turbomachinery Solutions</controllingFieldValue>
+            <valueName>Opex CS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Turbomachinery Solutions</controllingFieldValue>
+            <valueName>Upgrades</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Digital Solutions</controllingFieldValue>
+            <valueName>Bently Nevada</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Digital Solutions</controllingFieldValue>
+            <valueName>Control software &amp; solutions</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Digital Solutions</controllingFieldValue>
+            <valueName>Control Solutions</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Digital Solutions</controllingFieldValue>
+            <valueName>Digital</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Digital Solutions</controllingFieldValue>
+            <valueName>Flow &amp; Process Technologies</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Digital Solutions</controllingFieldValue>
+            <valueName>Inspection Technologies</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Digital Solutions</controllingFieldValue>
+            <valueName>Measurement &amp; Sensing</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Digital Solutions</controllingFieldValue>
+            <valueName>PII Pipeline Solutions</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Oil Field Equipment</controllingFieldValue>
+            <valueName>Flexible Pipe Systems</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Oil Field Equipment</controllingFieldValue>
+            <valueName>Offshore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Oil Field Equipment</controllingFieldValue>
+            <valueName>Services</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Oil Field Equipment</controllingFieldValue>
+            <valueName>Subsea Drilling Systems</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Oil Field Equipment</controllingFieldValue>
+            <valueName>Subsea Production Systems</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Oil Field Equipment</controllingFieldValue>
+            <valueName>Surface Pressure Control</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Oil Field Services</controllingFieldValue>
+            <valueName>Artificial Lift</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

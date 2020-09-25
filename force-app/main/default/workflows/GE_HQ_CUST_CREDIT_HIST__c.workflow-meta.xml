@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>Account_Credit_Limit</fullName>
+        <field>GE_ES_Account_Credit_Limit__c</field>
+        <formula>GE_HQ_Acct_Cr_Limit__c</formula>
+        <name>Account Credit Limit</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <targetObject>GE_HQ_Acc__c</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Comercial_Credit_Score</fullName>
+        <field>GE_ES_Commercial_Credit_Score__c</field>
+        <formula>GE_HQ_Cr_Score__c</formula>
+        <name>Comercial Credit Score</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <targetObject>GE_HQ_Acc__c</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Credit_Information_Available</fullName>
+        <field>GE_HQ_Credit_Infotmation_Available__c</field>
+        <formula>CASE(GE_HQ_Cr_Info_Available__c, &apos;Yes&apos;, &quot;Yes&quot;, &apos;No&apos;, &quot;No&quot;, &quot;No&quot;)</formula>
+        <name>Credit Information Available</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <targetObject>GE_HQ_Acc__c</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Credit_Limit_Exceeded</fullName>
+        <field>GE_HQ_Cr_Limit_Exceeded__c</field>
+        <formula>IF(GE_HQ_Cr_Limit_Exceeded__c, &apos;Yes&apos;, &apos;No&apos;)</formula>
+        <name>Credit Limit Exceeded</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <targetObject>GE_HQ_Acc__c</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Credit_Limit_Remaining</fullName>
+        <field>GE_ES_Credit_Limit_Remaining__c</field>
+        <formula>GE_HQ_Cr_Limit_Remaining__c</formula>
+        <name>Credit Limit Remaining</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <targetObject>GE_HQ_Acc__c</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Credit_Watchlist</fullName>
+        <field>GE_HQ_Cr_Watchlist__c</field>
+        <formula>CASE(GE_HQ_Cr_Watchlist__c, &apos;Yes&apos;, &quot;Yes&quot;, &apos;No&apos;, &quot;No&quot;, &quot;No&quot;)</formula>
+        <name>Credit Watchlist</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <targetObject>GE_HQ_Acc__c</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Credit_Watchlist_Level</fullName>
+        <field>GE_HQ_Cr_Watchlist_Level__c</field>
+        <formula>CASE(GE_HQ_Cr_Watchlist_Level__c, &apos;Purple-Credit Default&apos;, &quot;Purple-Credit Default&quot;, &apos;Red-High Risk&apos;, &quot;Red-High Risk&quot;, &apos;Orange-Medium&apos;, &quot;Orange-Medium&quot;, &quot;None&quot;)</formula>
+        <name>Credit Watchlist Level</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <targetObject>GE_HQ_Acc__c</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Days_to_Pay_Variance</fullName>
+        <field>GE_ES_Days_to_Pay_Variance__c</field>
+        <formula>GE_HQ_Days_to_Pay_Variance__c</formula>
+        <name>Days to Pay Variance</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <targetObject>GE_HQ_Acc__c</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Financial_Stress_Score</fullName>
+        <field>GE_ES_Financial_Stress_Score__c</field>
+        <formula>GE_HQ_Stress_Score__c</formula>
+        <name>Financial Stress Score</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <targetObject>GE_HQ_Acc__c</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>KMV_EDF_Expected_Default_Frequency</fullName>
+        <field>GE_ES_KMV_EDF__c</field>
+        <formula>GE_HQ_KMV_EDF__c</formula>
+        <name>KMV EDF (Expected Default Frequency)</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <targetObject>GE_HQ_Acc__c</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Paydex</fullName>
+        <field>GE_ES_Paydex__c</field>
+        <formula>GE_HQ_Paydex__c</formula>
+        <name>Paydex</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <targetObject>GE_HQ_Acc__c</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Total_AR_s</fullName>
+        <field>GE_ES_Total_AR_s__c</field>
+        <formula>GE_HQ_Tot_AR_s__c</formula>
+        <name>Total AR ($s)</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <targetObject>GE_HQ_Acc__c</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Total_Past_Due</fullName>
+        <field>GE_ES_Total_Past_Due__c</field>
+        <formula>GE_HQ_Tot_Past_Due__c</formula>
+        <name>Total Past Due</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <targetObject>GE_HQ_Acc__c</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Amount_Past_Dues</fullName>
+        <field>Amount_Past_Dues_GEOG__c</field>
+        <formula>GE_HQ_Tot_Past_Due__c</formula>
+        <name>Update Amount Past Dues</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <targetObject>GE_HQ_Acc__c</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Past_Due_181_365</fullName>
+        <field>GE_ES_Past_Due_181_365__c</field>
+        <formula>GE_HQ_Past_Due_181_365__c</formula>
+        <name>Update Past Due 181-365</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <targetObject>GE_HQ_Acc__c</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Past_Due_1_30</fullName>
+        <field>GE_ES_Past_Due_1_30__c</field>
+        <formula>GE_HQ_Past_Due_1_30__c</formula>
+        <name>Update Past Due 1-30</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <targetObject>GE_HQ_Acc__c</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Past_Due_31_60</fullName>
+        <field>GE_ES_Past_Due_31_60__c</field>
+        <formula>GE_HQ_Past_Due_31_60__c</formula>
+        <name>Update Past Due 31-60</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <targetObject>GE_HQ_Acc__c</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Past_Due_365</fullName>
+        <field>GE_ES_Past_Due_365__c</field>
+        <formula>GE_HQ_Past_Due_365__c</formula>
+        <name>Update Past Due 365+</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <targetObject>GE_HQ_Acc__c</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Past_Due_61_90</fullName>
+        <field>GE_ES_Past_Due_61_90__c</field>
+        <formula>GE_HQ_Past_Due_61_90__c</formula>
+        <name>Update Past Due 61-90</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <targetObject>GE_HQ_Acc__c</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Past_Due_91_180</fullName>
+        <field>GE_ES_Past_Due_91_180__c</field>
+        <formula>GE_HQ_Past_Due_91_180__c</formula>
+        <name>Update Past Due 91-180</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <targetObject>GE_HQ_Acc__c</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>eRAM_Score</fullName>
+        <field>GE_ES_Account_eRAM_score__c</field>
+        <formula>GE_HQ_Acct_eRAM_score__c</formula>
+        <name>eRAM Score</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <targetObject>GE_HQ_Acc__c</targetObject>
+    </fieldUpdates>
+    <rules>
+        <fullName>Update account fields on Customer Cr History Past</fullName>
+        <actions>
+            <name>Update_Amount_Past_Dues</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Past_Due_181_365</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Past_Due_1_30</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Past_Due_31_60</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Past_Due_365</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Past_Due_61_90</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Past_Due_91_180</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>DATEVALUE(LastModifiedDate)  =  TODAY()</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update account fields on Customer Cr History update</fullName>
+        <actions>
+            <name>Credit_Information_Available</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Credit_Limit_Exceeded</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Credit_Watchlist</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Credit_Watchlist_Level</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>DATEVALUE(LastModifiedDate)  =  TODAY()</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update account fields on Customer Credit History update</fullName>
+        <actions>
+            <name>Account_Credit_Limit</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Comercial_Credit_Score</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Credit_Limit_Remaining</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Days_to_Pay_Variance</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Financial_Stress_Score</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>KMV_EDF_Expected_Default_Frequency</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Paydex</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Total_AR_s</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Total_Past_Due</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>eRAM_Score</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>DATEVALUE(LastModifiedDate)  =  TODAY()</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

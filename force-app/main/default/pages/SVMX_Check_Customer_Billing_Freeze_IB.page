@@ -1,0 +1,7 @@
+<apex:page standardController="SVMXC__Installed_Product__c" rendered="{!SVMXC__Installed_Product__c.GE_OG_DS_Customer_Billing_Freeze__c='YES'}">
+    <script type="text/javascript">
+        {
+            window.alert("This customer has been flagged for a freeze in services. Please contact billing before opening any new work orders.");
+        }
+    </script>
+</apex:page>

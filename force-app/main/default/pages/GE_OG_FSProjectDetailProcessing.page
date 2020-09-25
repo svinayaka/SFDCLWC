@@ -1,0 +1,41 @@
+<apex:page controller="GE_OG_InvokeFSProjectDetailMgmtBatch" action="{!executeFSPDProcessing}" >
+    <apex:form >
+        <apex:outputPanel id="popup">
+            <apex:outputPanel id="popInnerOutputPnl" styleClass="customPopup" layout="block" >
+                <div align="center" draggable="false" >
+                    <br>"The batch job is currently executing. Please wait for it to complete."</br>
+                <!--div align="center" draggable="false" -->
+                <apex:commandButton value="Ok" action="{!closePopup}" styleClass="closeButton" rerender="popup"/>
+            </div>
+        </apex:outputPanel>
+    </apex:outputPanel>
+</apex:form>
+<style type="text/css">
+    .customPopup {
+    background-color: white;
+    border-style: solid;
+    border-width: 2px;
+    left: 30%;
+    padding: 10px;
+    position: absolute;
+    z-index: 9999;
+    width: 500px;
+    top: 20%;
+    }
+    
+    .disabledTextBox {
+    background-color: white;
+    border: 1px solid;
+    color: black;
+    cursor: default;
+    width: 90px;
+    display: table;
+    padding: 2px 1px;
+    text-align:right;
+    }   
+    
+    .closeButton {
+    float: Center;
+    }
+</style>
+</apex:page>

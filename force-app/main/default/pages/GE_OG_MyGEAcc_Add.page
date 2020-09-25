@@ -1,0 +1,21 @@
+<apex:page controller="MyGEAccountAddRemoveAccTeamController" id="page" tabStyle="Account" action="{!reDirect}">
+    <apex:form id="frm">
+        <apex:pageblock title="Team Role Selection" id="pb">
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!AddToAccountTeam}" value="Add to Account Team"/>       
+                <apex:commandButton action="{!Back}" value="Cancel"/>
+            </apex:pageBlockButtons>
+            Please Select a Team Role for the following Accounts: &nbsp;&nbsp;&nbsp;
+            <apex:selectList size="1" value="{!SelectedRole}" id="SelectedRole">
+                <apex:selectOptions value="{!Roles}" id="Roles"/>
+            </apex:selectList><br/><br/>
+                <apex:pageBlockTable value="{!AccNames}" var="t" title="Selected Accounts:">
+                    <apex:column value="{!t}" headerValue="Selected Accounts:"/>
+                </apex:pageBlockTable>
+                
+              <!--  <apex:pageBlockButtons rendered="{Action == 'ADD'}">
+                <apex:commandButton action="{!AddToAccountTeam }" value="{!newATM}"        
+            </apex:pageBlockButtons> -->
+        </apex:pageblock>
+    </apex:form>
+</apex:page>

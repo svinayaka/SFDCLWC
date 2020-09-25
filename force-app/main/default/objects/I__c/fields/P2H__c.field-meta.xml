@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>P2H__c</fullName>
+    <externalId>false</externalId>
+    <label>Pump 2 H&amp;B</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>CS</fullName>
+                <default>false</default>
+                <label>CS</label>
+            </value>
+            <value>
+                <fullName>4SS</fullName>
+                <default>false</default>
+                <label>4SS</label>
+            </value>
+            <value>
+                <fullName>3SS</fullName>
+                <default>false</default>
+                <label>3SS</label>
+            </value>
+            <value>
+                <fullName>4SS-UHP</fullName>
+                <default>false</default>
+                <label>4SS-UHP</label>
+            </value>
+            <value>
+                <fullName>UNKNOWN</fullName>
+                <default>false</default>
+                <label>UNKNOWN</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

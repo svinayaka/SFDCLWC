@@ -1,0 +1,59 @@
+<apex:page standardController="Account" extensions="AddLEAccountController_GEOG" >
+
+<apex:form >
+ 
+<apex:pageBlock >
+    <apex:pageMessages id="showmsg"></apex:pageMessages>
+    <apex:pageBlockButtons >
+        <apex:commandButton value="Save" action="{!Save}"/>
+        
+        <apex:commandButton value="Cancel" action="{!Cancel}"/>
+    </apex:pageBlockButtons>
+     
+    <apex:pageblockSection title="Account Edit">
+        <apex:inputField value="{!acc.Name}"/>
+        <apex:outputField value="{!acc.OwnerId}"/>
+              <apex:inputField value="{!acc.GE_HQ_Proposed_DUNS__c}"/>
+        <apex:outputField value="{!acc.RecordTypeId}"/>
+    <!--
+          <apex:inputField value="{!acc.ParentId}"/>
+        <apex:inputField value="{!acc.Account_Status__c}"/>
+        <apex:inputField value="{!acc.GE_HQ_GE_Status_Flag__c}" />
+        <apex:inputField value="{!acc.GE_HQ_Marketing_Name__c}"/>
+        <apex:inputField value="{!acc.GE_HQ_CMF_Request_Status__c}"/>
+      
+        <apex:inputField value="{!acc.GE_HQ_Customer_Connect_ID__c}"/>
+        <apex:inputField value="{!acc.Parent_Duns__c}"/>-->
+    </apex:pageblockSection>
+    
+    <apex:pageblockSection title="Commercial Parent Account Details">
+
+        <apex:outputField value="{!acc.Classification__c}" />
+        <apex:outputField value="{!acc.Type}" />
+        <apex:outputField value="{!acc.Account_Tier_GEOG__c}" />
+        <apex:outputField value="{!acc.Oil_Gas_Parent_Account__c}"/>
+        <apex:outputField value="{!acc.Region_GEOG__c}" />
+        <apex:outputField value="{!acc.Member_of_GE_OG__c}" />
+        <apex:outputField value="{!acc.Country_GEOG__c}" />
+
+               
+    </apex:pageblockSection> 
+      
+    <apex:pageblockSection title="Address Information">
+        <apex:inputField value="{!acc.GE_HQ_Site_Use_Code__c}" required="true"/>
+        <apex:inputField value="{!acc.Phone}" required="true"/>
+        <apex:inputField value="{!acc.GE_HQ_New_Account_Street__c}" required="true"/>
+        <apex:inputField value="{!acc.GE_HQ_Latitude__c}"/>
+        <apex:inputField value="{!acc.GE_HQ_New_Account_City__c}" required="true"/>
+        <apex:inputField value="{!acc.GE_HQ_Longitude__c}"/>
+        <apex:inputField value="{!acc.GE_HQ_New_Account_State_Province__c}" required="true"/>
+        <br/>
+        <apex:inputField value="{!acc.GE_HQ_New_Account_Zip_Postal_Code__c}" required="true"/>
+         <br/>
+        <apex:inputField value="{!acc.GE_HQ_New_Account_Country__c}" required="true"/>
+    </apex:pageblockSection>
+    
+ </apex:pageBlock> 
+</apex:form>
+                       
+</apex:page>

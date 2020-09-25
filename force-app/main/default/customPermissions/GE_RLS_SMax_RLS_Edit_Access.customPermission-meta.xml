@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>R-25422</description>
+    <label>GE_RLS_SMax_RLS_Edit_Access</label>
+</CustomPermission>

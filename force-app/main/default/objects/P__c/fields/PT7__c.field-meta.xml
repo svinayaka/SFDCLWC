@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PT7__c</fullName>
+    <externalId>false</externalId>
+    <label>Pump 7 Shaft Rot</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Smooth</fullName>
+                <default>false</default>
+                <label>Smooth</label>
+            </value>
+            <value>
+                <fullName>Stiff</fullName>
+                <default>false</default>
+                <label>Stiff</label>
+            </value>
+            <value>
+                <fullName>Locked</fullName>
+                <default>false</default>
+                <label>Locked</label>
+            </value>
+            <value>
+                <fullName>Twisted</fullName>
+                <default>false</default>
+                <label>Twisted</label>
+            </value>
+            <value>
+                <fullName>Side Play</fullName>
+                <default>false</default>
+                <label>Side Play</label>
+            </value>
+            <value>
+                <fullName>Deposition</fullName>
+                <default>false</default>
+                <label>Deposition</label>
+            </value>
+            <value>
+                <fullName>No</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>No</label>
+            </value>
+            <value>
+                <fullName>Rough</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Rough</label>
+            </value>
+            <value>
+                <fullName>Tight</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Tight</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,22 @@
+<apex:page standardController="Contract" extensions="OG_FA_Content_Display_On_Contract" action="{!init}">
+  
+<script>
+function OpenInNewWindow(getContentId){
+    alert(getContentId);
+    return false;
+}
+</script>  
+    
+        <!--<apex:detail rendered="true" relatedList="true"></apex:detail>-->
+            <apex:pageBlock rendered="{!viewAccess}">
+                <apex:pageBlockTable value="{!contentList}" var="con">
+                    <apex:column value="{!con.ContentDocumentId}" onclick="window.top.location.href = '/{!con.ContentDocumentId}'"/>
+                    <apex:column value="{!con.ContentModifiedById}"/>
+                    <apex:column value="{!con.ContentModifiedDate}"/>
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+            <apex:pageBlock rendered="{!NOT(viewAccess)}">
+                <apex:pageMessage severity="message" summary="No records to display" strength="3"/>
+            </apex:pageBlock>
+                      
+</apex:page>

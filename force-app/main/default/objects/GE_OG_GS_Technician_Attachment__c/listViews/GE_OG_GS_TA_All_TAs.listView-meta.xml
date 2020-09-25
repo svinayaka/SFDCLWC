@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GE_OG_GS_TA_All_TAs</fullName>
+    <columns>NAME</columns>
+    <columns>GE_OG_GS_TA_Technician__c</columns>
+    <columns>GE_OG_GS_Technician_Attachment_Name__c</columns>
+    <columns>GE_OG_GS_TA_Associated_To__c</columns>
+    <columns>GE_OG_GS_TA_Certification__c</columns>
+    <columns>GE_OG_GS_TA_Course__c</columns>
+    <columns>GE_OG_GS_TA_Passport__c</columns>
+    <columns>GE_OG_GS_TA_Visa__c</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>GE_OG_GS_TA_Link_to_Document__c</columns>
+    <columns>GE_OG_GS_Download_Link_to_Document__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>All Technician Attachments</label>
+    <language>en_US</language>
+</ListView>

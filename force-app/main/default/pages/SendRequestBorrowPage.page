@@ -1,0 +1,91 @@
+<apex:page standardController="FX5__Crew_Planning__c" extensions="sendRequestBorrowCtrl" showHeader="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
+    <apex:slds />
+ <div class="slds-scope"/>
+    <head> 
+  <style>
+  .tdr {
+text-align:right;
+}
+</style>
+
+<style>
+             body{ background-color:#666362;  }
+      </style>
+    </head>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+        <apex:form >
+                <apex:pageBlock >
+               
+                     <apex:pageBlockSection title="Current Job record Id is : {!obs.name}" collapsible="false">
+                      
+                                          
+                                          <!--
+                                          <apex:outputField value="{!obs.Name }"/> 
+                                          <apex:outputField value="{!obs.FX5__Job__r.SD_Job_Summary_New__c}"/> 
+                                           <apex:outputField value="{!obs.FX5__Job__r.SD_Job_Summary__c}"/>                               
+                                          <apex:outputField value="{!obs.FX5__Job__r.SD_Multi_Phase_Parent_Job__c}"/>
+                                          -->
+                                          
+                                          <apex:outputtext > 
+                                          <br/> Do you approve the request to borrow <b> {!obs.SD_Crew_Member__c}</b>
+                                                       for the job <a href="{!obs.BaseURL__c}" class="button" target="_blank">{!obs.FX5__Job__r.name}</a>
+                                                       from {!obs.FX5__Planned_Start_Date__c} to {!obs.FX5__Planned_End_Date__c} <br></br>
+                                                     
+                                          Approver's Initials &nbsp;&nbsp;&nbsp;  <apex:Inputfield value="{!obs.SD_Approver_s_Initials__c}"/>.
+                                          
+                                            
+                                           <br></br>        
+                                                   
+                                          <!-- apex:Inputfield value="{!obs.SD_Approver_s_Initials__c}"/ -->
+                                          <!-- apex:Inputfield id="pick1" value="{!ob.SD_Approver_s_Response__c}" / -->
+                                                 
+                                                 <apex:selectRadio id="radios"  value="{!radioValue}"  layout="pageDirection" style="margin-top: -10px;" onChange="show(this);" >
+                                                          <apex:selectOption itemLabel="Yes" itemValue="0"/> <br></br>
+                                                          <apex:selectOption itemLabel="No " itemValue="1"/>
+                                                      </apex:selectRadio> <br></br>
+                                           
+                                           <div style="display:none;" id="differcost"> 
+                                            Please provide a detailed reason why {!obs.SD_Crew_Member__c} isn't available.
+
+                                               
+                                             <apex:Inputfield id="differcost"  value="{!obs.SD_If_Approver_s_Response_is_no_why__c}" style="display:none;"/>
+                                             
+                                             
+                                             
+                                            
+                                         </div>
+                                    </apex:outputtext>     
+                                           <br></br>
+                        </apex:pageBlockSection>
+                       <div align="center" draggable="false" >
+                               <apex:commandButton value="Submit" action="{!doSubmit}"/>      
+                            </div>
+                            
+                            
+                </apex:pageBlock>
+                
+                <apex:pageBlock rendered="false">
+                     <apex:pageBlockSection title="Current Job record Id is : {!recId}" collapsible="false">
+                      </apex:pageBlockSection>
+              </apex:pageBlock>
+          </apex:form>
+          
+<script  type="text/javascript">
+function show(t)
+{
+    if ( $(t).val() == 0 ){
+
+        $('[id$="defaultcost1"]').hide();
+        $('[id$="differcost"]').hide();
+    }
+    else{
+       $('[id$="defaultcost1"]').show();
+       $('[id$="differcost"]').show();
+
+    }     
+}
+</script>
+          
+      
+    
+</apex:page>

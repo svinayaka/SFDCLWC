@@ -1,0 +1,96 @@
+<apex:page >
+<!--
+<apex:page standardController="GE_HQ_Acc_AccPlan_Rel__c" extensions="GE_HQ_GoogleMapController" sidebar="false">
+    
+    <table>
+        <tr>
+            <td>
+                <apex:pageBlock title="Selected Accounts">
+                <apex:pageBlockTable value="{!accounts}" var="account" id="accountTable">
+                <apex:column >
+                    <apex:facet name="header"><b>Name</b></apex:facet>
+                    <apex:outputLink value="../{!account.Id}">{!account.Name}</apex:outputLink>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header"><b>Address</b></apex:facet>
+                    {!account.ShippingStreet}, {!account.ShippingCity}, {!account.ShippingCountry}
+                </apex:column>
+                </apex:pageBlockTable>
+                </apex:pageBlock>
+            </td>
+            <td>
+                    <apex:pageBlock title="GoogleMap">
+                    <apex:sectionHeader title="sfGMap" subtitle="My Accounts"/>
+                    <c:sfGMap width="800" height="400" addressmodel="{!addressmodel}" zoom="4" uselatlng="false">
+                    </c:sfGMap>
+                    </apex:pageBlock>        
+
+            </td>
+        </tr>
+    </table>
+-->
+       <apex:form >
+        
+      <!--   <apex:pageBlock title="GoogleMap">-->
+        <!--
+        <apex:sectionHeader title="sfGMap" subtitle="My Accounts"/>
+        -->
+        <!--
+        <c:sfGMap width="1000" height="300" addressmodel="{!addressmodel}" zoom="4" uselatlng="false">
+        </c:sfGMap>
+        </apex:pageBlock>        
+
+        <apex:pageBlock title="Selected Accounts" id="SelectedAccountsId">
+            <apex:pageBlockButtons location="top">
+                <apex:commandButton value="Back to My GE Accounts" action="{!backToMyGEAccounts}"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockTable value="{!accountRes}" var="account" id="accountTable">
+                <apex:column >
+                    <apex:facet name="header"><b>Name</b></apex:facet>
+                    <apex:outputLink value="../{!account.Id}">{!account.Name}</apex:outputLink>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header"><b>DUNS Number</b></apex:facet>
+                    {!account.GE_HQ_DUNS_Number__c}
+                </apex:column>
+                
+                <apex:column >
+                    <apex:facet name="header"><b>Address</b></apex:facet>
+                    {!account.ShippingStreet}, {!account.ShippingCity}, {!account.ShippingCountry}
+                </apex:column>
+            </apex:pageBlockTable>
+            <table width="100%">
+                <tr>
+                   
+                    <td width="200" align="left">
+                    <B>
+                    <apex:outputText value="Records Per Page:"></apex:outputText>
+                    </B>
+                    <apex:selectList size="1" value="{!RowsperPage}" onchange="callMyGEAccountMethod();">
+                        <apex:selectOptions value="{!RecordsPerPage}" ></apex:selectOptions>
+                    </apex:selectList>
+                    <apex:actionFunction reRender="SelectedAccountsId" name="callMyGEAccountMethod" action="{!refreshAccounts}" status="Processing">
+                    </apex:actionFunction>
+                    <apex:actionStatus id="Processing" StartText="   Processing... Please Wait..."/> 
+
+                    </td> 
+                    
+                    <td width="300" align="left">
+                        <B><apex:commandLink value="First Page" rendered="{!isFirst}" action="{!FirstPage}" reRender="SelectedAccountsId"/></B> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <B><apex:commandLink value="<Prev Page" rendered="{!isPrev}" action="{!PrevPage}" reRender="SelectedAccountsId"/></B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <B><apex:commandLink value="Next Page>" rendered="{!isNext}" action="{!NextPage}" reRender="SelectedAccountsId"/></B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <B><apex:commandLink value="Last Page" rendered="{!isLast}" action="{!LastPage}" reRender="SelectedAccountsId"/></B>
+                        
+                    </td>
+                    
+                    <td width="100" align="right">
+                        <B><apex:outputText rendered="{!totalRecords > 0}">Records {!startRecord}-{!endRecord} of {!totalRecords}</apex:outputText></B>
+                    </td>
+                    </tr>                  
+            </table>
+        </apex:pageBlock>
+        
+    -->    
+    </apex:form>   
+  
+</apex:page>

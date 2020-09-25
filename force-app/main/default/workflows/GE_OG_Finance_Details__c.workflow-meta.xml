@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Email_alert_when_Finance_record_is_Completed</fullName>
+        <description>Email alert when Finance record is Completed</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderAddress>dlenergy.esitoops1@ge.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>GE_OG_Templates/Finance_Completed</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_alert_when_Finance_record_is_Esclated</fullName>
+        <description>Email alert when Finance record is Esclated</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_OG_Escalate_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/Escalate_toFinance_Team</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_alert_when_Finance_record_is_Rejected</fullName>
+        <description>Email alert when Finance record is Rejected</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderAddress>dlenergy.esitoops1@ge.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>GE_OG_Templates/Finance_Rejected</template>
+    </alerts>
+    <alerts>
+        <fullName>Sent_Email_to_the_Commercial_Finance_User</fullName>
+        <description>Sent Email to the Commercial Finance User</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_OG_Com_Finance_Contact__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderAddress>dlenergy.esitoops1@ge.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>GE_OG_Templates/GE_OG_KYC_Commercial_Finance_User_Template</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Finance_Inbound_Response_Update</fullName>
+        <field>Finance_Inbound_Response__c</field>
+        <formula>NOW()</formula>
+        <name>Finance Inbound Response Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Finance_Outbound_Response_Update</fullName>
+        <field>Finance_Outbound_Response__c</field>
+        <formula>NOW()</formula>
+        <name>Finance Outbound Response Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Finance_Review_COE_in_hrs</fullName>
+        <field>GE_OG_Fin_CoE_Age__c</field>
+        <formula>(NOW()-PRIORVALUE(LastModifiedDate))*24</formula>
+        <name>Finance Review COE in hrs</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_OG_Finance_Sent_Back_Counter</fullName>
+        <field>GE_OG_Finance_Sent_Back_Counter__c</field>
+        <formula>IF(ISPICKVAL(GE_OG_Finance_Status__c,&apos;Pending User Review - On Hold&apos;) ,
+if(ISNULL(GE_OG_Finance_Sent_Back_Counter__c) , 1,GE_OG_Finance_Sent_Back_Counter__c+1) , PRIORVALUE(GE_OG_Finance_Sent_Back_Counter__c))</formula>
+        <name>Finance Sent Back Counter</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_OG_Update_Finance_Sent_Back_Time</fullName>
+        <field>GE_OG_Finance_Sent_Back_Time__c</field>
+        <formula>NOW()</formula>
+        <name>Update Finance Sent Back Time</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Time_Finance_CoE_Age</fullName>
+        <description>Calculating Time in hours, When ever the status is Inprogress.</description>
+        <field>GE_OG_Fin_CoE_Age__c</field>
+        <formula>(NOW()-PRIORVALUE(LastModifiedDate))*24</formula>
+        <name>Time Finance CoE Age</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Finance_CoE_New_Value</fullName>
+        <field>GE_OG_Fin_CoE_New_Value__c</field>
+        <formula>TEXT( GE_OG_Finance_Status__c )</formula>
+        <name>Update Finance CoE New Value</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Finance_CoE_Old_Value</fullName>
+        <description>Updating the Finance CoE Old Value with Prior Value of Finance Status.</description>
+        <field>GE_OG_Fin_CoE_Old_Value__c</field>
+        <formula>TEXT( PRIORVALUE( GE_OG_Finance_Status__c ) )</formula>
+        <name>Update Finance CoE Old Value</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Finance_Complete_Reject_Timestamp</fullName>
+        <field>GE_OG_Finance_Completed_Timestamp__c</field>
+        <formula>IF(TEXT(GE_OG_Finance_Status__c)=&apos;Completed&apos;,NOW(), PRIORVALUE( GE_OG_Finance_Completed_Timestamp__c ))</formula>
+        <name>Update Finance Complete Timestamp</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Finance_Field_Status</fullName>
+        <field>GE_OG_Finance_Status__c</field>
+        <literalValue>Not Started</literalValue>
+        <name>Update Finance Field Status</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Finance_In_Progress_Timestamp</fullName>
+        <field>GE_OG_Finance_In_Process_Timestamp__c</field>
+        <formula>IF(TEXT(GE_OG_Finance_Status__c)=&apos;In Progress&apos;,NOW(), PRIORVALUE( GE_OG_Finance_In_Process_Timestamp__c ))</formula>
+        <name>Update Finance In Progress Timestamp</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Finance_Re_review_New_Value</fullName>
+        <field>GE_OG_Fin_Re_Review_New_Value__c</field>
+        <formula>TEXT( GE_OG_Finance_Status__c )</formula>
+        <name>Update Finance Re review New Value</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Finance_Re_review_OLD_Value</fullName>
+        <field>GE_OG_Fin_Re_Review_Old_Value__c</field>
+        <formula>TEXT( PRIORVALUE( GE_OG_Finance_Status__c ) )</formula>
+        <name>Update Finance Re review OLD Value</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <rules>
+        <fullName>Finance CoE Cycle Time</fullName>
+        <actions>
+            <name>GE_OG_Finance_Sent_Back_Counter</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Time_Finance_CoE_Age</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Finance_CoE_New_Value</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Finance_CoE_Old_Value</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Finance_Complete_Reject_Timestamp</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Finance_In_Progress_Timestamp</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Updating Finance CoE New Value
+Update the Finance Sent Back Counter</description>
+        <formula>AND( GE_OG_Fin_Rereview__c  = FALSE ,ISCHANGED(GE_OG_Finance_Status__c))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Finance Completed</fullName>
+        <actions>
+            <name>Email_alert_when_Finance_record_is_Completed</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>Sent_Email_to_the_Commercial_Finance_User</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>GE_OG_Finance_Details__c.GE_OG_Finance_Status__c</field>
+            <operation>equals</operation>
+            <value>Completed</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Finance Inbound Response Time Calculation</fullName>
+        <actions>
+            <name>Finance_Inbound_Response_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(ISCHANGED(GE_OG_Finance_Status__c), OR(ISPICKVAL(GE_OG_Finance_Status__c,&apos;Pending User Review - On Hold&apos;), ISPICKVAL(GE_OG_Finance_Status__c,&apos;Completed&apos;)) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Finance Outbound Response Time Calculation</fullName>
+        <actions>
+            <name>Finance_Outbound_Response_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(ISCHANGED(GE_OG_Finance_Status__c), OR( ISPICKVAL(PRIORVALUE(GE_OG_Finance_Status__c),&apos;Submitted&apos;), ISPICKVAL(PRIORVALUE(GE_OG_Finance_Status__c),&apos;Completed&apos;), ISPICKVAL(PRIORVALUE(GE_OG_Finance_Status__c),&apos;Finance Not Applicable&apos;), ISPICKVAL(PRIORVALUE(GE_OG_Finance_Status__c),&apos;Pending Due Diligence&apos;), ISPICKVAL(PRIORVALUE(GE_OG_Finance_Status__c),&apos;Pending User Submission&apos;)), OR(ISPICKVAL(GE_OG_Finance_Status__c,&apos;In Progress&apos;),ISPICKVAL(GE_OG_Finance_Status__c,&apos;Pending Due Diligence&apos;),ISPICKVAL(GE_OG_Finance_Status__c,&apos;Completed&apos;)))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Finance Re Review Cycle Time</fullName>
+        <actions>
+            <name>Finance_Review_COE_in_hrs</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Finance_Complete_Reject_Timestamp</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Finance_In_Progress_Timestamp</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Finance_Re_review_New_Value</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Finance_Re_review_OLD_Value</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND (GE_OG_Fin_Rereview__c  = TRUE ,ISCHANGED(GE_OG_Finance_Status__c))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Finance Rejected</fullName>
+        <actions>
+            <name>Email_alert_when_Finance_record_is_Rejected</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>GE_OG_Finance_Details__c.GE_OG_Finance_Status__c</field>
+            <operation>equals</operation>
+            <value>Pending User Review - On Hold</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Finance SentBack%2FPending User  On Hold</fullName>
+        <actions>
+            <name>GE_OG_Update_Finance_Sent_Back_Time</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(ISCHANGED(GE_OG_Finance_Status__c), OR(ISPICKVAL(PRIORVALUE(GE_OG_Finance_Status__c),&apos;In Progress&apos;),ISPICKVAL(PRIORVALUE(GE_OG_Finance_Status__c),&apos;Completed&apos;),ISPICKVAL(PRIORVALUE(GE_OG_Finance_Status__c), &apos;Pending User Submission&apos;), ISPICKVAL(PRIORVALUE(GE_OG_Finance_Status__c),&apos;Submitted&apos;), ISPICKVAL(PRIORVALUE(GE_OG_Finance_Status__c),&apos;Pending Due Diligence&apos;)),  ISPICKVAL(GE_OG_Finance_Status__c,&apos;Pending User Review - On Hold&apos;))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_OG_Escalate to Finance</fullName>
+        <actions>
+            <name>Email_alert_when_Finance_record_is_Esclated</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>GE_OG_Finance_Details__c.GE_OG_Tier3__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>GE_OG_Finance_Details__c.GE_OG_Finance_Status__c</field>
+            <operation>equals</operation>
+            <value>Escalated</value>
+        </criteriaItems>
+        <description>Created to use when Finance status is escalated</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+</Workflow>

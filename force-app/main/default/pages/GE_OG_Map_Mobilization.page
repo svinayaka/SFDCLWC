@@ -1,0 +1,102 @@
+<apex:page id="Page" controller="GE_OG_Mobilization_Detail">
+   
+<apex:sectionHeader subtitle="Mobilization"/> 
+<a style="float:right;" href="/500/e?retURL=%2F500%2Fo&RecordType=012A0000000oBfj&ent=Case" target="_blank"><b>Open a specific case</b></a>
+<a  href="/_ui/core/chatter/groups/GroupProfilePage?g=0F9A0000000DH9g" target="_blank"><b>Ask Support</b></a>
+
+  <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script> 
+  <script type="text/javascript"> 
+
+
+$(document).ready(function()
+{
+  var myOptions = {zoom:2,center: new google.maps.LatLng(38.747012,0.512694)}
+  var map;
+  var geocoder = new google.maps.Geocoder();
+  map = new google.maps.Map(document.getElementById("map"), myOptions);
+  google.maps.event.addListener(map, 'click', function(e) {
+     placeMarker(e.latLng, map);
+     var str = e.latLng.toString() ;
+     var rest = str.split(',');
+     var vrlat = rest[0].substring(1,rest[0].length);
+     var vrlng = rest[1].substring(0,rest[1].length -1 );
+     var latlng = new google.maps.LatLng(vrlat,vrlng );
+     geocoder.geocode({'latLng': latlng}, function(results, status) {
+     if (status == google.maps.GeocoderStatus.OK)
+     {
+       if (results.length > 0 ) 
+       {
+           country = results[(results.length)-1].formatted_address;
+           //alert(country);
+           jsregionalkeyplayercall();               
+       } 
+       else 
+       {
+         alert('No results found');
+       }
+     } 
+     else 
+     {
+       alert('Geocoder failed due to: ' + status);
+     }
+    });
+  }); 
+  function resizeIframe() 
+  {
+     var me = window.name;
+     if (me) 
+     {
+       var iframes = parent.document.getElementsByName(me);
+       if (iframes && iframes.length == 1) 
+       {
+         height = document.body.offsetHeight;
+         iframes[0].style.height = height + "px";
+       }
+     }
+   }
+});
+
+   function placeMarker(position, map) 
+   {
+    'http://maps.googleapis.com/maps/api/geocode/json?latlng='+position+'&sensor=false';
+   }
+  </script>
+  <style>
+  .pagination ul > li > a:hover{
+    background-color: #3b73b9;
+    border-color: #3b73b9;
+    color: white;
+    }
+
+    .pagination ul > .disabled > a:hover{
+    color: #bfc2c5;
+    background-color: transparent;
+    cursor: default;
+    border-color: #e1e2e5;
+    }
+  #map 
+  {
+     font-family: Arial;
+     font-size:12px;
+     line-height:normal !important;
+     height:600px;
+     background:transparent;
+   }
+</style>
+<script type="text/javascript"> 
+function getReport()
+    {
+                window.open('/apex/GE_OG_Mobilization_Detail?countrys='+country,'','height=800,width=1000,resizable=yes,scrollbars=yes,toolbar=yes,menubar=yes,location=yes' );
+     }
+</script>
+<div id="map"></div> 
+
+<apex:form id="frm">
+
+<apex:actionFunction action="{!regionKeyPlayerCall}"  name="jsregionalkeyplayercall" rerender="frm" oncomplete="getReport();" >
+</apex:actionFunction>
+</apex:form>
+
+
+</apex:page>

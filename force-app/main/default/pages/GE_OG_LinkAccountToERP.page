@@ -1,0 +1,143 @@
+<!--
+VF Name           : GE_OG_LinkAccountToERP
+Purpose/Overview  : Used For the all information not provided by MDM when an account is published from MDM is collected /asked to the user and passed to the existing ERP set up functionality built in Accounts workflow.
+Author            : Satyanarayana Pusuluri
+Class             : GE_OG_LinkAccountToERPController    
+Change History    : Date Modified : Developer Name     : Method/Section Modified/Added : Purpose/Overview of Change
+-->
+<apex:page standardController="Account" extensions="GE_OG_LinkAccountToERPController" action="{!ERPRedirect}"  showChat="false"  showHeader="false" sidebar="false">
+    <apex:form id="form">
+        <apex:pageBlock id="block1">
+        
+        <apex:actionStatus id="actStatusId" >
+                <apex:facet name="start">
+        <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb; height:100%;opacity:0.65;width:100%;">
+            <div class="waitingHolder" style="top: 100px; width: 91px;">
+            <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+            <span class="waitingDescription">Loading...</span>
+            </div>
+        </div>
+    </apex:facet>
+            </apex:actionStatus>
+            
+            
+            <apex:pageMessages >
+            </apex:pageMessages>    
+            
+            <apex:pageblockSection title="Tier Values" columns="1" id="tiersection">
+                
+                <apex:inputField value="{!Account.GE_OG_Buss_Tier1__c}" id="val1" required="true"  />
+                <apex:inputField value="{!Account.GE_OG_Buss_Tier2__c}" id="val2" required="true" />  
+                
+                <apex:inputField value="{!Account.GE_OG_Buss_Tier3__c}" id="val3" required="true"  > 
+                    <apex:actionSupport event="onchange" action="{!TierMethod}" rerender="Legacy_System,section,Selected_PBS" status="actStatusId"  />
+                </apex:inputField>                        
+                <apex:inputField value="{!Account.GE_OG_Buss_Tier4__c}" id="val5" / > 
+                    <apex:inputField value="{!Account.GE_PW_Select_Type_of_Business__c}" id="val4"/>
+                </apex:pageblockSection>
+                
+                <!--**************************Start Section*************************************** -->            
+                <apex:pageblockSection Title="Legacy System & Business Unit Details" columns="1" rendered="true" id="Legacy_System"> 
+                    
+                    <apex:pageblockTable value="{!Tier}"  var="a" columnswidth="50px,50px" cellpadding="4" border="1" id="render" >                
+                        <apex:column >                    
+                            <apex:facet name="header"> 
+                                <apex:inputCheckbox >
+                                    <apex:actionSupport event="onclick" action="{!GetSelected}" onsubmit="checkAll(this)" rerender="Selected_PBS" status="actStatusId"/>
+                                </apex:inputCheckbox>
+                            </apex:facet>                   
+                            <apex:inputCheckbox value="{!a.selected}" id="checkedone"   rendered="{!IF(a.tier.Default_Yes_No__c=='N',true,false)}" >        
+                                <apex:actionSupport event="onclick" action="{!GetSelected}"  rerender="Selected_PBS" status="actStatusId"/>
+                            </apex:inputCheckbox>                   
+                        </apex:column>              
+                        <apex:column headervalue="LEGACY SYSTEM" value="{!a.tier.LEGACY_SYSTEM__c}" />
+                        <apex:column headervalue="Business Unit" value="{!a.tier.Business_Unit__c}" />
+                        <apex:column headerValue="ORG NAME" value="{!a.tier.ORG_NAME__c}"/>
+                    </apex:pageblockTable>
+                    
+                </apex:pageBlockSection>  
+                
+                <apex:pageBlockSection Title="Selected Values" id="Selected_PBS"  columns="1" >
+                    <!--apex:commandButton action="{!input}" value="Save" reRender="Success" id="Count" rendered="{!Saveval}" /-->
+                    <apex:pageBlockTable value="{!SelectedTier}" var="s"  columnswidth="50px,50px"   cellpadding="4"  >             
+                        <apex:column headervalue="Business Unit" value="{!s.Business_Unit__c}" />
+                        <apex:column headervalue="LEGACY SYSTEM" value="{!s.LEGACY_SYSTEM__c}"  />
+                        <apex:column headerValue="Business Tier 1" value="{!s.Business_Tier_11__c}" />
+                        <apex:column headerValue="Business Tier 2" value="{!s.Business_Tier_2__c}" />
+                        <apex:column headerValue="Business Tier 3" value="{!s.Business_Tier_3__c}" />
+                        <apex:column headerValue="ORG NAME" value="{!s.ORG_NAME__c}" />
+                        <apex:column headerValue="ORG ID " value="{!s.ORG_ID__c}" />
+                    </apex:pageBlockTable>
+                </apex:pageBlockSection>
+                
+                <apex:pageblockSection columns="1" id="section"  title="Default Value"  >
+                    <apex:pageBlockTable value="{!Defaultmethod}" var="t"  columnswidth="50px,50px" cellpadding="4">                
+                        <apex:column headerValue="Business Unit" value="{!t.Business_Unit__c}"/>
+                        <apex:column headerValue="LEGACY SYSTEM" value="{!t.LEGACY_SYSTEM__c}"/>
+                        <apex:column headerValue="Business Tier 1" value="{!t.Business_Tier_11__c}"/>
+                        <apex:column headerValue="Business Tier 2" value="{!t.Business_Tier_2__c}"/>
+                        <apex:column headerValue="Business Tier 3" value="{!t.Business_Tier_3__c}"/>
+                        
+                        <apex:column headerValue="ORG NAME" value="{!t.ORG_NAME__c}"/>
+                        <apex:column headerValue="ORG ID" value="{!t.ORG_ID__c}"/>
+                    </apex:pageBlockTable>   
+                </apex:pageBlockSection>                              
+                <!--**************************Ended Section*************************************** -->          
+                
+                <apex:pageblockButtons >
+                    <apex:commandButton value="Submit" onclick="myFunction();" rerender="time" style="centre" />
+                    <apex:commandButton value="Cancel" action="{!CancelRequest}" onclick="return confirm('Are you sure you want to cancel this Link Account to ERP Process Request? This will discard all changes on this page and will redirect you to Account page.');"/>                
+                </apex:pageblockbuttons>
+                
+            </apex:pageBlock>
+            
+            <apex:actionfunction name="hitme" action="{!Submit}" rerender="render">
+                <apex:param value="" name="Tier1"/>
+                <apex:param value="" name="Tier2"/> 
+                <apex:param value="" name="Tier3"/>
+                <apex:param value="" name="Tier4"/>
+                <apex:param value="" name="Businesstype"/>
+            </apex:actionfunction>
+            
+            <apex:outputpanel id="render">
+            </apex:outputpanel>
+            <apex:outputpanel id="time">
+            </apex:outputpanel>
+            
+        </apex:form> 
+        
+        <script>
+        function myFunction()
+        {        
+            var val1,val2,val3,val4,val5,bool;
+            val1=document.getElementById("{!$Component.form.block1.tiersection.val1}").value;
+            val2=document.getElementById("{!$Component.form.block1.tiersection.val2}").value;
+            val3=document.getElementById("{!$Component.form.block1.tiersection.val3}").value;
+            val4=document.getElementById("{!$Component.form.block1.tiersection.val4}").value;
+            val5=document.getElementById("{!$Component.form.block1.tiersection.val5}").value;
+            if (val1=="")
+                alert("Please Enter Tier 1 P&L");
+            else if (val2=="")
+                alert("Please Enter Tier 2 P&L");
+            else if (val3=="")
+                alert("Please Enter Tier 3 P&L");           
+            else if ( (val3=="SS - Subsea" || val3=="SS - Offshore" || val3=="SS - Services" || val3=="SS - Well Stream" || val3=="D&S - AL" || val3=="D&S - PC" || val3=="D&S - Logging" || val3=="D&S - Drilling" || val3=="In Line Inspection" || val3=="Integrity Services") && val5=="")
+                alert("Please Select Tier 4 P&L as N/A");  
+            else {
+                hitme(val1,val2,val3,val5,val4);   
+                alert("LinkAccountToERP has been Triggered");
+                } 
+        }  
+        
+        function checkAll(cb)
+        {
+            var inputElem = document.getElementsByTagName("input");
+            for(var i=0; i<inputElem.length; i++)
+            {
+                if(inputElem[i].id.indexOf("checkedone")!=-1)
+                    inputElem[i].checked = cb.checked;
+            }
+        }            
+        </script>            
+        
+    </apex:page>

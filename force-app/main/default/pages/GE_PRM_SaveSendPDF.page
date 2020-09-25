@@ -1,0 +1,15 @@
+<apex:page StandardController="GE_PRM_Channel_Appointment__c" Extensions="SaveSendPDF" action="{! GeneratePDF}">
+    <apex:pageMessages > </apex:pageMessages>
+        <apex:form > 
+            <table width="100%" align="right" border="0">  
+                <tr>
+                    <td align="center" widht="100%"> &nbsp;</td>                    
+                </tr> 
+                <tr>
+                    <td align="center" widht="100%">  
+                    <apex:commandButton action="{!goback}" id="cancelButton" value="Continue"/>
+                    </td>
+                </tr>      
+            </table>
+        </apex:form>
+</apex:page>

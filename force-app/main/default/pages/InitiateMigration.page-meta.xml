@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>19.0</apiVersion>
+    <availableInTouch>false</availableInTouch>
+    <confirmationTokenRequired>false</confirmationTokenRequired>
+    <description>This VF page displays the current Account Information,Proposed Account Information and the relatedList Information to be Migrated to CMF.</description>
+    <label>InitiateMigration</label>
+</ApexPage>

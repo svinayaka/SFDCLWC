@@ -1,0 +1,3 @@
+<apex:page standardController="SVMXC__Service_Order__c" extensions="GE_OG_MC_Mismatch_Justification_Cntrl" >
+    <b><apex:outputText value="Please select any value for 'Justification of Skill MisMatch'" rendered="{!flag == true}" style="font-color:red;background-color:yellow;" /></b>
+</apex:page>

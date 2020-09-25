@@ -1,0 +1,3 @@
+<apex:page standardController="SVMXC__Service_Order__c" contenttype="application/pdf" renderAs="pdf" >
+<c:GE_OG_DS_WOJISSheet WOId="{!SVMXC__Service_Order__c.Id}" />
+</apex:page>

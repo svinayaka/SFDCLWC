@@ -1,0 +1,141 @@
+<!--
+* page Name-----------: GE_PRM_CommercialLines_Details 
+* Used Where----------: in ChannelAppointment View Page
+* Purpose/Overview----: to submit Commercial lines details
+* Functional Area-----: PRM
+* Author--------------: 
+* Created Date--------:  
+* Test Class Name-----: 
+* Change History -
+* Date Modified : Developer Name     : Method/Section Modified/Added : Purpose/Overview of Change
+-->
+<apex:page standardcontroller="GE_PRM_Commercial_line__c" id="idpage" extensions="GE_PRM_Commercial_Lines_Class" sidebar="false" showHeader="true"  standardstylesheets="true">
+    <apex:stylesheet value="{!URLFOR($Resource.PRM_CA_UX_CSS,'PRM_UX_CSS/PRM_UX.css')}"/>       
+    <apex:includeScript value="{!URLFOR($Resource.Jquery)}"/>    
+    <script> 
+    var $j = jQuery.noConflict();    
+    $j(document).ready(function(){
+        $j("[id$=mlktp]").hide();
+    });    
+    </script>    
+    <style>
+        .AddrowButton 
+        {
+        background: #A9A9A9;
+        border: 1px solid #8BA446;
+        display: inline-block;
+        padding: 5px 10px 5px;
+        border-radius: 2px 2px 2px 2px;
+        box-shadow: 0px 1px 2px 0px rgb(173, 173, 173);
+        font-family: Arial;
+        vertical-align: middle;
+        text-decoration: none;
+        background-image:none;
+        color:white;
+        font-size: 1em;
+        }
+    </style>    
+    <script>
+    function JS_ontypeChange(v){
+        idtype = v.id;        
+        picktypeid = idtype.replace("idType","idPicktype");
+        if(v.value == 'Sales Representative'){ 
+        <!--     document.getElementById(picktypeid).value= '--None--'; -->
+            document.getElementById(picktypeid).disabled = true;
+        } 
+        else{
+            document.getElementById(picktypeid).disabled = false;
+        }       
+    }
+    function JS_onpricingtypechange(u){
+        pricingtypeid = u.id;         
+        schedulemaxpricingid= pricingtypeid.replace("idpricingtype","idschedulemaxpricing");
+        scheduleminpricingid= pricingtypeid.replace("idpricingtype","idscheduleminpricing");
+        flatpricingid= pricingtypeid.replace("idpricingtype","idflatpricing");       
+        if(u.value == 'Flat'){             
+            document.getElementById(schedulemaxpricingid).value= "";
+            document.getElementById(scheduleminpricingid).value= "";
+            document.getElementById(flatpricingid).disabled = false;
+            document.getElementById(schedulemaxpricingid).disabled = true; 
+            document.getElementById(scheduleminpricingid).disabled = true; 
+        } 
+        else if(u.value == 'Schedule'){             
+            document.getElementById(schedulemaxpricingid).disabled = false;
+            document.getElementById(scheduleminpricingid).disabled = false;
+            document.getElementById(flatpricingid).value= ""; 
+            document.getElementById(flatpricingid).disabled = true; 
+                      
+        }  
+
+            else if(u.value == 'Case by Case/PO-PO') {         
+                document.getElementById(schedulemaxpricingid).disabled = true;
+                document.getElementById(scheduleminpricingid).disabled = true;
+                document.getElementById(flatpricingid).disabled = true;
+                document.getElementById(schedulemaxpricingid).value= "";
+                document.getElementById(scheduleminpricingid).value= "";
+                document.getElementById(flatpricingid).value= "";                
+            }   
+            else {         
+                document.getElementById(schedulemaxpricingid).disabled = false;
+                document.getElementById(scheduleminpricingid).disabled = false;
+                document.getElementById(flatpricingid).disabled = false;
+                document.getElementById(schedulemaxpricingid).value= "";
+                document.getElementById(scheduleminpricingid).value= "";
+                document.getElementById(flatpricingid).value= "";                
+            }                 
+    }  
+    </script>
+    <apex:pageMessages />
+    <apex:form id="frm"   >
+        <apex:pageBlock title="Commercial Line Details" mode="edit" id="commline" >
+            <apex:pageBlockButtons >
+                <apex:commandLink value="Save" action="{!saveCommercialLineDetails}" styleClass="AddrowButton" title="Save" style="color: white;  margin-bottom: 10px;"/> &nbsp;               
+                <apex:commandLink value="Cancel" action="{!cancel}" styleClass="AddrowButton" title="Cancel" style="color: white;  margin-bottom: 10px;"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection columns="1" id="commlinePBS"> 
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >Status</apex:outputLabel>
+                    <apex:selectList value="{!selectedstatus}"  size="1" required="true">
+                        <apex:selectOptions value="{!items}"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Relationship_expiry_date__c}"/>
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Tier_1__c}"/>
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Tier_2__c}" required="true"/>
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Tier_3__c}" required="true"/>
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Tier_4__c}" required="true"/>
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Tier_5__c}"/>              
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Sales_Manager__c}"/>               
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Type__c}" id="idType"  onchange="JS_ontypeChange(this)" required="true"/>          
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_If_Services_pick_type__c}" id="idPicktype" />
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Authorized_Countries_1__c}" />
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Authorized_Countries_2__c}" />               
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_State_Province_Region__c}" style="width:640px"/>
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Industries__c}"/>
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Buyers__c}"/>
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Non_Standrd_Indefnte_Discnt_r_Com__c}" required="true"/>               
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Pricing_Type__c}" id="idpricingtype" onchange="JS_onpricingtypechange(this)" />
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_If_schedule_Max_pricing__c}" id="idschedulemaxpricing"/><script>document.getElementById('{!$Component.idschedulemaxpricing}').disabled = {!maxpricing}; </script>
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_If_schedule_Min_pricing__c}" id="idscheduleminpricing"/><script>document.getElementById('{!$Component.idscheduleminpricing}').disabled = {!minpricing}; </script>
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_If_flat_pricing__c}" id="idflatpricing"/><script>document.getElementById('{!$Component.idflatpricing}').disabled = {!flatpricing}; </script>
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Term__c}" required="true"/>
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Current_year_target__c}"/>
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Next_year_target__c}"/>
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Is_this_linked_to_project_oppty__c}"/>
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_If_yes_provide_Opporty_Project_Id__c}"/>
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Nuclear_use_Add_comment__c}"/>   
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Military_use_Add_comment__c}"/>      
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Inclusions_exclusions_Add_comment__c}"/>     
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Any_Exclusions__c}"/>  
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRIf_Sales_Rep_sales_to_US_Government__c}"/>    
+                <apex:inputField value="{!GE_PRM_Commercial_line__c.GE_PRM_if_Yes_provide_comments_SlaesRep__c}" style="width:640px"/> 
+                 <apex:inputField value="{!GE_PRM_Commercial_line__c.ERP_Contact__c}"/>
+                <apex:outputField value="{!GE_PRM_Commercial_line__c.GE_PRM_Channel_Appointment__c}" rendered="false"/>     
+            </apex:pageBlockSection>
+            
+            
+            
+           
+        </apex:pageBlock>
+    </apex:form>    
+</apex:page>

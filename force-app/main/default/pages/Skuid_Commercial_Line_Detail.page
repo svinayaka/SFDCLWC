@@ -1,0 +1,3 @@
+<apex:page standardController="PRM_Commercial_Line_GE_OG__c" extensions="skuid.Redirects" action="{!redirect}&objecttype=PRM_Commercial_Line_GE_OG__c&actiontype=View">
+
+</apex:page>

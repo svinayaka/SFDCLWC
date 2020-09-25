@@ -1,0 +1,2 @@
+<apex:page standardController="Task"  extensions="TaskCloseController"  recordSetVar="Tasks" action="{!updateTask}">
+</apex:page>

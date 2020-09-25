@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>35.0</apiVersion>
+    <availableInTouch>false</availableInTouch>
+    <confirmationTokenRequired>false</confirmationTokenRequired>
+    <description>This skuid page will be used to override the default action of clicking on the Opportunity tab to view the Opportunity list.</description>
+    <label>SKUID_Opportunity_ListView</label>
+    <packageVersions>
+        <majorNumber>7</majorNumber>
+        <minorNumber>27</minorNumber>
+        <namespace>skuid</namespace>
+    </packageVersions>
+</ApexPage>

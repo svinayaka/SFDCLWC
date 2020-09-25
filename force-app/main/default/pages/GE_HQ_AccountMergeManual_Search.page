@@ -1,0 +1,50 @@
+<apex:page >
+<!--
+<apex:page standardController="Account"  extensions="GE_HQ_ManualMigration" >
+<apex:pageMessages />
+
+<apex:form >
+
+<style>
+.s1{
+font-family: GE Inspira Pitch, Verdana, Arial;
+font-size:16px;
+font-weight:Bold;
+color:Black}
+.s2{
+font-family: GE Inspira Pitch, Verdana, Arial;
+font-size:12px;
+font-weight:Bold;
+color:Black}
+</style>
+<apex:pageBlock title="Account Merge Tool">
+<apex:outputLabel styleClass="s1" >
+<br/>
+Please enter the original DUNS Number and the new DUNS Number to move all of the original  Account related list items to the new Account. 
+<br/>
+<br/>
+</apex:outputLabel>
+
+<apex:pageBlockSection columns="6">
+
+<apex:pageBlockSectionItem >
+<apex:outputText styleClass="s2" value="Original DUNS Number"/>
+<apex:inputText id="txt" value="{!OrigDUNS}"/>
+</apex:pageBlockSectionItem>
+
+<apex:pageBlockSectionItem >
+<apex:outputText styleClass="s2" value="New DUNS Number"/>
+<apex:inputText id="txt1" value="{!NewDUNS}"/>
+</apex:pageBlockSectionItem>
+
+<apex:commandButton value="Search" action="{!Search}">
+<apex:param name="personID" value="{!Account.GE_HQ_DUNS_Number__c}"/>
+</apex:commandButton>
+
+
+</apex:pageBlockSection>
+
+</apex:pageblock>                  
+</apex:form>
+-->
+</apex:page>

@@ -1,0 +1,61 @@
+<apex:page standardController="Account" Extensions="AccountSearchExtension_GEOG">
+    <script>
+    
+    function AddCommercialAccount(getName, getRegion, getCountry){
+
+        window.location='/apex/AddNewAccount_GEOG?name='+getName+'&Country='+getCountry+'&region='+getRegion;
+    } 
+    function AddHQRegAccount(getName, getRegion, getCountry){
+
+        window.location='/apex/Add_New_HQ_Regional_Account_GEOG?name='+getName;
+    } 
+    </script>
+    <apex:form >
+        <apex:pageBlock >
+            <apex:inputText value="{!searchtext}"/> &nbsp;&nbsp;
+            
+            <apex:selectList value="{!selectedCountry}" size="1">
+              <apex:selectOptions value="{!allCountry}"/>
+            </apex:selectList>
+          
+           <!-- <apex:inputField value="{!acc.GE_HQ_New_Account_Country__c}"/>&nbsp;&nbsp;&nbsp;-->
+            
+            <apex:commandButton action="{!search}" value="Search" rerender="pnl, idCommericalAccount"/>
+        </apex:pageBlock>
+    
+        
+        <apex:outputPanel id="pnl">
+            <apex:pageBlock rendered="{!If(lstAccount.size > 0,true,false)}">
+            <apex:pageBlockTable value="{!lstAccount}" var="lst">
+                 <apex:column headerValue="Name" value="{!lst.Name}"/> 
+                 <apex:column headerValue="Region" value="{!lst.Region_GEOG__c}"/>
+                 <apex:column headerValue="Country" value="{!lst.Country_GEOG__c}"/>
+                 <apex:column headerValue="Tier Value" value="{!lst.Account_Tier_GEOG__c}"/>
+                 <apex:column headerValue="Type" value="{!lst.Type}"/>
+                 <apex:column headerValue="Classification" value="{!lst.Classification__c}"/>
+                 
+                 <apex:column headerValue="Action">
+                 <apex:outputLink value="/{!lst.Id}" rendered="{!IF((lst.Account_Tier_GEOG__c=='Country'), true,false)}">Select Account</apex:outputLink>
+                 <apex:outputLink rendered="{!IF((lst.Account_Tier_GEOG__c=='Regional'), true,false)}" value="/apex/AddNewAccount_GEOG?id={!lst.Id}&name={!searchtext}&region={!selectedRegion}&Country={!selectedCountry}">+Add Country Account</apex:outputLink>
+                 </apex:column>
+                 
+          <apex:column headerValue="Owner" value="{!lst.Owner.Name}"/>            
+            </apex:pageblockTable>
+            
+            <apex:pageblockButtons >
+                <apex:commandButton value="First" rerender="pnl" action="{!beginning}" disabled="{!prev}"/>
+                <apex:commandButton value="Previous" rerender="pnl" action="{!previous}" disabled="{!prev}"/>
+                <apex:commandButton value="Next" rerender="pnl" action="{!next}" disabled="{!nxt}"/>
+                <apex:commandButton value="Last" rerender="pnl" action="{!end}" disabled="{!nxt}"/>                                    
+            </apex:pageblockButtons>
+            </apex:pageBlock>
+            
+        <apex:pageBlock id="idCommericalAccount" rendered="{!isCommercialAccount = true}">       
+            Not Finding the right Account, Click on Add new Account &nbsp;&nbsp;<apex:commandButton onClick="AddCommercialAccount('{!searchtext}','{!selectedRegion}','{!selectedCountry}')" value="Add New Commercial Account" rerender="pnl"/>
+            <apex:commandButton onClick="AddHQRegAccount('{!searchtext}')" value="Add New HQ/Regional Account" rerender="pnl"/>
+        </apex:pageBlock>
+        </apex:outputPanel>
+
+    </apex:form>
+    
+</apex:page>

@@ -1,0 +1,648 @@
+<!--   
+Page Name         : GE_HQ_Accounts360View
+Purpose/Overview  : Providing a 360 View of the Account and its related Object records (Opportunities, Contacts, Contracts, IBs, Account Team Members, Tasks, Events, Projects, Cases)
+Author            : Jayadev Rath
+Change History    : Date Modified : Developer Name     : Method/Section Modified/Added : Purpose/Overview of Change
+                  : Felix Release : Jayadev Rath       : Created : Created the page to give the 360 view of Account
+                  : 18th Oct 2011 : Jayadev Rath       : Updated for reducing the View state size and enhancing the performance (by loading the records on tab click)
+                  :23rd Feb 2012   : Rekha N           : Modified due to Re-Org Changes of Tier Values
+-->
+<apex:page standardController="GE_HQ_Account_Plan__c" tabStyle="GE_HQ_Account_Plan__c" extensions="GE_HQ_Accounts360ViewController" id="pg" title="Accounts 360 Degree View" showHeader="false" sidebar="false">
+  <!-- <apex:pageMessages id="errors" />    
+    <script type="text/javascript">
+        function getTabRecs(input) {
+            document.getElementById('{!$Component.pg.selectionFrm.SelTab}').value= input;
+            
+        }
+    </script>
+    <style>
+          .activeTab {background-color: #236FBD; color:white; background-image:none}
+          .inactiveTab { background-color: #D6F0F9; color:black; background-image:none}
+    </style>
+    
+    <apex:form id="selectionFrm">
+        <apex:pageBlock >
+            <apex:pageBlockSection columns="10">
+                 <apex:selectRadio value="{!AccountType}" onclick="callMyGEAccountMethod();" >
+                     <apex:selectOptions value="{!accountsType}"/>
+                 </apex:selectRadio>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        <apex:actionFunction reRender="AccTabPanel" name="callMyGEAccountMethod" status="Processing" action="{!refreshSearchStrings}">
+        </apex:actionFunction>
+        <apex:actionStatus id="Processing" StartText="   Processing... Please Wait..."/> 
+        <apex:inputHidden value="{!SelectedTab}" id="SelTab"/>
+        <apex:tabPanel switchType="server" selectedTab="Accounts" id="AccTabPanel" tabClass="activeTab" inactiveTabClass="inactiveTab">
+        <apex:stylesheet value="{!$Resource.style360viewpageRC}"/>
+           
+            <apex:tab label="Accounts" name="Accounts" id="AccountsTab" ontabenter="getTabRecs('Acc');">
+                <apex:pageBlock title="Account Records" id="AccountsBlock" rendered="{!SelectedTab == 'Acc'}">
+                    <apex:inputText id="SearchTextAcc" value="{!SearchTextAcc}" size="20" /> &nbsp;
+                    <apex:commandButton id="AccSearchBtn" value="Search" status="SearchingAcc" action="{!SearchAcc}" rerender="AccountsBlock" />&nbsp;
+                    <apex:actionStatus id="SearchingAcc" startText=" Searching... Please Wait..."/>
+                    <br/><br/>
+                    <apex:pageBlockTable value="{!AccountRecs}" var="Acc" rowClasses="s1,s2" id="AccountRecTable" rendered="{!NOT(ISNULL(AccountRecs))}">
+                        <apex:column headerValue="Account Name">
+                            <apex:outputLink target="new" value="/{!Acc.Id}">{!Acc.Name}</apex:outputLink>
+                        </apex:column>
+                        <apex:column headerValue="DUNS Number" value="{!Acc.GE_HQ_DUNS_Number__c}"/>
+                        <apex:column headerValue="GE OG Region" value="{!Acc.GE_OG_Region_Tier1__c}"/>
+                        <apex:column headerValue="Street" value="{!Acc.ShippingStreet}"/>
+                        <apex:column headerValue="City" value="{!Acc.ShippingCity}"/>
+                        <apex:column headerValue="State/Province" value="{!Acc.ShippingState}"/>
+                        <apex:column headervalue="Zip/Postal Code" value="{!Acc.ShippingPostalCode}"/>
+                        <apex:column headervalue="Country" value="{!Acc.ShippingCountry}"/>
+                    </apex:pageBlockTable>
+    
+                    <apex:panelGrid columns="1" width="100%" rendered="{!NOT(ISNULL(AccountRecs))}"> <apex:panelGroup >
+                    <table width="100%"><tr></tr><tr><td>
+                        <apex:commandLink value="<< First" action="{!getFirstAcc}" reRender="AccountsBlock" rendered="{!hasFirstAcc}" />
+                        <apex:outputText value="<< First" rendered="{!NOT(hasFirstAcc)}" /> &nbsp;
+                        <apex:commandLink value="< Previous" action="{!getPrevAcc}" reRender="AccountsBlock" rendered="{!hasPrevAcc}" />
+                        <apex:outputText value="< Previous" rendered="{!NOT(hasPrevAcc)}" /> &nbsp;
+                        <apex:commandLink value="Next >" action="{!getNextAcc}" reRender="AccountsBlock" rendered="{!hasNextAcc}" />
+                        <apex:outputText value="Next >" rendered="{!NOT(hasNextAcc)}" /> &nbsp;
+                        <apex:commandLink value="Last >>" action="{!getLastAcc}" reRender="AccountsBlock" rendered="{!hasLastAcc}" />
+                        <apex:outputText value="Last >>" rendered="{!NOT(hasLastAcc)}" /> &nbsp;
+                        </td><td align="right">
+                        <apex:outputText >Records {!StartRecAcc}-{!EndRecAcc} of {!TotalAccRecords} </apex:outputText>
+                    </td></tr></table> </apex:panelGroup>
+                    </apex:panelGrid>
+                    <div align="center" style="font-size: 14px;"><apex:outputText rendered="{!ISNULL(AccountRecs)}" ><br/>No records found</apex:outputText> </div>
+                </apex:pageBlock>
+            </apex:tab>
+      
+            <apex:tab label="Opportunities" name="Opportunities" id="OpportunityTab" ontabenter="getTabRecs('Opp');">
+                <apex:pageBlock title="Opportunity Records" id="OpportunityBlock" rendered="{!SelectedTab == 'Opp'}">
+    
+                    <apex:inputText id="SearchTextOpp" value="{!SearchTextOpp}" size="20" /> &nbsp;
+                    <apex:commandButton id="OppSearchBtn" value="Search" status="SearchingOpp" action="{!SearchOpp}" reRender="OpportunityBlock"/> &nbsp;
+                    <apex:actionStatus id="SearchingOpp" startText=" Searching... Please Wait..."/>
+                    <br/><br/>
+                    <apex:pageBlockTable value="{!OpportunityRecs}" var="Opp" rowClasses="s1,s2" id="OpportunityRecTable" rendered="{!NOT(ISNULL(OpportunityRecs))}">
+                        <apex:column headerValue="Opportunity Name">
+                            <apex:outputlink target="new" value="/{!Opp.id}"> {!Opp.Name} </apex:outputlink>
+                        </apex:column>       
+                        <apex:column headerValue="Tier 2 P&L" value="{!Opp.tier_2_ge_og__c}"/>
+                        <apex:column headerValue="Tier 3 P&L" value="{!Opp.tier_3_ge_og__c}"/>
+                        <apex:column headerValue="Account Name" value="{!Opp.AccountID}"/>
+                        <apex:column headerValue="Pipeline Amount" value="{!Opp.pipeline_amount_ge_og__c}"/>
+                        <apex:column headerValue="Stage" value="{!Opp.StageName}"/>
+                        <apex:column headerValue="Owner Name" value="{!Opp.OwnerId}"/>
+                        <apex:column headerValue="Expected Order Date" value="{!Opp.CloseDate}"/>
+                    </apex:pageBlockTable>
+        
+                    <apex:panelGrid columns="1" width="100%" rendered="{!NOT(ISNULL(OpportunityRecs))}"> <apex:panelGroup >
+                    <table width="100%"><tr></tr><tr><td>
+                        <apex:commandLink value="<< First" action="{!getFirstOpp}" reRender="OpportunityBlock" rendered="{!hasFirstOpp}"/> 
+                        <apex:outputText value="<< First" rendered="{!NOT(hasFirstOpp)}"/> &nbsp;
+                        <apex:commandLink value="< Previous" action="{!getPrevOpp}" reRender="OpportunityBlock" rendered="{!hasPrevOpp}" />
+                        <apex:outputText value="< Previous" rendered="{!NOT(hasPrevOpp)}" /> &nbsp;
+                        <apex:commandLink value="Next >" action="{!getNextOpp}" reRender="OpportunityBlock" rendered="{!hasNextOpp}" />
+                        <apex:outputText value="Next >" rendered="{!NOT(hasNextOpp)}" /> &nbsp;
+                        <apex:commandLink value="Last >>" action="{!getLastOpp}" reRender="OpportunityBlock" rendered="{!hasLastOpp}" />
+                        <apex:outputText value="Last >>" rendered="{!NOT(hasLastOpp)}" /> &nbsp;
+                        </td><td align="right">
+                        <apex:outputText >Records {!StartRecOpp}-{!EndRecOpp} of {!TotalOppRecords} </apex:outputText>
+                    </td></tr></table> </apex:panelGroup>
+                    </apex:panelGrid>
+                    <div align="center" style="font-size: 14px;"><apex:outputText rendered="{!ISNULL(OpportunityRecs)}" ><br/>No records found</apex:outputText> </div>
+                </apex:pageBlock>
+            </apex:tab>
+
+  
+            <apex:tab label="Contacts" name="Contacts" id="ContactTab" ontabenter="getTabRecs('Cont');">
+                <apex:pageBlock title="Contact Records" id="ContactBlock"  rendered="{!SelectedTab == 'Cont'}">
+                    <apex:inputText id="SearchTextContact" value="{!SearchTextContact}" size="20" /> &nbsp;
+                    <apex:commandButton id="ContactSearchBtn" value="Search" status="SearchingContact" action="{!SearchContact}" reRender="ContactBlock"/> &nbsp;
+                    <apex:actionStatus id="SearchingContact" startText=" Searching... Please Wait..."/>
+                    <br/><br/>
+                    <apex:pageBlockTable value="{!ContactRecs}" var="Contact" rowClasses="s1,s2" id="ContactRecTable" rendered="{!NOT(ISNULL(ContactRecs))}">
+                          <apex:column headerValue="Contact Name">
+                              <apex:outputLink target="new" value="/{!Contact.Id}">{!Contact.name}</apex:outputLink>
+                          </apex:column>
+                          <apex:column headerValue="Account name" value="{!Contact.AccountId}"/>
+                          <apex:column headerValue="Mailing Street" value="{!Contact.MailingStreet}"/>
+                          <apex:column headerValue="Mailing City" value="{!Contact.MailingCity}"/>
+                          <apex:column headerValue="Mailing State/Province" value="{!Contact.MailingState}"/>
+                          <apex:column headerValue="Mailing Zip/Postal Code" value="{!Contact.MailingPostalCode}"/>
+                          <apex:column headerValue="Mailing Country" value="{!Contact.MailingCountry}"/>
+                          <apex:column headerValue="Main Phone" value="{!Contact.Phone}"/>
+                          <apex:column headerValue="Function" value="{!Contact.GE_ES_Function__c}"/>
+                    </apex:pageBlockTable>
+        
+                    <apex:panelGrid columns="1" width="100%" rendered="{!NOT(ISNULL(ContactRecs))}"> <apex:panelGroup >
+                    <table width="100%"><tr></tr><tr><td>
+                        <apex:commandLink value="<< First" action="{!getFirstContact}" reRender="ContactBlock" rendered="{!hasFirstContact}"/>
+                        <apex:outputText value="<< First" rendered="{!NOT(hasFirstContact)}"/> &nbsp;
+                        <apex:commandLink value="< Previous" action="{!getPrevContact}" reRender="ContactBlock" rendered="{!hasPrevContact}" />
+                        <apex:outputText value="< Previous" rendered="{!NOT(hasPrevContact)}" /> &nbsp;
+                        <apex:commandLink value="Next >" action="{!getNextContact}" reRender="ContactBlock" rendered="{!hasNextContact}" />
+                        <apex:outputText value="Next >" rendered="{!NOT(hasNextContact)}" /> &nbsp;
+                        <apex:commandLink value="Last >>" action="{!getLastContact}" reRender="ContactBlock" rendered="{!hasLastContact}" />
+                        <apex:outputText value="Last >>" rendered="{!NOT(hasLastContact)}" /> &nbsp;
+                        </td><td align="right">
+                        <apex:outputText >Records {!StartRecContact}-{!EndRecContact} of {!TotalContactRecords} </apex:outputText>
+                    </td></tr></table> </apex:panelGroup>
+                    </apex:panelGrid>
+                    <div align="center" style="font-size: 14px;"><apex:outputText rendered="{!ISNULL(ContactRecs)}" ><br/>No records found</apex:outputText> </div>
+                </apex:pageBlock>
+            </apex:tab>
+
+
+            <apex:tab label="Open Activities"  name="Open Activities" id="OATab" ontabenter="getTabRecs('Task');">
+                <apex:tabPanel switchType="Server" selectedTab="Task" id="ActTabPanel" tabClass="activeTab" inactiveTabClass="inactiveTab" value="{!SelectedTab}"> 
+                    <apex:tab label="Task" name="Task" id="TaskTab" ontabenter="getTabRecs('Task');">
+                        <apex:pageBlock title="Tasks" id="TaskBlock" rendered="{!SelectedTab == 'Task'}">
+                            <apex:inputText id="SearchTextTask" value="{!SearchTextTask}" size="20" /> &nbsp;
+                            <apex:commandButton id="TaskSearchBtn" value="Search" status="SearchingTask" action="{!SearchTask}" reRender="TaskBlock"/> &nbsp;
+                            <apex:actionStatus id="SearchingTask" startText=" Searching... Please Wait..."/>
+                            <br/><br/>
+                            <apex:pageBlockTable value="{!TaskRecs}" var="Task" rowClasses="s1,s2" id="TaskRecTable" rendered="{!NOT(ISNULL(TaskRecs))}">
+                                <apex:column headerValue="Account Name" value="{!Task.AccountId}"/> 
+                                <apex:column headervalue="Subject" value="{!Task.Subject}"/>
+                                <apex:column headerValue="Contact/Lead" value="{!Task.WhoId}"/>
+                                <apex:column headervalue="Related To" value="{!Task.WhatId}"/>
+                                <apex:column headervalue="Activity Date" value="{!Task.ActivityDate}"/>
+                                <apex:column headervalue="Priority" value="{!Task.Priority }"/>
+                                <apex:column headervalue="Status" value="{!Task.Status}"/>
+                            </apex:pageBlockTable>
+                        
+                            <apex:panelGrid columns="1" width="100%" rendered="{!NOT(ISNULL(TaskRecs))}"> <apex:panelGroup >
+                            <table width="100%"><tr></tr><tr><td>
+                                <apex:commandLink value="<< First" action="{!getFirstTask}" reRender="TaskBlock" rendered="{!hasFirstTask}"/>
+                                <apex:outputText value="<< First" rendered="{!NOT(hasFirstTask)}"/> &nbsp;
+                                <apex:commandLink value="< Previous" action="{!getPrevTask}" reRender="TaskBlock" rendered="{!hasPrevTask}" />
+                                <apex:outputText value="< Previous" rendered="{!NOT(hasPrevTask)}" /> &nbsp;
+                                <apex:commandLink value="Next >" action="{!getNextTask}" reRender="TaskBlock" rendered="{!hasNextTask}" />
+                                <apex:outputText value="Next >" rendered="{!NOT(hasNextTask)}" /> &nbsp;
+                                <apex:commandLink value="Last >>" action="{!getLastTask}" reRender="TaskBlock" rendered="{!hasLastTask}" />
+                                <apex:outputText value="Last >>" rendered="{!NOT(hasLastTask)}" /> &nbsp;
+                                </td><td align="right">
+                                <apex:outputText >Records {!StartRecTask}-{!EndRecTask} of {!TotalTaskRecords} </apex:outputText>
+                            </td></tr></table> </apex:panelGroup>
+                            </apex:panelGrid>
+                                <div align="center" style="font-size: 14px;"><apex:outputText rendered="{!ISNULL(TaskRecs)}" ><br/>No records found</apex:outputText> </div>
+                        </apex:pageBlock>
+                    </apex:tab>
+
+                    <apex:tab label="Event" name="Event" id="EventTab"  ontabenter="getTabRecs('Event');">
+                        <apex:pageBlock title="Events" id="EventBlock" rendered="{!SelectedTab == 'Event'}">
+    
+                            <apex:inputText id="SearchTextEvent" value="{!SearchTextEvent}" size="20" /> &nbsp;
+                            <apex:commandButton id="EventSearchBtn" value="Search" status="SearchingEvent" action="{!SearchEvent}" reRender="EventBlock"/> &nbsp;
+                            <apex:actionStatus id="SearchingEvent" startText=" Searching... Please Wait..."/>
+                            <br/><br/>
+                            <apex:pageBlockTable value="{!EventRecs}" var="Event" rowClasses="s1,s2" id="EventRecTable" rendered="{!NOT(ISNULL(EventRecs))}">
+                                <apex:column headerValue="Account Name" value="{!Event.AccountId}" />
+                                <apex:column headerValue="Subject" value="{!Event.Subject}"/>
+                                <apex:column headerValue="Contact/Lead" value="{!Event.WhoId}"/>
+                                <apex:column headerValue="Related To" value="{!Event.WhatId}"/>
+                                <apex:column headerValue="Start Date/Time" value="{!Event.StartDateTime}"/>
+                                <apex:column headerValue="End Date/Time" value="{!Event.EndDateTime}"/>
+                                <apex:column headerValue="Assigned To" value="{!Event.OwnerId}"/>
+                            </apex:pageBlockTable>
+    
+                            <apex:panelGrid columns="1" width="100%" rendered="{!NOT(ISNULL(EventRecs))}"> <apex:panelGroup >
+                            <table width="100%"><tr></tr><tr><td>
+                                <apex:commandLink value="<< First" action="{!getFirstEvent}" reRender="EventBlock" rendered="{!hasFirstEvent}"/>
+                                <apex:outputText value="<< First" rendered="{!NOT(hasFirstEvent)}"/> &nbsp;
+                                <apex:commandLink value="< Previous" action="{!getPrevEvent}" reRender="EventBlock" rendered="{!hasPrevEvent}" />
+                                <apex:outputText value="< Previous" rendered="{!NOT(hasPrevEvent)}" /> &nbsp;
+                                <apex:commandLink value="Next >" action="{!getNextEvent}" reRender="EventBlock" rendered="{!hasNextEvent}" />
+                                <apex:outputText value="Next >" rendered="{!NOT(hasNextEvent)}" /> &nbsp;
+                                <apex:commandLink value="Last >>" action="{!getLastEvent}" reRender="EventBlock" rendered="{!hasLastEvent}" />
+                                <apex:outputText value="Last >>" rendered="{!NOT(hasLastEvent)}" /> &nbsp;
+                                </td><td align="right">
+                                <apex:outputText >Records {!StartRecEvent}-{!EndRecEvent} of {!TotalEventRecords} </apex:outputText>
+                            </td></tr></table> </apex:panelGroup>
+                            </apex:panelGrid>
+                            <div align="center" style="font-size: 14px;"><apex:outputText rendered="{!ISNULL(EventRecs)}" ><br/>No records found</apex:outputText> </div>
+                        </apex:pageBlock>
+                    </apex:tab>
+                </apex:tabpanel>        
+            </apex:tab>
+
+
+            <apex:tab label="Contracts" name="Contracts" id="ContractTab"  ontabenter="getTabRecs('Cntr');">
+                <apex:pageBlock title="Contract Records" id="ContractBlock" rendered="{!SelectedTab == 'Cntr'}">
+                    <apex:inputText id="SearchTextContract" value="{!SearchTextContract}" size="20" /> &nbsp;
+                    <apex:commandButton id="ContractSearchBtn" value="Search" status="SearchingContract" action="{!SearchContract}" reRender="ContractBlock"/> &nbsp;
+                    <apex:actionStatus id="SearchingContract" startText=" Searching... Please Wait..."/>
+                    <br/><br/>
+                    <apex:pageBlockTable value="{!ContractRecs}" var="Contract" rowClasses="s1,s2" id="ContractRecTable" rendered="{!NOT(ISNULL(ContractRecs))}">
+                        <apex:column headerValue="Contract Number">
+                            <apex:outputLink target="new" value="/{!Contract.id}">{!Contract.ContractNumber}</apex:outputLink>
+                        </apex:column>
+                        <apex:column value="{!Contract.Name}"/>
+                        <apex:column headerValue="Account Name" value="{!Contract.AccountId}" />
+                        <apex:column headerValue="Contract Start Date" value="{!Contract.StartDate}"/>
+                        <apex:column headerValue="Contract End Date" value="{!Contract.EndDate}"/>
+                        <apex:column headerValue="Status" value="{!Contract.Status}"/>
+                        <apex:column headerValue="Agreement Title" value="{!Contract.GE_ES_Agreement_Title__c}"/>
+                        <apex:column headerValue="Tier 2 P&L" value="{!Contract.GE_HQ_Buss_Tier1__c}"/>
+                        <apex:column headerValue="Tier 3 P&L" value="{!Contract.GE_HQ_Buss_Tier2__c}"/>
+                        
+                    </apex:pageBlockTable>
+    
+                    <apex:panelGrid columns="1" width="100%" rendered="{!NOT(ISNULL(ContractRecs))}"> <apex:panelGroup >
+                    <table width="100%"><tr></tr><tr><td>
+                        <apex:commandLink value="<< First" action="{!getFirstContract}" reRender="ContractBlock" rendered="{!hasFirstContract}"/>
+                        <apex:outputText value="<< First" rendered="{!NOT(hasFirstContract)}"/> &nbsp;
+                        <apex:commandLink value="< Previous" action="{!getPrevContract}" reRender="ContractBlock" rendered="{!hasPrevContract}" />
+                        <apex:outputText value="< Previous" rendered="{!NOT(hasPrevContract)}" /> &nbsp;
+                        <apex:commandLink value="Next >" action="{!getNextContract}" reRender="ContractBlock" rendered="{!hasNextContract}" />
+                        <apex:outputText value="Next >" rendered="{!NOT(hasNextContract)}" /> &nbsp;
+                        <apex:commandLink value="Last >>" action="{!getLastContract}" reRender="ContractBlock" rendered="{!hasLastContract}" />
+                        <apex:outputText value="Last >>" rendered="{!NOT(hasLastContract)}" /> &nbsp;
+                        </td><td align="right">
+                        <apex:outputText >Records {!StartRecContract}-{!EndRecContract} of {!TotalContractRecords} </apex:outputText>
+                    </td></tr></table> </apex:panelGroup>
+                    </apex:panelGrid>
+                    <div align="center" style="font-size: 14px;"><apex:outputText rendered="{!ISNULL(ContractRecs)}" ><br/>No records found</apex:outputText> </div>
+                </apex:pageBlock>
+            </apex:tab>
+    
+            <apex:tab label="IB" name="IB" id="IBTab" ontabenter="getTabRecs('IB');">
+                <apex:pageBlock title="Install Base Records" id="IBBlock" rendered="{!SelectedTab == 'IB'}">
+                    <apex:inputText id="SearchTextIB" value="{!SearchTextIB}" size="20" /> &nbsp;
+                    <apex:commandButton id="IBSearchBtn" value="Search" status="SearchingIB" action="{!SearchIB}" reRender="IBBlock"/> &nbsp;
+                    <apex:actionStatus id="SearchingIB" startText=" Searching... Please Wait..."/>
+                    <br/><br/>
+                    <apex:pageBlockTable value="{!IBRecs}" var="IB" rowClasses="s1,s2" id="IBRecTable" rendered="{!NOT(ISNULL(IBRecs))}">
+                        <apex:column headerValue="IB Name">
+                            <apex:outputLink target="new" value="/{!IB.id}">{!IB.Name}</apex:outputLink>
+                        </apex:column>
+                        <apex:column headerValue="Account Name" value="{!IB.Account__c}"/>
+                        <apex:column headervalue="Technology" value="{!IB.GE_ES_Technology__c}"/> 
+                        <apex:column headerValue="Station Name" value="{!IB.GE_ES_Station_Name__c}"/> 
+                        <apex:column headerValue="Equip. Model" value="{!IB.GE_ES_Equip_Model__c}"/> 
+                    </apex:pageBlockTable>
+        
+                    <apex:panelGrid columns="1" width="100%" rendered="{!NOT(ISNULL(IBRecs))}"> <apex:panelGroup >
+                    <table width="100%"><tr></tr><tr><td>
+                        <apex:commandLink value="<< First" action="{!getFirstIB}" reRender="IBBlock" rendered="{!hasFirstIB}"/>
+                        <apex:outputText value="<< First" rendered="{!NOT(hasFirstIB)}"/> &nbsp;
+                        <apex:commandLink value="< Previous" action="{!getPrevIB}" reRender="IBBlock" rendered="{!hasPrevIB}" />
+                        <apex:outputText value="< Previous" rendered="{!NOT(hasPrevIB)}" /> &nbsp;
+                        <apex:commandLink value="Next >" action="{!getNextIB}" reRender="IBBlock" rendered="{!hasNextIB}" />
+                        <apex:outputText value="Next >" rendered="{!NOT(hasNextIB)}" /> &nbsp;
+                        <apex:commandLink value="Last >>" action="{!getLastIB}" reRender="IBBlock" rendered="{!hasLastIB}" />
+                        <apex:outputText value="Last >>" rendered="{!NOT(hasLastIB)}" /> &nbsp;
+                        </td><td align="right">
+                        <apex:outputText >Records {!StartRecIB}-{!EndRecIB} of {!TotalIBRecords} </apex:outputText>
+                    </td></tr></table> </apex:panelGroup>
+                    </apex:panelGrid>
+                    <div align="center" style="font-size: 14px;"><apex:outputText rendered="{!ISNULL(IBRecs)}" ><br/>No records found</apex:outputText> </div>
+                </apex:pageBlock>
+            </apex:tab>
+    
+
+            <apex:tab label="Projects" name="Projects" id="ProjectTab" ontabenter="getTabRecs('Prj');">
+                <apex:pageBlock title="Project Records" id="ProjectBlock"  rendered="{!SelectedTab == 'Prj'}">
+                    <apex:inputText id="SearchTextProject" value="{!SearchTextProject}" size="20" /> &nbsp;
+                    <apex:commandButton id="ProjectSearchBtn" value="Search" status="SearchingProject" action="{!SearchProject}" reRender="ProjectBlock"/> &nbsp;
+                    <apex:actionStatus id="SearchingProject" startText=" Searching... Please Wait..."/>
+                    <br/><br/>
+                    <apex:pageBlockTable value="{!ProjectRecs}" var="Project" rowClasses="s1,s2" id="ProjectRecTable" rendered="{!NOT(ISNULL(ProjectRecs))}">
+                        <apex:column headerValue="Project Name">
+                            <apex:outputLink target="new" value="/{!Project.id}">{!Project.Name}</apex:outputLink>
+                        </apex:column>
+                        <apex:column headerValue="Account Name" value="{!Project.GE_ES_Account__c}"/>
+                        <apex:column headervalue="Account Sales Region" value="{!Project.GE_ES_Account_Region__c}"/> 
+                        <apex:column headervalue="GE S/N" value="{!Project.GE_ES_Installed_Base_SN__c}"/> 
+                        <apex:column headervalue="Tier 2 P&L" value="{!Project.GE_ES_Tier_2_P_L__c}"/> 
+                        <apex:column headervalue="Record Type" value="{!Project.RecordTypeId}"/> 
+                        <apex:column headervalue="Owner" value="{!Project.OwnerId}"/> 
+                        <apex:column headervalue="Outage Start Date" value="{!Project.GE_ES_Outage_Start_Date__c}"/> 
+                    </apex:pageBlockTable>
+        
+                    <apex:panelGrid columns="1" width="100%" rendered="{!NOT(ISNULL(ProjectRecs))}"> <apex:panelGroup >
+                    <table width="100%"><tr></tr><tr><td>
+                        <apex:commandLink value="<< First" action="{!getFirstProject}" reRender="ProjectBlock" rendered="{!hasFirstProject}"/>
+                        <apex:outputText value="<< First" rendered="{!NOT(hasFirstProject)}"/> &nbsp;
+                        <apex:commandLink value="< Previous" action="{!getPrevProject}" reRender="ProjectBlock" rendered="{!hasPrevProject}" />
+                        <apex:outputText value="< Previous" rendered="{!NOT(hasPrevProject)}" /> &nbsp;
+                        <apex:commandLink value="Next >" action="{!getNextProject}" reRender="ProjectBlock" rendered="{!hasNextProject}" />
+                        <apex:outputText value="Next >" rendered="{!NOT(hasNextProject)}" /> &nbsp;
+                        <apex:commandLink value="Last >>" action="{!getLastProject}" reRender="ProjectBlock" rendered="{!hasLastProject}" />
+                        <apex:outputText value="Last >>" rendered="{!NOT(hasLastProject)}" /> &nbsp;
+                        </td><td align="right">
+                        <apex:outputText >Records {!StartRecProject}-{!EndRecProject} of {!TotalProjectRecords} </apex:outputText>
+                    </td></tr></table> </apex:panelGroup>
+                    </apex:panelGrid>
+                    <div align="center" style="font-size: 14px;"><apex:outputText rendered="{!ISNULL(ProjectRecs)}" ><br/>No records found</apex:outputText> </div>
+                </apex:pageBlock>
+            </apex:tab>
+    
+
+            <apex:tab label="Cases" name="Cases" id="CaseTab" ontabenter="getTabRecs('Case');">
+                <apex:pageBlock title="Case Records" id="CaseBlock" rendered="{!SelectedTab == 'Case'}">
+                    <apex:inputText id="SearchTextCase" value="{!SearchTextCase}" size="20" /> &nbsp; 
+                    <apex:commandButton id="CaseSearchBtn" value="Search" status="SearchingCase" action="{!SearchCase}" reRender="CaseBlock"/> &nbsp;
+                    <apex:actionStatus id="SearchingCase" startText=" Searching... Please Wait..."/>
+                    <br/><br/>
+                    <apex:pageBlockTable value="{!CaseRecs}" var="Case" rowClasses="s1,s2" id="CaseRecTable" rendered="{!NOT(ISNULL(CaseRecs))}">
+                        <apex:column headerValue="Case Number">
+                            <apex:outputLink target="new" value="/{!Case.id}">{!Case.CaseNumber}</apex:outputLink>
+                        </apex:column>
+                        <apex:column headerValue="Account Name" value="{!Case.AccountId}"/>
+                        <apex:column headerValue="Contact Name" value="{!Case.ContactId}"/>
+                        <apex:column headerValue="Record Type" Value="{!Case.RecordTypeId }"/>
+                        <apex:column headervalue="Subject" value="{!Case.Subject}"/>
+                        <apex:column headervalue="Status" value="{!Case.Status}"/>
+                        <apex:column headervalue="Priority" value="{!Case.Priority}"/>
+                        <apex:column headervalue="Date/Time Opened" value="{!Case.CreatedDate}"/>
+                        <apex:column headervalue="Case Owner" value="{!Case.OwnerId}"/>
+                    </apex:pageBlockTable>
+        
+                    <apex:panelGrid columns="1" width="100%" rendered="{!NOT(ISNULL(CaseRecs))}"> <apex:panelGroup >
+                    <table width="100%"><tr></tr><tr><td>
+                        <apex:commandLink value="<< First" action="{!getFirstCase}" reRender="CaseBlock" rendered="{!hasFirstCase}"/>
+                        <apex:outputText value="<< First" rendered="{!NOT(hasFirstCase)}"/> &nbsp;
+                        <apex:commandLink value="< Previous" action="{!getPrevCase}" reRender="CaseBlock" rendered="{!hasPrevCase}" />
+                        <apex:outputText value="< Previous" rendered="{!NOT(hasPrevCase)}" /> &nbsp;
+                        <apex:commandLink value="Next >" action="{!getNextCase}" reRender="CaseBlock" rendered="{!hasNextCase}" />
+                        <apex:outputText value="Next >" rendered="{!NOT(hasNextCase)}" /> &nbsp;
+                        <apex:commandLink value="Last >>" action="{!getLastCase}" reRender="CaseBlock" rendered="{!hasLastCase}" />
+                        <apex:outputText value="Last >>" rendered="{!NOT(hasLastCase)}" /> &nbsp;
+                        </td><td align="right">
+                        <apex:outputText >Records {!StartRecCase}-{!EndRecCase} of {!TotalCaseRecords} </apex:outputText>
+                    </td></tr></table> </apex:panelGroup> 
+                    </apex:panelGrid>
+                    <div align="center" style="font-size: 14px;"><apex:outputText rendered="{!ISNULL(CaseRecs)}" ><br/>No records found</apex:outputText> </div>
+                </apex:pageBlock>
+            </apex:tab>
+    
+
+            <apex:tab label="Team Members" name="Team Members" id="ATMTab" ontabenter="getTabRecs('ATM');">
+                <apex:pageBlock title="Account Team Member Records" id="ATMBlock"  rendered="{!SelectedTab == 'ATM'}">
+                    <apex:inputText id="SearchTextATM" value="{!SearchTextATM}" size="20" /> &nbsp;
+                    <apex:commandButton id="ATMSearchBtn" value="Search" status="SearchingATM" action="{!SearchATM}" reRender="ATMBlock"/> &nbsp;
+                    <apex:actionStatus id="SearchingATM" startText=" Searching... Please Wait..."/>
+                    <br/><br/>
+                    <apex:pageBlockTable value="{!ATMRecs}" var="ATM" rowClasses="s1,s2" id="ATMRecTable" rendered="{!NOT(ISNULL(ATMRecs))}">
+                        <apex:column headerValue="User" value="{!ATM.UserId}" />
+                        <apex:column headerValue="Team Member Role" value="{!ATM.TeamMemberRole}"/>
+                        <apex:column headerValue="Account Name" value="{!ATM.AccountId}" />
+                    </apex:pageBlockTable>
+        
+                    <apex:panelGrid columns="1" width="100%" rendered="{!NOT(ISNULL(ATMRecs))}"> <apex:panelGroup >
+                    <table width="100%"><tr></tr><tr><td>
+                        <apex:commandLink value="<< First" action="{!getFirstATM}" reRender="ATMBlock" rendered="{!hasFirstATM}"/>
+                        <apex:outputText value="<< First" rendered="{!NOT(hasFirstATM)}"/> &nbsp;
+                        <apex:commandLink value="< Previous" action="{!getPrevATM}" reRender="ATMBlock" rendered="{!hasPrevATM}" />
+                        <apex:outputText value="< Previous" rendered="{!NOT(hasPrevATM)}" /> &nbsp;
+                        <apex:commandLink value="Next >" action="{!getNextATM}" reRender="ATMBlock" rendered="{!hasNextATM}" />
+                        <apex:outputText value="Next >" rendered="{!NOT(hasNextATM)}" /> &nbsp;
+                        <apex:commandLink value="Last >>" action="{!getLastATM}" reRender="ATMBlock" rendered="{!hasLastATM}" />
+                        <apex:outputText value="Last >>" rendered="{!NOT(hasLastATM)}" /> &nbsp;
+                        </td><td align="right">
+                        <apex:outputText >Records {!StartRecATM}-{!EndRecATM} of {!TotalATMRecords} </apex:outputText>
+                    </td></tr></table> </apex:panelGroup>
+                    </apex:panelGrid>
+                    <div align="center" style="font-size: 14px;"><apex:outputText rendered="{!ISNULL(ATMRecs)}" ><br/>No records found</apex:outputText> </div>
+                </apex:pageBlock>
+            </apex:tab>
+            
+
+            <apex:tab label="Related Plans"  name="Related Plans" id="RPTab" ontabenter="getTabRecs('EnergyPlans');">
+                <apex:tabPanel switchType="Server" selectedTab="EnergyPlans" id="RelatedPlansTabPanel" tabClass="activeTab" inactiveTabClass="inactiveTab" value="{!SelectedTab}" > 
+                    <apex:tab label="Energy Plans" name="EnergyPlans" id="EnergyPlansTab" ontabenter="getTabRecs('EnergyPlans');">
+                        <apex:pageBlock title="Energy Plan Records" id="EnergyPlanBlock"  rendered="{!SelectedTab == 'EnergyPlans'}">
+                            <apex:inputText id="SearchTextEnergyPlan" value="{!SearchTextEnergyPlan}" size="20" /> &nbsp;
+                            <apex:commandButton id="EnergyPlanSearchBtn" value="Search" status="SearchingEnergyPlan" action="{!SearchEnergyPlan}" rerender="EnergyPlanBlock" />&nbsp;
+                            <apex:actionStatus id="SearchingEnergyPlan" startText=" Searching... Please Wait..."/>
+                            <br/><br/>
+                        
+                            <apex:pageBlockTable value="{!EnergyPlanRecs}" var="EnergyPlanObj" rowClasses="s1,s2" id="EnergyPlanRecTable" rendered="{!NOT(ISNULL(EnergyPlanRecs))}">
+                                <apex:column headerValue="Account Plan Name">
+                                    <apex:outputLink target="new" value="/{!EnergyPlanObj.Id}">{!EnergyPlanObj.Name}</apex:outputLink>
+                                </apex:column>
+                                <apex:column headerValue="Tier 1 P&L" value="{!EnergyPlanObj.GE_HQ_Buss_Tier__c}"/>
+                                <apex:column headerValue="Tier 2 P&L" value="{!EnergyPlanObj.GE_HQ_Buss_Tier1__c}"/>
+                                <apex:column headerValue="GE Energy Account" value="{!EnergyPlanObj.GE_HQ_DDUNS_Number__c}"/>
+                                <apex:column headerValue="Playbook Long Term" value="{!EnergyPlanObj.GE_HQ_Pb_Long_Term__c}"/>
+                                <apex:column headerValue="Playbook Short Term" value="{!EnergyPlanObj.GE_HQ_Pb_Short_Term__c}"/>
+                                <apex:column headerValue="Last Modified By" value="{!EnergyPlanObj.LastModifiedById}"/>
+                            </apex:pageBlockTable>
+      
+                           <apex:panelGrid columns="1" width="100%" rendered="{!NOT(ISNULL(EnergyPlanRecs))}"> <apex:panelGroup >
+                               <table width="100%">
+                                   <tr></tr><tr><td>
+                                   <apex:commandLink value="<< First" action="{!getFirstEnergyPlan}" reRender="EnergyPlanBlock" rendered="{!hasFirstEnergyPlan}"/>
+                                   <apex:outputText value="<< First" rendered="{!NOT(hasFirstEnergyPlan)}"/> &nbsp;
+                                   <apex:commandLink value="< Previous" action="{!getPrevEnergyPlan}" reRender="EnergyPlanBlock" rendered="{!hasPrevEnergyPlan}" />
+                                   <apex:outputText value="< Previous" rendered="{!NOT(hasPrevEnergyPlan)}" /> &nbsp;
+                                   <apex:commandLink value="Next >" action="{!getNextEnergyPlan}" reRender="EnergyPlanBlock" rendered="{!hasNextEnergyPlan}" />
+                                   <apex:outputText value="Next >" rendered="{!NOT(hasNextEnergyPlan)}" /> &nbsp;
+                                   <apex:commandLink value="Last >>" action="{!getLastEnergyPlan}" reRender="EnergyPlanBlock" rendered="{!hasLastEnergyPlan}" />
+                                   <apex:outputText value="Last >>" rendered="{!NOT(hasLastEnergyPlan)}" /> &nbsp;
+                                   </td><td align="right">
+                                   <apex:outputText >Records {!StartRecEnergyPlan}-{!EndRecEnergyPlan} of {!TotalEnergyPlanRecords} </apex:outputText>
+                                   </td></tr></table> </apex:panelGroup>
+                            </apex:panelGrid>
+                            <div align="center" style="font-size: 14px;"><apex:outputText rendered="{!ISNULL(EnergyPlanRecs)}" ><br/>No records found</apex:outputText> </div>
+                            
+                        </apex:pageBlock>
+                    </apex:tab>
+                    <!--
+                    <apex:tab label="AE Plans" name="AEPlans" id="AEPlansTab" ontabenter="getTabRecs('AEPlans');">
+                        <apex:pageBlock title="AE Plan Records" id="AEPlanBlock"  rendered="{!SelectedTab == 'AEPlans'}">
+                            <apex:inputText id="SearchTextAEPlan" value="{!SearchTextAEPlan}" size="20" /> &nbsp;
+                            <apex:commandButton id="AEPlanSearchBtn" value="Search" status="SearchingAEPlan" action="{!SearchAEPlan}" rerender="AEPlanBlock" />&nbsp;
+                            <apex:actionStatus id="SearchingAEPlan" startText=" Searching... Please Wait..."/>
+                            <br/><br/>
+
+                            <apex:pageBlockTable value="{!AEPlanRecs}" var="AEPlanObj" rowClasses="s1,s2" id="AEPlanRecTable" rendered="{!NOT(ISNULL(AEPlanRecs))}">
+                                <apex:column headerValue="Account Plan Name">
+                                    <apex:outputLink target="new" value="/{!AEPlanObj.Id}">{!AEPlanObj.Name}</apex:outputLink>
+                                </apex:column>
+                                <apex:column headerValue="Tier 1 P&L" value="{!AEPlanObj.GE_HQ_Buss_Tier__c}"/>
+                                <apex:column headerValue="Tier 2 P&L" value="{!AEPlanObj.GE_HQ_Buss_Tier1__c}"/>
+                                <apex:column headerValue="GE Energy Account" value="{!AEPlanObj.GE_HQ_DDUNS_Number__c}"/>
+                                <apex:column headerValue="Playbook Long Term" value="{!AEPlanObj.GE_HQ_Pb_Long_Term__c}"/>
+                                <apex:column headerValue="Playbook Short Term" value="{!AEPlanObj.GE_HQ_Pb_Short_Term__c}"/>
+                                <apex:column headerValue="Last Modified By" value="{!AEPlanObj.LastModifiedById}"/>
+                            </apex:pageBlockTable>
+                            
+                           <apex:panelGrid columns="1" width="100%" rendered="{!NOT(ISNULL(AEPlanRecs))}"> <apex:panelGroup >
+                               <table width="100%">
+                                   <tr></tr><tr><td>
+                                   <apex:commandLink value="<< First" action="{!getFirstAEPlan}" reRender="AEPlanBlock" rendered="{!hasFirstAEPlan}"/>
+                                   <apex:outputText value="<< First" rendered="{!NOT(hasFirstAEPlan)}"/> &nbsp;
+                                   <apex:commandLink value="< Previous" action="{!getPrevAEPlan}" reRender="AEPlanBlock" rendered="{!hasPrevAEPlan}" />
+                                   <apex:outputText value="< Previous" rendered="{!NOT(hasPrevAEPlan)}" /> &nbsp;
+                                   <apex:commandLink value="Next >" action="{!getNextAEPlan}" reRender="AEPlanBlock" rendered="{!hasNextAEPlan}" />
+                                   <apex:outputText value="Next >" rendered="{!NOT(hasNextAEPlan)}" /> &nbsp;
+                                   <apex:commandLink value="Last >>" action="{!getLastAEPlan}" reRender="AEPlanBlock" rendered="{!hasLastAEPlan}" />
+                                   <apex:outputText value="Last >>" rendered="{!NOT(hasLastAEPlan)}" /> &nbsp;
+                                   </td><td align="right">
+                                   <apex:outputText >Records {!StartRecAEPlan}-{!EndRecAEPlan} of {!TotalAEPlanRecords} </apex:outputText>
+                                   </td></tr></table> </apex:panelGroup>
+                            </apex:panelGrid>
+                            <div align="center" style="font-size: 14px;"><apex:outputText rendered="{!ISNULL(AEPlanRecs)}" ><br/>No records found</apex:outputText> </div>
+                            
+
+                        </apex:pageBlock>
+                    
+                    </apex:tab>
+       
+                    <apex:tab label="PRM Plans" name="PRMPlans" id="PRMPlansTab" ontabenter="getTabRecs('PRMPlans');">
+                        <apex:pageBlock title="PRM Plan Records" id="PRMPlanBlock"  rendered="{!SelectedTab == 'PRMPlans'}">
+                            <apex:inputText id="SearchTextPRMPlan" value="{!SearchTextPRMPlan}" size="20" /> &nbsp;
+                            <apex:commandButton id="PRMPlanSearchBtn" value="Search" status="SearchingPRMPlan" action="{!SearchPRMPlan}" rerender="PRMPlanBlock" />&nbsp;
+                            <apex:actionStatus id="SearchingPRMPlan" startText=" Searching... Please Wait..."/>
+                            <br/><br/>
+
+                            <apex:pageBlockTable value="{!PRMPlanRecs}" var="PRMPlanObj" rowClasses="s1,s2" id="PRMPlanRecTable" rendered="{!NOT(ISNULL(PRMPlanRecs))}">
+                                <apex:column headerValue="Account Plan Name">
+                                    <apex:outputLink target="new" value="/{!PRMPlanObj.Id}">{!PRMPlanObj.Name}</apex:outputLink>
+                                </apex:column>
+                                <apex:column headerValue="Tier 1 P&L" value="{!PRMPlanObj.GE_PRM_Tier_1__c}"/>
+                                <apex:column headerValue="Tier 2 P&L" value="{!PRMPlanObj.GE_PRM_Tier_2__c}"/>
+                                <apex:column headerValue="Status" value="{!PRMPlanObj.GE_PRM_Status__c}"/>
+                                <apex:column headerValue="Last Modified By" value="{!PRMPlanObj.LastModifiedById}"/>
+                            </apex:pageBlockTable>
+                            
+                           <apex:panelGrid columns="1" width="100%" rendered="{!NOT(ISNULL(PRMPlanRecs))}"> <apex:panelGroup >
+                               <table width="100%">
+                                   <tr></tr><tr><td>
+                                   <apex:commandLink value="<< First" action="{!getFirstPRMPlan}" reRender="PRMPlanBlock" rendered="{!hasFirstPRMPlan}"/>
+                                   <apex:outputText value="<< First" rendered="{!NOT(hasFirstPRMPlan)}"/> &nbsp;
+                                   <apex:commandLink value="< Previous" action="{!getPrevPRMPlan}" reRender="PRMPlanBlock" rendered="{!hasPrevPRMPlan}" />
+                                   <apex:outputText value="< Previous" rendered="{!NOT(hasPrevPRMPlan)}" /> &nbsp;
+                                   <apex:commandLink value="Next >" action="{!getNextPRMPlan}" reRender="PRMPlanBlock" rendered="{!hasNextPRMPlan}" />
+                                   <apex:outputText value="Next >" rendered="{!NOT(hasNextPRMPlan)}" /> &nbsp;
+                                   <apex:commandLink value="Last >>" action="{!getLastPRMPlan}" reRender="PRMPlanBlock" rendered="{!hasLastPRMPlan}" />
+                                   <apex:outputText value="Last >>" rendered="{!NOT(hasLastPRMPlan)}" /> &nbsp;
+                                   </td><td align="right">
+                                   <apex:outputText >Records {!StartRecPRMPlan}-{!EndRecPRMPlan} of {!TotalPRMPlanRecords} </apex:outputText>
+                                   </td></tr></table> </apex:panelGroup>
+                            </apex:panelGrid>
+                            <div align="center" style="font-size: 14px;"><apex:outputText rendered="{!ISNULL(PRMPlanRecs)}" ><br/>No records found</apex:outputText> </div>
+                            
+
+                        </apex:pageBlock>
+                    </apex:tab>
+
+                    <apex:tab label="Field of Play (MH)" name="FieldofPlays" id="FieldofPlayTab" ontabenter="getTabRecs('FieldofPlays');">
+                        <apex:pageBlock title="Field of Play Records" id="FieldofPlayBlock"  rendered="{!SelectedTab == 'FieldofPlays'}">
+                            <apex:inputText id="SearchTextFieldofPlay" value="{!SearchTextFieldofPlay}" size="20" /> &nbsp;
+                            <apex:commandButton id="FieldofPlaySearchBtn" value="Search" status="SearchingFieldofPlay" action="{!SearchFieldofPlay}" rerender="FieldofPlayBlock" />&nbsp;
+                            <apex:actionStatus id="SearchingFieldofPlay" startText=" Searching... Please Wait..."/>
+                            <br/><br/>
+
+                            <apex:pageBlockTable value="{!FieldofPlayRecs}" var="FieldofPlayObj" rowClasses="s1,s2" id="FieldofPlayRecTable" rendered="{!NOT(ISNULL(FieldofPlayRecs))}">
+                                <apex:column headerValue="Field of Play Name">
+                                    <apex:outputLink target="new" value="/{!FieldofPlayObj.Id}">{!FieldofPlayObj.Name}</apex:outputLink>
+                                </apex:column>
+                                <apex:column headerValue="Charter Statement" value="{!FieldofPlayObj.mh_Charter_Statement__c}"/>
+                                <apex:column headerValue="Associated Gold Sheet" value="{!FieldofPlayObj.mh_Last_Updated_Gold_Sheet__c}"/>
+                                <apex:column headerValue="Additional Notes Exist" value="{!FieldofPlayObj.mh_Additional_Notes_Exist__c}"/>
+                                <apex:column headerValue="Managers Notes Exist" value="{!FieldofPlayObj.mh_Managers_Notes_Exist__c}"/>
+                                <apex:column headerValue="Managers Review Date" value="{!FieldofPlayObj.mh_Managers_Review_Date__c}"/>
+                                <apex:column headerValue="Last Modified Date" value="{!FieldofPlayObj.LastModifiedDate}"/>
+                            </apex:pageBlockTable>
+                            
+                           <apex:panelGrid columns="1" width="100%" rendered="{!NOT(ISNULL(FieldofPlayRecs))}"> <apex:panelGroup >
+                               <table width="100%">
+                                   <tr></tr><tr><td>
+                                   <apex:commandLink value="<< First" action="{!getFirstFieldofPlay}" reRender="FieldofPlayBlock" rendered="{!hasFirstFieldofPlay}"/>
+                                   <apex:outputText value="<< First" rendered="{!NOT(hasFirstFieldofPlay)}"/> &nbsp;
+                                   <apex:commandLink value="< Previous" action="{!getPrevFieldofPlay}" reRender="FieldofPlayBlock" rendered="{!hasPrevFieldofPlay}" />
+                                   <apex:outputText value="< Previous" rendered="{!NOT(hasPrevFieldofPlay)}" /> &nbsp;
+                                   <apex:commandLink value="Next >" action="{!getNextFieldofPlay}" reRender="FieldofPlayBlock" rendered="{!hasNextFieldofPlay}" />
+                                   <apex:outputText value="Next >" rendered="{!NOT(hasNextFieldofPlay)}" /> &nbsp;
+                                   <apex:commandLink value="Last >>" action="{!getLastFieldofPlay}" reRender="FieldofPlayBlock" rendered="{!hasLastFieldofPlay}" />
+                                   <apex:outputText value="Last >>" rendered="{!NOT(hasLastFieldofPlay)}" /> &nbsp;
+                                   </td><td align="right">
+                                   <apex:outputText >Records {!StartRecFieldofPlay}-{!EndRecFieldofPlay} of {!TotalFieldofPlayRecords} </apex:outputText>
+                                   </td></tr></table> </apex:panelGroup>
+                            </apex:panelGrid>
+                            <div align="center" style="font-size: 14px;"><apex:outputText rendered="{!ISNULL(FieldofPlayRecs)}" ><br/>No records found</apex:outputText> </div>
+                            
+
+                        </apex:pageBlock>                    
+                    </apex:tab>
+
+                    <apex:tab label="Account Plan Activities" name="PlanActivities" id="PlanActivitiesTab" ontabenter="getTabRecs('PlanActivities');">
+                        <apex:pageBlock title="Plan Activity Records" id="PlanActivityBlock"  rendered="{!SelectedTab == 'PlanActivities'}">
+                            <apex:inputText id="SearchTextPlanActivity" value="{!SearchTextPlanActivity}" size="20" /> &nbsp;
+                            <apex:commandButton id="PlanActivitySearchBtn" value="Search" status="SearchingPlanActivity" action="{!SearchPlanActivity}" rerender="PlanActivityBlock" />&nbsp;
+                            <apex:actionStatus id="SearchingPlanActivity" startText=" Searching... Please Wait..."/>
+                            <br/><br/>
+
+                            <apex:pageBlockTable value="{!PlanActivityRecs}" var="PlanActivityObj" rowClasses="s1,s2" id="PlanActivityRecTable" rendered="{!NOT(ISNULL(PlanActivityRecs))}">
+                                <apex:column headerValue="Account Plan" value="{!PlanActivityObj.WhatId}"/>
+                                <apex:column headerValue="Subject" value="{!PlanActivityObj.Subject}"/>
+                                <apex:column headerValue="Assigned To" value="{!PlanActivityObj.OwnerId}"/>
+                                <apex:column headerValue="Due Date" value="{!PlanActivityObj.ActivityDate}"/>
+                                <apex:column headerValue="Status" value="{!PlanActivityObj.Status}"/>
+                                <apex:column headerValue="Priority" value="{!PlanActivityObj.Priority}"/>
+                                <apex:column headerValue="Type" value="{!PlanActivityObj.Type}"/>
+                            </apex:pageBlockTable>
+                            
+                           <apex:panelGrid columns="1" width="100%" rendered="{!NOT(ISNULL(PlanActivityRecs))}"> <apex:panelGroup >
+                               <table width="100%">
+                                   <tr></tr><tr><td>
+                                   <apex:commandLink value="<< First" action="{!getFirstPlanActivity}" reRender="PlanActivityBlock" rendered="{!hasFirstPlanActivity}"/>
+                                   <apex:outputText value="<< First" rendered="{!NOT(hasFirstPlanActivity)}"/> &nbsp;
+                                   <apex:commandLink value="< Previous" action="{!getPrevPlanActivity}" reRender="PlanActivityBlock" rendered="{!hasPrevPlanActivity}" />
+                                   <apex:outputText value="< Previous" rendered="{!NOT(hasPrevPlanActivity)}" /> &nbsp;
+                                   <apex:commandLink value="Next >" action="{!getNextPlanActivity}" reRender="PlanActivityBlock" rendered="{!hasNextPlanActivity}" />
+                                   <apex:outputText value="Next >" rendered="{!NOT(hasNextPlanActivity)}" /> &nbsp;
+                                   <apex:commandLink value="Last >>" action="{!getLastPlanActivity}" reRender="PlanActivityBlock" rendered="{!hasLastPlanActivity}" />
+                                   <apex:outputText value="Last >>" rendered="{!NOT(hasLastPlanActivity)}" /> &nbsp;
+                                   </td><td align="right">
+                                   <apex:outputText >Records {!StartRecPlanActivity}-{!EndRecPlanActivity} of {!TotalPlanActivityRecords} </apex:outputText>
+                                   </td></tr></table> </apex:panelGroup>
+                            </apex:panelGrid>
+                            <div align="center" style="font-size: 14px;"><apex:outputText rendered="{!ISNULL(PlanActivityRecs)}" ><br/>No records found</apex:outputText> </div>
+                            
+
+                        </apex:pageBlock>                    
+                    </apex:tab>
+
+                </apex:tabpanel>        
+            </apex:tab>
+
+
+            
+                 <apex:tab label="Channel Appointments" name="Channel Appointments" id="chanApptTab" ontabenter="getTabRecs('chanAppt');" rendered="{!IF(GE_HQ_Account_Plan__c.RecordTypeId =='012A0000000k4m0IAA',true,false)}">
+                <apex:pageBlock title="Channel Appointment Records" id="chanApptBlock" rendered="{!SelectedTab == 'chanAppt'}">
+                    <apex:inputText id="SearchTextchanAppt" value="{!SearchTextchanAppt}" size="20" /> &nbsp;
+                    <apex:commandButton id="chanApptSearchBtn" value="Search" status="SearchingchanAppt" action="{!SearchchanAppt}" rerender="chanApptBlock" />&nbsp;
+                    <apex:actionStatus id="SearchingchanAppt" startText=" Searching... Please Wait..."/>
+                    <br/><br/>
+                    <apex:pageBlockTable value="{!chanApptRecs}" var="ch" rowClasses="s1,s2" id="chanApptRecTable" rendered="{!NOT(ISNULL(chanApptRecs))}">
+                      <apex:column headerValue="Channel Appointment Unique Identifier" width="10">
+                            <apex:outputLink target="new" value="/{!ch.Id}">{!ch.Name}</apex:outputLink>
+                        </apex:column>
+                       <apex:column headerValue="Account Name" value="{!ch.GE_PRM_Account_Name__c}" />
+                       <apex:column headerValue="Primary Tier 2 P&L" value="{!ch.GE_PRM_Tier_2_P_L__c }" />     
+                       <apex:column headerValue="Current Status" value="{!ch.GE_PRM_Current_Status__c}" />
+                       <apex:column headerValue="Last Modified Date " value="{!ch.LastModifiedDate }" />  
+                     </apex:pageBlockTable>
+    
+                    <apex:panelGrid columns="1" width="100%" rendered="{!NOT(ISNULL(chanApptRecs))}"> <apex:panelGroup >
+                    <table width="100%"><tr></tr><tr><td>
+                        <apex:commandLink value="<< First" action="{!getFirstchanAppt}" reRender="chanApptBlock" rendered="{!hasFirstchanAppt}" />
+                        <apex:outputText value="<< First" rendered="{!NOT(hasFirstchanAppt)}" /> &nbsp;
+                        <apex:commandLink value="< Previous" action="{!getPrevchanAppt}" reRender="chanApptBlock" rendered="{!hasPrevchanAppt}" />
+                        <apex:outputText value="< Previous" rendered="{!NOT(hasPrevchanAppt)}" /> &nbsp;
+                        <apex:commandLink value="Next >" action="{!getNextchanAppt}" reRender="chanApptBlock" rendered="{!hasNextchanAppt}" />
+                        <apex:outputText value="Next >" rendered="{!NOT(hasNextchanAppt)}" /> &nbsp;
+                        <apex:commandLink value="Last >>" action="{!getLastchanAppt}" reRender="chanApptBlock" rendered="{!hasLastchanAppt}" />
+                        <apex:outputText value="Last >>" rendered="{!NOT(hasLastchanAppt)}" /> &nbsp;
+                        </td><td align="right">
+                        <apex:outputText >Records {!StartRecchanAppt}-{!EndRecchanAppt} of {!TotalchanApptRecords} </apex:outputText>
+                    </td></tr></table> </apex:panelGroup>
+                    </apex:panelGrid>
+                    <div align="center" style="font-size: 14px;"><apex:outputText rendered="{!ISNULL(chanApptRecs)}" ><br/>No records found</apex:outputText> </div>
+                </apex:pageBlock>
+       </apex:tab>    
+
+        </apex:tabPanel>
+    </apex:form>-->
+</apex:page>

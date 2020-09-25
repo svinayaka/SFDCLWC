@@ -1,0 +1,183 @@
+<!--
+Page Name:GE_OG_FinanceRetrigger
+Used Where ? :   On Account detail page
+Purpose/Overview : Used to re trigger Finance
+Functional Area : Accounts
+Author:  
+Created Date: 
+
+Date Modified : Developer Name     : Section/PageBlock Modified/Added : Purpose/Overview of Change
+:12th Feb 2014: Satya: Added Requested credit limit& Comments fields on this page for R-15576
+-->
+<apex:page standardController="Account" extensions="GE_OG_FinanceRetriggerController" action="{!KycRedirect}" showChat="false"  showHeader="false" sidebar="false">
+         
+    <apex:form id="form">
+        <apex:pageBlock id="block1" >
+        
+        <apex:actionStatus id="actStatusId" >
+                <apex:facet name="start">
+        <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb; height:100%;opacity:0.65;width:100%;">
+            <div class="waitingHolder" style="top: 100px; width: 91px;">
+            <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+            <span class="waitingDescription">Loading...</span>
+            </div>
+        </div>
+    </apex:facet>
+            </apex:actionStatus>
+            
+            <apex:outputpanel id="render">
+                <apex:pageMessages >
+                </apex:pageMessages> 
+            </apex:outputpanel>
+            <apex:outputpanel id="time">
+                <apex:pageMessages >
+                </apex:pageMessages> 
+            </apex:outputpanel>
+            
+            <apex:pageblockSection title="Tier Values" columns="1" id="tiersection" >
+                <apex:inputField value="{!acc.GE_OG_Buss_Tier1__c}" id="val1"  />
+                <apex:inputField value="{!acc.GE_OG_Buss_Tier2__c}" id="val2" />
+                <apex:inputField value="{!acc.GE_OG_Buss_Tier3__c}" id="val3"  />
+                <apex:inputField value="{!acc.GE_OG_Buss_Tier4__c}" id="val5" / > 
+
+                <apex:inputField value="{!acc.GE_PW_Select_Type_of_Business__c}" id="val4">
+                    <apex:actionSupport event="onchange" action="{!onchangeType_of_Business}" reRender="block1" status="actStatusId"/>
+                </apex:inputField>
+            </apex:pageblockSection>            
+            
+            <apex:pageBlockSection id="pgId" columns="1" title="Customer Financial Assessment" collapsible="false">                
+            
+                <apex:pageBlockSection columns="1">  
+                    <div><B>Level 1 Criteria</B></div>                                    
+                    <div style="color:#0000FF">
+                        <p> Has the customer accepted Cash-in-Advance terms and the initial transaction size is less than $50,000 USD? And/Or, will this be a credit card transaction? </p>
+                    </div>(By clicking on the checkbox, you will be selecting the option as "Yes" and by leaving the value unchecked, it will be selected as "No")   
+                    
+                    <apex:inputCheckbox value="{!creditq1}"> 
+                        <apex:actionSupport event="onclick" rerender="pgId" status="actStatusId"/>
+                    </apex:inputCheckbox>
+                </apex:pageBlockSection>
+                
+                <apex:pageBlockSection columns="1" rendered="{!(RiskType == 'Low')}">       
+                    <style>
+                        a:hover {
+                        background:#ffffff; /*BG color is a must for IE6*/
+                        text-decoration:none;
+                        } 
+                        a.tooltip span {
+                        display:none; 
+                        padding:2px 3px; 
+                        margin-left:8px; 
+                        width:250px;
+                        }
+                        a.tooltip:hover span{
+                        display:inline; 
+                        position:absolute; 
+                        background:#FFC; 
+                        border:1px solid #cccccc; 
+                        color:#000000;
+                        }
+                    </style>                      
+                    <div style="color:#0000FF">Does the initial transaction size meet the PL defined “Fast Lane” criteria? 
+                        <a class="tooltip" target="_blank"><img src="{!$Resource.helptxt}"/> 
+                            <span>{!$ObjectType.GE_OG_Finance_Details__c.Fields.GE_OG_Fast_Lane_Criteria__c.inlineHelpText}</span>  
+                        </a>     
+                    </div>(By clicking on the checkbox, you will be selecting the option as "Yes" and by leaving the value unchecked, it will be selected as "No")   
+                    
+                    <apex:inputCheckbox value="{!creditq2}">
+                        <apex:actionSupport event="onclick" rerender="pgId" status="actStatusId"/>
+                    </apex:inputCheckbox>                                                            
+                    
+                </apex:pageBlockSection>
+                
+                <apex:pageBlockSection columns="1" id="Commercial" rendered="{!AND((creditq1 == false),(creditq2 == false),(isCreditLevel2 == true))}">
+                    <hr ></hr>
+                    <div><B>Level 2 Considerations</B></div>
+                    &nbsp;
+                    <div style="color:#0000FF">
+                        
+                        <h6> DOCUMENTATION IS OPTIONAL </h6>
+                    </div>
+                    <div style="color:#0000FF">
+                        <p>  The Credit CoE team will solicit financial information from Dunn &amp; Bradstreet (D&amp;B) upon receipt of your request. In the event that D&amp;B does not have financial information available, the Credit CoE team may request additional financial documentation from you in order to perform a more comprehensive credit review.<br/>
+                            However, if you have relevant financial documentation that will assist with the credit review at this time, you may attach it here.
+                        </p>
+                    </div>
+                    <!--apex:commandButton value="Save" onclick="myFunction2();" reRender="input" /-->  
+                    <apex:pageblockSection id="input"  >
+                        <apex:inputfield value="{!finc.GE_OG_Credit_Line_Request__c}" id="creditlimit" style="width: 200px; height: 40px;"/>
+                        <apex:inputfield value="{!finc.GE_OG_Comment__c}" id="comment" label="Comments" style="width: 400px; height: 40px;" />              
+                    </apex:pageBlockSection>   
+                
+                </apex:pageBlockSection> 
+            
+                <apex:pageBlockSection columns="1" id="level3credit" rendered="{!AND((creditq1 == false),(creditq2 == false),(isCreditLevel2 == false))}">
+                    <hr ></hr>                   
+                    <div><B>Level 3 Additional Data</B></div>
+                    <div style="color:#0000FF">
+                        <p> The Credit CoE team will solicit financial information from Dunn &amp; Bradstreet (D&amp;B) upon receipt of your request.In the event that D&amp;B does not have financial information available, the Credit CoE team will use the information you provide below in order to perform a more comprehensive credit review. <br/>
+                            
+                            Please provide as much information as possible and if you have relevant financial documentation that will assist with the credit review at this time, you may attach it here.
+                        </p>
+                    </div>              
+                    <!--apex:commandButton value="Save" onclick="level3save();" reRender="level3input" /-->
+                    <apex:pageblockSection id="level3input"  columns="3">
+                        <apex:inputfield value="{!finc.GE_OG_Credit_Line_Request__c}" id="creditlimit"/>
+                        <apex:inputfield value="{!finc.GE_OG_Currnt_Yr_Sales__c}" id="csales"/>
+                        <apex:inputfield value="{!finc.GE_OG_Comment__c}"  id="comment" label="comments" />
+                        <apex:inputfield value="{!finc.GE_OG_Approx_of_Employees__c}" id="appemp"/>
+                        <apex:inputfield value="{!finc.GE_OG_Pre_Yr_Sales__c}" id="psales"/>
+                        <br/>                                              
+                        <apex:inputfield value="{!finc.GE_OG_Approx_yrs_in_Business__c}" id="appbus"/>                
+                    </apex:pageBlockSection>                
+                </apex:pageBlockSection>                
+            </apex:pageBlockSection>      
+    
+            <apex:pageblockSection title="VAT Applicable" rendered="{!vatApplicable}" id="vatsection" >
+                <apex:inputField value="{!kycid.GE_HQ_VAT_Tax_ID__c}" id="val5" />
+                <apex:inputField value="{!kycid.GE_HQ_Vat_Reason_Code__c}" id="val6"/>
+                <apex:outputField value="{!vat.GE_PW_VAT_Format__c}"/>
+            </apex:pageblockSection>
+    
+            <apex:pageBlockSection title="Address Details" columns="1">
+                <apex:outputField value="{!acc.GE_HQ_Site_Use_Code__c}"/>
+                <apex:pageblocksection title="Quote To">
+                    <apex:outputField value="{!acc.GE_PW_Street_Quote_To_Sold_To_HQ__c}"/>
+                    <apex:outputField value="{!acc.GE_PW_City_Quote_To_Sold_To_HQ__c}"/>
+                    <apex:outputField value="{!acc.GE_PW_State_Province_Quote_To_Sold_To_HQ__c}"/>
+                    <apex:outputField value="{!acc.GE_PW_Zip_Postal_Code_Quote_To_Sold_ToHQ__c}"/>
+                    <apex:outputField value="{!acc.GE_PW_Country_Quote_To_Sold_To_HQ__c}"/>
+                </apex:pageblocksection>
+        
+                <apex:pageblocksection title="Ship To">
+                    <apex:outputField value="{!acc.ShippingStreet}"/>
+                    <apex:outputField value="{!acc.ShippingCity}"/>
+                    <apex:outputField value="{!acc.ShippingState}"/>
+                    <apex:outputField value="{!acc.ShippingPostalCode}"/>
+                    <apex:outputField value="{!acc.ShippingCountry}"/>
+                </apex:pageblocksection>
+                
+                <apex:pageblocksection title="Bill To">
+                    <apex:outputField value="{!acc.BillingStreet}"/>
+                    <apex:outputField value="{!acc.BillingCity}"/>
+                    <apex:outputField value="{!acc.BillingState}"/>
+                    <apex:outputField value="{!acc.BillingPostalCode}"/>
+                    <apex:outputField value="{!acc.BillingCountry}"/>
+                </apex:pageblocksection>
+                <!--<apex:outputText >
+                <div style="color:#0000FF">
+                <p>
+                The Credit CoE team will solicit financial information from Dunn &amp; Bradstreet (D&amp;B) upon receipt of your request. In the event that D&amp;B does not have financial information available, the Credit CoE team may request additional financial documentation from you in order to perform a more comprehensive credit review. However, if you have relevant financial documentation that will assist with the credit review at this time, you may attach it here.
+                </p>
+                </div>
+                </apex:outputText>-->               
+            </apex:pageBlockSection>
+            
+            <apex:pageblockButtons >
+                <apex:commandButton value="Submit" action="{!Submit}" rerender="time" style="centre" >
+                </apex:commandButton>
+                <apex:commandButton value="Cancel" action="{!GoBack}"/>
+            </apex:pageblockbuttons>
+        </apex:pageBlock>
+    </apex:form>           
+</apex:page>

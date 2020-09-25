@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Role xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseAccessLevel>Read</caseAccessLevel>
+    <contactAccessLevel>Edit</contactAccessLevel>
+    <description>EN-ES-SAL Sales</description>
+    <mayForecastManagerShare>false</mayForecastManagerShare>
+    <name>EN-ES-SAL Sales</name>
+    <opportunityAccessLevel>Read</opportunityAccessLevel>
+    <parentRole>GEOGAdmin</parentRole>
+</Role>

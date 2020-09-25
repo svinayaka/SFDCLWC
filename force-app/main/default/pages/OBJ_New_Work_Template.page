@@ -1,0 +1,1 @@
+<apex:page standardController="SVMXC__Task_Template__c" extensions="COMM_Controller" tabStyle="SVMXC__Task_Template__c" showheader="true" action="{!CreateWorkTemplate}" />

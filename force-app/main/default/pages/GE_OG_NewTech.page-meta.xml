@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>32.0</apiVersion>
+    <availableInTouch>false</availableInTouch>
+    <confirmationTokenRequired>false</confirmationTokenRequired>
+    <description>R- ?? -  Used to create a new Employee technician for this group.  Limits the number of fields displayed. also has error message for improper SSO</description>
+    <label>GE_OG_NewTech</label>
+    <packageVersions>
+        <majorNumber>15</majorNumber>
+        <minorNumber>20000</minorNumber>
+        <namespace>SVMXC</namespace>
+    </packageVersions>
+</ApexPage>

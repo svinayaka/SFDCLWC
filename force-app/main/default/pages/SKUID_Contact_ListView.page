@@ -1,0 +1,5 @@
+<apex:page standardController="Contact" recordSetVar="c"
+
+extensions="skuid.Redirects" action="{!redirect}?page=GEOG_Sales_ContactList">
+
+</apex:page>

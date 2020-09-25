@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Role xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseAccessLevel>None</caseAccessLevel>
+    <contactAccessLevel>Edit</contactAccessLevel>
+    <description>OG-TMS-GM</description>
+    <mayForecastManagerShare>false</mayForecastManagerShare>
+    <name>OG-TMS-GM</name>
+    <opportunityAccessLevel>Edit</opportunityAccessLevel>
+    <parentRole>OG_TMS_Admin</parentRole>
+</Role>

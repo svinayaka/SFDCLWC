@@ -1,0 +1,9 @@
+<apex:page >
+<a href="/500/e?nooverride=1&RecordType=012120000019DkE&retURL=%2F500%2Fo" target="_top">
+<apex:image url="{!$Resource.PriceConcessionBanner}"/>
+</a>
+<br/>
+<a href="{!URLFOR($Resource.PriceConcessionNote)}" target="_blank">Click here for more information.</a>
+<br/>
+
+</apex:page>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TBG__c</fullName>
+    <externalId>false</externalId>
+    <label>TBG THD</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>8RD</fullName>
+                <default>false</default>
+                <label>8RD</label>
+            </value>
+            <value>
+                <fullName>10RD</fullName>
+                <default>false</default>
+                <label>10RD</label>
+            </value>
+            <value>
+                <fullName>VAM</fullName>
+                <default>false</default>
+                <label>VAM</label>
+            </value>
+            <value>
+                <fullName>STC - 8RD</fullName>
+                <default>false</default>
+                <label>STC - 8RD</label>
+            </value>
+            <value>
+                <fullName>LTC - 8RD</fullName>
+                <default>false</default>
+                <label>LTC - 8RD</label>
+            </value>
+            <value>
+                <fullName>VAGT AC</fullName>
+                <default>false</default>
+                <label>VAGT AC</label>
+            </value>
+            <value>
+                <fullName>MMS</fullName>
+                <default>false</default>
+                <label>MMS</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

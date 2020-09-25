@@ -1,0 +1,189 @@
+<apex:page standardController="GE_HQ_Acc_AccPlan_Rel__c" extensions="GEHQAccountSearchPageController" tabStyle="Account" id="pageId">
+
+<script type="text/javascript">
+        
+        function validate_Data(cityval,accountnameval,dunsvalue,countryval,stateval,phoneval)
+        {
+                      
+            var city = document.getElementById(cityval).value;
+            var accname = document.getElementById(accountnameval).value;
+            var duns = document.getElementById(dunsvalue).value;
+            var country = document.getElementById(countryval).value;
+            var state = document.getElementById(stateval).value;
+            var phone= document.getElementById(phoneval).value;
+            
+            if(city.length < 2 && accname.length < 2 && duns.length < 2 && country.length < 2 && state.length < 2 && phone.length < 2){
+                alert('Please enter a search string at least 2 characters long.');
+                return false;
+            }
+            else    {
+            actSrch();        
+            return false;
+            }
+          }
+          
+</script> 
+
+<apex:form id="searchform">
+<!-- <script language="javascript">
+ function CheckSubmit() {
+if (event.keyCode == 13) {
+document.getElementById('searchId').focus();
+}
+}
+</script> -->
+
+       
+
+<apex:sectionHeader title="Account Search" />
+<!-- <apex:PanelGrid columns="6" id="panel" cellpadding="2"> -->
+<apex:pageBlock >
+<apex:pageBlockSection columns="10">
+    <apex:outputLabel value="Search Type:"></apex:outputLabel>
+     <apex:selectRadio value="{!AccountType}" onclick="callMyGEAccountMethod();" id="radio" onselect="true" tabindex="0">
+            <apex:selectOptions value="{!accountsType}"/>
+     </apex:selectRadio>
+</apex:pageBlockSection>
+</apex:pageBlock>
+
+<apex:actionFunction action="{!search}" name="actSrch" rerender="pageblock" status="Searching"/>
+<apex:actionFunction action="{!myGEAccount}" name="callMyGEAccountMethod" rerender="searchform">
+</apex:actionFunction>
+
+<apex:pageBlock rendered="{!isGEAccount==false}" id="pageBlockId">
+<apex:PanelGrid columns="6" id="panelId" cellpadding="2"> 
+<apex:outputLabel value="Account Name: "></apex:outputLabel>
+<apex:inputText id="AccountNameId" value="{!searchText}" size="40" style="height:13px;font-size:11px;"></apex:inputText>
+
+<apex:outputLabel value="DUNS Number: "></apex:outputLabel>
+<apex:inputText id="DUNSNumber" value="{!dunsNumber}" size="40" style="height:13px;font-size:11px;"></apex:inputText>
+
+<apex:outputLabel value="City:"></apex:outputLabel>
+<apex:inputText id="City" value="{!city}" size="40" style="height:13px;font-size:11px;"></apex:inputText>
+
+<apex:outputLabel value="Country:"></apex:outputLabel>
+<apex:inputText id="Country" value="{!country}" size="40" style="height:13px;font-size:11px;"></apex:inputText>
+
+<apex:outputLabel value="State:"></apex:outputLabel>
+<apex:inputText id="State" value="{!state}" size="40" style="height:13px;font-size:11px;"></apex:inputText>
+
+<apex:outputLabel value="Phone:"></apex:outputLabel>
+<apex:inputText id="Phone" value="{!phone}" size="40" style="height:13px;font-size:11px;"></apex:inputText>
+
+<!--<apex:outputLabel value="Sales Region:"></apex:outputLabel>-->
+<!--  <apex:inputText id="SalesRegion" value="{!salesRegion}" size="40" style="height:13px;font-size:11px;"></apex:inputText> -->
+<!--<apex:selectList size="1" value="{!salesRegion}" >
+    <apex:selectOptions value="{!accSalesRegions}" />
+    
+    </apex:selectList> -->
+ 
+</apex:panelGrid>
+
+</apex:pageBlock>    
+
+
+<apex:panelGrid columns="7" >
+<!--
+<apex:commandButton action="{!search}" value="Search" rerender="pageblock" status="Searching" rendered="{!isGEAccount == false}"  
+onclick="validate_Data('{!$Component.pageBlockId.City}','{!$Component.pageBlockId.AccountNameId}','{!$Component.pageBlockId.DUNSNumber}','{!$Component.pageBlockId.Country}','{!$Component.pageBlockId.State}','{!$Component.pageBlockId.Phone}');" immediate="true" />
+-->
+<apex:commandButton value="Search"  rendered="{!isGEAccount == false}"  
+onclick="return validate_Data('{!$Component.pageBlockId.City}','{!$Component.pageBlockId.AccountNameId}','{!$Component.pageBlockId.DUNSNumber}','{!$Component.pageBlockId.Country}','{!$Component.pageBlockId.State}','{!$Component.pageBlockId.Phone}');" />
+&nbsp;
+<apex:commandButton action="{!ProcessSelected}" value="Process Selected" id="AddButton"  onclick="return validateSelection1();" status="Adding"/>
+&nbsp;
+<apex:commandButton action="{!Cancel}" value="Cancel"/> 
+&nbsp;
+<apex:actionStatus id="Searching" StartText="   Searching... Please Wait..."/> 
+</apex:panelGrid>
+      
+
+<br/>
+<apex:outputPanel >
+<apex:pageblock id="pageblock"  >
+<apex:messages ></apex:messages>
+<apex:pageBlockSection title="Results" id="results" columns="1" collapsible="true">
+    <apex:outputLabel value="No Account records were found" rendered="{!TotalNoOfAccounts == 0}"> </apex:outputLabel>
+<apex:pageBlockTable value="{!accountResults}" id="TableData" var="a" rendered="{!NOT(ISNULL(accountResults))}">
+<apex:column headerValue="Select All" >
+    
+    <apex:facet name="header">
+      <apex:inputCheckbox id="chkSelectAll"  title="Select All" value="{!chkFlag}" >
+      <apex:actionSupport event="onclick" action="{!chkAllBox}" />
+      </apex:inputCheckbox>
+    </apex:facet>
+ 
+    <apex:selectCheckboxes value="{!Selected}" id="ids" >
+         <apex:selectOption itemvalue="{!a.ID}"  />
+    </apex:selectCheckBoxes>
+
+</apex:column> 
+
+<apex:column headerValue="Account Name">
+<apex:outputLink target="new" value="/{!a.Id}">{!a.Name}</apex:outputLink>
+</apex:column>
+
+<apex:column value="{!a.GE_HQ_DUNS_Number__c}"></apex:column>
+<apex:column value="{!a.GE_HQ_Region_Tier1__c}"></apex:column>
+<apex:column value="{!a.ShippingCity}"></apex:column>
+<apex:column value="{!a.ShippingCountry}"></apex:column>
+<apex:column value="{!a.ShippingState}"></apex:column>
+<apex:column value="{!a.Phone}"></apex:column>
+
+</apex:pageBlockTable>
+</apex:pageBlockSection>
+<!-- Start of Code added by Jayadev for pagination -->
+<apex:pageBlockButtons location="bottom" rendered="{!NOT(ISNULL(accountResults))}">
+        <table width="100%"  rendered="{!NOT(ISNULL(accountResults))}"><tr></tr><tr><td align="left">
+        <apex:commandLink value="<< First" action="{!getFirst}" reRender="pageblock" rendered="{!hasFirst}" />
+        <apex:outputText value="<< First" rendered="{!NOT(hasFirst)}" /> &nbsp;
+        <apex:commandLink value="< Previous" action="{!getPrev}" reRender="pageblock" rendered="{!hasPrev}" />
+        <apex:outputText value="< Previous" rendered="{!NOT(hasPrev)}" /> &nbsp;
+        <apex:commandLink value="Next >" action="{!getNext}" reRender="pageblock" rendered="{!hasNext}" />
+        <apex:outputText value="Next >" rendered="{!NOT(hasNext)}" /> &nbsp;
+        <apex:commandLink value="Last >>" action="{!getLast}" reRender="pageblock" rendered="{!hasLast}" />
+        <apex:outputText value="Last >>" rendered="{!NOT(hasLast)}" /> &nbsp;
+        </td><td align="right">
+        <apex:outputText >Records {!StartRec}-{!EndRec} of {!TotalNoOfAccounts} </apex:outputText>
+        </td></tr></table>
+
+</apex:pageBlockButtons>
+<!-- End of Code added by Jayadev for Pagination -->        
+
+</apex:pageblock>
+</apex:outputPanel>
+</apex:form>
+
+<script type="text/javascript">
+
+    var selectedCount = 0;
+  
+    function validateSelection1()
+    {
+        
+        
+        var inputElem = document.getElementsByTagName("input");
+        for(var i=0; i<inputElem.length; i++)
+        {
+        
+        if(inputElem[i].id.indexOf("ids")!=-1 || inputElem[i].id.indexOf("chkSelectAll")!=-1)
+        {
+            if(inputElem[i].checked==true)
+            {
+            selectedCount=1;
+            }
+        }   
+    }
+    
+    
+      if(selectedCount == 0)
+      {
+          alert('Please select at least one Account');
+          return false;
+      }
+        return true;
+    }
+    
+
+</script>
+</apex:page>

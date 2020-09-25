@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Email_to_Channels_at_works_Community_Alert</fullName>
+        <description>Email to Channels at works Community Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>jim.spearman.1@ge.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>laurence.ricq@ge.com.geclone5</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/Ideas_Email_to_community_experts</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_to_GE_Compass_Expert</fullName>
+        <description>Email to GE Compass Expert</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>nitin.jain@bhge.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/Ideas_Email_to_community_experts</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_to_IDEA_Creator_Alert</fullName>
+        <description>Email to IDEA Creator Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/Ideas_Email_to_creator</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_to_Ideas</fullName>
+        <description>Email to Ideas General Community Experts</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>IdeasGeneralExperts</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/Ideas_Email_to_community_experts</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_to_Ideas_Best_Practice_Experts</fullName>
+        <description>Email to Ideas Best Practice Experts</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>IdeasBestPracticeContest</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/Ideas_Email_to_community_experts</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_to_Ideas_Catalog_Community_Expert</fullName>
+        <description>Email to Ideas Catalog Community Expert</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>dardenle@ge.com.geclone5</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>karina.belli@ge.com.geclone5</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>michelle.chang@ge.com.geclone5</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>rodger.taylor@ge.com.geclone5</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/Ideas_Email_to_community_experts</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_to_Ideas_Commercial_Finance_Community_Expert</fullName>
+        <description>Email to Ideas Commercial Finance Community Expert</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>IdeasCommercialFinanceExperts</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/Ideas_Email_to_community_experts</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_to_Ideas_Creator</fullName>
+        <description>Email to Ideas Creator</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/Ideas_Email_to_creator</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_to_Ideas_Installed_Base_Experts</fullName>
+        <description>Email to Ideas Installed Base Experts</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>IdeasInstalledBaseExperts</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/Ideas_Email_to_community_experts</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_to_Ideas_MCS_NPI_Experts</fullName>
+        <description>Email to Ideas MCS NPI Experts</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>IdeasGEESMCSNPIExpertsGroup</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/Ideas_Email_to_community_experts</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_to_Ideas_Marketing_Experts</fullName>
+        <description>Email to Ideas Marketing Experts</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>IdeasESMarketingExpertsGroup</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/Ideas_Email_to_community_experts</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_to_Ideas_O_G_Experts</fullName>
+        <description>Email to Ideas O&amp;G Experts</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>IdeasOGExperts</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/Ideas_Email_to_community_experts</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_to_Ideas_Opporutniy_Experts</fullName>
+        <description>Email to Ideas Opportunity Experts</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>IdeasOpportunityExperts</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/Ideas_Email_to_community_experts</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_to_Ideas_P_W_Experts</fullName>
+        <description>Email to Ideas P&amp;W Experts</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>nitin.jain@bhge.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/Ideas_Email_to_community_experts</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_to_Ideas_Report_Experts</fullName>
+        <description>Email to Ideas Report Experts</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>IdeasReportsExperts</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/Ideas_Email_to_community_experts</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_to_Ideas_Risk_Experts</fullName>
+        <description>Email to Ideas Risk Experts</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>IdeasRiskExperts</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/Ideas_Email_to_community_experts</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_to_OG_Community_Alert</fullName>
+        <description>Email to OG Community Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>craig.walker.1@ge.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>federica.bernacchioni@ge.com.geclone5</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/Ideas_Email_to_community_experts</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_to_PW_Community_Alert</fullName>
+        <description>Email to PW Community Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>gary.sweeney@ge.com.geclone5</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>joanna.begg@ge.com.geclone5</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/Ideas_Email_to_community_experts</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_ES_Email_to_NPI_Region_Leaders</fullName>
+        <description>Email to NPI Region Leaders</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>IdeasGEESNPIExpertsGroup</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/Idea_Creation_Notification</template>
+    </alerts>
+    <alerts>
+        <fullName>Ideas_Email_to</fullName>
+        <description>Email to Ideas Content Community Experts</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>IdeasContentExperts</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/Ideas_Email_to_community_experts</template>
+    </alerts>
+    <alerts>
+        <fullName>Notify_Idea_Owner_based_on_Comments</fullName>
+        <description>Notify Idea Owner based on Comments</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/Ideas_Email_to_Owner</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Update_Status_for_New_Ideas</fullName>
+        <field>Status</field>
+        <literalValue>Not Yet Reviewed</literalValue>
+        <name>Update Status for New Ideas</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <rules>
+        <fullName>Email to Channels at works Community Expert</fullName>
+        <actions>
+            <name>Email_to_Channels_at_works_Community_Alert</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Idea.CommunityId</field>
+            <operation>equals</operation>
+            <value>Channels at work</value>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Email to OG Community Expert</fullName>
+        <actions>
+            <name>Email_to_OG_Community_Alert</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Idea.CommunityId</field>
+            <operation>equals</operation>
+            <value>Oil &amp; Gas</value>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Notify IDEA Creator based on Status</fullName>
+        <actions>
+            <name>Email_to_IDEA_Creator_Alert</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula>ISCHANGED( Status )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Notify IDEA Owner based on Comments</fullName>
+        <actions>
+            <name>Notify_Idea_Owner_based_on_Comments</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula>ISCHANGED( NumComments )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

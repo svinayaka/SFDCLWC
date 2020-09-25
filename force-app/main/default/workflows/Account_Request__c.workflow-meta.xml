@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Account_Modification_Request_EMAIL_On_Hold_or_Reject_Notification</fullName>
+        <description>Account Modification Request EMAIL - On Hold or Reject Notification</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>dlenergy.esitoops1@ge.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Accounts_and_Contacts_Email_Templates/Account_Modificaton_Pending_User_Review_Notification_NEW</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_to_Account_Modification_Request_Owner_when_Account_Modification_Request_No</fullName>
+        <description>Email to Account Modification Request Owner when Account Modification Request Not Submitted to CMF</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Accounts_and_Contacts_Email_Templates/Account_Modificaton_Pending_User_Review_Notification_NEW</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Account_ID2</fullName>
+        <field>GE_HQ_Account_Request_ID__c</field>
+        <formula>Name</formula>
+        <name>Account ID2</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Account_Mod_Req_Page_Layout_Change</fullName>
+        <description>This changes the page layout when the REQUEST STATUS = &apos;PENDING USER REVIEW&apos;</description>
+        <field>RecordTypeId</field>
+        <lookupValue>ES_Account_Request</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Account Mod Req - Page Layout Change</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Approved_CMF</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>ES_Account_Request_ReadOnly</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Approved-CMF</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_ES_Pagelayout_To_RecordType</fullName>
+        <description>This field update is for  transfering to the &quot;Account Request ReadOnly&quot; Record Type.</description>
+        <field>RecordTypeId</field>
+        <lookupValue>ES_Account_Request_ReadOnly</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>GE_ES_Pagelayout_To_RecordType</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_OG_Comments_Update_AccModify</fullName>
+        <description>Created to update comments field value if it is blank</description>
+        <field>GE_HQ_Nts_Comments__c</field>
+        <formula>&quot;You Can Enter Comments Here&quot;</formula>
+        <name>GE_OG_Comments_Update_AccModify</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>On_Hold_or_Reject_Page_Layout_Change</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>ES_Account_Request</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>On Hold or Reject Page Layout Change</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>SFDC_Request_Status_REJ</fullName>
+        <description>Field update for CMF Request Status of Rejected-CMF.</description>
+        <field>GE_HQ_Request_Status__c</field>
+        <literalValue>Pending User Review</literalValue>
+        <name>SFDC_Request_Status_REJ</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Web_Service_Response_Status_R</fullName>
+        <description>To Update Webservice Response Status reset to None.</description>
+        <field>GE_HQ_WebService_Response_Status__c</field>
+        <name>Web_Service_Response_Status_R</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Webservice_Response_Status_GW</fullName>
+        <description>For CMF Request Status of In Process-CMF</description>
+        <field>GE_HQ_WebService_Response_Status__c</field>
+        <name>Webservice Response Status GW</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Webservice_Response_Status_REJ</fullName>
+        <description>For CMF Request Status of Rejected-CMF (R,E).</description>
+        <field>GE_HQ_WebService_Response_Status__c</field>
+        <name>Webservice Response Status REJ</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>accountrequestidupdate</fullName>
+        <description>Updates this field with the value stored in Name</description>
+        <field>GE_HQ_Account_Request_ID__c</field>
+        <formula>Name</formula>
+        <name>Account Request ID Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>sfdcmodrequeststatus1</fullName>
+        <field>GE_HQ_Request_Status__c</field>
+        <literalValue>Pending CMF</literalValue>
+        <name>SFDC Mod Request Status1</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>sfdcmodrequeststatus2</fullName>
+        <field>GE_HQ_Request_Status__c</field>
+        <literalValue>CMF Approved</literalValue>
+        <name>SFDC Mod Request Status  2</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>sfdcmodrequeststatus3</fullName>
+        <field>GE_HQ_Request_Status__c</field>
+        <literalValue>Pending User Review</literalValue>
+        <name>SFDC Mod Request Status 3</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>sfdcrequeststatusapprovedcmf</fullName>
+        <description>To Update the SFDC &quot; Request Status &quot; field For CMF Request Status of Approved CMF(A,L)</description>
+        <field>GE_HQ_Request_Status__c</field>
+        <literalValue>CMF Approved</literalValue>
+        <name>SFDC Request Status Approved CMF</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>sfdcrequeststatusd</fullName>
+        <description>Field update for CMF Request Status of D.</description>
+        <field>GE_HQ_Request_Status__c</field>
+        <literalValue>CMF Approved</literalValue>
+        <name>SFDC Request Status D</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>sfdcrequeststatusinprocesscmfgw</fullName>
+        <description>To Update the SFDC &quot; Request Status For CMF Request Status of In Process CMF.</description>
+        <field>GE_HQ_Request_Status__c</field>
+        <literalValue>Pending User Review</literalValue>
+        <name>SFDC Request Status In Process CMF GW</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>sfdcrequeststatusn</fullName>
+        <description>To Update SFDC Request Status Field for CMF Request Status of N.</description>
+        <field>GE_HQ_Request_Status__c</field>
+        <literalValue>Pending CMF</literalValue>
+        <name>SFDC Request Status N</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>sfdcrequeststatusreje</fullName>
+        <description>Field update for CMF Request Status of Rejected-CMF (E)</description>
+        <field>GE_HQ_Request_Status__c</field>
+        <literalValue>Pending CMF</literalValue>
+        <name>SFDC Request Status REJ E</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>webserviceresponsestatuse</fullName>
+        <description>To Reset Webservice Response Status reset to None</description>
+        <field>GE_HQ_WebService_Response_Status__c</field>
+        <name>Webservice Response Status E</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>webserviceresponsestatusr</fullName>
+        <description>To Update Webservice Response Status to None</description>
+        <field>GE_HQ_WebService_Response_Status__c</field>
+        <name>Web Service Response Status R</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>webserviceresponsestatusreje</fullName>
+        <description>For CMF Request Status of Rejected-CMF (R).</description>
+        <field>GE_HQ_WebService_Response_Status__c</field>
+        <name>Webservice Response Status REJ E</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <rules>
+        <fullName>Account Modification Request not Submitted to CMF</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>Account_Request__c.GE_HQ_Request_Status__c</field>
+            <operation>equals</operation>
+            <value>New</value>
+        </criteriaItems>
+        <description>Workflow rule to send Email notification to Account Modification Request owner for those account modification requests which are saved but not yet submitted to CMF</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Email_to_Account_Modification_Request_Owner_when_Account_Modification_Request_No</name>
+                <type>Alert</type>
+            </actions>
+            <timeLength>7</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>Account Request ID Populate</fullName>
+        <actions>
+            <name>Account_ID2</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Account_Request__c.Name</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <description>Used to store the value of &quot;NAME&quot; which is a standard field labelled Account Request ID</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Account Request ID field update</fullName>
+        <actions>
+            <name>accountrequestidupdate</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Account_Request__c.Name</field>
+            <operation>notEqual</operation>
+            <value>null</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Approved-CMF Rule</fullName>
+        <actions>
+            <name>Approved_CMF</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Account_Request__c.GE_HQ_CMF_Request_Status__c</field>
+            <operation>equals</operation>
+            <value>Approved-CMF</value>
+        </criteriaItems>
+        <description>If “CMF Request Status equals to “Approved-CMF” then it will changed from Account Request ReadOnly Layout to Account Request Layout editable page layout.</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>CMF Account Request Status Approved-CMF-AL</fullName>
+        <actions>
+            <name>sfdcrequeststatusapprovedcmf</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Account_Request__c.GE_HQ_CMF_Request_Status__c</field>
+            <operation>equals</operation>
+            <value>Approved-CMF</value>
+        </criteriaItems>
+        <description>To Update the SFDC &quot; Request Status &quot; field For CMF Request Status of Approved-CMF (A,L)</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>CMF Account Request Status N</fullName>
+        <actions>
+            <name>sfdcrequeststatusn</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Account_Request__c.GE_HQ_CMF_Request_Status__c</field>
+            <operation>equals</operation>
+            <value>N</value>
+        </criteriaItems>
+        <description>To Update the SFDC &quot; Request Status &quot; field for CMF Request Status of N.</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>CMF Account Request Status On Hold-CMF-GW</fullName>
+        <actions>
+            <name>Account_Modification_Request_EMAIL_On_Hold_or_Reject_Notification</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>On_Hold_or_Reject_Page_Layout_Change</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Webservice_Response_Status_GW</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>sfdcrequeststatusinprocesscmfgw</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Account_Request__c.GE_HQ_CMF_Request_Status__c</field>
+            <operation>equals</operation>
+            <value>On Hold-CMF</value>
+        </criteriaItems>
+        <description>To Update the SFDC &quot; Request Status &quot; field For CMF Request Status of On Hold-CMF(G).</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>CMF Account Request Status Rejected-CMF-RE</fullName>
+        <actions>
+            <name>Account_Modification_Request_EMAIL_On_Hold_or_Reject_Notification</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>On_Hold_or_Reject_Page_Layout_Change</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>SFDC_Request_Status_REJ</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Webservice_Response_Status_REJ</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Account_Request__c.GE_HQ_CMF_Request_Status__c</field>
+            <operation>equals</operation>
+            <value>Rejected-CMF</value>
+        </criteriaItems>
+        <description>To Update the SFDC &quot; Request Status &quot; field and Reset the Web Service Response Status field For CMF Request Status of Rejected-CMF(R,E).</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_ES_Pagelayout_Edit_To_ReadOnly</fullName>
+        <actions>
+            <name>GE_ES_Pagelayout_To_RecordType</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Account_Request__c.GE_HQ_CMF_Request_Status__c</field>
+            <operation>equals</operation>
+            <value>In Process-CMF,N</value>
+        </criteriaItems>
+        <description>This workflow redirects the &quot;Account Request Layout&quot; to &quot;Account Request ReadOnly&quot; pagelayout when the Account Modification Request record is created.</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE_OG_Comments_Update_AccModify</fullName>
+        <actions>
+            <name>GE_OG_Comments_Update_AccModify</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Account_Request__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Account Request,Account Request ReadOnly</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account_Request__c.GE_HQ_Nts_Comments__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <description>Created to update Comments field with default value when it is blank</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>On Hold or Reject Notification</fullName>
+        <actions>
+            <name>Account_Modification_Request_EMAIL_On_Hold_or_Reject_Notification</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Account_Request__c.GE_HQ_Request_Status__c</field>
+            <operation>equals</operation>
+            <value>Pending User Review</value>
+        </criteriaItems>
+        <description>This sends user a notification and changes the page layout to editable.</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+</Workflow>

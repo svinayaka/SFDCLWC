@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Compliance_IRB_Commercial_Approved_CL</fullName>
+        <description>Compliance/IRB &amp; Commercial Approved_CL</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_PRM_Sales_Manager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_New_templates/Compliance_IRB_Commercial_Approved_html</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PRM_Commercial_Line_approved_CL</fullName>
+        <description>GE_PRM_Commercial Line approved_CL</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_PRM_Sales_Manager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_New_templates/Commercial_Line_approved_html</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PRM_Commercial_Line_approved_CL2</fullName>
+        <description>GE_PRM_Commercial Line approved_CL2</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_PRM_Sales_Manager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_New_templates/Commercial_Line_approved_html</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PRM_Compliance_approved_CL</fullName>
+        <description>GE_PRM_Compliance approved_CL</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_PRM_Sales_Manager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_New_templates/Compliance_approved_html</template>
+    </alerts>
+    <alerts>
+        <fullName>GE_PRM_IRB_approved_CL</fullName>
+        <description>GE_PRM_IRB approved_CL</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_PRM_Sales_Manager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_New_templates/IRB_approved_html</template>
+    </alerts>
+    <alerts>
+        <fullName>Master_Appointment_30_days_expiry_CL</fullName>
+        <description>Master Appointment &lt;30 days expiry_CL</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_PRM_Sales_Manager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_New_templates/Master_Appointment_30_days_expiry_html</template>
+    </alerts>
+    <alerts>
+        <fullName>Master_Appointment_60_days_expiry_CL</fullName>
+        <description>Master Appointment &lt;60 days expiry_CL</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_PRM_Sales_Manager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_New_templates/Master_Appointment_60_days_expiry_html</template>
+    </alerts>
+    <alerts>
+        <fullName>Master_Appointment_90_days_expiry_CL</fullName>
+        <description>Master Appointment &lt;90 days expiry_CL</description>
+        <protected>false</protected>
+        <recipients>
+            <field>GE_PRM_Sales_Manager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_New_templates/Master_Appointment_90_days_expiry_html</template>
+    </alerts>
+    <rules>
+        <fullName>GE PRM ChannelApp Approved High_CL</fullName>
+        <actions>
+            <name>Compliance_IRB_Commercial_Approved_CL</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>GE_PRM_IRB_approved_CL</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <description>Created Workflow When Appointment Approved. Risk rating High for Commercial line</description>
+        <formula>And(GE_PRM_Channel_Appointment__r.GE_PRM_Pending_CA_Approvals__c=0,  GE_PRM_Channel_Appointment__r.GE_PRM_Approved_ChannelApp_Approvals__c &gt; 0,  GE_PRM_Channel_Appointment__r.GE_PRM_Need_Info_ChannelApp_Approvals__c  = 0,  GE_PRM_Channel_Appointment__r.GE_PRM_Rejected_ChannelApp_Approvals__c  = 0, NOT(ISPICKVAL(GE_PRM_Channel_Appointment__r.GE_PRM_Risk_rating__c,&apos;&apos;)), ISPICKVAL(GE_PRM_Channel_Appointment__r.GE_PRM_Risk_rating__c,&apos;High&apos;),ISPICKVAL(GE_PRM_Channel_Appointment__r.GE_PRM_Current_Status__c,&apos;Submitted&apos;))</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE PRM CommerApp Approved_CL</fullName>
+        <actions>
+            <name>GE_PRM_Commercial_Line_approved_CL</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(GE_PRM_Channel_Appointment__r.GE_PRM_Approved_CommercialApp_Approvals__c!=0,GE_PRM_Channel_Appointment__r.GE_PRM_Total_Count_CommerApp_Approvals__c!=0,GE_PRM_Channel_Appointment__r.GE_PRM_Approved_CommercialApp_Approvals__c == GE_PRM_Channel_Appointment__r.GE_PRM_Total_Count_CommerApp_Approvals__c, GE_PRM_Channel_Appointment__r.GE_PRM_DOA_generated__c!=true)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>GE PRM CommerApp approved for additional CL_CL</fullName>
+        <actions>
+            <name>GE_PRM_Commercial_Line_approved_CL2</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(GE_PRM_Channel_Appointment__r.GE_PRM_Approved_CommercialApp_Approvals__c!=0,GE_PRM_Channel_Appointment__r.GE_PRM_Total_Count_CommerApp_Approvals__c!=0,GE_PRM_Channel_Appointment__r.GE_PRM_Approved_CommercialApp_Approvals__c == GE_PRM_Channel_Appointment__r.GE_PRM_Total_Count_CommerApp_Approvals__c, GE_PRM_Channel_Appointment__r.GE_PRM_DOA_generated__c==true)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Master Appointment Exp%3C30days_CL</fullName>
+        <actions>
+            <name>Master_Appointment_30_days_expiry_CL</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <description>Master Appointment Expiry&lt;30 days for commercial line</description>
+        <formula>AND(GE_PRM_Channel_Appointment__r.GE_PRM_Expirydate1__c &lt;  TODAY() +30,NOT(ISPICKVAL(GE_PRM_Channel_Appointment__r.GE_PRM_Current_Status__c, &quot;Abandoned&quot;)))</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Master Appointment Exp%3C60days_CL</fullName>
+        <actions>
+            <name>Master_Appointment_60_days_expiry_CL</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <description>Master Appointment Expiry&lt;60 days for commercial line</description>
+        <formula>AND(GE_PRM_Channel_Appointment__r.GE_PRM_Expirydate1__c &lt;  TODAY() +60,NOT(ISPICKVAL(GE_PRM_Channel_Appointment__r.GE_PRM_Current_Status__c, &quot;Abandoned&quot;)))</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Master Appointment Exp%3C90days_CL</fullName>
+        <actions>
+            <name>Master_Appointment_90_days_expiry_CL</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <description>Master Appointment Expiry&lt;90 days for commercial line</description>
+        <formula>AND(GE_PRM_Channel_Appointment__r.GE_PRM_Expirydate1__c &lt;  TODAY() +90,NOT(ISPICKVAL(GE_PRM_Channel_Appointment__r.GE_PRM_Current_Status__c, &quot;Abandoned&quot;)))</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+</Workflow>

@@ -1,0 +1,203 @@
+<apex:page controller="Relationship_HierarchyController" tabStyle="Account">
+<apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" />
+ <style>
+        #col1,#col2{width:45%;display:inline-block;}
+        #col2{align:center;}
+        #sectionId,#sectionId2{height:250px;width:550px;display:inline-block;}
+    </style>
+    
+  <script>
+      function validateIdName1(){
+          var id = document.getElementById("{!$Component.formId.blockId.sectionId.accId}").value;
+          var name = document.getElementById("{!$Component.formId.blockId.sectionId.accName}").value;
+          if(id == '' && name == ''){
+              alert('Both Account Id and Name can not be empty');
+              return false;
+          }
+          else{
+              return true;
+          }
+      }
+      
+      function validateIdName2(){
+          var id = document.getElementById("{!$Component.formId.blockId2.sectionIdRegion.accId2}").value;
+          var name = document.getElementById("{!$Component.formId.blockId2.sectionIdRegion.accName2}").value;
+          if(id == '' && name == ''){
+              alert('Both Account Id and Name can not be empty');
+              return false;
+          }
+          else{
+              return true;
+          }
+      }
+      
+      function validateIdName3(){
+          var id = document.getElementById("{!$Component.formId.blockId3.sectionIdGlobal.accId3}").value;
+          var name = document.getElementById("{!$Component.formId.blockId3.sectionIdGlobal.accName3}").value;
+          if(id == '' && name == ''){
+              alert('Both Account Id and Name can not be empty');
+              return false;
+          }
+          else{
+              return true;
+          }
+      }
+      
+      function validateCountry(){
+          var countryName = document.getElementById("{!$Component.formId.blockId.sectionId.CountryName}").value;
+          
+          if(countryName== '' || countryName== 'None'){
+              alert('Please select Country to create Commerical account');
+              return false;
+          }
+          else{
+              return true;
+          }
+      }
+      
+  </script>
+  <apex:form id="formId">
+  
+  <apex:panelGrid columns="2">
+ <apex:outputPanel style="height:220px;width:540px;" layout="block">
+      <apex:pageBlock id="blockId">
+          <apex:pageblocksection id="sectionId" title="Country Commercial Account" columns="1" collapsible="false">
+               <apex:inputText id="accId" value="{!strAccId1}" label="Account ID:"/>
+               <apex:outputpanel style="font-weight: bold;margin-left: 200px;">OR</apex:outputpanel>
+               <apex:inputText id="accName" value="{!strAccName1}" label="Account Name:"/>
+               <apex:selectList value="{!selectedCountry}" size="1" label="Country" id="CountryName">
+                   <apex:selectOptions value="{!allCountry}"/>
+               </apex:selectList>
+               <apex:outputPanel >
+                   <apex:commandButton value="Search Country Account" onclick="return validateIdName1();" action="{!seacrchForCountry}"/>
+                   <apex:commandButton value="Create Country Account" onclick="return validateCountry();" action="{!populateValuesCountry}"/>
+               </apex:outputPanel>
+          </apex:pageblocksection>
+          
+      </apex:pageBlock>
+  </apex:outputPanel>
+   
+  <apex:outputPanel style="height:200px;width:540px;overflow-y:auto;" layout="block" rendered="{!isCountry}">
+  <!-- <apex:outputPanel style="height:22px;width:540px;" layout="block"> -->
+       <apex:pageBlock >
+       <apex:pageBlockSection columns="2" id="sectionId2" title="Country Commercial Account Details" collapsible="false">
+       <apex:outputText /><apex:outputText />
+           <apex:outputText value="{!lstCountryFinal[0].Id}" label="Account ID"/>
+           <apex:outputText value="{!lstCountryFinal[0].Country_GEOG__c}" label="Country"/>
+           
+           <apex:outputText value="{!lstCountryFinal[0].name}" label="Account Name"/>
+           <apex:outputText value="{!lstCountryFinal[0].Region_GEOG__c}" label="Region"/>
+           
+            <apex:outputText value="{!lstCountryFinal[0].Type}" label="Type"/>
+           <apex:outputText value="{!lstCountryFinal[0].Account_Tier_GEOG__c}" label="Account Tier"/>
+          
+           <apex:outputText value="{!lstCountryFinal[0].Classification__c}" label="Classification"/>
+            <apex:outputText value="{!lstCountryFinal[0].Parent.Name}" label="Parent Relationship"/>
+            
+           <apex:outputText value="{!lstCountryFinal[0].Owner.Name}" label="Owner Name"/>
+           <apex:outputText value="{!lstCountryFinal[0].Member_of_GE_OG__r.name}" label="Member of"/>
+           
+           <apex:outputText />
+       
+       </apex:pageBlockSection>
+       </apex:pageBlock>
+  </apex:outputPanel>
+  </apex:panelGrid>          
+  
+ <apex:panelGrid columns="2">
+ <apex:outputPanel style="height:220px;width:540px;" layout="block">
+      <apex:pageBlock id="blockId2">
+          <apex:pageblocksection id="sectionIdRegion" title="Regional Commercial Account" columns="1" collapsible="false">
+          <apex:outputText />
+               <apex:inputText id="accId2" label="Account ID:" value="{!strAccId2}"/>
+               <apex:outputpanel style="font-weight: bold;margin-left: 260px;">OR</apex:outputpanel>
+               <apex:inputText id="accName2" label="Account Name:" value="{!strAccName2}"/>
+               <apex:outputpanel >
+                   <apex:commandButton value="Search Regional Account" onclick="return validateIdName2();" action="{!seacrchForRegion}"/>
+                   <apex:commandButton value="Create Regional Account" action="{!populateValuesRegion}"/>
+               </apex:outputpanel>
+          </apex:pageblocksection>
+          
+       </apex:pageBlock>
+  </apex:outputPanel>
+   
+  <apex:outputPanel style="height:200px;width:540px;overflow-y:auto" layout="block" rendered="{!isRegional}">
+  <!--<apex:outputPanel style="height:22px;width:540px;" layout="block"> -->
+       <apex:pageBlock >
+       <apex:pageBlockSection columns="2" title="Regional Commercial Account Details" collapsible="false">
+       <apex:outputText /><apex:outputText />
+           <apex:outputText value="{!lstRegionalFinal[0].id}" label="Account ID"/>
+           <apex:outputText value="{!lstRegionalFinal[0].Region_GEOG__c}" label="Region"/>
+           <apex:outputText value="{!lstRegionalFinal[0].name}" label="Account Name"/>
+           <apex:outputText value="{!lstRegionalFinal[0].Account_Tier_GEOG__c}" label="Account Tier"/>
+           <apex:outputText value="{!lstRegionalFinal[0].Type}" label="Type"/>
+           <apex:outputText value="{!lstRegionalFinal[0].Parent.Name}" label="Parent Relationship"/>
+           <apex:outputText value="{!lstRegionalFinal[0].Classification__c}" label="Classification"/>
+           <apex:outputText value="{!lstRegionalFinal[0].Member_of_GE_OG__r.name}" label="Member of"/>
+           <apex:outputText value="{!lstRegionalFinal[0].Owner.Name}" label="Owner Name"/>
+           <apex:outputText /><apex:outputText />
+       
+       </apex:pageBlockSection>
+       </apex:pageBlock>
+  </apex:outputPanel>
+  </apex:panelGrid> 
+  
+  
+  <apex:panelGrid columns="2">
+ <apex:outputPanel style="height:220px;width:540px;" layout="block">
+           <apex:pageBlock id="blockId3">
+    
+          <apex:pageblocksection id="sectionIdGlobal" title="HQ Commercial Account" columns="1" collapsible="false">
+               <apex:outputText />
+               <apex:inputText id="accId3" label="Account ID:" value="{!strAccId3}"/>
+               <apex:outputpanel style="font-weight: bold;margin-left: 260px;">OR</apex:outputpanel>
+               <apex:inputText id="accName3" label="Account Name:" value="{!strAccName3}"/>
+               <apex:outputpanel >
+                   <apex:commandButton value="Search HQ Account" onclick="return validateIdName3();" action="{!seacrchForHQ}"/>
+                   <apex:commandButton value="Create HQ Account" action="{!populateValuesHQ}"/>
+              </apex:outputpanel>
+          </apex:pageblocksection>
+          
+      </apex:pageBlock>
+  </apex:outputPanel>
+   
+  <apex:outputPanel style="height:200px;width:540px;overflow-y:auto" layout="block" rendered="{!isGlobal}">
+  <!--<apex:outputPanel style="height:22px;width:540px;" layout="block"> -->
+       <apex:pageBlock >
+       <apex:pageBlockSection columns="2" title="HQ Commercial Account Details" collapsible="false">
+       <apex:outputText /><apex:outputText />
+           <apex:outputText value="{!lstHQFinal[0].Id}" label="Account ID"/>
+           <apex:outputText value="{!lstHQFinal[0].Region_GEOG__c}" label="Region"/>
+           <apex:outputText value="{!lstHQFinal[0].name}" label="Account Name"/>
+           <apex:outputText value="{!lstHQFinal[0].Account_Tier_GEOG__c}" label="Account Tier"/>
+           <apex:outputText value="{!lstHQFinal[0].Type}" label="Type"/>
+           <apex:outputText value="{!lstHQFinal[0].Member_of_GE_OG__r.name}" label="Member of"/>
+           <apex:outputText value="{!lstHQFinal[0].Classification__c}" label="Classification"/>
+           <apex:outputText value="{!lstHQFinal[0].Owner.Name}" label="Owner Name"/>
+           
+           <br/><br/>
+       
+       </apex:pageBlockSection>
+       </apex:pageBlock>
+  </apex:outputPanel>
+  </apex:panelGrid> 
+  
+  <div align="Center" >
+  <apex:outputPanel layout="block" style="background-color: #8a9ebe;height: 35px;" rendered="{!isLinkable}">
+      <apex:commandButton value="Link Accounts" action="{!linkSelectedAccount}" rendered="{!isLinkable}" style="margin-top:7px;"/>
+  </apex:outputPanel> 
+  </div>    
+    
+
+
+          
+         <!-- <apex:pageblocksection>       
+              Not Finding the right Account, Click on Add new Account &nbsp;&nbsp;<apex:commandButton onClick="AddCommercialAccount('{!searchtext}','{!selectedRegion}','{!selectedCountry}')" value="Add New Commercial Account" rerender="pnl"/>
+              <apex:commandButton onClick="AddHQRegAccount('{!searchtext}')" value="Add New HQ/Regional Account" rerender="pnl"/>
+        </apex:pageblocksection>-->
+        
+      
+      
+      <!--<apex:actionFunction id="seacrchForCountry" name="seacrchForCountry" action="{!seacrchForCountry}" rerender="formId"/>-->
+  </apex:form>
+</apex:page>

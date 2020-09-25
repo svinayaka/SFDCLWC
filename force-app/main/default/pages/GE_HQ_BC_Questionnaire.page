@@ -1,0 +1,245 @@
+<!-- 
+VF Page Name: GEHQBusCourtesy
+Purpose/Overview: A VF Page for Business courtesy Questionner
+Author : Rajkumar  Malla
+Created Date:2/08/2012
+-->
+
+
+<apex:page standardController="GE_HQ_Business_Courtesy__c" extensions="GEHQBusCourtesy" showHeader="true" sidebar="true">
+<script src="/soap/ajax/22.0/connection.js" />
+    <script type="text/javascript">
+        function viewHelpText(evtObj,seltdOptn)
+        {
+          
+        //document.getElementById("divWinMsg").style.visibility="visible";
+
+        
+        if(seltdOptn=='opt1')
+        {
+            document.getElementById("divWinMsg1").style.visibility="visible"; 
+            //document.getElementById("divWinMsg").innerText='';       
+            document.getElementById("divWinMsg1").style.left="710px";
+            document.getElementById("divWinMsg1").style.top="500px";
+ 
+        }
+                  
+        if(seltdOptn=='opt2')
+        {
+            //document.getElementById("divWinMsg").innerText=''; 
+            document.getElementById("divWinMsg2").style.visibility="visible";      
+            document.getElementById("divWinMsg2").style.left="600px";
+            document.getElementById("divWinMsg2").style.top="600px";              
+        }
+        
+        if(seltdOptn=='opt3')
+        {
+            //document.getElementById("divWinMsg").innerText='';  
+            document.getElementById("divWinMsg3").style.visibility="visible";
+            document.getElementById("divWinMsg3").style.left="500px";
+            document.getElementById("divWinMsg3").style.top="600px";              
+        }
+        //document.getElementById("divWinMsg").style.bgcolor="#800080";
+    } 
+    
+    function hideHelpText()
+    {
+        document.getElementById("divWinMsg1").style.visibility="hidden";
+        document.getElementById("divWinMsg2").style.visibility="hidden";
+        document.getElementById("divWinMsg3").style.visibility="hidden";
+    }
+    
+    </script>
+    <apex:sectionHeader title="Edit Business Courtesy" subtitle="{!GE_HQ_Business_Courtesy__c.name}"/>
+    <apex:form >
+        <apex:pageBlock title="Edit Business Courtesy" id="thePageBlock" mode="edit">
+            <apex:pageMessages />
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Save" action="{!save}"/>
+                <apex:commandButton value="Delete" action="{!delete}"/>
+                              
+            </apex:pageBlockButtons>
+            <apex:actionRegion >
+            
+            <apex:pageBlockSection >
+                <Table cellpadding="0" cellspacing="0" width="990" border="0">
+                    <TR><TD>I want to convey a business courtesy to someone who is not a GE employee.</TD></TR>
+                    <TR><TD>What should I do?</TD></TR>
+                    <TR><TD> Answer these questions for immediate guidance.</TD></TR>
+                 </Table>
+            </apex:pageBlockSection>
+
+          
+            
+                <apex:pageBlockSection title="General Information" columns="2">
+                    <apex:inputField value="{!GE_HQ_Business_Courtesy__c.name}"/>
+                    <apex:inputField value="{!GE_HQ_Business_Courtesy__c.GE_HQ_Phone__c}"/>
+                    <apex:inputField value="{!GE_HQ_Business_Courtesy__c.GE_HQ_Req_Dt__c}"/>
+                    <apex:inputField value="{!GE_HQ_Business_Courtesy__c.GE_HQ_Email__c}"/>                    
+                    <apex:inputField value="{!GE_HQ_Business_Courtesy__c.GE_HQ_Buss_Tier__c}"/>
+                    <apex:inputField value="{!GE_HQ_Business_Courtesy__c.GE_HQ_Acc__c}"/>
+                    <apex:inputField value="{!GE_HQ_Business_Courtesy__c.GE_HQ_Buss_Tier1__c}"/>
+                    <apex:inputField value="{!GE_HQ_Business_Courtesy__c.GE_HQ_Oppty__c}"/>
+                    <apex:inputField value="{!GE_HQ_Business_Courtesy__c.GE_HQ_Status_Flag__c}"/>
+                                        
+                    <apex:pageBlockSectionItem rendered="{!GE_HQ_Business_Courtesy__c.GE_HQ_Status_Flag__c == 'In Progress'}">
+                     <apex:outputPanel />
+                     <apex:outputPanel ><apex:image id="Yellow" url="{!URLFOR($Resource.RiskTopicSignalsYellow)}" rendered="{!GE_HQ_Business_Courtesy__c.GE_HQ_Status_Flag__c == 'In Progress'}" width="25" height="25"/> - Yellow </apex:outputPanel>                        
+                    </apex:pageBlockSectionItem>  
+                                       
+                    <apex:pageBlockSectionItem rendered="{!GE_HQ_Business_Courtesy__c.GE_HQ_Status_Flag__c == 'This type of business courtesy does not require legal approval'}">  
+                      <apex:outputPanel />
+                     <apex:outputPanel ><apex:image id="Green" rendered="{!GE_HQ_Business_Courtesy__c.GE_HQ_Status_Flag__c == 'This type of business courtesy does not require legal approval'}" url="{!URLFOR($Resource.RiskTopicSignalsGreen)}"  width="25" height="25"/> - Green</apex:outputPanel>                     
+                    </apex:pageBlockSectionItem>   
+                                  
+                    <apex:pageBlockSectionItem rendered="{!GE_HQ_Business_Courtesy__c.GE_HQ_Status_Flag__c == 'This type of business courtesy requires approval'}">   
+                      <apex:outputPanel />
+                     <apex:outputPanel ><apex:image id="Red" url="{!URLFOR($Resource.RiskTopicSignalsRed)}" rendered="{!GE_HQ_Business_Courtesy__c.GE_HQ_Status_Flag__c == 'This type of business courtesy requires approval'}" width="25" height="25"/> - Red</apex:outputPanel>                    
+                    </apex:pageBlockSectionItem>                 
+                      
+                </apex:pageBlockSection>
+                
+                
+                <apex:pageBlockSection title="Business Courtesy Questions" columns="1">
+                                        
+                    <apex:pageBlockSectionItem >
+                                           
+                        <apex:outputPanel >
+                            <div style="width:100%;"><table><tr><td style="width:700px;">Is the recipient employed by a local, state or federal government?</td><td style="width:200px;"><apex:inputField value="{!GE_HQ_Business_Courtesy__c.GE_HQ_Rept_Emp_Loc__c}">
+                                <apex:actionSupport event="onchange" rerender="thePageBlock" action="{!doSave}" status="status"/>
+                            </apex:inputField></td></tr></table></div>
+                             <!-- <apex:actionStatus  startText="applying value..." id="status"/> -->
+                        </apex:outputPanel>
+ 
+                    </apex:pageBlockSectionItem>
+                    
+                    <apex:pageBlockSectionItem rendered="{!GE_HQ_Business_Courtesy__c.GE_HQ_Rept_Emp_Loc__c == 'No'}" >  
+                                
+                         <apex:outputPanel >
+                            <div style="width:100%;"><table><tr><td style="width:700px;">Is the recipient employed by an organization that is owned or controlled by a local, state, or federal government?"</td><td style="width:200px;"><apex:inputField value="{!GE_HQ_Business_Courtesy__c.GE_HQ_Rept_Emp_Org__c}">
+                            <apex:image url="/resource/1330696237000/HelpTextImg" style="width:10px;height:10px;" onmouseover="javascript:viewHelpText(event,'opt1')" onmouseout="javascript:hideHelpText(event)"/>
+                                        
+                                <apex:actionSupport event="onchange" rerender="thePageBlock" action="{!doSave}"
+                                                    status="status"/>
+                            </apex:inputField></td></tr></table></div>
+                            <!-- <apex:actionStatus startText="applying value..." id="status"/> -->
+                        </apex:outputPanel>    
+                                      
+                   </apex:pageBlockSectionItem>  
+
+
+                    <apex:pageBlockSectionItem rendered="{!GE_HQ_Business_Courtesy__c.GE_HQ_Rept_Emp_Org__c == 'No'}" >  
+                                          
+                        <apex:outputPanel >
+                            <div style="width:100%;"><table><tr><td style="width:700px;">Do you want to pay for travel expenses for someone who is not a GE employee?</td><td style="width:200px;"><apex:inputField value="{!GE_HQ_Business_Courtesy__c.GE_HQ_Travel_Exp__c}">
+                                <apex:actionSupport event="onchange" rerender="thePageBlock" action="{!doSave}"
+                                                    status="status"/>
+                            </apex:inputField></td></tr></table></div>
+                            <!-- <apex:actionStatus startText="applying value..." id="status"/> -->
+                        </apex:outputPanel>                   
+                         
+                   </apex:pageBlockSectionItem>  
+          
+                   <apex:pageBlockSectionItem rendered="{!GE_HQ_Business_Courtesy__c.GE_HQ_Travel_Exp__c == 'No'}" >
+                                                          
+                        <apex:outputPanel >
+                            <div style="width:100%;"><table><tr><td style="width:700px;">In what country will the business courtesy be provided?</td><td style="width:200px;"><apex:inputField value="{!GE_HQ_Business_Courtesy__c.GE_HQ_CountryLkup__c}">
+                                <apex:actionSupport event="onchange" rerender="thePageBlock" action="{!doSave}" status="status" /> 
+                            </apex:inputField></td></tr></table></div>
+                            <!-- <apex:actionStatus startText="applying value..." id="status"/> -->
+                        </apex:outputPanel>                   
+                        
+                   </apex:pageBlockSectionItem>                        
+                   
+                   <apex:pageBlockSectionItem rendered="{!IF(OR(GE_HQ_Business_Courtesy__c.GE_HQ_Sanct_Cnty__c =='True', GE_HQ_Business_Courtesy__c.GE_HQ_CountryFm__c ==''),'False','True')}" >
+                   <!-- <apex:pageBlockSectionItem rendered="{!IF(OR(GE_HQ_Business_Courtesy__c.GE_HQ_CountryFm__c =='CHINA',GE_HQ_Business_Courtesy__c.GE_HQ_CountryFm__c =='INDIA',GE_HQ_Business_Courtesy__c.GE_HQ_CountryFm__c ==''),'False','True')}" >  -->
+                        <!--<apex:outputLabel value="What type of business courtesy would you like to provide?"/>                   -->
+                        <apex:outputPanel >
+                            <div style="width:100%;"><table><tr><td style="width:700px;">What type of business courtesy would you like to provide?</td><td style="width:200px;"><apex:inputField value="{!GE_HQ_Business_Courtesy__c.GE_HQ_Meal_Entertainment__c}">                           
+                            <apex:image url="/resource/1330696237000/HelpTextImg" style="width:10px;height:10px;" onmouseover="javascript:viewHelpText(event,'opt2')" onmouseout="javascript:hideHelpText(event)"/>
+                                <apex:actionSupport event="onchange" rerender="thePageBlock" action="{!doSave}"
+                                                    status="status"/>
+                            </apex:inputField></td></tr></table></div>
+                          <!--  <apex:actionStatus startText="applying value..." id="status"/> -->
+                        </apex:outputPanel>                   
+                        
+                   </apex:pageBlockSectionItem>                          
+                    
+                  <apex:pageBlockSectionItem rendered="{!GE_HQ_Business_Courtesy__c.GE_HQ_Meal_Entertainment__c == 'Meal or entertainment'}" >  
+                       <!--<apex:outputLabel value="Will a representative from GE be present?"/> -->
+                        <apex:outputPanel >
+                           <div style="width:100%;"><table><tr><td style="width:700px;">Will a representative from GE be present?</td><td style="width:200px;"><apex:inputField value="{!GE_HQ_Business_Courtesy__c.GE_HQ_Will_Rep_Fm_GE_Pres__c}">
+                            
+
+<apex:image url="/resource/1330696237000/HelpTextImg" style="width:10px;height:10px;" onmouseover="javascript:viewHelpText(event,'opt3')" onmouseout="javascript:hideHelpText(event)"/>
+                                <apex:actionSupport event="onchange" rerender="thePageBlock" action="{!doSave}" status="status"/>
+                            </apex:inputField></td></tr></table></div>
+                            <!-- <apex:actionStatus startText="applying value..." id="status"/> -->
+                        </apex:outputPanel>                   
+                        
+                   </apex:pageBlockSectionItem>   
+                   
+                   
+                  <apex:pageBlockSectionItem rendered="{!IF(OR(GE_HQ_Business_Courtesy__c.GE_HQ_Meal_Entertainment__c == 'Gift',GE_HQ_Business_Courtesy__c.GE_HQ_Will_Rep_Fm_GE_Pres__c == 'No'),'True','False')}" >  
+                       <!-- <apex:outputLabel value="Do you plan on spending more than $100 a person or do you know that GE has spent more than $200 on the same recipient this year?"/> -->                
+                       <!--<Apex:outputText >Do you plan on spending more than ${!GE_HQ_Business_Courtesy__c.GE_HQ_Threshold_Gift__c} a person, or, to the best of your knowledge, has GE spent more than ${!GE_HQ_Business_Courtesy__c.GE_HQ_Thresholds_Gift_Aggregate__c} on gifts for the same recipient this year?</Apex:outputText>-->
+                        <apex:outputPanel >
+                        <div style="width:100%;"><table><tr><td style="width:700px;">Do you plan on spending more than ${!GE_HQ_Business_Courtesy__c.GE_HQ_Threshold_Gift__c} a person, or, to the best of your knowledge, has GE spent more than ${!GE_HQ_Business_Courtesy__c.GE_HQ_Thresholds_Gift_Aggregate__c} on gifts for the same recipient this year?</td><td style="width:200px;"><apex:inputField value="{!GE_HQ_Business_Courtesy__c.GE_HQ_Plan_Spend_Gift__c}">
+                                <apex:actionSupport event="onchange" rerender="thePageBlock" action="{!doSave}" status="status"/>
+                            </apex:inputField></td></tr></table></div>
+                            <!-- <apex:actionStatus startText="applying value..." id="status"/> -->
+                        </apex:outputPanel>                   
+                         
+                   </apex:pageBlockSectionItem>   
+                   
+                  <apex:pageBlockSectionItem rendered="{!IF(AND(GE_HQ_Business_Courtesy__c.GE_HQ_Meal_Entertainment__c == 'Meal or entertainment',GE_HQ_Business_Courtesy__c.GE_HQ_Will_Rep_Fm_GE_Pres__c == 'Yes'),'True','False')}" >  
+                        <!-- <apex:outputLabel value="Do you plan on spending more then $150 a person?"/> -->
+                        <!--<Apex:outputText >Do you plan on spending more then ${!GE_HQ_Business_Courtesy__c.GE_HQ_Threshold_Events__c} a person?</Apex:outputText>-->
+                        <apex:outputPanel >
+                            <div style="width:100%;"><table><tr><td style="width:700px;">Do you plan on spending more then ${!GE_HQ_Business_Courtesy__c.GE_HQ_Threshold_Events__c} a person?</td><td style="width:200px;"><apex:inputField value="{!GE_HQ_Business_Courtesy__c.GE_HQ_Plan_Spend_Entertainment__c}">
+                                <apex:actionSupport event="onchange" rerender="thePageBlock" action="{!doSave}" status="status"/>
+                            </apex:inputField></td></tr></table></div>
+                            <!-- <apex:actionStatus startText="applying value..." id="status"/> -->
+                        </apex:outputPanel>                   
+                         
+                   </apex:pageBlockSectionItem>    
+                   
+                   <apex:pageBlockSectionItem rendered="{!GE_HQ_Business_Courtesy__c.GE_HQ_Status_Flag__c == 'This type of business courtesy does not require legal approval'}">                                  
+                   <apex:outputText ><apex:image id="Green" url="{!URLFOR($Resource.RiskTopicSignalsGreen)}" width="25" height="25"/>This type of business courtesy does not require legal approval.
+                   <br/><b>&nbsp;Key Reminders :</b>   
+
+                     <ul > 
+                          <li>   All business courtesies must be:
+                                <ul>
+                                    <li>Customary and reasonable;</li>
+                                    <li>Not including adult entertainment;</li>
+                                    <li>Appropriate for GE’s reputation;</li>                                                                
+                                    <li>Non-cash;</li>
+                                    <li>Permitted under the rules of the recipient’s employer;</li>
+                                    <li>Lawful for giver and recipient; and</li>                                                                                                
+                                    <li>Properly documented in Company books and records.</li>                                
+                                </ul>
+                           </li>
+                           <li>Generally, business courtesies should not be offered during the  period between submission of a bid and contract award.</li>
+                           <li>If you have a question about a business courtesy, contact your assigned legal counsel.</li>
+                     </ul>
+                     <b>Special situations:</b><br/>
+                     Facilitating Payment?<br/>
+                     Receiving business courtesies?<br/>
+                     <apex:outputLink value="http://sc.ge.com/*O&G.gifts" style="color:blue;">Click Here</apex:outputLink>                          
+                   </apex:outputText>
+                   
+                   </apex:pageBlockSectionItem> 
+                   
+                   <apex:pageBlockSectionItem rendered="{!GE_HQ_Business_Courtesy__c.GE_HQ_Status_Flag__c == 'This type of business courtesy requires approval'}">   
+                    <apex:outputText ><apex:image id="Red" url="{!URLFOR($Resource.RiskTopicSignalsRed)}" width="25" height="25"/> This type of business courtesy requires approval. <apex:outputLink value="http://sc.ge.com/*O&G.gifts" style="color:blue;"> “Click here to seek approval"</apex:outputLink></apex:outputText>                                   
+                   </apex:pageBlockSectionItem>               
+                             
+                 </apex:pageBlockSection>                 
+            </apex:actionRegion>            
+        </apex:pageBlock>        
+    </apex:form>
+    <div id="divWinMsg1" style="BORDER-RIGHT:#AFC7C7 2px solid; BORDER-TOP:#AFC7C7 2px solid; LEFT:300px; VISIBILITY:hidden; FONT:10pt comic sans ms; BORDER-LEFT:#AFC7C7 2px solid;WIDTH:400px; PADDING-TOP:7px; BORDER-BOTTOM:#AFC7C7 2px solid;POSITION:absolute; TOP:800px; HEIGHT:60px; TEXT-ALIGN:center; z-index:1;background:#BDEDFF;">Employees of any organization that is owned or controlled by a local, state, or federal government (including public utility companies) are considered government employees.</div>
+    <div id="divWinMsg2" style="BORDER-RIGHT:#AFC7C7 2px solid; BORDER-TOP:#AFC7C7 2px solid; LEFT:300px; VISIBILITY:hidden; FONT:10pt comic sans ms; BORDER-LEFT:#AFC7C7 2px solid;WIDTH:400px; PADDING-TOP:7px; BORDER-BOTTOM:#AFC7C7 2px solid;POSITION:absolute; TOP:800px; HEIGHT:60px; TEXT-ALIGN:center; z-index:1;background:#BDEDFF;">Other types of business courtesies include sponsorships, donations, benefits, services, and other items of value given or received by GE employees.</div>
+    <div id="divWinMsg3" style="BORDER-RIGHT:#AFC7C7 2px solid; BORDER-TOP:#AFC7C7 2px solid; LEFT:300px; VISIBILITY:hidden; FONT:10pt comic sans ms; BORDER-LEFT:#AFC7C7 2px solid;WIDTH:400px; PADDING-TOP:7px; BORDER-BOTTOM:#AFC7C7 2px solid;POSITION:absolute; TOP:800px; HEIGHT:60px; TEXT-ALIGN:center; z-index:1;background:#BDEDFF;">If no GE employee  is present for the meal or event, the expense is considered a gift.  If a GE employee  is present, the expense is considered entertainment.</div>    
+</apex:page>

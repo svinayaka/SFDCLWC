@@ -1,0 +1,398 @@
+<apex:page standardController="Account" tabStyle="Account" sidebar="false" extensions="New_Channel_Partner_Access" standardStylesheets="true" >
+    <script src="{!URLFOR($Resource.AngularJS143, 'angular.min.js')}" />
+    <script src="{!URLFOR($Resource.AngularJS143, 'ui-bootstrap-tpls-0.11.0.min.js')}" />
+    <link href="{!URLFOR($Resource.Bootstrap, 'css/bootstrap.min.css')}" rel="stylesheet" />
+    <script type="text/javascript">
+    function checkEmail(email){
+        var regexp = /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i;
+        if (( regexp.test(email))) {
+            return true;
+        } else {
+            return false;
+        }       
+    }
+    function getContacts(callback){
+        var id = "{!Account.Id}";           
+        Visualforce.remoting.Manager.invokeAction(  
+            '{!$RemoteAction.New_Channel_Partner_Access.getContactList}',
+            id,
+            callback,  
+            {escape: false}  
+        );        
+    }
+    function changeEmailR(contact,callback){
+        Visualforce.remoting.Manager.invokeAction(  
+            '{!$RemoteAction.New_Channel_Partner_Access.changeEmail}',
+            contact,contact.email,
+            callback,  
+            {escape: true}  
+        );        
+    }
+    function changeSSOR(contact,callback){
+        Visualforce.remoting.Manager.invokeAction(  
+            '{!$RemoteAction.New_Channel_Partner_Access.changeSSO}',
+            contact,contact.ssoid,
+            callback,  
+            {escape: true}  
+        );        
+    }
+    function activateR(contact,callback){
+        delete contact.$$hashKey;
+        Visualforce.remoting.Manager.invokeAction(  
+            '{!$RemoteAction.New_Channel_Partner_Access.activate}',
+            contact,
+            callback,  
+            {escape: true}  
+        );        
+    }
+    angular.module('partnerAccess', ['ui.bootstrap'])
+    .factory('getContactList',function($q,$rootScope){  
+        var factory = {};  
+        factory.getData = function(){  
+            var deferred = $q.defer();  
+            getContacts(function(result){  
+                $rootScope.$apply(function(){  
+                    deferred.resolve(result);  
+                });  
+            });  
+            return deferred.promise;  
+        }  
+        return factory;  
+    })
+    .controller('PartnerCtrl',function($scope,getContactList){
+        $scope.showHelp = true;
+        $scope.itemsPerPage = 10;
+        $scope.currentPage = 1;
+        getContactList.getData().then(function(result){
+            $scope.Contacts = result;
+            $scope.totalItems = $scope.Contacts.length;
+            $scope.numPages = Math.ceil($scope.totalItems/$scope.itemsPerPage);
+            $scope.$watch('currentPage + itemsPerPage', function() {
+                var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
+                end = begin + $scope.itemsPerPage;
+                $scope.filteredContacts = $scope.Contacts.slice(begin, end);
+            });
+        });
+        $scope.prims = [{ label: 'Not Primary', val: false }, { label: 'Primary', val: true }];
+        $scope.aCCstats = {!RWstatuses};
+        $scope.Profiles = {!RWprofiles};
+        $scope.alerts = [];
+        $scope.validate = function() {
+            if(checkEmail($scope.selected.email))
+                $scope.emailCheck = true;
+            else
+                $scope.emailCheck = false;
+            if($scope.selected.RWprofile == "--select Access Level--" || ($scope.selected.RWprimary =="true" && $scope.selected.RWprofile == "Sales Person"))
+                $scope.profileSelected = false;
+            else
+                $scope.profileSelected = true;
+            $scope.accstatSelected = true;
+            if($scope.selected.RWaccess == "No Access" || ($scope.selected.upacc == "No Access"&&$scope.selected.RWaccess=="De-Activated"))
+                $scope.accstatSelected = false;
+            if($scope.selected.ssoid==null || $scope.selected.ssoid=='' )
+                $scope.blanksso = true;
+            else
+                $scope.blanksso = false;
+            if($scope.emailCheck&&!$scope.blankSSO&&$scope.accstatSelected&&$scope.profileSelected)
+                $scope.deactivateAction = false;
+            else
+                $scope.deactivateAction = true;
+            $scope.pwresetModalShown = false;
+        };
+        $scope.validate2 = function() {
+            if(checkEmail($scope.selected.email))
+                $scope.emailCheck = true;
+            else
+                $scope.emailCheck = false;
+            if($scope.emailCheck&&$scope.updateEmail!=$scope.selected.email)
+                $scope.deactivateAction2 = false;
+            else
+                $scope.deactivateAction2 = true;
+        };
+        $scope.validate3 = function() {
+            if($scope.selected.ssoid==null || $scope.selected.ssoid=='')
+                $scope.blanksso = true;
+            else
+                $scope.blanksso = false;
+            if($scope.updateSSO!=$scope.selected.ssoid&&$scope.selected.ssoid!=null&&!($scope.selected.ssoid.indexOf(' ') >= 0))
+                $scope.deactivateAction3 = false;
+            else
+                $scope.deactivateAction3 = true;
+        };
+        $scope.openActivate = function(index) {
+            $scope.index = index;
+            $scope.selected = angular.copy($scope.filteredContacts[index]);
+            $scope.upacc = $scope.selected.RWaccess;
+            $scope.validate();
+            $scope.deactivateAction = true;
+            $scope.activateModalShown = !$scope.activateModalShown;
+        };
+        $scope.openEmail = function(index) {
+            $scope.index = index;
+            $scope.selected = angular.copy($scope.filteredContacts[index]);
+            $scope.updateEmail = $scope.selected.email;
+            $scope.validate2();
+            $scope.deactivateAction2 = true;
+            $scope.emailModalShown = !$scope.emailModalShown;
+        };
+        $scope.openSSO = function(index) {
+            $scope.index = index;
+            $scope.selected = angular.copy($scope.filteredContacts[index]);
+            $scope.updateSSO = $scope.selected.ssoid;
+            $scope.validate3();
+            $scope.deactivateAction3 = true;
+            $scope.ssoModalShown = !$scope.ssoModalShown;
+        };
+    }).directive('activateModal', function() {
+        return {
+            restrict: 'E',
+            scope: {
+                show: '=',
+            },
+            replace: true, // Replace with the template below
+            transclude: true, // we want to insert custom content inside the directive
+            link: function(scope, element, attrs) {
+                scope.dialogStyle = {};
+                if (attrs.width)
+                    scope.dialogStyle.width = attrs.width;
+                if (attrs.height)
+                    scope.dialogStyle.height = attrs.height;
+                scope.hideModal = function() {
+                    scope.show = false;
+                };
+                scope.activate = function(cw) {
+                    activateR(cw,function(result, event){
+                        if (event.status) {
+                            if(result.match("ERROR:")){
+                                scope.$parent.alerts = [{type: 'danger', msg: result + " " +cw.conc.Name+ "."}];
+                            } else {
+                                scope.$parent.selected.RWchange = true;
+                                if(result.match("NOTE:" || result.match("PSUBMITTED:"))){
+                                    scope.$parent.selected.RWprimary = true;
+                                    scope.$parent.selected.RWenabled = true;
+                                    result = result.replace("PSUBMITTED:","SUBMITTED:");
+                                } else if (result.match("DEACTIVATED:")){
+                                    scope.$parent.selected.RWprimary = false;
+                                    scope.$parent.selected.RWenabled = false;
+                                } else if (result.match("NSUBMITTED:")){
+                                    scope.$parent.selected.RWenabled = true;
+                                    scope.$parent.selected.RWprimary = false;
+                                    result = result.replace("NSUBMITTED:","SUBMITTED:");
+                                }
+                                scope.$parent.alerts = [{type: 'success', msg: result + " " +cw.conc.Name+ "."}];
+                            }
+                            scope.$parent.filteredContacts[scope.$parent.index] = scope.$parent.selected;
+                            scope.$parent.Contacts[((scope.$parent.currentPage-1)*scope.$parent.itemsPerPage)+scope.$parent.index] = scope.$parent.selected;
+                        } else {
+                            scope.$parent.alerts = [{type: 'danger', msg: event.message}];
+                        }   
+                        scope.hideModal();
+                        scope.$apply();
+                    });
+                };
+            },
+            templateUrl: '{!URLFOR($Resource.PartnerAccessTemplatesR,'activateDialog.txt')}'// See below
+        };
+    }).directive('emailModal', function() {
+        return {
+            restrict: 'E',
+            scope: {
+                show: '=',
+            },
+            replace: true, // Replace with the template below
+            transclude: true, // we want to insert custom content inside the directive
+            link: function(scope, element, attrs) {
+                scope.dialogStyle = {};
+                if (attrs.width)
+                    scope.dialogStyle.width = attrs.width;
+                if (attrs.height)
+                    scope.dialogStyle.height = attrs.height;
+                scope.hideModal = function() {
+                    scope.show = false;
+                };
+                scope.changeEmail = function(cw) {
+                    changeEmailR(cw,function(result, event){
+                        if (event.status) {
+                            scope.$parent.selected.RWchange = true;
+                            scope.$parent.alerts = [{type: 'success', msg: result + " " +cw.conc.Name+ "."}];
+                            scope.$parent.filteredContacts[scope.$parent.index] = scope.$parent.selected;
+                            scope.$parent.Contacts[((scope.$parent.currentPage-1)*scope.$parent.itemsPerPage)+scope.$parent.index] = scope.$parent.selected;
+                        } else {
+                            scope.$parent.alerts = [{type: 'danger', msg: event.message}];
+                        }   
+                        scope.hideModal();
+                        scope.$apply();
+                    });
+                };
+            },
+            templateUrl: '{!URLFOR($Resource.PartnerAccessTemplatesR,'emailDialog.txt')}' // See below
+        };
+    }).directive('ssoModal', function() {
+        return {
+            restrict: 'E',
+            scope: {
+                show: '=',
+            },
+            replace: true, // Replace with the template below
+            transclude: true, // we want to insert custom content inside the directive
+            link: function(scope, element, attrs) {
+                scope.dialogStyle = {};
+                if (attrs.width)
+                    scope.dialogStyle.width = attrs.width;
+                if (attrs.height)
+                    scope.dialogStyle.height = attrs.height;
+                scope.hideModal = function() {
+                    scope.show = false;
+                };
+                scope.changeSSO = function(cw) {
+                    changeSSOR(cw,function(result, event){
+                        if (event.status) {
+                            scope.$parent.selected.RWchange = true;
+                            scope.$parent.alerts = [{type: 'success', msg: result + " " +cw.conc.Name+ "."}];
+                            scope.$parent.filteredContacts[scope.$parent.index] = scope.$parent.selected;
+                            scope.$parent.Contacts[((scope.$parent.currentPage-1)*scope.$parent.itemsPerPage)+scope.$parent.index] = scope.$parent.selected;
+                        } else {
+                            scope.$parent.alerts = [{type: 'danger', msg: event.message}];
+                        }
+                        scope.hideModal();
+                        scope.$apply();
+                    });
+                };
+            },
+            templateUrl: '{!URLFOR($Resource.PartnerAccessTemplatesR,'changessoDialog.txt')}' // See below
+        };
+    });
+    </script>
+    <style>
+        .ng-modal-overlay {
+        /* A dark translucent div that covers the whole screen */
+        position:absolute;
+        z-index:9999;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background-color:#000000;
+        opacity: 0.7;
+        }
+        .ng-modal-dialog {
+        /* A centered div above the overlay with a box shadow. */
+        z-index:10000;
+        position: absolute;
+        width: 50%; /* Default */
+        
+        /* Center the dialog */
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        
+        background-color: #fff;
+        box-shadow: 4px 4px 80px #000;
+        border-radius: 7px;
+        }
+        .ng-modal-dialog-content {
+        padding:10px;
+        text-align: left;
+        }
+    </style>
+    <div ng-app="partnerAccess" >
+        <apex:sectionHeader title="GE Oil & Gas" subtitle="Manage Partner User Access" />
+        <div ng-controller="PartnerCtrl" class="bs" >
+            <div class="jumbotron">
+                <h2>{!Account.Name}</h2><h4>[{!Account.GE_HQ_DUNS_Number__c}]</h4><br/>
+                <h4>{!address}</h4><br/>
+                <h4>This Account <i><mark><b>{!isPartnerAcc}</b></mark></i> a valid Partner Account</h4>
+            </div>
+            <div style="margin: 0 90%;width: 150px;cursor: pointer;" ng-click="showHelp=!showHelp" ng-show="Contacts">
+                <div class="glyphicon glyphicon-leaf"/> Show/Hide Help
+            </div>
+            <div collapse="showHelp" class="check-element animate-hide" style="width: 60%;margin: 0 auto;" >
+                <div class="alert alert-info" role="alert">             
+                    This page will help you manage which Contacts have access to other platforms.<br/>
+                    Only the Channel Sales team should use this page, for their own channel partners.<br/>
+                    <br/>
+                      - It shows all contacts assigned to this account.<br/>
+                      - It shows you where to create an SSO for this contact (click the pencil in the SSO column, click Generate B2B SSO in the popup).<br/>
+                        &nbsp;&nbsp;Once you have a valid SSO, type it into the SSO field for that Contact<br/>
+                      - It lets you edit the contact's email address<br/>
+                      - It lets you request access to a platform (click the orange button, after entering a valid SSO)<br/>
+                      - It shows you if the contact already has access (the platform's button will be green)<br/>
+                      - It shows you if the contact is a Primary contact (the platform button will be blue).<br/>
+                        &nbsp;&nbsp;A Primary contact is someone who can set up other users in Partner+, and is usually the manager of the Channel Partner.<br/>
+                      - If a platform button is white with gray text, then there is no linkage to that platform yet.<br/>
+                      <br/>
+                      Warning:<br/>
+                      - Users cannot share SSOs; do not use one person's SSO for another person.<br/>
+                </div>
+            </div>
+            <alert class="alert-dismissible" ng-repeat="alert in alerts" type="{{alert.type}}" >{{alert.msg}}</alert>
+            <pre style="text-align: center"><b>Displaying page: {{currentPage}} of {{numPages}}. Number of  Contacts: {{totalItems}}</b></pre>
+            <div class="panel panel-default" ng-show="Contacts">
+                <table class="table table-hover">
+                    <thead><tr><th>Name</th><th>Title</th><th>SSO</th><th>Email</th><th>Actions</th></tr></thead>
+                    <tr ng-repeat="Contact in filteredContacts" >
+                        <td style="padding:12px">{{Contact.conc.Name}}</td>
+                        <td style="padding:12px">{{Contact.conc.Title}}</td>
+                        <td style="padding:12px"><i>{{Contact.ssoid}}</i> &nbsp;<span class="glyphicon glyphicon-pencil" style="cursor:pointer;font-size:14px;" ng-click="openSSO($index)" /></td>
+                        <td style="padding:12px"><i>{{Contact.email}}</i> &nbsp;<span class="glyphicon glyphicon-pencil" style="cursor:pointer;font-size:14px;" ng-click="openEmail($index)" /></td>
+                        <td>
+                            <button class="btn btn-primary btn-sm" type="button" ng-show="((Contact.RWprimary==true)||(Contact.RWprimary=='true'))&&(Contact.RWenabled||(Contact.RWenabled=='true'))" ng-disabled="Contact.ssoid==null" ng-click="openActivate($index)" >Partner+ <span class="glyphicon" ng-class="{'glyphicon-ok' : !Contact.RWChange&&Contact.RWenabled,'glyphicon-remove' : !Contact.RWenabled,'glyphicon-time' : Contact.RWchange&&Contact.RWenabled}" style="font-size: 16px;"/></button>
+                            <button class="btn btn-success btn-sm" type="button" ng-show="((Contact.RWprimary==false)||(Contact.RWprimary=='false'))&&(Contact.RWenabled||(Contact.RWenabled=='true'))" ng-disabled="Contact.ssoid==null" ng-click="openActivate($index)" >Partner+ <span class="glyphicon" ng-class="{'glyphicon-ok' : !Contact.RWChange&&Contact.RWenabled,'glyphicon-remove' : !Contact.RWenabled,'glyphicon-time' : Contact.RWchange&&Contact.RWenabled}" style="font-size: 16px;"/></button>
+                            <button class="btn btn-warning btn-sm" type="button" ng-show="(!Contact.RWenabled)&&Contact.ssoid!=null" ng-disabled="(Contact.ssoid==null)||(Contact.ssoid=='')" ng-click="openActivate($index)" >Partner+ <span class="glyphicon glyphicon-remove" style="font-size: 16px;"/></button>
+                            <button class="btn btn-warning btn-sm" type="button" ng-show="(!Contact.RWenabled)&&Contact.ssoid==null" ng-disabled="Contact.ssoid==null" ng-click="openActivate($index)" >Partner+ <span class="glyphicon glyphicon-remove" style="font-size: 16px;"/></button>
+                            <button class="btn btn-default btn-sm" type="button" ng-disabled="true" ng-click="openActivate($index)">eCommerce <span class="glyphicon glyphicon-remove" style="font-size: 16px;"/></button>
+                            <button class="btn btn-default btn-sm" type="button" ng-disabled="true" ng-click="openActivate($index)">Intelliquip <span class="glyphicon glyphicon-remove" style="font-size: 16px;"/></button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <pager total-items="totalItems" ng-model="currentPage" ng-show="Contacts&&(Contacts.length>4)" items-per-page="itemsPerPage"></pager>
+            <div ng-hide="Contacts">
+                <p class="text-center" style="color: red;">No contact records to display</p>
+            </div>
+            <activate-modal show='activateModalShown' >
+                <form name="activateForm">
+                    <div class="form-group" ng-class="has-success">
+                        <label for="primCont" class="control-label">Primary Contact</label>
+                        <select class="form-control" id="primCont" ng-model="selected.RWprimary" ng-change="validate()">
+                            <option ng-repeat="prim in prims" value="{{prim.val}}">{{prim.label}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group" ng-class="{'has-success' : accstatSelected,'has-error' : !accstatSelected}">
+                        <label for="accessstat" class="control-label">Access Status</label>
+                        <select class="form-control" id="accessstat" ng-model="selected.RWaccess" ng-change="validate()">
+                            <option ng-repeat="aCCstat in aCCstats">{{aCCstat}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group" ng-class="{'has-success' : profileSelected,'has-error' : !profileSelected}">
+                        <label for="RWProfile" class="control-label">Profile</label>
+                        <select class="form-control" id="RWProfile" ng-model="selected.RWprofile" ng-change="validate()">
+                            <option ng-repeat="prof in Profiles" >{{prof}}</option>
+                        </select>
+                    </div>
+                </form>
+            </activate-modal>
+            <email-modal show='emailModalShown' width='500px' >
+                <form name="emailForm">
+                    <div class="form-group" ng-class="{'has-success' : !deactivateAction2,'has-error' : deactivateAction2}">
+                        <label for="contactEmail" class="control-label">Email Address</label>
+                        <input type="text" class="form-control" id="contactEmail" name="inputEmail" ng-model="selected.email" placeholder="Enter email" ng-change="validate2()"/>
+                    </div>
+                </form>
+            </email-modal>
+            <sso-modal show='ssoModalShown' width='500px' >
+                <form name="ssoForm">
+                    <div class="form-group" ng-class="{'has-success' : !deactivateAction3,'has-error' : deactivateAction3}">
+                        <label for="contactsso" class="control-label">SSO</label>
+                        <input type="text" class="form-control" id="contactsso" name="inputsso" ng-model="selected.ssoid" placeholder="Enter SSO" ng-change="validate3()"/>
+                    </div>
+                    <div class="form-group" ng-class="{'has-success' : !deactivateAction3,'has-error' : deactivateAction3}" collapse="!blanksso">
+                        <a href="https://www.ge-registrar.com/gecentral/register.jsp?ditbranch=200&loginurl" target="_blank" id="code" type="submit" class="btn btn-warning btn-sm" style="width:150px;"><b>Generate B2B SSO</b></a>
+                    </div>
+                </form>
+            </sso-modal>
+        </div>
+    </div>
+</apex:page>

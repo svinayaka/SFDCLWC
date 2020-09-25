@@ -1,0 +1,72 @@
+<apex:page standardController="SVMXC__Service_Order__c"  extensions="GE_SS_SiRCAM_Cases_Mobilize"  >
+<apex:form >
+
+    <script>
+    function delRec(idvalue) {
+        var con = window.confirm('Are you sure');
+        if(con) {
+            callfunc(idvalue);
+        }     
+        
+    }
+    </script>
+
+    <apex:actionFunction name="callfunc" action="{!deleteRec}" reRender="pbt">
+    <apex:param name="name1" value="" assignTo="{!idval}"/>
+    </apex:actionFunction>
+   <apex:pageBlock id="pbt">
+       <apex:pageBlockTable value="{!lstScamCase}" var="SiRCaM" >
+            
+          <apex:column headerValue="Action" >
+              <apex:outputlink target="_blank" value="/{!SiRCaM.Id}/e" >Edit</apex:outputlink> <!--|&nbsp;
+              <apex:commandLink value="Del" onclick="delRec('{!SiRCaM.Id}');" rerender="pbt"/>-->
+          </apex:column>
+           <apex:column headerValue="Case Number" Width="10%">
+               <apex:outputlink target="_blank" value="/{!SiRCaM.id}" >{!SiRCaM.CaseNumber}</apex:outputlink>
+           </apex:column>
+           
+           <apex:column headerValue="Status" >
+               <apex:outputField value="{!SiRCaM.Status}" />
+           </apex:column>
+           
+           <apex:column >
+            <apex:facet name="header">Type</apex:facet>
+               <apex:outputfield value="{!SiRCaM.Type}" ></apex:outputfield>
+           </apex:column>
+           
+           <apex:column >
+               <apex:facet name="header">Sub Type</apex:facet>
+               <apex:outputField value="{!SiRCaM.GE_ES_Sub_Type__c}" />
+           </apex:column>
+           
+           <apex:column headerValue="Subject" >
+               <apex:outputfield value="{!SiRCaM.Subject}" ></apex:outputfield>
+           </apex:column>
+           
+           <apex:column headerValue="Description" >
+               <apex:outputfield value="{!SiRCaM.Description}" ></apex:outputfield>
+           </apex:column>
+           
+           <apex:column headerValue="Root Cause Details" Width="20%">
+               <apex:outputfield value="{!SiRCaM.GE_SS_Root_Cause_Details__c}" ></apex:outputfield>
+           </apex:column>
+           
+          <apex:column headerValue="Resolution">
+            <apex:outputfield value="{!SiRCaM.GE_Customer_Resolutuion_message__c}" ></apex:outputfield>
+           </apex:column>
+           
+          <apex:column headerValue="Case Creation Date">
+               <apex:outputfield value="{!SiRCaM.GE_SS_Case_Creation_Date__c}" ></apex:outputfield>
+           </apex:column>
+           
+       </apex:pageBlockTable>
+       <apex:panelGrid columns="2">
+           <!--<apex:commandLink value="Show more"/>-->
+           <apex:outputPanel rendered="{!recordSize}">
+           <apex:outputlink target="_blank" value="/apex/GE_SS_SiRCAM_Cases_Mobilize?id={!Aid}&allRec=true" >Go To List ></apex:outputlink>
+           </apex:outputPanel>
+       </apex:panelGrid>
+   </apex:pageBlock>
+
+</apex:form>
+</apex:page>

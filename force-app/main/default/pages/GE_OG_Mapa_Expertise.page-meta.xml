@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>35.0</apiVersion>
+    <availableInTouch>true</availableInTouch>
+    <confirmationTokenRequired>false</confirmationTokenRequired>
+    <description>This page is used by the MapAnything tool to view technician related information like expertise</description>
+    <label>GE_OG_Mapa_Expertise</label>
+    <packageVersions>
+        <majorNumber>15</majorNumber>
+        <minorNumber>40000</minorNumber>
+        <namespace>SVMXC</namespace>
+    </packageVersions>
+</ApexPage>

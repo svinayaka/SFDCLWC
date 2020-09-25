@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingOwnerRules>
+        <fullName>GEEnergySvcAdminstratorsI</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>GE Energy Svc AdminstratorsI</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>GEEnergySvcAdminstrators</roleAndSubordinatesInternal>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>VPOilGas</roleAndSubordinatesInternal>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>GEEnergySvcAdminstratorsI320561</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>GE Energy Svc AdminstratorsI</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>GEEnergySvcAdminstrators</roleAndSubordinatesInternal>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>ENESSALSales</roleAndSubordinatesInternal>
+        </sharedFrom>
+    </sharingOwnerRules>
+</SharingRules>

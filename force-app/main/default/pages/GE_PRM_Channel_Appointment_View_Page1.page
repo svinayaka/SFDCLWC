@@ -1,0 +1,1112 @@
+<!--
+* page Name-----------: GE_PRM_Channel_Appointment_view_Page1 
+* Used Where----------: in ChannelAppointment 
+* Purpose/Overview----: to display channel appointment details
+* Functional Area-----: PRM
+* Author--------------: 
+* Created Date--------:  
+* Test Class Name-----: 
+* Change History -
+* Date Modified : Developer Name     : Method/Section Modified/Added : Purpose/Overview of Change
+-->
+
+<apex:page standardcontroller="GE_PRM_Channel_Appointment__c"  extensions="GE_PRM_Channel_Appointment_Class" action="{!displayCAA}" sidebar="false" showHeader="true" standardstylesheets="true" tabStyle="Appointment__tab">
+    <chatter:feedWithFollowers entityId="{!GE_PRM_Channel_Appointment__c.id}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.PRM_CA_UX_CSS,'PRM_UX_CSS/PRM_UX.css')}"/>   
+    <apex:variable var="isStatusDraft" value="{!IF(GE_PRM_Channel_Appointment__c.GE_PRM_Current_Status__c=='Draft',true,false)}" />
+    <apex:variable var="isnotdummyappt" value="{!IF(GE_PRM_Channel_Appointment__c.GE_PRM_Dummy_Apppointment__c==true,false,true)}" />
+    <apex:variable var="isStatusApproved" value="{!IF(GE_PRM_Channel_Appointment__c.GE_PRM_Current_Status__c=='Approved',true,false)}" />
+    <apex:variable var="isStatusSubmitted" value="{!IF(GE_PRM_Channel_Appointment__c.GE_PRM_Current_Status__c=='Submitted',true,false)}" />
+
+    <apex:variable var="isStatusNotAbandoned" value="{!IF(GE_PRM_Channel_Appointment__c.GE_PRM_Current_Status__c=='Abandoned',false,true)}"/>
+    <apex:variable var="enablecommercialbutton" value="{!IF(GE_PRM_Channel_Appointment__c.GE_PRM_EnableCommercialButton__c==true,true,false)}"/>
+    <apex:variable var="enablecomplaincebutton" value="{!IF(GE_PRM_Channel_Appointment__c.GE_PRM_EnableComplainceButton__c==true,true,false)}"/>
+    <style> 
+        .statuslabel 
+        {  
+        width: 100%;
+        font-weight: 700;
+        font-size: 14px; 
+        color: #666666;
+        white-space: normal;
+        }
+        .AddrowButton
+        {
+        background: #A9A9A9;
+        border: 1px solid #8BA446;
+        display: inline-block;
+        padding: 5px 10px 5px;
+        border-radius: 2px 2px 2px 2px;
+        box-shadow: 0px 1px 2px 0px rgb(173, 173, 173);
+        font-family: Arial;
+        vertical-align: middle;
+        text-decoration: none;
+        background-image:none;
+        color:white;
+        font-size: 1em;
+        }        
+        .AddrowButton:hover 
+        {
+        background: rgb(138, 181, 41);
+        text-decoration: none;
+        color:white;
+        }        
+        .statuschxlabel 
+        {
+        width: 85%; 
+        float: left;
+        font-weight: 600;
+        text-align: left;
+        font-size: 11px;
+        color: #666666;
+        white-space: normal;
+        }        
+        .statuschxfield 
+        {
+        width: 15%;
+        float: right;
+        font-size: 14px;
+        color: #666666;
+        }        
+        .DeleterowButton
+        {
+        background: rgb(204, 0, 0);
+        border: 1px solid #BE2625;
+        display: inline-block;
+        padding: 5px 5px 5px;
+        border-radius: 2px 2px 2px 2px;
+        box-shadow: 0px 1px 2px 0px rgb(173, 173, 173);
+        font-family: Arial;
+        vertical-align: middle;
+        text-decoration: none;
+        background-image:none;
+        color:white;
+        font-size: .9em;
+        margin-left:5px;
+        }        
+        .DeleterowButton:hover 
+        {
+        background: #EE0000;
+        text-decoration: none;
+        color:white;
+        }
+        .RowHeading
+        {
+        border: 0px solid;
+        display: inline-block;
+        padding: 5px 5px 5px;
+        border-radius: 2px 2px 2px 2px;
+        font-family: Arial;
+        vertical-align: middle;
+        text-decoration: none;
+        background-image:none;
+        color:white;
+        font-size: 1.2em;
+        }  
+    </style>
+     <style type="text/css">
+        .custPopup{
+            background-color: white;
+            border-width: 2px;
+            border-style: solid;
+            z-index: 9999;
+            left: 50%;
+            padding:10px;
+            position: absolute;
+            /* These are the 3 css properties you will need to change so the popup 
+            displays in the center of the screen. First set the width. Then set 
+            margin-left to negative half of what the width is. You can add 
+            the height property for a fixed size pop up if you want.*/              
+            border-radius: 7px;    
+            position:absolute;
+            width:800px;
+            top: 1%;
+            left: 50%;
+            margin-left: -400px; 
+            margin-top: -40px;       
+        }
+        .popupBackground{
+            background-color:black;
+            opacity: 0.20;
+            filter: alpha(opacity = 20);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 9998;
+        }
+
+    </style>
+
+    <apex:sectionHeader title="Channel Appointment" subtitle="GE Oil & Gas | Channel Partner Commercial Operations"/>
+    <apex:actionstatus id="counterStatus">
+    <apex:facet name="start">
+        <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb; height:100%;opacity:0.65;width:100%;">
+            <div class="waitingHolder" style="top: 100px; width: 91px;">
+            <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+            <span class="waitingDescription">Loading...</span>
+            </div>
+        </div>
+    </apex:facet>
+   </apex:actionstatus>
+    <apex:form id="frm">
+        <apex:pageMessages rendered="{!!displayPopup }"/> 
+        <body style="background:white;">
+            <table width="900px" border="0px" class="list fixed">
+                <colgroup>
+                    <col width="900px"/>
+                </colgroup>
+                <!-- Save -->
+                <tr id="Save">
+                    <td style="border: 0px;text-align: center;">
+                        
+                        <apex:commandLink value="Edit" action="{!editChannelAppointment}" styleClass="AddrowButton" title="Edit" style="color: white;  margin-bottom: 10px;" rendered="{!AND(OR ($Profile.Name == 'GE_ES Developer' , $Profile.Name=='System Administrator',AND(hasPRMKYCAccess,NOT(complianceNeedmoreInforender)),commManagerrender),OR(AND(isStatusDraft ,isStatusNotAbandoned),complianceNeedmoreInforender,Recalledflag_for_editbuttton))}" />&nbsp; 
+ 
+                        <apex:commandLink value="Add Content" action="{!addcontent}" styleClass="AddrowButton" title="Add Content" style="color: white;  margin-bottom: 10px;" rendered="{!AND(OR ($Profile.Name == 'GE_ES Developer' , $Profile.Name=='System Administrator',hasPRMKYCAccess,commManagerrender),isStatusNotAbandoned)}"/>&nbsp;
+                     <!--   <apex:commandLink value="Abandon" action="{!AbandonChannelAppointment}" rerender="tstpopup,msgpopup" styleClass="AddrowButton" title="Abandon" status="counterStatus" style="color: white;  margin-bottom: 10px;" rendered="{!AND(OR ($Profile.Name == 'GE_ES Developer' , $Profile.Name=='System Administrator',commManagerrender),isStatusNotAbandoned)}"/> -->
+                        <apex:commandLink value="Abandon" action="{!AbandonChannelAppointment}" styleClass="AddrowButton" title="Abandon" status="counterStatus" style="color: white;  margin-bottom: 10px;" rendered="{!AND(OR($Profile.Name == 'GE_ES Developer' , $Profile.Name=='System Administrator',commManagerrender),isStatusNotAbandoned,!IF(GE_PRM_Channel_Appointment__c.GE_PRM_Master_appointment_type__c=='NR/T',True,false))}"/>
+                       
+                       <apex:commandLink value="Recall Compliance" styleClass="AddrowButton" action="{!RecallCompliance}" OnClick="showmessage()" reRender="javascrp" title="Recall/Regenarate Compliance" style="color: white;  margin-bottom: 10px; margin-left:4px;" rendered="{!AND(OR ($Profile.Name == 'GE_ES Developer' , $Profile.Name=='System Administrator',commManagerrender),isStatusSubmitted,NOT(GE_PRM_Channel_Appointment__c.GE_PRM_IsApproved__c),isStatusNotAbandoned,NOT(isStatusApproved),NOT(isStatusDraft))}"/>
+                        <!-- Aler message for recall compliance button - begins -->
+                              
+                             <apex:outputPanel id="javascrp">
+                                  <script>
+                                  function showmessage() 
+                                  {
+                                  
+                                      var r = window.confirm('By Recalling the Compliance Tollgate, all existing CAA records for Compliance will be updated to RECALLED status (including approved). Please confirm you understand & agree to the above.');
+                                           if (r==false)
+                                              {
+                                                 window.location = '/' + channelAppId ; 
+                                              }
+                                   }
+                                </script>
+                            </apex:outputPanel>
+
+                        
+                        <!-- Aler message for recall compliance button - end -->
+                        
+                    </td>
+                </tr>
+                
+                
+                <!-- Status -->
+                <tr style="background: #333366;">                
+                    <td style="padding-left: 10px; font-weight:bold; color: white;vertical-align: middle;border: 0px;">Status</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="fields">
+                            <div class="row">
+                                <table  border="1px" class="list fixed" width="100%">
+                                    <colgroup>
+                                        <col width="20%"/>
+                                        <col width="24%"/>
+                                        <col width="20%"/>
+                                        <col width="18%"/>
+                                        <col width="18%"/>        
+                                    </colgroup>
+                                    <tr>
+                                        <th>Appointment Description</th>
+                                        <th>Compliance Risk Assessment</th>
+                                        <th>KYC Due Diligence</th>
+                                        <th>Partner Input</th>
+                                        <th>Approval Status</th>
+                                    </tr>
+                                    <tr>
+                                        <td style=" border-bottom: 0px;">
+                                            <div class="row">
+                                                <div class="statuschxlabel">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Financial_history__c.label}</div>
+                                                <div class="statuschxfield"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Financial_history__c}"/></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="statuschxlabel">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Performance_reviewnew__c.label}</div>
+                                                <div class="statuschxfield"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Performance_reviewnew__c}"/></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="statuschxlabel">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Product_added__c.label}</div>
+                                                <div class="statuschxfield"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Product_added__c}"/></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="statuschxlabel">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Target_discussion__c.label}<font color="red" size="3"> *</font></div>
+                                                <div class="statuschxfield"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Target_discussion__c}"/></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="statuschxlabel">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Pricing_review__c.label}<font color="red" size="3"> *</font></div>
+                                                <div class="statuschxfield"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Pricing_review__c}"/></div>
+                                            </div>
+                                            <div class="row" style=" border-bottom: 0px;">
+                                                <div class="statuschxlabel">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Commercial_approval__c.label}</div>
+                                                <div class="statuschxfield"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Commercial_approval__c}"/></div>
+                                            </div>
+                                        </td>
+                                        <td style=" border-bottom: 0px;">
+                                            <div class="row">
+                                                <div class="statuschxlabel">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Compliance_qualification__c.label}</div>
+                                                <div class="statuschxfield"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Compliance_qualification__c}"/></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="statuschxlabel">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Spirit_Letter_training__c.label}</div>
+                                                <div class="statuschxfield"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Spirit_Letter_training__c}"/></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="statuschxlabel">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Site_visit__c.label}</div>
+                                                <div class="statuschxfield"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Site_visit__c}"/></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="statuschxlabel">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Financial_Bank_details__c.label}</div>
+                                                <div class="statuschxfield"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Financial_Bank_details__c}"/></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="statuschxlabel">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Attachment_check__c.label}<font color="red" size="3"> *</font></div>
+                                                <div class="statuschxfield"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Attachment_check__c}"/></div>
+                                            </div>
+                                            <div class="row" style=" border-bottom: 0px;">
+                                                <div class="statuschxlabel">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Deloitte_report_5_yeras__c.label}</div>
+                                                <div class="statuschxfield"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Deloitte_report_5_yeras__c}"/></div>
+                                            </div>
+                                        </td>
+                                        
+                                        <td style=" border-bottom: 0px;vertical-align: top;">
+                                            
+                                            <div class="row">
+                                                <div class="statuschxlabel">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Initial_Due_Diligence__c.label}</div>
+                                                <div class="statuschxfield"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Initial_Due_Diligence__c}"/></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="statuschxlabel">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Additional_Due_Diligence__c.label}</div>
+                                                <div class="statuschxfield"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Additional_Due_Diligence__c}"/></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="statuschxlabel">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Deloitte_report_ordered__c.label}</div>
+                                                <div class="statuschxfield"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Deloitte_report_ordered__c}"/></div>
+                                            </div>
+                                            <div class="row" style=" border-bottom: 0px;">
+                                                <div class="statuschxlabel">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Due_diligence_approval__c.label}</div>
+                                                <div class="statuschxfield"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Due_diligence_approval__c}"/></div>
+                                            </div>
+                                        </td>
+                                        
+                                        <td style=" border-bottom: 0px;vertical-align: top;">
+                                            
+                                            <div class="row">
+                                                <div class="statuschxlabel">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Partner_submission__c.label}</div>
+                                                <div class="statuschxfield"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Partner_submission__c}"/></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="statuschxlabel">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Affiliate_dependent__c.label}</div>
+                                                <div class="statuschxfield"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Affiliate_dependent__c}"/></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="statuschxlabel">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Modification_requestnew__c.label}<font color="red" size="3"> *</font></div>
+                                                <div class="statuschxfield"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Modification_requestnew__c}"/></div>
+                                            </div>
+                                            <div class="row" style=" border-bottom: 0px;">
+                                                <div class="statuschxlabel">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Modification_complete__c.label}<font color="red" size="3"> *</font></div>
+                                                <div class="statuschxfield"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Modification_complete__c}"/></div>
+                                            </div>
+                                        </td>
+                                        
+                                        <td style=" border-bottom: 0px;">
+                                            <div class="row">
+                                                <div class="statuschxlabel">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_DOA_generated__c.label}</div>
+                                                <div class="statuschxfield"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_DOA_generated__c}"/></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="statuschxlabel">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_IRB_completed__c.label}<font color="red" size="3"> *</font></div>
+                                                <div class="statuschxfield"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_IRB_completed__c}"/></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="statuschxlabel">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Sales_approval__c.label}</div>
+                                                <div class="statuschxfield"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Sales_approval__c}"/></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="statuschxlabel">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Finance_approval__c.label}</div>
+                                                <div class="statuschxfield"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Finance_approval__c}"/></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="statuschxlabel">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Compliance_approval__c.label}</div>
+                                                <div class="statuschxfield"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Compliance_approval__c}"/></div>
+                                            </div>
+                                            <div class="row" style=" border-bottom: 0px;">
+                                                <div class="statuschxlabel">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Legal_approval__c.label}</div>
+                                                <div class="statuschxfield"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Legal_approval__c}"/></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <!--Master Appointment Overview -->                
+                <tr style="background: #333366;" >                
+                    <td style="padding-left: 10px; font-weight:bold; color: white;vertical-align: middle;border: 0px;">Master Appointment Overview</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="fields">
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Account_DUNS__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Account_DUNS__c}"/></div>
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.Name.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.Name}"/></div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Account_CMF_Status__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Account_CMF_Status__c}"/></div>
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Master_appointment_type__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Master_appointment_type__c}"/></div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Current_Status__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Current_Status__c}"/></div>
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Expirydate1__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Expirydate1__c}"/></div>
+                                
+                            </div>
+                            
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Region_Sales_Channel_Leader__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Region_Sales_Channel_Leader__c}"/></div>
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Tier_2_P_L__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Tier_2_P_L__c}"/></div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Primary_Sales_Channel_Manager__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Primary_Sales_Channel_Manager__c}"/></div>
+                               <!-- <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_BHGE_Region__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_BHGE_Region__c}"/></div>    -->                                                    
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_O_G_Region__c .label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_O_G_Region__c}"/></div>                                                        
+                           </div>
+                            
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Commercial_Manager__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Commercial_Manager__c}"/></div>
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Risk_rating__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Risk_rating__c}"/></div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Date_created__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Date_created__c}"/></div>
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Review_LevelNew__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Review_LevelNew__c}"/></div>
+                            </div>
+                            
+                            <div class="row">                                
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_In_Business_Since__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_In_Business_Since__c}"/></div>
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.Was_Ever_High__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.Was_Ever_High__c}"/></div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_With_GE_since__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_With_GE_since__c}"/></div>
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Last_Compliance_Approved__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Last_Compliance_Approved__c}"/></div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Last_Commercial_Approved__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Last_Commercial_Approved__c}"/></div>                                
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Abandon_Reason__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Abandon_Reason__c}"/></div>                          
+                            </div>
+                            <div class="row">
+                                <div class="label"><div style="margin: 5px;"></div> </div>
+                                <div class="field"><div style="margin: 5px;"></div> </div>                              
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Abandon_Reason_If_Others__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Abandon_Reason_If_Others__c}"/></div>   
+                           </div> 
+                        </div>
+                    </td>
+                </tr>
+                
+                <!--Account Details-->
+                <tr style="background: #333366;">                
+                    <td style="padding-left: 10px; font-weight:bold; color: white; vertical-align: middle;border: 0px;">Account Details</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="fields">
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Account_Name__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Account_Name__c}"/></div>
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Principal_contact__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Principal_contact__c}"/></div>
+                            </div>
+                            
+                            <div class="row">
+                            <apex:variable value="{!IF(GE_PRM_Channel_Appointment__c.GE_PRM_Account_Address__c == "" ,"white" , "#666666")}" var="c"/>
+                            <apex:variable value="{!IF(GE_PRM_Channel_Appointment__c.GE_PRM_Account_Address__c == "" ,"." , GE_PRM_Channel_Appointment__c.GE_PRM_Account_Address__c)}" var="v"/>
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Account_Address__c.label}</div>
+                                 <div class="field"><font color="{!c}"><apex:outputtext value="{!v}"/></font></div>
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Phone__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_PhoneNew__c}"/></div>
+                            </div>
+                            
+                            <div class="row">
+                            <apex:variable value="{!IF(GE_PRM_Channel_Appointment__c.GE_PRM_Account_City__c == "" ,"white" , "#666666")}" var="c"/>
+                            <apex:variable value="{!IF(GE_PRM_Channel_Appointment__c.GE_PRM_Account_City__c == "" ,"." , GE_PRM_Channel_Appointment__c.GE_PRM_Account_City__c)}" var="v"/>
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Account_City__c.label}</div>
+                                <div class="field"><font color="{!c}"><apex:outputtext value="{!v}"/></font></div>
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Account_Mobile__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Account_Mobile__c}"/></div>
+                                
+                            </div>
+                            
+                            <div class="row">
+                            <apex:variable value="{!IF(GE_PRM_Channel_Appointment__c.GE_PRM_Account_Postal_Code__c == "" ,"white" , "#666666")}" var="c"/>
+                            <apex:variable value="{!IF(GE_PRM_Channel_Appointment__c.GE_PRM_Account_Postal_Code__c == "" ,"." , GE_PRM_Channel_Appointment__c.GE_PRM_Account_Postal_Code__c)}" var="v"/>
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Account_Postal_Code__c.label}</div>
+                                <div class="field"><font color="{!c}"><apex:outputtext value="{!v}"/></font></div>
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Account_Email__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Account_Email__c}"/></div>
+                            </div> 
+                            
+                            <div class="row">
+                            <apex:variable value="{!IF(GE_PRM_Channel_Appointment__c.GE_PRM_Account_Country__c == "" ,"white" , "#666666")}" var="c"/>
+                            <apex:variable value="{!IF(GE_PRM_Channel_Appointment__c.GE_PRM_Account_Country__c == "" ,"." , GE_PRM_Channel_Appointment__c.GE_PRM_Account_Country__c)}" var="v"/>
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Account_Country__c.label}</div>
+                                <div class="field"><font color="{!c}"><apex:outputtext value="{!v}"/></font></div>
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_GE_Account_Name__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_GE_Account_Name__c}"/></div>
+                            </div>
+                            
+                            <div class="row">
+                            <apex:variable value="{!IF(GE_PRM_Channel_Appointment__c.GE_PRM_Commercial_Account__c == "" ,"white" , "#666666")}" var="c"/>
+                            <apex:variable value="{!IF(GE_PRM_Channel_Appointment__c.GE_PRM_Commercial_Account__c == "" ,"." , GE_PRM_Channel_Appointment__c.GE_PRM_Commercial_Account__r.Name)}" var="v"/>
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Commercial_Account__c.label}</div>
+                                <div class="field"><font color="{!c}"><apex:outputtext value="{!v}"/></font></div>
+                            </div>
+                            
+                        </div>
+                    </td>
+                </tr>
+                <!--Previous Activity -->
+                <tr style="background: #333366;" id="PreviousActivity">                
+                    <td style="padding-left: 10px; font-weight:bold; color: white; vertical-align: middle;border: 0px;">Previous Activity</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="fields">
+                            <table class="list fixed" border="0px" width="100%">
+                                <colgroup>
+                                    <col width="25%"/>
+                                    <col width="25%"/>
+                                    <col width="25%"/>
+                                    <col width="25%"/>           
+                                    
+                                </colgroup>
+                                <thead>
+                                    <tr style="line-height: 20px;">
+                                        <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700;">User Reference Number </th>
+                                        <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700;">Last Modified By</th>
+                                        <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700;">Tier 2</th>             
+                                        <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700;">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <apex:repeat value="{!afaList1}" var="afa">
+                                        <tr style="font-size:92%;">
+                                            <td style="font-size:92%;"><apex:outputLink value="/{!afa.id}" styleclass="inp" style="height:100px;" target="_blank">{!afa.name}</apex:outputLink></td> 
+                                            <td style="font-size:92%;"><apex:outputField value="{!afa.LastModifiedById}" styleclass="inp" style="height:100px;"/></td>
+                                            <td style="font-size:92%;"><apex:outputField value="{!afa.GE_PRM_Tier_2__c }" styleclass="inp" style="height:100px;font-size:80%"/></td>  
+                                            <td style="font-size:92%;"><apex:outputField value="{!afa.GE_PRM_Status__c}" styleclass="inp" style="height:100px;"/></td> 
+                                        </tr>
+                                    </apex:repeat>
+                                    <apex:repeat value="{!tempList1}" var="tmp">
+                                        <tr style="font-size:92%;">
+                                            <td style="font-size:92%;"><apex:outputLink value="/{!tmp.id}" styleclass="inp" style="height:50px;" target="_blank">{!tmp.name}</apex:outputLink></td> 
+                                            <td style="font-size:92%;"><apex:outputField value="{!tmp.LastModifiedById}" styleclass="inp" style="height:50px;"/></td> 
+                                            <td style="font-size:92%;"><apex:outputField value="{!tmp.GE_PRM_Tier_2_P_L__c }" styleclass="inp" style="height:50px;"/></td> 
+                                            <td style="font-size:92%;"><apex:outputField value="{!tmp.GE_PRM_Current_Status__c}" styleclass="inp" style="height:50px;"/></td> 
+                                        </tr>
+                                    </apex:repeat>
+                                </tbody>
+                            </table>
+                            <apex:panelGrid columns="4">
+                                <br/><apex:commandLink action="{!showmore}" target="_blank">Show All</apex:commandlink>
+                            </apex:panelGrid>
+                        </div>
+                    </td>
+                </tr>
+                
+                <!--Master Appointment Background-->
+                <tr style="background:#333366;">                
+                    <td style="padding-left: 10px; font-weight:bold; color: white; vertical-align: middle;border: 0px;">Master Appointment Background</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="fields">
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Prior_year_orders__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Prior_year_orders__c}"/></div>
+                                <!--<div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Prior_performance_rating__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Prior_performance_rating__c}"/></div>-->
+                                <apex:outputText value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Prior_performance_rating__c}" rendered="false"/>
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Current_yr_orders_target__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Current_yr_orders_target__c}"/></div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Prior_year_commission_paid__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Prior_year_commission_paid__c}"/></div>
+                                <!--<div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Prior_growth_rating__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Prior_growth_rating__c}"/></div>-->
+                                <apex:outputText value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Prior_growth_rating__c}" rendered="false"/>
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Next_yr_orders_target__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Next_yr_orders_target__c}"/></div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Any_past_dues__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Any_past_dues__c}"/></div>
+                                
+                            </div>
+                            
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_If_yes_amount_of_past_dues__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_If_yes_amount_of_past_dues__c}"/></div>
+                                
+                            </div>
+                        </div>
+                    </td>
+                </tr> 
+                
+                <!--Commercial Lines-->
+                <tr style="background: #333366;" id="CommercialLines">                
+                    <td style="padding-left: 10px; font-weight:bold; color: white; vertical-align: middle;border: 0px;">Commercial Lines</td>
+                </tr>
+                <td>
+                    <!--   <apex:commandLink value="Add Commercial Line" action="{!addCommercialLines}" styleClass="AddrowButton" title="Add Row" style="color: white; float: right; margin-bottom: 10px;" rendered="{!AND($Profile.Name!='GE_PRM KYC',isStatusDraft,isnotdummyappt)}"/>-->
+                    <apex:commandLink value="Add Commercial Line" action="{!Additionalcommline}" styleClass="AddrowButton" title="Add Row" style="color: white; float: right; margin-bottom: 10px;" rendered="{!AND(OR ($Profile.Name == 'GE_ES Developer' , $Profile.Name=='System Administrator',commManagerrender),isStatusApproved,isnotdummyappt,NOT(isrenewingapptexists),NOT(CLunderrenew))}"/> 
+                </td>
+                <tr>
+                    <td>
+                        <div class="fields">
+                            <table class="list fixed" border="0px" width="100%">
+                                <colgroup>
+                                    <col width="10%"/>
+                                    <col width="10%"/>
+                                    <col width="10%"/>
+                                    <col width="10%"/>
+                                    <col width="10%"/>
+                                    <col width="10%"/>                                            
+                                    <col width="10%"/>
+                                    <col width="10%"/>
+                                </colgroup>
+                                <thead>
+                                    <tr style="line-height: 20px;">
+                                        <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700;">CommercialLine</th>
+                                        <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700;">Status</th>
+                                        <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700;">Type</th>
+                                        <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700;">Tier 2</th>
+                                        <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700;">Tier 3</th>
+                                        <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700;">Tier 4</th>  
+                                         <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700;">Tier 5</th>                                         
+                                        
+                                        <th  class="aligncenter" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700;">Current Year Orders</th>
+                                        <!--  <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700;">Next Year Orders</th>   -->  
+                                        
+                                        <th  style="font-weight:700;text-align:center;"> Action </th>   
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <apex:repeat value="{!lstcomwrap}" var="item" id="rep">
+                                        <tr>
+                                            <td>
+                                                <div class="label">
+                                                    <!-- <apex:commandLink value="{!item.Name}" action="/apex/GE_PRM_CommercialLine_View?ChannelAppointmentId={!item.GE_PRM_Channel_Appointment__c}&Id={!item.Id}"></apex:commandLink> -->
+                                                    <apex:outputLink value="/apex/GE_PRM_CommercialLine_View?ChannelAppointmentId={!item.c.GE_PRM_Channel_Appointment__c}&Id={!item.c.Id}">{!item.c.Name}</apex:outputLink>
+                                                </div></td>  
+                                            <td><div class="field"><apex:outputfield value="{!item.c.GE_PRM_Status__c}"/> </div></td>
+                                            <td><div class="field"><apex:outputfield value="{!item.c.GE_PRM_Type__c}"/></div></td>
+                                            <td><div class="field"><apex:outputfield value="{!item.c.GE_PRM_Tier_2__c}"/></div></td>
+                                            <td><div class="field"><apex:outputfield value="{!item.c.GE_PRM_Tier_3__c}"/></div></td>
+                                            <td><div class="field"><apex:outputfield value="{!item.c.GE_PRM_Tier_4__c}"/></div></td>    
+                                             <td><div class="field"><apex:outputfield value="{!item.c.GE_PRM_Tier_5__c}"/></div></td>                                         
+                                            <td><div class="field"><apex:outputfield value="{!item.c.GE_PRM_Current_year_target__c}"/></div></td>
+                                            <!--  <td><div class="label"><apex:outputfield value="{!item.GE_PRM_Next_year_target__c}"/></div></td> -->
+                                            <td><div>
+                                             <apex:outputPanel rendered="{!AND(OR ($Profile.Name == 'GE_ES Developer' , $Profile.Name=='System Administrator',commManagerrender),item.nonrenewstr , isStatusNotAbandoned)}"> 
+                                                    <apex:commandLink action="{!cmdNonrenew}" styleClass="AddrowButton" title="Non-Renew" style="color: white; float: right; margin-bottom: 10px;"  > 
+                                                        <apex:param name="cline" value="{!item.c.id}" assignTo="{!clineid}"/>
+                                                        <font size="1">Non-Renew/Terminate </font>
+                                                    </apex:commandlink>
+                                                </apex:outputPanel>
+                                                </div> </td>
+                                            
+                                        </tr>
+                                    </apex:repeat>
+                                </tbody>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+                
+                <!--Commercial Qualification Rationale-->
+                <tr style="background: #333366;">                
+                    <td style="padding-left: 10px; font-weight:bold; color: white; vertical-align: middle;border: 0px;">Commercial Qualification Rationale</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="fields">
+                            <div class="row" style="width:100%">
+                                <div class="label" >{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Commercial_quali_rationale__c.label}</div>
+                                <div class="field" style="position:relative;width:75%;word-wrap:break word;overflow-x:visible;"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Commercial_quali_rationale__c}" 
+                                           html-placeholder="Input comments on qualification & reputation of the channel partner.  Key items to consider:  Have other CPs been considered, what is the value proposition of this specific CP, does the CP have the available funds to represent GE adequately, CP main customers, main revenue drivers." style="white-space: pre-line;" /></div>
+                                                                                                                                                   
+                            </div>
+                            
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Payment_term_requested__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Payment_term_requested__c}"/></div>
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Primary_bank_name_address__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Primary_bank_name_address__c}"/></div>
+                            </div>
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Credit_limit_requested__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Credit_limit_requested__c}"/></div>    
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Primary_bank_account_country__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Primary_bank_account_country__c}"/> </div>
+                            </div> 
+                            
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Financial_statements_uploaded__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Financial_statements_uploaded__c}"/></div>
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Primary_bank_account__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Primary_bank_account__c}"/></div>
+                                
+                            </div>
+                            <div class="row">             
+                                <div class="label" >{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Is_government_cert_uploaded__c.label}</div>             
+                                <div class="field" ><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Is_government_cert_uploaded__c}"/></div>    
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Primary_bank_contact__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Primary_bank_contact__c}"/></div>
+                                
+                            </div> 
+                            
+                            <!--<div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.Commercial_References_Requested_Date__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.Commercial_References_Requested_Date__c}"/></div> 
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.Commercial_References_Received_Date__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.Commercial_References_Received_Date__c}"/></div>
+                            </div>-->
+                        </div>
+                    </td>
+                </tr>
+                <tr id="CommercialTollgate">
+                    <td style="border: 0px;text-align: center;">
+                        <apex:commandLink value="Commercial Tollgate Approvers" action="{!generateCommerApp}" styleClass="AddrowButton" title="Commercial Tollgate Approver" style="color: white;  margin-bottom: 10px;" rendered="{!OR(AND(OR ($Profile.Name == 'GE_ES Developer' , $Profile.Name=='System Administrator',commManagerrender),isnotdummyappt,isStatusNotAbandoned),AND(OR ($Profile.Name == 'GE_ES Developer' , $Profile.Name=='System Administrator',commManagerrender),enablecomplaincebutton))}"/>
+                        <!--   <apex:commandLink value="Commercial Tollgate Approvers" action="{!GenerateaddCommlinesAppr}" styleClass="AddrowButton" title="Commercial Tollgate Approver" style="color: white;  margin-bottom: 10px;" rendered="{!AND(IF(GE_PRM_Channel_Appointment__c.GE_PRM_addtional_CL__c,true,false),$Profile.Name!='GE_PRM KYC')}"/> -->
+                        
+                    </td>
+                </tr>
+                <!--Due Diligence Documentation-->
+                <tr style="background: #333366;">                
+                    <td style="padding-left: 10px; font-weight:bold; color: white; vertical-align: middle;border: 0px;">Due Diligence Documentation</td>
+                </tr>
+                
+                <tr style="background: white">                
+                    <td style="padding-left: 10px; font-weight:bold; color: black; border: 0px;">Standard Due Diligence</td>
+                </tr>
+                
+                <tr>
+                    <td>
+                        <div class="fields">
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Due_diligence_approval_Status__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Due_diligence_approval_Status__c}"/></div>
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_KYC_DD_Approved_Date__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_KYC_DD_Approved_Date__c}"/></div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.Negative_News_Search_Date__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.Negative_News_Search_Date__c}"/></div>
+                               <!-- <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.KYC_DD_Date_Days_since_last_validation__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.KYC_DD_Date_Days_since_last_validation__c}"/></div>
+                                -->
+                            </div>
+                            
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_D_B_Validation__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_D_B_Validation__c}"/></div>
+                              <!--  <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.Negative_News_Days_since_last_validatio__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.Negative_News_Days_since_last_validatio__c}"/></div>
+                               -->
+                            </div>
+                            
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Legal_Procedngs_Chk_Renewal_or_SR__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Legal_Procedngs_Chk_Renewal_or_SR__c}"/></div>
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_If_concerns_identified_comments__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_If_concerns_identified_comments__c}"/></div>
+                            </div>
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Director_Member_Due_Diligence__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Director_Member_Due_Diligence__c}"/></div>
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_If_concerns_identifed_coments_Dir__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_If_concerns_identifed_coments_Dir__c}"/></div>
+                            </div> 
+                            
+                            <div class="row">
+                                <!-- <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Negative_News_Search_Complete__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Negative_News_Search_Complete__c}"/></div> -->
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Financials_analysis_DR_VAR_RSL__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Financials_analysis_DR_VAR_RSL__c}"/></div>
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Negative_News_Search_Finding__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Negative_News_Search_Finding__c}"/></div>
+                            </div> 
+                            
+                            <div class="row">
+                                <!--<div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Financials_analysis_DR_VAR_RSL__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Financials_analysis_DR_VAR_RSL__c}"/></div> -->
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Bank_details_SR__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Bank_details_SR__c}"/></div>
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_If_concerns_identifed_coments_Fin__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_If_concerns_identifed_coments_Fin__c}"/></div>
+                            </div> 
+                            
+                            <div class="row">
+                                <div class="label" style="display:none">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Bank_details_SR__c.label}</div>
+                                <div class="field" style="display:none"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Bank_details_SR__c}"/></div>
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_If_concerns_identified_coments_SR__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_If_concerns_identified_coments_SR__c}"/></div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                
+                <tr style="background: white">                
+                    <td style="padding-left: 10px; font-weight:bold; color: black; vertical-align: middle;border: 0px;">Additional Due Diligence (After Partner Input)</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="fields">
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Branch_Validation__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Branch_Validation__c}"/></div>
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_If_concerns_identifed_coments_Bra__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_If_concerns_identifed_coments_Bra__c}"/></div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Subsidiariies_Validation__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Subsidiariies_Validation__c}"/></div>
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_If_concerns_identifed_coments_Su1__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_If_concerns_identifed_coments_Su1__c}"/></div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Sub_agent_sub_dealer_validation__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Sub_agent_sub_dealer_validation__c}"/></div>
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_If_concerns_identifed_coments_Su2__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_If_concerns_identifed_coments_Su2__c}"/></div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="fields">
+                            
+                            <div class="row" style="width:100%">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Comments__c.label}</div>
+                                <div class="field" style="position:relative;width:75%;word-wrap:break word;overflow-x:visible;" ><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Comments__c}" style="white-space: pre-line;"/></div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                
+                <!--Compliance Risk Assessment -->
+                <tr style="background: #333366;">                
+                    <td style="padding-left: 10px; font-weight:bold; color: white; vertical-align: middle;border: 0px;">Compliance Risk Assessment</td>
+                </tr>
+                <tr id="PDF">
+                    <td style="border: 0px;text-align: center;">
+                        <apex:commandLink value="Send Partner Validation Pdf" action="{!sendPartnerPdf}" styleClass="AddrowButton" title="SendPDF" style="color: white;  margin-bottom: 10px;" rendered="{!AND(OR ($Profile.Name == 'GE_ES Developer' , $Profile.Name=='System Administrator',commManagerrender),isnotdummyappt ,isStatusNotAbandoned)}"/>
+                        &nbsp;
+                        <apex:commandLink value="Send S&L Policy" action="{!sendSLPolicyEmail}" styleClass="AddrowButton" title="SendSLPolicy" style="color: white;  margin-bottom: 10px;" rendered="{!AND(OR ($Profile.Name == 'GE_ES Developer' , $Profile.Name=='System Administrator',commManagerrender),isnotdummyappt,isStatusNotAbandoned)}"/>
+                    </td>
+                </tr>
+                <tr>                
+                    <td>
+                        <div class="fields">
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Mandated_by_End_Customer__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Mandated_by_End_Customer__c}"/></div>
+                            </div>
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Export_Controlled_products__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Export_Controlled_products__c}"/></div>
+                            </div>
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_High_Risk_product_lines__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_High_Risk_product_lines__c}"/></div>
+                            </div>
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Approved_exclusivity_from_P_L__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Approved_exclusivity_from_P_L__c}"/></div>
+                            </div>
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Do_you_sell_to_the_government__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Do_you_sell_to_the_government__c}"/></div>
+                            </div>
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Sell_to_Nuclear_industry__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Sell_to_Nuclear_industry__c}"/></div>
+                            </div>
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Sell_to_Military__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Sell_to_Military__c}"/></div>
+                            </div>
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Export_outside_own_country__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Export_outside_own_country__c}"/></div>
+                            </div>
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Do_you_have_Officers_in_Gov__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Do_you_have_Officers_in_Gov__c}"/></div>
+                            </div>
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Convicted_of_any_felony_crims_r_s__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Convicted_of_any_felony_crims_r_s__c}"/></div>
+                            </div>
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Does_Channel_Partner_have_subsid__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Does_Channel_Partner_have_subsid__c}"/></div>
+                            </div>
+                            <div class="row" style="border:0px; height:30px;">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Des_Chnl_Partner_hv_sb_dea_sbagnt__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Des_Chnl_Partner_hv_sb_dea_sbagnt__c}"/></div>
+                            </div>
+                            <div class="row" style="border:0px; height:30px;">
+                            </div>
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_If_Russia_CIS_WFF__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_If_Russia_CIS_WFF__c}"/></div>
+                            </div>
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_If_Brazil_SR_SC_Core__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_If_Brazil_SR_SC_Core__c}"/></div>
+                            </div>
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_If_Brazil_SR_CMPJ__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_If_Brazil_SR_CMPJ__c}"/></div>
+                            </div>
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Partner_S_L_Status__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Partner_S_L_Status__c}"/></div>                                </div>
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Partner_S_L_Comment__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Partner_S_L_Comment__c}"/></div>
+                            </div>
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Last_Spirit_Letter_signed_date__c.label}</div> 
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Last_Spirit_Letter_signed_date__c}"/></div>
+                            </div>
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Last_Site_visit_signed_date__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Last_Site_visit_signed_date__c}"/></div>
+                            </div>
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Deloitte_report_order_date__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Deloitte_report_order_date__c}"/></div>
+                            </div>
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Last_Deloitte_report_cmpltd_date__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Last_Deloitte_report_cmpltd_date__c}"/></div>
+                            </div>
+                            
+                            <!--<div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.Last_Deloitte_Report_Received_Date__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.Last_Deloitte_Report_Received_Date__c}"/></div>
+                            </div>-->
+                            <apex:outputText value="{!GE_PRM_Channel_Appointment__c.GE_PRM_If_selling_to_govrn_last_training__c}" rendered="false"/>
+                            <!--<div class="row">
+                                
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_If_selling_to_govrn_last_training__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_If_selling_to_govrn_last_training__c}"/></div>
+                            </div>-->
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Partner_Approval__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Partner_Approval__c}"/></div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Partner_Comment__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Partner_Comment__c}"/></div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Partner_s_Reply_Date_Time__c.label}</div>
+                                <div class="field" ><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Partner_s_Reply_Date_Time__c}" /></div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.Commercial_References_Requested_Date__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.Commercial_References_Requested_Date__c}"/></div> 
+                            </div>
+                            
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.Commercial_References_Received_Date__c.label}</div>
+                                <div class="field"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.Commercial_References_Received_Date__c}"/></div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.ICP_Report_Request_Date__c.label}</div>
+                                <div class="field" ><apex:outputField value="{!GE_PRM_Channel_Appointment__c.ICP_Report_Request_Date__c}" /></div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.Last_ICP_Report_Completed_Date__c.label}</div>
+                                <div class="field" ><apex:outputField value="{!GE_PRM_Channel_Appointment__c.Last_ICP_Report_Completed_Date__c}" /></div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>  
+                
+                <!--Branch Office Subsidiary -->
+                <tr style="background: #333366;" id="BranchOffices">                
+                    <td style="padding-left: 10px; font-weight:bold; color: white; vertical-align: middle;border: 0px;">Sub-Affiliate Relationships</td>
+                </tr>
+                
+                <tr>
+                    <td style="border: 0px;">
+                        <table class="list fixed" border="0px" width="100%">
+                            <colgroup>
+                                <col width="20%"/>
+                                <col width="20%"/>
+                                <col width="20%"/>
+                                <col width="20%"/>
+                                <col width="20%"/>
+                            </colgroup>
+                            <thead>
+                                <tr style="line-height: 20px;">
+                                    <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700;">Sub-Affiliate</th>
+                                    <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700;">Type</th>
+                                    <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700;">Legal Name</th>
+                                    <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700;">City</th>
+                                    <th class="alignLeft" style="padding-left: 5px;white-space: normal;text-align: Left; font-weight:700;">Principal Contact</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <apex:repeat value="{!BranchOffices}" var="item">
+                                    <tr>
+                                        <td>
+                                            <div class="label"> <apex:commandLink value="{!item.GE_PRM_Unique_Id__c}" action="/apex/GE_PRM_Channel_BranchOff_View?ChannelAppointmentId={!item.GE_PRM_Channel_Appointment__c}&Id={!item.Id}" ></apex:commandLink>
+                                            </div></td>
+                                        <td><div class="field"><apex:outputfield value="{!item.GE_PRM_Affiliate_dependent_type__c}"/></div></td>
+                                        <td><div class="field"><apex:outputfield value="{!item.GE_PRM_Legal_name__c}"/></div></td>
+                                        <td><div class="field"><apex:outputfield value="{!item.GE_PRM_City__c}"/></div></td>
+                                        <td><div class="field"><apex:outputfield value="{!item.GE_PRM_Prinicipal_Conatct_Text__c}"/></div></td>
+                                        
+                                    </tr>
+                                </apex:repeat>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <!--Compliance Qualification Rationale-->
+                <tr style="background: #333366;">                
+                    <td style="padding-left: 10px; font-weight:bold; color: white; vertical-align: middle;border: 0px;">Compliance Qualification Rationale</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="fields">
+                            <div class="row" style="width:100%">
+                                <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Compliance_qual_rationale__c.label}</div>
+                                <div class="field" style="position:relative;width:75%;word-wrap:break word;overflow-x:visible;"><apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Compliance_qual_rationale__c}" 
+                                                                                                                                                    html-placeholder="Input comments on qualification & reputation of the channel partner.  Key items to consider:  What is the nature of the intermediary's representation on GE, how did we hear about this CP, are there any red flags identified and/or mitigated." style="white-space: pre-line;"/></div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr id="complainceTollgate">
+                    <td style="border: 0px;text-align: center;">
+                        <!--   <apex:commandLink value="Compliance Tollgate Approvers" action="{!generateRisk}" styleClass="AddrowButton" title="Compliance Tollgate Approver" style="color: white;  margin-bottom: 10px;" rendered="OR({!isStatusDraft},TRUE)"/>-->
+                        <apex:commandLink value="Compliance Tollgate Approvers" action="{!GetComplainceApprovers}" styleClass="AddrowButton" title="Compliance Tollgate Approver" style="color: white;  margin-bottom: 10px;" rendered="{!OR(AND(OR ($Profile.Name == 'GE_ES Developer' , $Profile.Name=='System Administrator',commManagerrender),isnotdummyappt,isStatusNotAbandoned),AND(OR ($Profile.Name == 'GE_ES Developer' , $Profile.Name=='System Administrator',commManagerrender),enablecomplaincebutton))}"/>
+                        <!--  <apex:commandLink value="Compliance Tollgate Approvers" action="{!AddnCOmplApprovers}" styleClass="AddrowButton" title="Compliance Tollgate Approver" style="color: white;  margin-bottom: 10px;" rendered="{!AND(IF(GE_PRM_Channel_Appointment__c.GE_PRM_DOA_generated__c,True,false),$Profile.Name!='GE_PRM KYC')}"/>-->
+                    </td>
+                </tr>
+            </table>
+        </body>
+        <apex:outputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Commercial_Start_Date_addCL__c }" style="visibility: hidden;" rendered="false"/> 
+          
+     <!-- Pop-Up Model Window for Abandon Process -->
+     <apex:outputPanel id="tstpopup">       
+        <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!displayPopUp}"/>
+            <apex:outputPanel id="Abandonpopup" styleClass="custPopup" layout="block" rendered="{!displayPopUp}">
+                <b>Please provide the abandon reason.</b><br/><br/> 
+             <apex:pageMessages rendered="{!AbandonMessageFlag}"/>              
+             <div class="row">            
+                   <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Abandon_Reason__c.label}</div>
+                   <div class="label">
+                   <apex:actionRegion >
+                   <apex:inputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Abandon_Reason__c}">
+                   <apex:actionSupport event="onchange" status="PopUpStatus" reRender="Abandonpopup"> 
+                          <apex:actionstatus id="PopUpStatus">
+                              <apex:facet name="start">
+                                   <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb; height:100%;opacity:0.65;width:100%;">
+                                        <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                                        <span class="waitingDescription">Loading...</span>
+                                   </div>
+                               </apex:facet>
+                         </apex:actionstatus></apex:actionsupport>
+                   </apex:inputField></apex:actionRegion>
+                   </div><br/><br/>
+                   <div class="label">{!$ObjectType.GE_PRM_Channel_Appointment__c.Fields.GE_PRM_Abandon_Reason_If_Others__c.label}</div>
+                   <div class="field"><apex:inputField value="{!GE_PRM_Channel_Appointment__c.GE_PRM_Abandon_Reason_If_Others__c}" required="{!GE_PRM_Channel_Appointment__c.GE_PRM_Abandon_Reason__c='Other'}"/></div>
+             </div>             
+            <br/><br/> <br/>
+             <apex:commandLink value="Abandon" action="{!AbandonProcessed}" styleClass="AddrowButton" status="counterStatus" title="Abandon" style="color: white;  margin-bottom: 10px;"/>  &nbsp;&nbsp;&nbsp;&nbsp; 
+        <!--   <apex:commandLink value="Abandon" action="{!AbandonProcessed}" styleClass="AddrowButton" status="counterStatus" title="Abandon" style="color: white;  margin-bottom: 10px;"/>  &nbsp;&nbsp;&nbsp;&nbsp;  -->
+            
+            <apex:commandLink value="Cancel" action="{!CancelAbandon}" styleClass="AddrowButton" status="counterStatus" rerender="tstpopup" title="Cancel" style="color: white;  margin-bottom: 10px;"/>
+        </apex:outputPanel>
+    </apex:outputPanel>  
+    <apex:outputPanel id="msgpopup">
+        <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!displayMsgPopup}"/>
+            <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!displayMsgPopup }">
+                 <b>You cannot Abandon a Channel Appointment with an Approved status. If Contracts are Executed, please follow the NR/T Process to terminate or non-renew this channel appointment.</b><br/><br/> 
+                <apex:commandLink value="Back" action="{!CancelAbandon}" styleClass="AddrowButton" status="counterStatus" rerender="msgpopup" title="Back" style="color: white;  margin-bottom: 10px;"/>
+            </apex:outputPanel>
+     </apex:outputPanel>   
+    </apex:form>
+    
+    <apex:relatedList list="OpenActivities"/>
+    <apex:relatedList list="ActivityHistories"/>
+    <apex:relatedList list="PRM_Content__r"/>
+    <apex:relatedList list="Channel_Appointment_Approvers__r"/>
+ 
+     <apex:relatedList list="CombinedAttachments">
+    <apex:facet name="header">&nbsp;</apex:facet>     
+    </apex:relatedList>
+    <apex:relatedList list="Contracts__r" />
+     
+    <apex:outputPanel rendered="{!isApttusContractUser}">
+        <apex:relatedList list="Agreements__r" /> 
+    </apex:outputPanel>   
+    <apex:pageblock title="History">
+        <apex:pageBlockTable value="{!GE_PRM_Channel_Appointment__c.Histories}" var="h">
+            <apex:column headerValue="Date" value="{!h.createddate}"/>
+            <apex:column headerValue="User" value="{!h.createdbyid}"/>
+            <apex:column headerValue="Field Label">
+                <apex:outputText rendered="{!h.field == 'created'}" value="Created" />
+                <apex:outputText rendered="{!h.field != 'created'}" value="{!$ObjectType['GE_PRM_Channel_Appointment__c'].fields[h.field].Label}" />
+            </apex:column>
+            <apex:column headerValue="From"><apex:outputText value="{!h.oldvalue}"/></apex:column>
+            <apex:column headerValue="To"><apex:outputText value="{!h.newvalue}"/></apex:column>
+        </apex:pageBlockTable>
+    </apex:pageblock>
+    
+</apex:page>

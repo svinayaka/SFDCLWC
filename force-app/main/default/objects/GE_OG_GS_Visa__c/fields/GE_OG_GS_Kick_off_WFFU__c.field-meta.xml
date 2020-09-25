@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GE_OG_GS_Kick_off_WFFU__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Hidden checkbox for Visa/Passport update, can be discarded once in prod</description>
+    <externalId>false</externalId>
+    <label>GE OG GS Kick off Visa WFEmailFU</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

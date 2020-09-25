@@ -1,0 +1,145 @@
+<apex:page controller="GE_PRM_NonRenew_Contract_Selection" standardStylesheets="false"  sidebar="false">
+
+    <style>
+    .fsWrapper{
+    width: 960px;
+    margin: 0 auto;
+    }
+    .headerTitle{
+    font-family: arial, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff!important;
+    text-align: left;
+    background: #4e75a3;
+    display: block;
+    padding: 10px;
+    margin:0;
+    }
+    .dataTable table{
+    width: 100%;
+    font-family: arial, sans-serif;
+    border: solid 1px #E0E3E5;
+    border-collapse: collapse;
+    }
+    .dataTable  th{
+    background: #888888!important ;
+    border-top: solid 1px #E0E3E5!important;
+    border-right: solid 1px #E0E3E5!important;
+    color: #fff!important;
+    font-size: 0.8em!important;
+    font-weight: normal!important;
+    padding: 11px 2px 10px 5px!important;
+    text-align: center!important;
+    }
+    .dataTable td {
+    border-top: solid 2px #E0E3E5;
+    border-right: solid 3px #E0E3E5;
+    color: #404040;
+    font-size: 13px;
+    padding: 5px 2px 5px 5px;
+    text-align: center;
+    }
+    .actionBtnWrapper {
+    text-align: center;
+    float: center;
+    margin-top: 7px;
+    margin-left: 7px;
+    margin-bottom: 7px;
+    }
+    .actionBtnWrapper .btn{
+    text-align: center;
+    padding: 5px 10px;
+    background: #0b51a3;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: arial, sans-serif;
+    text-decoration: none;
+    border: none;
+    border-radius: 0;
+    transition: 0.5s ease-in-out;
+    cursor: pointer;
+    }
+    .actionBtnWrapper .btn:hover{
+    color: lightgray;
+    text-decoration: none;
+    background:#4e75a3 ;
+    }
+    .down-arrow {
+        display: inline-block;
+        position: relative;
+        background: white;
+        padding: 15px 0;
+        width:15px;
+        text-align: center;
+    }
+
+    .down-arrow:after {
+        content: '';
+        display: block;  
+        position: absolute;
+        left: 0;
+        top: 100%;
+        width: 0;
+        height: 0;
+        border-top: 5px solid white;
+        border-right: 20px solid transparent;
+        border-bottom: 0 solid transparent;
+        border-left: 20px solid transparent;
+    }
+    </style>
+        <apex:actionstatus id="counterStatus">            
+                    <apex:facet name="start">
+                    <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb; height:100%;opacity:0.65;width:100%;">
+                    <div class="waitingHolder" style="top: 200px; width: 100px; opacity:2;">
+                        <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                        <span class="waitingDescription">Loading...</span>
+                    </div>
+                    </div>
+                    </apex:facet>  
+         </apex:actionstatus>
+
+        <apex:form id="fm1" styleClass="fsWrapper">      
+            <apex:outputPanel style="color:MidnightBlue  ; text-shadow: 1px 2px 6px #BCC0C3;">       
+                <apex:sectionHeader title="Non-Renew/Terminate Contracts"/>      
+            </apex:outputPanel><br/><br/>          
+            
+             <apex:outputPanel styleClass="dataTable">
+                <div style="font-family: arial, sans-serif;font-size: 16px;font-weight: 600;text-align: left;display: block;padding: 10px;margin:0;">
+                    <b>Account Name </b>&nbsp;<b style="color:darkblue" >"{!acct.Name}"</b> 
+                    <b>Duns# </b>&nbsp;<b style="color:darkblue" >"{!acct.GE_HQ_DUNS_Number__c}"</b>
+                </div>
+                <apex:pageBlock >             
+                    <h2 class="headerTitle">Select Addendum Contracts to Non-Renew/Terminate.</h2> 
+                    <apex:outputPanel rendered="{!IF ((displayAppointments == false),true,false) }">
+                         <b><i> There is no Approved Channel Appointments to Select </i></b>
+                    </apex:outputPanel>  
+                    <apex:outputPanel id="panel2" rendered="{!displayContracts}">   
+                        <div class="actionBtnWrapper" align="center">
+                            <apex:commandButton value="Select" action="{!checkforAppointment}" styleClass="btn" status="counterStatus" reRender="fm1"/>&nbsp;
+                            <apex:commandButton value="Cancel" action="{!backtoAccount}" styleClass="btn" />
+                       </div>                   
+                        <apex:PageBlockTable value="{!lstExecutedAddendumContracts}" var="con" id="rep">                             
+                              <apex:column headerValue="Select">  
+                                <apex:inputCheckbox value="{!con.isSelected }"/>
+                              </apex:column>                              
+                              <apex:column headerValue=" System ID " value="{!con.ContractNumber}" />                              
+                              <apex:column headerValue="Master Agreement ID" value="{!con.GE_PRM_Master_agreement_ID}"/>
+                              <apex:column headerValue="Channel Appointment ID" value="{!con.GE_PRM_Channel_Appointment_ID}"/>
+                              <apex:column headerValue="Relationship Type" value="{!con.GE_PRM_Relationship_Type}"/>
+                              <apex:column headerValue="Contract End Date" value="{!con.EndDate }" />
+                              <apex:column headerValue="Status"  value="{!con.Status  }"/>
+                              <apex:column headerValue="Tier 2 P&L"  value="{!con.GE_PRM_Tier_2 }"/>
+                              <apex:column headerValue="Tier 3 P&L"  value="{!con.GE_PRM_Tier_3 }"/>
+                              <apex:column headerValue="Tier 4 Product"  value="{!con.GE_PRM_Tier_4 }"/>
+                              <apex:column headerValue="Tier 5 Product"  value="{!con.GE_PRM_Tier_5 }"/>   
+                         </apex:PageBlockTable>
+                    </apex:outputPanel><br/>
+                    <apex:outputPanel rendered="{!IF ((displayContracts == false),true,false) }">
+                        <b><i> There is no Addendum Contracts to Select </i></b>
+                    </apex:outputPanel>                  
+                </apex:pageBlock>
+            </apex:outputPanel>
+         </apex:form> 
+</apex:page>

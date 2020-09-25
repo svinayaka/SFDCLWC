@@ -1,0 +1,15 @@
+<!--
+Type Name [Class/Trigger/Page Name] : VF - GEOGMC_CaseCloneWithAtts
+Purpose                             : Customize the standard clone functionality of Case Object
+Overview                            : Include attachments when cloning an Case
+Functional Area                     : Service
+Author                              : RajaKumar Malla
+Created Date                        : 16 Feb 2013
+
+-->
+<apex:page standardController="Case" extensions="GEOGMC_CaseCloneWithAttsController"  id="page" tabStyle="Case" action="{!reDirect}">
+    <apex:form id="frm">
+      <apex:messages />
+      <apex:outputLink value="/{!Case.Id}" >Go Back.</apex:outputLink>
+    </apex:form>
+</apex:page>

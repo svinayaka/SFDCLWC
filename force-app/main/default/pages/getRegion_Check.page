@@ -1,0 +1,29 @@
+<apex:page id="Page" title="getRgion() Method Test" controller="GE_HQ_Get_Region">
+<script type="text/javascript">
+</script>
+  <h1>Congratulations</h1>
+<apex:pageBlock id="pb">
+<apex:pageblockSection id="pbs" columns="1" collapsible="True">
+<!-- data table ..try it-->
+<apex:form id="frm">
+Enter Tier Information:    <apex:inputText id="tier" value="{!Tier}"/>
+<br/>
+Enter Country Information : <apex:inputText id="country" value="{!Country}"/>
+<br/>
+Enter Function: <apex:inputText id="fun" value="{!InputFunction}"/>
+<br/>
+Enter State Name: <apex:inputText id="state" value="{!State}"/>
+<br/><br/>
+<apex:commandButton action="{!FindRegion}" title="getRegion" value="Fetch Region" reRender="region, regionid"/>
+<br/>
+<b>&nbsp;&nbsp;&nbsp; Region Name:- &nbsp;
+<apex:outputlabel id="region" value="{!region}"></apex:outputlabel> </b>
+<br/>
+<b>&nbsp;&nbsp;&nbsp; Region SFDC Id:- &nbsp;
+<apex:outputlabel id="regionid" value="{!RegionId}"></apex:outputlabel> </b>
+
+
+</apex:form>
+</apex:pageblockSection>
+</apex:pageBlock>
+</apex:page>

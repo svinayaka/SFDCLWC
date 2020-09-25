@@ -1,0 +1,9 @@
+<!--
+  Auth: Raja Kumar Malla
+  Created Date: 1/28/2013
+  Description: This VF Page is used to view my Activities
+-->
+
+<apex:page lightningStylesheets="true">
+<apex:enhancedList type="Activity" height="600" />
+</apex:page>

@@ -1,13 +1,20 @@
 <template>
-    <lightning-formatted-date-time value={today}>
-   </lightning-formatted-date-time>
-   <!-- <p>Date: {date}</p>
-   <p>Month: {month}</p>
-   <p>Year: {year}</p> -->
-   <div class="meter">
-    <span style="width:80%;"><span class="progress"></span></span>
-   </div>
-   <p>Quarter: {quarter}  {lastQdate} </p>
-   <p>date: <br>{date2} <br>{date1}</p>
-   <p>Days reaining in Quarter: {result}</p>
+    <lightning-card>
+        <div>
+            <lightning-formatted-date-time value={today}>
+            </lightning-formatted-date-time>
+            <p>Quarter: {quarter} {lastQdate} </p>
+            <p>date: <br>{date2} <br>{date1}</p>
+            <p>Days reaining in Quarter: {result}</p>
+            <p>{stroke} strokes</p>
+            <svg version="1.1" baseProfile="full" width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+                <path class="grey" fill="none" stroke="#B7C4D2" stroke-width="10" d="M 136 277 A 100 100 0 1 1 264 277">
+                </path>
+                <path class="blue" fill="none" stroke="#30A7F4" stroke-width="10" d="M 136 277 A 100 100 0 1 1 264 277">
+                </path>
+                <text x="180" y="180" class="bigtext">XXX</text>
+                <text x="170" y="200" class="smalltext">Days Left</text>
+            </svg>
+        </div>
+    </lightning-card>
 </template>

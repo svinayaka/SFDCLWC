@@ -1,0 +1,47 @@
+<apex:page standardcontroller="Sub_Dealer__c" extensions="GE_PRM_SubDealer_Class" sidebar="false" showHeader="true"  standardstylesheets="true">
+   <apex:stylesheet value="{!URLFOR($Resource.PRM_CA_UX_CSS,'PRM_UX_CSS/PRM_UX.css')}"/>   
+    <style>
+      .AddrowButton
+        {
+        background: #A9A9A9;
+        border: 1px solid #8BA446;
+        display: inline-block;
+        padding: 5px 10px 5px;
+        border-radius: 2px 2px 2px 2px;
+        box-shadow: 0px 1px 2px 0px rgb(173, 173, 173);
+        font-family: Arial;
+        vertical-align: middle;
+        text-decoration: none;
+        background-image:none;
+        color:white;
+        font-size: 1em;
+        }
+        </style>
+    <apex:form id="frm">
+        <apex:pageBlock title="Branch Office / Subsidiary Details" mode="edit">
+            <apex:pageBlockButtons >
+                <apex:commandLink value="Save" action="{!saveSubDealerDetails}" styleClass="AddrowButton" title="Save" style="color: white;  margin-bottom: 10px;"/>
+                &nbsp;
+                <apex:commandLink value="Cancel" action="{!cancel}" styleClass="AddrowButton" title="Cancel" style="color: white;  margin-bottom: 10px;"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection columns="2"> 
+                <apex:inputField value="{!Sub_Dealer__c.GE_PRM_Affiliate_dependent_type__c}" required="true"/>
+                <apex:inputField value="{!Sub_Dealer__c.GE_PRM_Prinicipal_Conatct_Text__c}" required="true"/> 
+                <apex:inputField value="{!Sub_Dealer__c.GE_PRM_Legal_name__c}" required="true"/>
+                 <apex:inputField value="{!Sub_Dealer__c.GE_PRM_Authorized_commercial_lines__c}" required="true"/> 
+                <apex:inputField value="{!Sub_Dealer__c.GE_PRM_Address_line_1__c}" />
+                <apex:inputField value="{!Sub_Dealer__c.GE_PRM_Phone__c}" />
+                <apex:inputField value="{!Sub_Dealer__c.GE_PRM_Address_line_2__c}" />
+                <apex:inputField value="{!Sub_Dealer__c.GE_PRM_Mobile__c}" />
+                <apex:inputField value="{!Sub_Dealer__c.GE_PRM_City__c}" />
+                <apex:inputField value="{!Sub_Dealer__c.GE_PRM_Email__c}" />
+                <apex:inputField value="{!Sub_Dealer__c.GE_PRM_Postal_code__c}" />
+                <apex:inputField value="{!Sub_Dealer__c.GE_PRM_City_of_registration__c}" />
+                <apex:inputField value="{!Sub_Dealer__c.GE_PRM_Country__c}" />         
+                <apex:inputField value="{!Sub_Dealer__c.GE_PRM_Ownership__c}"/>
+                  
+                
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PF4__c</fullName>
+    <externalId>false</externalId>
+    <label>Pump 4 Foreign Material Exterior</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>N/A</fullName>
+                <default>true</default>
+                <label>N/A</label>
+            </value>
+            <value>
+                <fullName>Scale</fullName>
+                <default>false</default>
+                <label>Scale</label>
+            </value>
+            <value>
+                <fullName>Asphaltene</fullName>
+                <default>false</default>
+                <label>Asphaltene</label>
+            </value>
+            <value>
+                <fullName>Sand</fullName>
+                <default>false</default>
+                <label>Sand</label>
+            </value>
+            <value>
+                <fullName>Paraffin</fullName>
+                <default>false</default>
+                <label>Paraffin</label>
+            </value>
+            <value>
+                <fullName>Well Fluid</fullName>
+                <default>false</default>
+                <label>Well Fluid</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>GE_OG_Account_Request_Note_Email_Alert</fullName>
+        <description>Send an email alert to account owner when user modifies the comments on account.</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Account_Creator__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>dlenergy.esitoops1@ge.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Accounts_and_Contacts_Email_Templates/GE_OG_Account_Request_Note_Template_NEW</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Update_Account_Creator_Email</fullName>
+        <field>Account_Creator__c</field>
+        <formula>Account__r.CreatedBy.Email</formula>
+        <name>Update Account Creator Email</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <rules>
+        <fullName>GE_OG_Account_Request_Note_Alert_To_Account_Owner</fullName>
+        <actions>
+            <name>GE_OG_Account_Request_Note_Email_Alert</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>Update_Account_Creator_Email</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Account_Request_Note__c.CreatedById</field>
+            <operation>contains</operation>
+            <value>Webmethods</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account_Request_Note__c.LastModifiedById</field>
+            <operation>contains</operation>
+            <value>Webmethods</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account_Request_Note__c.Account_Creator__c</field>
+            <operation>contains</operation>
+            <value>Webmethods</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account_Request_Note__c.LastModifiedById</field>
+            <operation>equals</operation>
+            <value>Webmethods Integration</value>
+        </criteriaItems>
+        <description>Send an email alert to Account Owner when comment is modified.</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+</Workflow>

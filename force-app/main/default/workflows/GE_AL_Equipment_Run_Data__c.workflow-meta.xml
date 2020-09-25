@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>GE_AL_Update_Date_Installed_on_IP</fullName>
+        <field>SVMXC__Date_Installed__c</field>
+        <formula>IF(
+AND (
+ISNULL(GE_AL_Pull_Date__c),NOT(ISNULL(GE_AL_Install_Date__c))
+),
+GE_AL_Install_Date__c ,
+IF(
+AND(NOT(ISNULL(GE_AL_Pull_Date__c)),NOT(ISNULL(GE_AL_Install_Date__c)),OR(ISCHANGED(GE_AL_Pull_Date__c),ISCHANGED(GE_AL_Install_Date__c))),null,SVMXC_Installed_Product__r.SVMXC__Date_Installed__c
+)
+)</formula>
+        <name>Update Date Installed on IP</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <targetObject>SVMXC_Installed_Product__c</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>GE_AL_Update_Pull_Date_on_Installed_Prod</fullName>
+        <description>R-25327</description>
+        <field>GE_AL_Pull_Date__c</field>
+        <formula>GE_AL_Pull_Date__c</formula>
+        <name>Update Pull Date on Installed Product</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <targetObject>SVMXC_Installed_Product__c</targetObject>
+    </fieldUpdates>
+    <rules>
+        <fullName>GE AL Update Pull Date on Installed Product</fullName>
+        <actions>
+            <name>GE_AL_Update_Pull_Date_on_Installed_Prod</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Update Pull Date on Installed Product - R-25327</description>
+        <formula>AND(NOT(ISBLANK( GE_AL_Install_Date__c )) , NOT(ISBLANK( GE_AL_Pull_Date__c )) )</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Installed Date on IP</fullName>
+        <actions>
+            <name>GE_AL_Update_Date_Installed_on_IP</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>SVMXC__Installed_Product__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>GE OG D&amp;S Artificial Lift</value>
+        </criteriaItems>
+        <description>R-22310</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

@@ -1,0 +1,195 @@
+<apex:page controller="GEOG_Mearge_Commerical_AccountController">
+
+<script>
+
+ function boolFunction(variable)
+    {
+        
+        var bool = variable.value;
+        //alert(bool);
+        if(bool == 'namePanel')
+                
+        {
+           document.getElementById('NameSpan').style.display = 'block';
+           document.getElementById('IdSpan').style.display = 'none';
+        }
+        else
+        {
+            document.getElementById('NameSpan').style.display = 'none';
+            document.getElementById('IdSpan').style.display = 'block';
+        }
+    } 
+    function changeValue(input, masterorslave) {
+       //alert(input.value);
+          //alert(masterorslave);  
+           if(masterorslave=='Master')
+        {
+            //alert(document.getElementById('j_id0:frm:hiddenFieldMasterAccountId').value);
+            document.getElementById('j_id0:frm:hiddenFieldMasterAccountId').value= input.value;
+           // masterAccount(input.value);
+            
+        }
+        if(masterorslave=='Slave')
+        { 
+            //alert(document.getElementById('j_id0:frm:hiddenFieldSlaveAccountId').value);
+            document.getElementById('j_id0:frm:hiddenFieldSlaveAccountId').value= input.value;
+            // slaveAccount(input.value);
+        }
+        
+    }
+</script>
+
+<apex:pageMessages />
+    <apex:form id="frm">
+    
+    <apex:inputHidden value="{!selectedMasterAccountId}" id="hiddenFieldMasterAccountId" />
+    <apex:inputHidden value="{!selectedSlaveAccountId}" id="hiddenFieldSlaveAccountId" />
+
+    
+ 
+        <apex:pageBlock title="Account Merge Tool">
+            <apex:outputPanel id="Panel1">
+
+                <apex:selectRadio id="idRadio1" onclick="boolFunction(this);" value="{!selectedPanel}" layout="pageDirection" rendered="{! !bool1 }" >
+                    <apex:selectOption itemValue="namePanel" 
+                                        itemLabel="Please Enter the Master Account Name and the Slave Account Name to move all of the Master Account related list items to the Slave Account." 
+                                        rendered="{! !bool1 }"/>
+                    <br/>
+                    <apex:selectOption itemValue="idPanel" 
+                                       itemLabel="Please Enter the Master Account ID and the Slave Account ID to move all of the Master Account related list items to the Slave Account." 
+                                       rendered="{! !bool1 }"/>
+                </apex:selectRadio> 
+
+                <div id="NameSpan" style = "display:none">
+                    <apex:pageBlockSection columns="2" rendered="{! !bool1 }">            
+                        <apex:pageBlockSectionItem >
+                            <apex:outputText value="Master Account"/>
+                            <apex:inputText id="txt" value="{!MasterName}"/>
+                        </apex:pageBlockSectionItem>
+                        <apex:pageBlockSectionItem >
+                            <apex:outputText value="Slave Account"/>
+                            <apex:inputText id="txt1" value="{!slaveName}"/>
+                        </apex:pageBlockSectionItem>
+                
+                        <apex:commandButton value="Next" action="{!Next}" reRender="frm"></apex:commandButton>            
+                    </apex:pageBlockSection>
+                </div>
+            
+            <div id="IdSpan" style = "display:none">            
+                <apex:pageBlockSection columns="2" rendered="{! !bool1 }">
+            
+                    <apex:pageBlockSectionItem >
+                        <apex:outputText value="Master Account Id"/>
+                        <apex:inputText id="id" value="{!MasterId}"/>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputText value="Slave Account Id"/>
+                        <apex:inputText id="id1" value="{!slaveId}"/>
+                    </apex:pageBlockSectionItem>
+                
+                    <apex:commandButton value="Next" action="{!Next}" reRender="frm"></apex:commandButton>            
+                </apex:pageBlockSection>
+            </div>
+        </apex:outputPanel>
+        
+        <!----To Display Records-------->
+        <apex:outputPanel id="Panel3"> 
+            <apex:outputPanel rendered="{! bool2 }">
+            <br/>
+            <table width="100%" style="width:100%;" cellspacing="10">
+                <tr>
+                    <th><h1>Master Accounts </h1> </th>
+                    <th><h1>Slave Accounts  </h1> </th>
+                </tr>
+                <tr>
+                    <td>                
+                        <apex:pageBlockTable value="{!mapMaterRecords}" var="i" id="MasteraccTable" 
+                               title="Master Account Records" >
+                            <apex:column headerValue="Select">
+                               
+                                <!-- <apex:selectRadio id="masterAccount" value="{!selectedMasterAccountId}">
+                                    <apex:selectOption itemValue="{!mapMaterRecords[i].id}"/>
+                                    <apex:actionSupport event="onclick" action="{!getSelected}" reRender="none">
+                                         
+                                    </apex:actionSupport>
+                                </apex:selectRadio>      -->
+                                <input type="radio" name="masterAccount" value="{!mapMaterRecords[i].id}" onclick="changeValue(this,'Master');" />
+                            </apex:column>
+                            <apex:column value="{!mapMaterRecords[i].Id}"/>
+                            <apex:column value="{!mapMaterRecords[i].Name}"/>
+                        </apex:pageBlockTable>
+                    </td>
+                
+                    <td>
+                
+                        <apex:pageBlockTable value="{!mapSlaveRecords}" var="j" id="SlaveaccTable" 
+                              title="Slave Account Records" >
+                            <apex:column headerValue="Select">
+                       <!--
+                                <apex:selectRadio id="slaveAccount" name="" value="{!selectedSlaveAccountId}"> 
+                                    <apex:selectOption itemValue="{!mapSlaveRecords[j].id}"/>
+                                    <apex:actionSupport event="onclick" action="{!getSelected}" reRender="none">
+                                  </apex:actionSupport>
+                                </apex:selectRadio>-->
+                                <input type="radio" name="slaveAccount" value="{!mapSlaveRecords[j].id}" onclick="changeValue(this,'Slave');" />
+                            </apex:column>
+                            <apex:column value="{!mapSlaveRecords[j].Id}"/>
+                            <apex:column value="{!mapSlaveRecords[j].Name}"/>
+                        </apex:pageBlockTable>
+                    </td>                                    
+                </tr>               
+        </table>
+        </apex:outputPanel>
+    </apex:outputPanel>
+        
+    <apex:pageBlockButtons id="SearchPanelId" location="bottom" rendered="{! bool2 }">
+        <apex:outputPanel id="sav1">
+            <apex:commandButton value="Search" action="{!Search}"></apex:commandButton>
+        </apex:outputPanel>
+    </apex:pageBlockButtons>
+              
+    <!-----------------*********----------------->
+        
+    <apex:outputPanel id="Panel2">    
+        <apex:outputPanel rendered="{! bool3 }">
+            <br/>
+            <table width="100%" style="width:100%;" cellspacing="10">
+                <tr>
+                    <th><h1>Master Account Detail</h1> </th>
+                    <th><h1>Slave Account Detail</h1> </th>
+                </tr>
+                <tr>
+                    <td>
+                        <apex:pageBlockTable value="{!masterAcct}" var="mstAct" title="Master Account Detail">
+                            <apex:column value="{!mstAct.Id}"/>
+                            <apex:column value="{!mstAct.Name}"/>
+                            <apex:column value="{!mstAct.Account_Tier_GEOG__c}"/>
+                            <apex:column value="{!mstAct.ParentId}"/>
+                            <apex:column value="{!mstAct.Member_of_GE_OG__c}"/>
+                                                    
+                        </apex:pageBlockTable>  
+                    </td>
+                    <td>
+                        <apex:pageBlockTable value="{!slaveAcct}" var="slvAct" title="Slave Account Detail">
+                            <apex:column value="{!slvAct.Id}"/>
+                            <apex:column value="{!slvAct.Name}"/>
+                            <apex:column value="{!slvAct.Account_Tier_GEOG__c}"/>
+                            <apex:column value="{!slvAct.ParentId}"/>
+                            <apex:column value="{!slvAct.Member_of_GE_OG__c}"/>
+                        </apex:pageBlockTable>
+                    </td>
+                </tr>
+            </table> 
+        </apex:outputPanel>
+    </apex:outputPanel>
+
+        <apex:pageBlockButtons id="pbs1" location="bottom" rendered="{! bool3 }">
+            <apex:outputPanel id="sav1">
+                <apex:commandButton value="Back" action="{!Back}" />
+                <apex:commandButton value="Merge" action="{!mergeAct}" onclick="return confirm('You have requested to MIGRATE child records from Slave Account {! slaveName } to Master Account {! MasterName}. \n\nThis action is permanent and cannot be undone. Do you want to proceed?')" rendered="{! !actNtfound }"/>
+            </apex:outputPanel>
+        </apex:pageBlockButtons>
+        
+    </apex:pageblock> 
+ </apex:form>
+</apex:page>

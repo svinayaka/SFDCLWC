@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Email_Alert_for_the_Contract_term</fullName>
+        <description>Email Alert for the Contract term</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Alert_Email_GEOG__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_OG_Templates/Contract_Term_Expiry_Email2_GEOG</template>
+    </alerts>
+    <rules>
+        <fullName>Contract_Term_Expiration_Email_Alert</fullName>
+        <active>false</active>
+        <criteriaItems>
+            <field>Contract_Term_GEOG__c.Email_Alert_Date_GEOG__c</field>
+            <operation>greaterOrEqual</operation>
+            <value>TODAY</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Email_Alert_for_the_Contract_term</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Contract_Term_GEOG__c.Email_Alert_Date_GEOG__c</offsetFromField>
+            <timeLength>-1</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+</Workflow>

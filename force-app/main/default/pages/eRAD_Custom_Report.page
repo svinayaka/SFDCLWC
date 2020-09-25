@@ -1,0 +1,128 @@
+<apex:page standardController="eRAD__c" extensions="eRAD_Custom_Report_Cntrl" sidebar="false" showHeader="false">
+    <style>
+        .lefttable{
+            border: 0px;
+            font-weight: bold;
+        }
+    </style>
+    <apex:form id="frm">
+        <apex:pageBlock >
+        
+        <table align="left" width="80%" cellspacing="10">
+        <tr>
+        <td width="9%"><apex:outputLabel value="Oppty Name" style="text-align:left;font-weight:bold;" /></td>
+        <td><apex:commandLink value="{!erAdlist[0].Opportunity_name__C}" onclick="window.open('/{!erAdlist[0].Opportunity__c}','_blank');"/></td>
+        </tr>
+        <tr>
+        <td><apex:outputLabel value="Oppty Number" style="text-align:left;font-weight:bold;" /></td>
+        <td><apex:outputLabel value="{!erAdlist[0].Opportunity_Number__C}" /></td>
+        </tr>
+        <tr>
+        <td><apex:outputLabel value="Oppty Status" style="text-align:left;font-weight:bold;" /></td>
+        <td><apex:outputLabel value="{!erAdlist[0].Opportunity_Status__C}" /></td>
+        </tr>
+        <tr>
+        <td valign="top"><b>Highlights </b>
+        </td>
+        <td>
+        <apex:outputPanel ><apex:outputfield value="{!erAdlist[0].Highllights__c}" /><br/></apex:outputPanel></td>
+        </tr>
+        </table>
+        
+        <br/>               
+        <table width="100%">
+        <tr>
+        
+        <td>
+        <div align="left">
+        <table width="65%" class="lefttable" cellpadding="5px 2px 4px 5px" style="text-align:center;">
+            <tr bgcolor="darkblue"  >
+                <th width="20%"><center><font COLOR="white" >Category</font></center></th>
+                <th width="15%"><center><font COLOR="white">Weights %</font></center></th>
+                <th width="15%"><center><font COLOR="white">{!GEOG}</font></center></th>
+                
+                <apex:repeat value="{!comlis}" var="comp">
+                    <th width="15%"><apex:outputText ><center><font COLOR="white">{!comp.Competitor__c}</font></center></apex:outputText></th>
+                </apex:repeat>
+           </tr>
+            <tr>
+                <td style="border-bottom:1pt solid black;border-top:1pt solid black;border-left:1pt solid black;border-right:1pt solid black;">Capex</td>
+                <td style="border-bottom:1pt solid black;border-top:1pt solid black;border-left:1pt solid black;border-right:1pt solid black;"><apex:outputText value="{!capexweight}" /></td>
+                <td style="border-bottom:1pt solid black;border-top:1pt solid black;border-left:1pt solid black;border-right:1pt solid black;"><apex:outputText value="{!IF(erAdlist[0].Capex_Score__c == null,0,erAdlist[0].Capex_Score__c)}"/></td>
+                <apex:repeat value="{!comlis}" var="comp">
+                    <td style="border-bottom:1pt solid black;border-top:1pt solid black;border-left:1pt solid black;border-right:1pt solid black;"><apex:outputText value="{!IF(comp.Capex_Score__c== null,0,comp.Capex_Score__c)}" /></td>
+                </apex:repeat>
+            </tr>
+            
+            <tr>
+                <td style="border-bottom:1pt solid black;border-top:1pt solid black;border-left:1pt solid black;border-right:1pt solid black;">Opex</td>
+                <td style="border-bottom:1pt solid black;border-top:1pt solid black;border-left:1pt solid black;border-right:1pt solid black;"><apex:outputText value="{!opexweight}" /></td>
+                <td style="border-bottom:1pt solid black;border-top:1pt solid black;border-left:1pt solid black;border-right:1pt solid black;"><apex:outputText value="{!IF(erAdlist[0].Opex_Score__c == null,0,erAdlist[0].Opex_Score__c)}" /></td>
+                <apex:repeat value="{!comlis}" var="comp">
+                    <td style="border-bottom:1pt solid black;border-top:1pt solid black;border-left:1pt solid black;border-right:1pt solid black;"><apex:outputText value="{!IF(comp.Opex_Score__c== null,0,comp.Opex_Score__c)}" /></td>
+                </apex:repeat>
+            </tr>
+            
+            <tr>
+                <td style="border-bottom:1pt solid black;border-top:1pt solid black;border-left:1pt solid black;border-right:1pt solid black;">Commercial</td>
+                <td style="border-bottom:1pt solid black;border-top:1pt solid black;border-left:1pt solid black;border-right:1pt solid black;"><apex:outputText value="{!commweight}" /></td>
+                <td style="border-bottom:1pt solid black;border-top:1pt solid black;border-left:1pt solid black;border-right:1pt solid black;"><apex:outputText value="{!IF(erAdlist[0].Commercial_Score__c== null,0,erAdlist[0].Commercial_Score__c)}" /></td>
+                <apex:repeat value="{!comlis}" var="comp">
+                    <td style="border-bottom:1pt solid black;border-top:1pt solid black;border-left:1pt solid black;border-right:1pt solid black;"><apex:outputText value="{!IF(comp.Commercial_Score__c== null,0,comp.Commercial_Score__c)}" /></td>
+                </apex:repeat>
+            </tr>
+            
+            <tr>
+                <td style="border-bottom:1pt solid black;border-top:1pt solid black;border-left:1pt solid black;border-right:1pt solid black;">References</td>
+                <td style="border-bottom:1pt solid black;border-top:1pt solid black;border-left:1pt solid black;border-right:1pt solid black;"><apex:outputText value="{!refweight}" /></td>
+                <td style="border-bottom:1pt solid black;border-top:1pt solid black;border-left:1pt solid black;border-right:1pt solid black;"><apex:outputText value="{!IF(erAdlist[0].References_Score__c== null,0,erAdlist[0].References_Score__c)}" /></td>
+                <apex:repeat value="{!comlis}" var="comp">
+                    <td style="border-bottom:1pt solid black;border-top:1pt solid black;border-left:1pt solid black;border-right:1pt solid black;"><apex:outputText value="{!IF(comp.References_Score__c== null,0,comp.References_Score__c)}" /></td>
+                </apex:repeat>
+            </tr>
+            
+            <tr>
+                <td style="border-bottom:1pt solid black;border-top:1pt solid black;border-left:1pt solid black;border-right:1pt solid black;">Relations</td>
+                <td style="border-bottom:1pt solid black;border-top:1pt solid black;border-left:1pt solid black;border-right:1pt solid black;"><apex:outputText value="{!relweight}" /></td>
+                <td style="border-bottom:1pt solid black;border-top:1pt solid black;border-left:1pt solid black;border-right:1pt solid black;"><apex:outputText value="{!IF(erAdlist[0].Relations_Score__c== null,0,erAdlist[0].Relations_Score__c)}" /></td>
+                <apex:repeat value="{!comlis}" var="comp">
+                    <td style="border-bottom:1pt solid black;border-top:1pt solid black;border-left:1pt solid black;border-right:1pt solid black;"><apex:outputText value="{!IF(comp.Relations_Score__c == null,0,comp.Relations_Score__c)}"/></td>
+                </apex:repeat>
+            </tr>
+            
+            <tr>
+                <td style="border-bottom:1pt solid black;border-top:1pt solid black;border-left:1pt solid black;border-right:1pt solid black;">Technical</td>
+                <td style="border-bottom:1pt solid black;border-top:1pt solid black;border-left:1pt solid black;border-right:1pt solid black;"><apex:outputText value="{!techweight}" /></td>
+                <td style="border-bottom:1pt solid black;border-top:1pt solid black;border-left:1pt solid black;border-right:1pt solid black;"><apex:outputText value="{!IF(erAdlist[0].Technical_Score__c== null,0,erAdlist[0].Technical_Score__c)}" /></td>
+                <apex:repeat value="{!comlis}" var="comp">
+                    <td style="border-bottom:1pt solid black;border-top:1pt solid black;border-left:1pt solid black;border-right:1pt solid black;"><apex:outputText value="{!IF(comp.Technical_Score__c== null,0,comp.Technical_Score__c)}" /></td>
+                </apex:repeat>
+            </tr>
+            
+            <tr>
+                <td style="border-bottom:1pt solid black;border-top:1pt solid black;border-left:1pt solid black;border-right:1pt solid black;"><font color="blue">Total</font></td>
+                <td style="border-bottom:1pt solid black;border-top:1pt solid black;border-left:1pt solid black;border-right:1pt solid black;"><font color="blue"><apex:outputText value="{!IF(erAdlist[0].Total_Oppty_Score__c == 'RAD Not Completed','RAD Not Completed','100')}"/></font></td>
+                <td style="border-bottom:1pt solid black;border-top:1pt solid black;border-left:1pt solid black;border-right:1pt solid black;"><font color="blue"><apex:outputText value="{!IF(erAdlist[0].Total_Oppty_Score__c== null,0,erAdlist[0].Total_Oppty_Score__c)}" /></font></td>
+                <apex:repeat value="{!comlis}" var="comp">
+                    <td style="border-bottom:1pt solid black;border-top:1pt solid black;border-left:1pt solid black;border-right:1pt solid black;"><font color="blue"><apex:outputText value="{!IF(comp.Total_Competitor_Score__c== null,0,comp.Total_Competitor_Score__c)}" /></font></td>
+                </apex:repeat>
+            </tr>
+                
+            </table>
+            </div>
+        </td>
+        </tr>
+        </table>
+        <br/>
+        <div>
+            <apex:chart height="400" width="100%" data="{!data}">
+                <apex:legend position="right"/>
+                <apex:axis type="Numeric" position="left" fields="score,{!fields}" title="Rating" grid="true" minimum="0" maximum="10" steps="9"/>
+                <apex:axis type="Category" position="bottom" fields="name" title="Category" />
+                <apex:barSeries title="{!reporttitle}" orientation="vertical" axis="left" xField="name" yField="score,{!fields}"/>
+            </apex:chart>  
+        </div><br/>
+        <apex:commandButton value="Generate PDF" onclick="window.open('apex/eRAD_Custom_Report_PDF?id={!eradid}','_blank');"/>
+     </apex:pageBlock>
+    </apex:form>
+</apex:page>

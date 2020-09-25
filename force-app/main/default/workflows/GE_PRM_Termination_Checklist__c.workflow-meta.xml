@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>GE_PRM_Notification_to_Channel_Manager_once_Termination_Checklist_is_Completed</fullName>
+        <description>Notification to Channel Manager once Termination Checklist is Completed</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>GE_PRM_Email_Templates/GE_PRM_Termination_Checklist_Completed</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>GE_PRM_Termination_Checklist_Locked</fullName>
+        <description>Termination Checklist to be Locked once Completed</description>
+        <field>RecordTypeId</field>
+        <lookupValue>GE_PRM_Termination_Checklist_Locked</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Termination Checklist Locked</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <rules>
+        <fullName>GE_PRM_Termination_Checklist_Completed</fullName>
+        <actions>
+            <name>GE_PRM_Termination_Checklist_Locked</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>GE_PRM_Termination_Checklist__c.GE_PRM_Status__c</field>
+            <operation>equals</operation>
+            <value>Completed</value>
+        </criteriaItems>
+        <description>Notify Channel Manager once the Termination Checklist is Completed</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+</Workflow>
